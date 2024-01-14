@@ -8,9 +8,11 @@ import NavBar from "@/components/common/NavBar";
 export default function layout({ children }: { children: React.ReactNode }) {
     return (
         <div>
-            <Header />
+            <Header/>
+            <div className="h-[52px]"/>
             {children}
-            <NavBar />
+            <div className="h-[104px]" />
+            <NavBar/>
         </div>
     );
 }
