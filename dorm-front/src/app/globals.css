@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .recruiting-tag {
+        @apply text-black bg-[#D8EAFF]
+    }
+    .recruitment-completed-tag {
+        @apply bg-gray1 text-black
+    }
+    .board-type-tag {
+        @apply bg-secondary text-primary
+    }
+    .tag {
+        @apply bg-gray0 text-gray5
+    }
+    .click-filter {
+        @apply bg-primaryMid text-white
+    }
+    .not-click-filter {
+        @apply border-[1px] border-gray2 text-gray4
+    }
+    .home-button {
+        @apply border-[1px] border-primaryMid rounded-full text-primaryMid hover:shadow-lg transition
+    }
+}
+
+@layer components {
+    /* 목표 설정 content className */
+    .goal-setting-content {
+        @apply rounded-[16px] bg-gray0 py-3 px-4 w-full
+    }
+}

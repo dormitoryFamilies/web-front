@@ -1,8 +1,4 @@
 const RoomMate = () => {
-    return (
-        <div>
-
-        </div>
-    );
+  return <div></div>;
 };
 export default RoomMate;

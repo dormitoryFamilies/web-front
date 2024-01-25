@@ -43,7 +43,7 @@ const config: Config = {
       h3: '18px', // Title 2, 3
       h4: '16px', // Title 4, 5, SubTitle 1, Body1
       h5: '14px', // SubTitle 2, Body2, Button
-      h6: '12px'
+      h6: '12px',
     },
   },
   plugins: [],
