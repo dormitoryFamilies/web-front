@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface Props {
   usage: string;
-  profileUrl: string;
+  profileUrl?: string;
   nickName: string;
   createdDate: string;
   dormitory?: string;
@@ -21,12 +21,12 @@ const Profile = (props: Props) => {
             : "flex gap-x-2"
       }>
       {usage == "author" ? (
-        <Image src={profileUrl} width={45} height={45} alt={"프로필"} className={"rounded-full w-[45px] h-[45px]"} />
+        <Image src={"/unnimm.jpg"} width={45} height={45} alt={"프로필"} className={"rounded-full w-[45px] h-[45px]"} />
       ) : usage == "comment" ? (
-        <Image src={profileUrl} width={32} height={32} alt={"프로필"} className={"rounded-full w-[32px] h-[32px]"} />
+        <Image src={"/unnimm.jpg"} width={32} height={32} alt={"프로필"} className={"rounded-full w-[32px] h-[32px]"} />
       ) : (
         <Image
-          src={profileUrl}
+          src={"/unnimm.jpg"}
           width={24}
           height={24}
           alt={"프로필"}
@@ -44,7 +44,7 @@ const Profile = (props: Props) => {
           <div className="font-semibold">{nickName}</div>
         )}
         <div className="text-h5 text-gray4">
-          {format(new Date(createdDate), "yy.MM.dd") + " | " + format(new Date(createdDate), "HH:mm")}
+          {/*{format(new Date(createdDate), "yy.MM.dd") + " | " + format(new Date(createdDate), "HH:mm")}*/}
         </div>
       </div>
     </div>

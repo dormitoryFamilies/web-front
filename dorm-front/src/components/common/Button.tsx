@@ -23,7 +23,7 @@ const Button = (props: Props) => {
         className,
       )}
       onClick={onClick ? onClick : null}>
-      <div className="flex items-center gap-x-1 text-h5">
+      <div className="flex items-center gap-x-[5px] text-h5">
         {SecondIcon ? <SecondIcon /> : null}
         {children}
         {Icon ? <Icon /> : null}

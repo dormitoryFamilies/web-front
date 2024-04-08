@@ -1,21 +1,32 @@
 "use client";
-import { useParams } from "next/navigation";
+
 import Button from "@/components/common/Button";
 import Profile from '@/components/board/Profile';
 import PostDetailContent from '@/components/board/PostDetailContent';
 import * as React from 'react';
-import Comment from '@/components/board/Comment';
-import { postDetail } from '@/utils/board/postDetail';
+import CommentInput from '@/components/board/CommentInput';
+import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
+import { useEffect } from "react";
+import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
+import { ArticleDetailCommentType } from "@/types/board/type";
+import CommentContent from "@/components/board/CommentContent";
+import { useParams } from "next/navigation";
 
 const BoardDetail = () => {
-  const parameter = useParams();
+  const params = useParams();
+  const { articleDetail } = useGetArticleDetail(params.id);
+  const { articleDetailComments } = useGetArticleDetailComments(params.id);
+
+  useEffect(() => {
+    console.log("articleDetailComments", articleDetailComments)
+  }, [articleDetailComments]);
   return (
     <div>
       <div className="flex flex-col m-5 gap-y-4">
         {/*태그*/}
         <div className="flex gap-x-2">
-          <Button className={"board-type-tag"}>{postDetail.boardType}</Button>
-          {postDetail.status == 0 ? (
+          <Button className={"board-type-tag"}>{articleDetail?.boardType}</Button>
+          {articleDetail?.status == "모집중" ? (
             <Button className={"recruiting-tag"}>모집중</Button>
           ) : (
             <Button className={"recruitment-completed-tag"}>모집완료</Button>
@@ -24,29 +35,31 @@ const BoardDetail = () => {
         {/*프로필*/}
         <Profile
           usage={"author"}
-          createdDate={postDetail.createdDate}
-          profileUrl={postDetail.profileUrl}
-          nickName={postDetail.nickName}
+          createdDate={articleDetail?.createdAt}
+          profileUrl={"/unnimm.jpg"}
+          // profileUrl={articleDetail?.profileUrl}
+          nickName={articleDetail?.nickName}
           dormitory={"양진재"}
         />
 
         {/*게시글 내용*/}
         <PostDetailContent
-          title={postDetail.title}
-          content={postDetail.content}
-          tags={postDetail.tags}
-          images={postDetail.images}
+          title={articleDetail?.title}
+          content={articleDetail?.content}
+          tags={articleDetail?.tags}
+          // images={"/unnimm.jpg"}
+          // images={articleDetail?.imagesUrls}
         />
 
         {/*하트, 댓글 갯수*/}
         <div className="flex gap-x-2 items-center">
           <div className="flex gap-x-1 items-center">
             <HeartIcon />
-            <span className="text-h6 text-gray5"> {postDetail.wishCount}</span>
+            <span className="text-h6 text-gray5"> {articleDetail?.wishCount}</span>
           </div>
           <div className="flex gap-x-1 items-center">
             <CommentIcon />
-            <span className="text-h6 text-gray5"> {postDetail.commentCount}</span>
+            <span className="text-h6 text-gray5"> {articleDetailComments?.totalCount}</span>
           </div>
         </div>
 
@@ -54,7 +67,7 @@ const BoardDetail = () => {
         <div className="flex justify-between">
           <div className="flex gap-x-2">
             <Button className={"not-click-filter"} SecondIcon={WishIcon}>
-              {postDetail.wishCount}
+              {articleDetail?.wishCount}
             </Button>
             <Button className={"not-click-filter"} SecondIcon={StarIcon}>
               찜하기
@@ -67,37 +80,40 @@ const BoardDetail = () => {
       </div>
       <div className="h-1 bg-gray1"></div>
       {/*댓글*/}
-      {postDetail.comments.map((comment, index) => {
-        return (
-          <div key={index} className="flex flex-col m-5 gap-y-6">
-            <div>
-              <Comment
-                usage={"comment"}
-                createdDate={comment.createdDate}
-                profileUrl={comment.profileUrl}
-                nickName={comment.nickName}
-                content={comment.content}
-              />
+      <div className="flex flex-col m-5 gap-y-6">
+        {articleDetailComments?.comments.map((comment: ArticleDetailCommentType, index: number) => {
+          return (
+            <div key={index} className="flex flex-col gap-y-6">
+              <div>
+                <CommentContent
+                  usage={"comment"}
+                  createdDate={comment.createdAt}
+                  profileUrl={comment.profileUrl}
+                  nickName={comment.nickName}
+                  content={comment.content}
+                />
+              </div>
+              <div className="flex flex-col gap-y-5">
+                {comment.replyComments
+                  ? comment.replyComments.map((replyComment, index) => {
+                      return (
+                        <CommentContent
+                          key={index}
+                          usage={"replyComment"}
+                          createdDate={replyComment.createdAt}
+                          // profileUrl={replyComment.profileUrl}
+                          nickName={replyComment.nickName}
+                          content={replyComment.content}
+                        />
+                      );
+                    })
+                  : null}
+              </div>
             </div>
-            <div className="flex flex-col gap-y-5">
-              {comment.replyComments
-                ? comment.replyComments.map((replyComment, index) => {
-                    return (
-                      <Comment
-                        key={index}
-                        usage={"replyComment"}
-                        createdDate={replyComment.createdDate}
-                        profileUrl={replyComment.profileUrl}
-                        nickName={replyComment.nickName}
-                        content={replyComment.content}
-                      />
-                    );
-                  })
-                : null}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+        <CommentInput />
+      </div>
     </div>
   );
 };

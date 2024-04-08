@@ -19,10 +19,10 @@
         @apply bg-primaryMid text-white
     }
     .not-click-filter {
-        @apply border-[1px] border-gray2 text-gray4
+        @apply border-[1px] border-gray1 text-gray5
     }
     .home-button {
-        @apply border-[1px] border-primaryMid rounded-full text-primaryMid hover:shadow-lg transition
+        @apply border-[1px] px-3 py-1 text-h5 border-primaryMid rounded-full text-primaryMid hover:shadow-lg transition
     }
 }
 

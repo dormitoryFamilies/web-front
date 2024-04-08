@@ -4,21 +4,40 @@ import Image from "next/image";
 import * as React from "react";
 
 import Button from "@/components/common/Button";
+import { useRouter } from "next/navigation";
 
 interface Props {
-  author: string;
+  articleId: number;
+  nickName: string;
   boardType: string;
   title: string;
   content: string;
   wishCount: number;
   commentCount: number;
-  status: number;
+  status: string;
   createdDate: string;
   thumbnailUrl: string;
-  onClick: () => void;
+  viewCount: number;
 }
 const Post = (props: Props) => {
-  const { author, boardType, title, content, wishCount, commentCount, status, createdDate, thumbnailUrl, onClick } = props;
+  const {
+    articleId,
+    nickName,
+    viewCount,
+    boardType,
+    title,
+    content,
+    wishCount,
+    commentCount,
+    status,
+    createdDate,
+    thumbnailUrl,
+  } = props;
+  const router = useRouter();
+
+  const onMove = (articleId: number) => {
+    router.push("/board/" + articleId);
+  };
 
   function formatDate(date: string) {
     const d = new Date(date);
@@ -26,6 +45,7 @@ const Post = (props: Props) => {
     const diff = (now - d.getTime()) / 1000; // 현재 시간과의 차이(초)
     if (diff < 60 * 1) {
       // 1분 미만일땐 방금 전 표기
+      //TODO: 몊분 전
       return "방금 전";
     }
     if (diff < 60 * 60 * 24 * 7) {
@@ -34,6 +54,7 @@ const Post = (props: Props) => {
     }
     if (diff < 60 * 60 * 24 * 30 * 12) {
       // 1년, 1달 기준
+      //TODO: 날짜로 나오게 하는게 좋을 것 같다.
       return formatDistanceToNow(d, { addSuffix: true, locale: ko });
     }
     if (diff > 60 * 60 * 24 * 30 * 12) {
@@ -43,7 +64,7 @@ const Post = (props: Props) => {
   }
 
   return (
-    <div onClick={onClick} className="rounded-[20px] p-4 border-[1px] border-gray1">
+    <div onClick={() => onMove(articleId)} className="rounded-[20px] p-4 border-[1px] border-gray1">
       <div className="flex flex-col gap-y-2">
         {/*태그*/}
         <div className="flex gap-x-2">
@@ -80,13 +101,13 @@ const Post = (props: Props) => {
                 height={15}
                 className={"w-[15px] h-[15px] mt-1"}></Image>
               <div>
-                {author} <span className="text-[11px]">|</span>
+                {nickName} <span className="text-[11px]">|</span>
               </div>
             </div>
             <div>
               {formatDate(createdDate)} <span className="text-[11px]">|</span>
             </div>
-            <div>조회 7</div>
+            <div>조회 {viewCount}</div>
           </div>
           <div className="flex gap-x-2">
             <div className="flex items-center gap-x-1">

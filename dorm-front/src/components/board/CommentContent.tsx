@@ -1,14 +1,19 @@
-import Profile from '@/components/board/Profile';
+import Profile from "@/components/board/Profile";
+import { useEffect } from "react";
 
 interface Props {
-  usage: string;
+  usage: string; //replyComment, comment
   profileUrl: string;
   createdDate: string;
   nickName: string;
   content: string;
 }
-const Comment = (props: Props) => {
+const CommentContent = (props: Props) => {
   const { usage, profileUrl, createdDate, nickName, content } = props;
+
+  useEffect(() => {
+    console.log("nickName", nickName);
+  }, []);
   return (
     <div className={usage == "replyComment" ? "flex flex-col gap-y-[5px] ml-[55px]" : "flex flex-col gap-y-[5px]"}>
       <div className="flex justify-between items-center">
@@ -18,20 +23,18 @@ const Comment = (props: Props) => {
       <div className="flex flex-col gap-y-[5px] ml-9">
         <div>{content}</div>
         <div className="flex gap-x-4">
-          <button className="flex gap-x-1 items-center">
-            <CommentIcon />
-            <div className="text-primaryMid text-h5">답글 달기</div>
-          </button>
-          <button className="flex gap-x-1 items-center">
-            <HeartIcon />
-            <div className="text-primaryMid text-h5">좋아요</div>
-          </button>
+          {usage == "comment" ? (
+            <button className="flex gap-x-1 items-center">
+              <CommentIcon />
+              <div className="text-primaryMid text-h5">답글 달기</div>
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
   );
 };
-export default Comment;
+export default CommentContent;
 
 function CommentIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

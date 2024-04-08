@@ -1,44 +1,85 @@
-export interface PostType {
+export interface ResponseArticleType {
+  code: number;
+  data: Paging;
+}
+export interface Paging {
+  nowPageNumber: number;
+  isLast: boolean;
+  articles: ArticleType[];
+}
+export interface ArticleType {
   articleId: number;
-  author: string;
+  nickName: string;
+  profileUrl: string;
   boardType: string;
   title: string;
   content: string;
   wishCount: number;
+  isWished: boolean;
   commentCount: number;
-  status: number;
-  createdDate: string;
+  viewCount: number;
+  status: string;
+  createdAt: string;
   thumbnailUrl: string;
 }
-export interface PostDetailType {
+
+export interface ResponseArticleDetailType {
+  code: number;
+  data: ArticleDetailType;
+}
+export interface ArticleDetailType {
   articleId: number;
-  dormitoryId: number;
-  profileUrl: string;
+  memberId: number;
   nickName: string;
+  profileUrl: string;
+  memberDormitory: string;
+  articleDormitory: string;
   boardType: string;
+  tags: string;
   title: string;
   content: string;
-  tags: string[];
   wishCount: number;
-  commentCount: number;
-  status: number;
-  createdDate: string;
-  images: ImageType[];
-  comments: CommentsDetailType[];
+  isWished: boolean;
+  status: string;
+  createdAt: string;
+  imagesUrls: string[];
 }
 
-export interface ImageType {
-  imageId: number;
-  imageName: string;
-  s3Url: string;
+//댓글
+export interface ResponseArticleDetailAllCommentsType {
+  code: number;
+  data: ArticleDetailAllCommentsType;
+}
+export interface ArticleDetailAllCommentsType {
+  totalCount: number;
+  comments: ArticleDetailCommentType[];
 }
 
-export interface CommentsDetailType {
+export interface ArticleDetailCommentType {
   commentId: number;
   memberId: number;
   profileUrl: string;
   nickName: string;
-  createdDate: string;
+  createdAt: string;
   content: string;
-  replyComments?: CommentsDetailType[];
+  isWriter: string;
+  isDeleted: string;
+  replyComments?: ArticleDetailReplyCommentsType[];
+}
+export interface ArticleDetailReplyCommentsType {
+  replyCommentId: number;
+  memberId: number;
+  profileUrl: string;
+  nickName: string;
+  createdAt: string;
+  content: string;
+  isWriter: number;
+}
+export interface ArticlePostType {
+  dormitoryType: string;
+  boardType: string;
+  title: string;
+  content: string;
+  tags: string;
+  imagesUrls: string[];
 }
