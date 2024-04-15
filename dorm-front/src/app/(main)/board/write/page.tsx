@@ -1,15 +1,16 @@
 "use client";
 
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
+import BoardTypeFilter from "@/components/board/BoardTypeFilter";
+import DormTypeFilter from "@/components/board/DormTypeFilter";
 import ImageInput from "@/components/board/ImageInput";
-import Filter from "@/components/common/Filter";
 import Input from "@/components/common/Input";
+import { postArticle } from "@/lib/api/board";
+import { postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { DORM_LIST } from "@/utils/dorm";
-import { postArticle } from "@/lib/api/board";
-import { useRecoilState } from "recoil";
-import { postDataState } from "@/recoil/board/atom";
 
 const Write = () => {
   const [postData, setPostData] = useRecoilState(postDataState);
@@ -18,8 +19,8 @@ const Write = () => {
     <form>
       <div className="flex flex-col m-5 gap-y-5">
         <div className="flex justify-between gap-x-4">
-          <Filter usage={"dormList"} content={DORM_LIST} title={"기숙사"} />
-          <Filter usage={"boardTypeList"} content={BOARD_TYPE_LIST} title={"게시판"} />
+          <DormTypeFilter content={DORM_LIST} title={"기숙사"} />
+          <BoardTypeFilter content={BOARD_TYPE_LIST} title={"게시판"} />
         </div>
         <Input
           usage={"title"}

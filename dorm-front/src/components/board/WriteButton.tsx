@@ -1,5 +1,5 @@
+import { useRouter } from "next/navigation";
 import * as React from "react";
-import { useRouter } from 'next/navigation';
 const WriteButton = () => {
   const router = useRouter();
   const onMove = () => {

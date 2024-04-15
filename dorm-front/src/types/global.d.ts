@@ -7,7 +7,13 @@ export interface MenuList {
 }
 
 // 기숙사 리스트 타입
-export interface DormList {
+export interface DormTypeList {
+  id: number;
+  name: string;
+}
+
+// 게시판 종류 리스트 타입
+export interface BoardTypeList {
   id: number;
   name: string;
 }
