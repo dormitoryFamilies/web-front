@@ -1,7 +1,10 @@
 //Navbar 리스트 타입
+import React from "react";
+
 export interface MenuList {
   id: number;
-  Icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  ClickedIcon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  UnClickedIcon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   name: string;
   path: string;
 }
