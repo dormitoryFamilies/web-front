@@ -1,3 +1,9 @@
+export type BoardType = "전체" | "도와주세요" | "함께해요" | "나눔해요" | "궁금해요" | "분실신고";
+
+export type BoardSortType = "createdAt" | "popularity";
+
+export type BoardStatusType = "전체" | "모집완료" | "모집중";
+
 export interface ResponseArticleType {
   code: number;
   data: Paging;

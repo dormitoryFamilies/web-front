@@ -1,12 +1,12 @@
 import React from "react";
 
-import { DormList } from "@/types/global";
+import { DormTypeList } from "@/types/global";
 import { useRecoilState } from "recoil";
 import { postDataState } from "@/recoil/board/atom";
 
 interface Props {
   usage: string; // dormList, boardTypeList
-  content: DormList[] | [];
+  content: DormTypeList[] | [];
   setCloseModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const FilterContent = (props: Props) => {

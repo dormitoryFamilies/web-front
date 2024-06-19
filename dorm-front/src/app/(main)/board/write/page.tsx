@@ -4,9 +4,11 @@ import * as React from "react";
 import { useRecoilState } from "recoil";
 
 import BoardTypeFilter from "@/components/board/BoardTypeFilter";
+import ContentInput from "@/components/board/ContentInput";
 import DormTypeFilter from "@/components/board/DormTypeFilter";
 import ImageInput from "@/components/board/ImageInput";
-import Input from "@/components/common/Input";
+import TagInput from "@/components/board/TagInput";
+import TitleInput from "@/components/board/TitleInput";
 import { postArticle } from "@/lib/api/board";
 import { postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
@@ -22,23 +24,10 @@ const Write = () => {
           <DormTypeFilter content={DORM_LIST} title={"기숙사"} />
           <BoardTypeFilter content={BOARD_TYPE_LIST} title={"게시판"} />
         </div>
-        <Input
-          usage={"title"}
-          essential={true}
-          numberOfCharacters={20}
-          title={"제목"}
-          placeholder={"제목을 입력해주세요."}
-        />
-        <Input
-          usage={"content"}
-          essential={true}
-          numberOfCharacters={300}
-          title={"내용"}
-          placeholder={"내용을 입력해주세요."}
-          inputClassName={"h-[200px] placeholder focus:placeholder-top"}
-        />
+        <TitleInput essential={true} numberOfCharacters={20} label={"제목"} placeholder={"제목을 입력해주세요."} />
+        <ContentInput essential={true} numberOfCharacters={300} label={"내용"} placeholder={"내용을 입력해주세요."} />
         <ImageInput></ImageInput>
-        <Input essential={false} usage={"tag"} placeholder={"ex. #함께해요"} title={"태그"} className={"w-[130px]"} />
+        <TagInput essential={false} placeholder={"ex. #함께해요"} label={"태그"} />
       </div>
       <button
         type={"submit"}

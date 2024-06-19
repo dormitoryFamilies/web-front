@@ -1,60 +1,104 @@
-import { useMemo, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { boardTypeState } from '@/recoil/board/atom';
+import { BoardType } from "@/types/board/type";
 
-const FilterMenu = () => {
-  const [isClick, setIsClick] = useRecoilState(boardTypeState);
-  const boardTypes = useMemo(
-    () => [
-      {
-        label: "전체",
-        boardType: 0,
-        active: isClick == 0,
-      },
-      {
-        label: "도와주세요",
-        boardType: 1,
-        active: isClick == 1,
-      },
-      {
-        label: "함께해요",
-        boardType: 2,
-        active: isClick == 2,
-      },
-      {
-        label: "나눔해요",
-        boardType: 3,
-        active: isClick == 3,
-      },
-      {
-        label: "궁금해요",
-        boardType: 4,
-        active: isClick == 4,
-      },
-      {
-        label: "분실신고",
-        boardType: 5,
-        active: isClick == 5,
-      },
-    ],
-    [isClick],
-  );
+interface Props {
+  boardType: BoardType;
+  setBoardType: React.Dispatch<React.SetStateAction<BoardType>>;
+}
+
+const FilterMenu = (props: Props) => {
+  const { boardType, setBoardType } = props;
+
+  const changeBoardType = (type: BoardType) => {
+    setBoardType(type);
+  };
 
   return (
-    <div className="flex gap-x-6 overflow-y-scroll border-b border-gray1 px-5">
-      {boardTypes.map((item, index) => {
-        return (
-          <button key={index}>
-            <div
-              className={item.active ? "text-primary border-b-[2px] border-primary font-semibold" : "text-gray3"}
-              onClick={() => {
-                setIsClick(item.boardType);
-              }}>
-              {item.label}
-            </div>
-          </button>
-        );
-      })}
+    <div
+      className={"bg-white px-5 py-1 border-b-[1px] border-gray1 flex gap-x-2 w-full overflow-x-scroll scroll-hidden"}>
+      <button
+        onClick={() => {
+          changeBoardType("전체");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "전체"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          전체
+        </span>
+      </button>
+      <button
+        onClick={() => {
+          changeBoardType("도와주세요");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "도와주세요"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          도와주세요
+        </span>
+      </button>
+      <button
+        onClick={() => {
+          changeBoardType("함께해요");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "함께해요"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          함께해요
+        </span>
+      </button>
+      <button
+        onClick={() => {
+          changeBoardType("나눔해요");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "나눔해요"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          나눔해요
+        </span>
+      </button>
+      <button
+        onClick={() => {
+          changeBoardType("궁금해요");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "궁금해요"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          궁금해요
+        </span>
+      </button>
+      <button
+        onClick={() => {
+          changeBoardType("분실신고");
+        }}
+        className={"flex-shrink-0"}>
+        <span
+          className={
+            boardType === "분실신고"
+              ? "text-primary border-b-[2px] font-semibold px-[12px] py-[5px]"
+              : "text-gray3 px-[12px] py-[5px]"
+          }>
+          분실신고
+        </span>
+      </button>
     </div>
   );
 };

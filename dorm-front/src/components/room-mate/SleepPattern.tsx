@@ -1,6 +1,9 @@
-import React from "react";
-import Header from "@/components/room-mate/Header";
+"use client";
+
 import Image from "next/image";
+import React, { useState } from "react";
+
+import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
 
 interface Props {
@@ -8,6 +11,44 @@ interface Props {
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const SleepPattern = (props: Props) => {
+  const { onNext, onBefore } = props;
+  const [clickedBedTime, setClickedBedTime] = useState<
+    | ""
+    | "오후 9시 이전"
+    | "오후 9시"
+    | "오후 10시"
+    | "오후 11시"
+    | "오전 12시"
+    | "오전 1시"
+    | "오전 2시"
+    | "오전 3시"
+    | "오전 3시 이후"
+  >("");
+  const [clickedWakeUpTime, setClickedWakeUpTime] = useState<
+    | ""
+    | "오전 4시 이전"
+    | "오전 4시"
+    | "오전 5시"
+    | "오전 6시"
+    | "오전 7시"
+    | "오전 8시"
+    | "오전 9시"
+    | "오전 10시"
+    | "오전 10시 이후"
+  >("");
+  const [clickedSleepHabits, setClickedSleepHabits] = useState<
+    | ""
+    | "이갈이"
+    | "코골이"
+    | "잠꼬대"
+    | "없음"
+  >("");
+  const [clickedSleepSensitivity, setSleepSensitivity] = useState<
+    | ""
+    | "어두움"
+    | "밝음"
+    | "없음"
+  >("");
   const bedTime = [
     "오후 9시 이전",
     "오후 9시",
@@ -31,7 +72,7 @@ const SleepPattern = (props: Props) => {
     "오전 10시 이후",
   ];
   const sleepHabits = ["이갈이", "코골이", "잠꼬대", "없음"];
-  const sleepSensitivity = ["어두움", "밝음","없음"];
+  const sleepSensitivity = ["어두움", "밝음", "없음"];
   return (
     <div className={"flex flex-col p-5"}>
       <Header />
@@ -62,16 +103,42 @@ const SleepPattern = (props: Props) => {
       </div>
 
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
-        <Item title={"취침시간"} data={bedTime} className={"grid-cols-3"} />
-        <Item title={"기상시간"} data={wakeUpTime} className={"grid-cols-3"} />
+        <Item
+          title={"취침시간"}
+          data={bedTime}
+          className={"grid-cols-3"}
+          setIsClickedItem={setClickedBedTime}
+          isClickedItem={clickedBedTime}
+        />
+        <Item
+          title={"기상시간"}
+          data={wakeUpTime}
+          className={"grid-cols-3"}
+          setIsClickedItem={setClickedWakeUpTime}
+          isClickedItem={clickedWakeUpTime}
+        />
         <Item
           title={"잠버릇"}
           data={sleepHabits}
           className={"grid-cols-4"}
+          setIsClickedItem={setClickedSleepHabits}
+          isClickedItem={clickedSleepHabits}
           secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
         />
-        <Item title={"기상시간"} data={sleepSensitivity} className={"grid-cols-3"} />
-        <button className={"w-full rounded-full bg-gray3 text-white text-h5 py-4"}>다음</button>
+        <Item
+          title={"기상시간"}
+          data={sleepSensitivity}
+          className={"grid-cols-3"}
+          setIsClickedItem={setSleepSensitivity}
+          isClickedItem={clickedSleepSensitivity}
+        />
+        <button
+          onClick={onNext}
+          className={
+            "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:bg-primary hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </div>
   );

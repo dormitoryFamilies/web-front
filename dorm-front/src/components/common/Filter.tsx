@@ -3,13 +3,13 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import FilterContent from "@/components/common/FilterContent";
-import { DormList } from "@/types/global";
+import { DormTypeList } from "@/types/global";
 import { useRecoilState } from "recoil";
 import { postDataState } from "@/recoil/board/atom";
 
 interface Props {
   usage: string; // dormList, boardTypeList
-  content: DormList[] | string[];
+  content: DormTypeList[] | string[];
   title: string;
 }
 const Filter = (props: Props) => {

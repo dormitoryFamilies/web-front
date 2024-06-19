@@ -7,7 +7,7 @@
         @apply text-black bg-[#D8EAFF]
     }
     .recruitment-completed-tag {
-        @apply bg-gray1 text-black
+        @apply bg-gray0 text-gray5
     }
     .board-type-tag {
         @apply bg-secondary text-primary

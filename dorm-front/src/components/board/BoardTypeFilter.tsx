@@ -17,10 +17,6 @@ const BoardTypeFilter = (props: Props) => {
   const [isClick, setIsClick] = useState(false);
   const [postData, setPostData] = useRecoilState(postDataState);
 
-  useEffect(() => {
-    console.log("보드타입", postData.boardType);
-  }, [postData]);
-
   return (
     <div className="relative flex flex-col gap-y-2 w-full">
       {/*title*/}

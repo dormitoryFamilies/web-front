@@ -12,23 +12,23 @@ const MyPage = () => {
   const accountManagementContents = ["로그아웃", "탈퇴하기"];
   const EtcContents = ["문의하기", "도움말", "앱버전"];
   return (
-    <div>
-      <RoommateWishlist />
-    </div>
-    // <div className={"relative flex flex-col gap-y-5 p-5"}>
-    //   <Image
-    //     alt={"/unnimm.jpg"}
-    //     src={"/unnimm.jpg"}
-    //     width={72}
-    //     height={72}
-    //     className={"absolute top-8 left-8 rounded-full"}></Image>
-    //   <div className={"h-[55px]"} />
-    //   <Profile name={"닉네임닉네임닉네임"} />
-    //   <Item title={"룸메매칭"} contents={roomMateContents} Icon={MoveIcon} />
-    //   <Item title={"긱사생활"} contents={doomLifeStyleContents} Icon={MoveIcon} />
-    //   <Item title={"계정관리"} contents={accountManagementContents} Icon={MoveIcon} />
-    //   <Item title={"기타"} contents={EtcContents} Icon={MoveIcon} />
+    // <div>
+    //   <RoommateWishlist />
     // </div>
+    <div className={"relative flex flex-col gap-y-5 p-5"}>
+      <Image
+        alt={"/unnimm.jpg"}
+        src={"/unnimm.jpg"}
+        width={72}
+        height={72}
+        className={"absolute top-8 left-8 rounded-full"}></Image>
+      <div className={"h-[55px]"} />
+      <Profile name={"닉네임닉네임닉네임"} />
+      <Item title={"룸메매칭"} contents={roomMateContents} Icon={MoveIcon} />
+      <Item title={"긱사생활"} contents={doomLifeStyleContents} Icon={MoveIcon} />
+      <Item title={"계정관리"} contents={accountManagementContents} Icon={MoveIcon} />
+      <Item title={"기타"} contents={EtcContents} Icon={MoveIcon} />
+    </div>
   );
 };
 export default MyPage;
