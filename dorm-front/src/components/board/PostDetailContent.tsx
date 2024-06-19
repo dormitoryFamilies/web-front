@@ -1,17 +1,22 @@
-import Image from "next/image";
-import Tag from '@/components/board/Tag';
-import * as React from 'react';
-import Button from '@/components/common/Button';
-import { ImageType } from '@/types/board/type';
+import * as React from "react";
+
+import Button from "@/components/common/Button";
+import { ImageType } from "@/types/board/type";
 
 interface Props {
   title: string;
   content: string;
-  tags: string[];
+  tags: string;
   images?: ImageType[];
 }
 const PostDetailContent = (props: Props) => {
   const { title, content, tags, images } = props;
+
+  const parseTags = (tagsString: string) => {
+    // 문자열을 #을 기준으로 나눈 후, 빈 문자열을 제외한 나머지를 필터링
+    return tagsString?.split("#").filter((tag) => tag !== "");
+  };
+
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex flex-col gap-y-2">
@@ -28,13 +33,13 @@ const PostDetailContent = (props: Props) => {
         {/*})}*/}
       </div>
       <div className="flex gap-x-1">
-        {/*{tags.map((tag, index) => {*/}
-        {/*  return (*/}
-        {/*    <Button className={"tag"} key={index}>*/}
-        {/*      #{tag}*/}
-        {/*    </Button>*/}
-        {/*  );*/}
-        {/*})}*/}
+        {parseTags(tags)?.map((tag, index) => {
+          return (
+            <Button className={"tag"} key={index}>
+              #{tag}
+            </Button>
+          );
+        })}
       </div>
     </div>
   );
