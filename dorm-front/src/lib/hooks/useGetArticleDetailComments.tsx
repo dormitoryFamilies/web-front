@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios";
+import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
 import { ResponseArticleDetailAllCommentsType } from "@/types/board/type";
-import useSWR from "swr";
 
-const useGetArticleDetail = (parameter: number) => {
-  const { data, error } = useSWR<AxiosResponse<ResponseArticleDetailAllCommentsType>>(
-    `/api/articles/${parameter}/comments`,
+const useGetArticleDetail = (parameter: string | string[]) => {
+  const { data, error, mutate } = useSWR<AxiosResponse<ResponseArticleDetailAllCommentsType>>(
+    `/articles/${parameter}/comments`,
     swrGetFetcher,
   );
 
@@ -14,6 +14,7 @@ const useGetArticleDetail = (parameter: number) => {
     articleDetailComments: data ? data.data : null,
     isLoading: !error && !data,
     isError: error,
+    commentMutate: mutate,
   };
 };
 export default useGetArticleDetail;

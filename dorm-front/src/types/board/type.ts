@@ -81,6 +81,12 @@ export interface ArticleDetailReplyCommentsType {
   content: string;
   isWriter: number;
 }
+
+// 댓글 post Type
+export interface PostCommentType {
+  content: string;
+}
+
 export interface ArticlePostType {
   dormitoryType: string;
   boardType: string;

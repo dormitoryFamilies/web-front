@@ -2,7 +2,7 @@
 
 import { atom } from "recoil";
 
-import { ArticlePostType, PostType } from "@/types/board/type";
+import { ArticlePostType, PostCommentType, PostType } from "@/types/board/type";
 
 //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
 export const boardTypeState = atom({
@@ -26,6 +26,14 @@ export const postDataState = atom<ArticlePostType>({
     content: "",
     tags: "",
     imagesUrls: [],
+  },
+});
+
+//게시글 댓글 쓰기 post
+export const articleCommentDataAtom = atom<PostCommentType>({
+  key: "articleCommentDataAtom",
+  default: {
+    content: "",
   },
 });
 

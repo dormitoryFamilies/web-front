@@ -44,7 +44,9 @@ const Profile = (props: Props) => {
           <div className="font-semibold">{nickName}</div>
         )}
         <div className="text-h5 text-gray4">
-          {/*{format(new Date(createdDate), "yy.MM.dd") + " | " + format(new Date(createdDate), "HH:mm")}*/}
+          {createdDate
+            ? format(new Date(createdDate), "yy.MM.dd") + " | " + format(new Date(createdDate), "HH:mm")
+            : null}
         </div>
       </div>
     </div>
