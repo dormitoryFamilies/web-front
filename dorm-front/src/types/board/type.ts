@@ -68,8 +68,8 @@ export interface ArticleDetailCommentType {
   nickName: string;
   createdAt: string;
   content: string;
-  isWriter: string;
-  isDeleted: string;
+  isWriter: boolean;
+  isDeleted: boolean;
   replyComments?: ArticleDetailReplyCommentsType[];
 }
 export interface ArticleDetailReplyCommentsType {

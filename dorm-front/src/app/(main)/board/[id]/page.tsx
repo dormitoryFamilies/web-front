@@ -1,30 +1,39 @@
 "use client";
-import type { SVGProps } from "react";
-import Button from "@/components/common/Button";
-import Profile from "@/components/board/Profile";
-import PostDetailContent from "@/components/board/PostDetailContent";
-import * as React from "react";
-import CommentInput from "@/components/board/CommentInput";
-import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
-import { useEffect } from "react";
-import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
-import { ArticleDetailCommentType } from "@/types/board/type";
-import CommentContent from "@/components/board/CommentContent";
 import { useParams } from "next/navigation";
+import { SVGProps, useState } from "react";
+import * as React from "react";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+
+import CommentContent from "@/components/board/CommentContent";
+import CommentDeleteMenu from "@/components/board/CommentDeleteMenu";
+import CommentInput from "@/components/board/CommentInput";
+import PostDetailContent from "@/components/board/PostDetailContent";
+import Profile from "@/components/board/Profile";
+import Button from "@/components/common/Button";
 import { deleteArticleWish, postArticleWish } from "@/lib/api/board";
+import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
+import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
+import { deleteCommentIdAtom } from "@/recoil/board/atom";
+import { ArticleDetailCommentType } from "@/types/board/type";
 
 const BoardDetail = () => {
   const params = useParams();
   const { articleDetail, articleMutate } = useGetArticleDetail(params.id);
   const { articleDetailComments, commentMutate } = useGetArticleDetailComments(params.id);
+  const [isClickedCommentContent, setIsClickedCommentContent] = useState<boolean>(false);
+  const [deleteCommentId, setDeleteCommentId] = useRecoilState(deleteCommentIdAtom);
 
   useEffect(() => {
     console.log("articleDetail", articleDetail);
-    console.log("articleDetail?.isWished", articleDetail?.isWished);
+    console.log("articleDetailComments", articleDetailComments);
   }, [articleDetail, articleDetailComments]);
 
   return (
     <div>
+      {isClickedCommentContent ? (
+        <CommentDeleteMenu commentId={deleteCommentId} setIsClickedCommentContent={setIsClickedCommentContent} mutate={commentMutate} />
+      ) : null}
       <div className="flex flex-col m-5 gap-y-4">
         {/*태그*/}
         <div className="flex gap-x-2">
@@ -53,7 +62,6 @@ const BoardDetail = () => {
           // images={"/unnimm.jpg"}
           // images={articleDetail?.imagesUrls}
         />
-
       </div>
       <div className="h-1 bg-gray1"></div>
       {/*댓글*/}
@@ -64,10 +72,14 @@ const BoardDetail = () => {
               <div>
                 <CommentContent
                   usage={"comment"}
+                  commentId={comment.commentId}
+                  isWriter={comment.isWriter}
                   createdDate={comment.createdAt}
                   profileUrl={comment.profileUrl}
                   nickName={comment.nickName}
                   content={comment.content}
+                  setIsClickedCommentContent={setIsClickedCommentContent}
+                  setDeleteCommentId={setDeleteCommentId}
                 />
               </div>
               <div className="flex flex-col gap-y-5">
