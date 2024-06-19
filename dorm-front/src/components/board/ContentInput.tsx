@@ -36,6 +36,7 @@ const ContentInput = (props: Props) => {
       {/*글쓰기*/}
       <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4"}>
         <textarea
+          maxLength={300}
           placeholder={placeholder}
           className={"focus:outline-0 w-full h-[200px] placeholder focus:placeholder-top"}
           onChange={(e) => {

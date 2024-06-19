@@ -7,7 +7,24 @@ export const postArticle = async (data: ArticlePostType) => {
       headers: {
         "Content-type": "application/json",
         "Authorization":
-          "Bearer eyJraWQiOiJrZXkzIiwiYWxnIjoiSFMzODQifQ.eyJzdWIiOiJoc2tlMzYwMkBkYXVtLm5ldCIsImlhdCI6MTcxODc5NzUxNiwiZXhwIjoxNzE5Mzk3NTE2fQ.QTpxpgBo6RR-jGM7paak8nxaO1vDVlUR7TjpQiHioKaUDi2KVHjoA6g2vGfi7gpc",
+          "Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMzODQifQ.eyJzdWIiOiJoc2tlMzYwMkBkYXVtLm5ldCIsImlhdCI6MTcxODgwMTgyNSwiZXhwIjoxNzE5NDAxODI1fQ.HqPBDzXW9E71urpeMTMGJf5Hu7xej0W8A65v9x0pkLj0-pQ9OoGKrTylQrhHOyHA",
+      },
+    });
+    // 성공적인 응답 처리
+    return response.data;
+  } catch (error) {
+    // 에러 처리
+    console.error("게시글 post 에러 발생:", error);
+  }
+};
+
+export const postArticleImage = async (formData: FormData) => {
+  try {
+    const response = await client.post("/images", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization":
+          "Bearer eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMzODQifQ.eyJzdWIiOiJoc2tlMzYwMkBkYXVtLm5ldCIsImlhdCI6MTcxODgwMTgyNSwiZXhwIjoxNzE5NDAxODI1fQ.HqPBDzXW9E71urpeMTMGJf5Hu7xej0W8A65v9x0pkLj0-pQ9OoGKrTylQrhHOyHA",
       },
     });
     // 성공적인 응답 처리

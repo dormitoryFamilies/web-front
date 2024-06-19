@@ -22,10 +22,19 @@ export const postDataState = atom<ArticlePostType>({
   default: {
     dormitoryType: "본관",
     boardType: "도와주세요",
-    title: "바퀴벌레 잡아주실 분",
-    content: "ㅠㅠㅠ 무서워용. 어서 저를 도와주세요!!",
-    tags: "#바퀴벌래#무서워#갓생",
+    title: "",
+    content: "",
+    tags: "",
     imagesUrls: [],
   },
 });
 
+export const imgUrlListAtom = atom<string[]>({
+  key: "imgUrlListAtom",
+  default: [],
+});
+
+export const fileListAtom = atom<File[]>({
+  key: "fileListAtom",
+  default: [],
+});
