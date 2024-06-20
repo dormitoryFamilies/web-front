@@ -12,10 +12,10 @@ const getKey = (
   statusType: BoardStatusType,
 ) => {
   if (size === 0) {
-    return `/dormitories/본관/board-type/${boardType}/articles?page=${size}&size=6&sort=${sortType}&status=${statusType}`;
+    return `/dormitories/본관/board-type/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
   }
   if (previousPageData && !previousPageData.data.isLast) {
-    return `/dormitories/본관/board-type/${boardType}/articles?page=${size}&size=6&sort=${sortType}&status=${statusType}`;
+    return `/dormitories/본관/board-type/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
   }
   if (previousPageData.data.isLast) {
     return null;
