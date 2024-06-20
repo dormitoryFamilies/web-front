@@ -79,7 +79,7 @@ export interface ArticleDetailReplyCommentsType {
   nickName: string;
   createdAt: string;
   content: string;
-  isWriter: number;
+  isWriter: boolean;
 }
 
 // 댓글 post Type
@@ -94,4 +94,24 @@ export interface ArticlePostType {
   content: string;
   tags: string;
   imagesUrls: string[];
+}
+
+/**
+ * 찜 목록
+ */
+
+export interface ArticleWishType {
+  memberId: number;
+  nickName: string;
+  dormitoryType: string;
+  profileUrl: string;
+}
+
+export interface ArticleWishListType {
+  members: ArticleWishType[];
+}
+
+export interface ResponseArticleWishListType {
+  code: number;
+  data: ArticleWishListType;
 }
