@@ -15,6 +15,7 @@ import { postArticle, postArticleImage } from "@/lib/api/board";
 import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { DORM_LIST } from "@/utils/dorm";
+import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
 
 const Write = () => {
   const [postData, setPostData] = useRecoilState(postDataState);
@@ -22,6 +23,7 @@ const Write = () => {
   const [fileList, setFileList] = useRecoilState<File[]>(fileListAtom); //이미지 file
   // 입력 필드 목록을 관리하는 상태
   const [tags, setTags] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 상태를 관리
 
   /**
    * Tags 새 입력 필드를 추가하는 함수
@@ -51,9 +53,6 @@ const Write = () => {
     console.log(postData);
   }, [postData]);
 
-  /**
-   * form 형식 제출 함수
-   */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // 폼 제출 시 새로고침 방지
 
@@ -63,29 +62,54 @@ const Write = () => {
       tags: `#${tagsString}`,
     }));
 
-    for (const file of fileList) {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      // formData의 내용을 확인
-      // for (let [key, value] of formData.entries()) {
-      //   console.log(`${key}:`, value);
-      // }
-
-      try {
-        const response = await postArticleImage(formData);
-      } catch (error) {
-        console.error("이미지 업로드 중 오류 발생:", error);
-      }
-    }
-
     try {
-      const response = await postArticle(postData); // API 호출
-      console.log(response);
+      const uploadedImgUrls: string[] = await Promise.all(
+        fileList.map(async (file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+          }
+
+          try {
+            const response = await postArticleImage(formData);
+            console.log("S3성공", response);
+            return response.data.imageUrl; // 이미지 URL 반환
+          } catch (error) {
+            console.error("이미지 업로드 중 오류 발생:", error);
+            throw error; // 오류 발생 시 throw하여 Promise.all이 멈추도록 함
+          }
+        }),
+      );
+
+      setPostData((prevData) => ({
+        ...prevData,
+        imagesUrls: [...prevData.imagesUrls, ...uploadedImgUrls], // 업로드된 이미지 URL을 postData에 추가
+      }));
+
+      setIsSubmitting(true); // 제출 중 상태로 변경
     } catch (error) {
       console.error("폼 제출 중 오류 발생:", error);
     }
   };
+
+  const submitPost = async () => {
+    if (isSubmitting) {
+      try {
+        const response = await postArticle(postData); // API 호출
+        console.log(response);
+      } catch (error) {
+        console.error("폼 제출 중 오류 발생:", error);
+      } finally {
+        setIsSubmitting(false); // 제출 후 상태를 false로 변경
+      }
+    }
+  };
+
+  useEffect(() => {
+    submitPost();
+  }, [isSubmitting]);
 
   return (
     <div>

@@ -16,7 +16,6 @@ interface Props {
 }
 const ImageInput = (props: Props) => {
   const { imgUrlList, setImgUrlList, fileList, setFileList } = props;
-  const [postData, setPostData] = useRecoilState(postDataState);
   const imgRef = useRef<HTMLInputElement>(null);
 
   // 이미지 업로드 input의 onChange
@@ -41,10 +40,6 @@ const ImageInput = (props: Props) => {
       }
     }
   };
-
-  useEffect(() => {
-    setPostData((prevData) => ({ ...prevData, imagesUrls: [...imgUrlList] }));
-  }, [imgUrlList, setPostData]);
 
   return (
     <div>
