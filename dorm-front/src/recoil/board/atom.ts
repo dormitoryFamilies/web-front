@@ -37,9 +37,17 @@ export const articleCommentDataAtom = atom<PostCommentType>({
   },
 });
 
-//게시글 댓글 삭제 commentId
-export const deleteCommentIdAtom = atom<number>({
-  key: "deleteCommentIdAtom",
+//게시글 대댓글 쓰기 post
+export const articleReplyCommentDataAtom = atom<PostCommentType>({
+  key: "articleReplyCommentDataAtom",
+  default: {
+    content: "",
+  },
+});
+
+//선택된 commentId
+export const selectedCommentIdAtom = atom<number>({
+  key: "selectedCommentIdAtom",
   default: 0,
 });
 

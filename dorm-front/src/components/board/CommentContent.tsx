@@ -8,8 +8,11 @@ interface Props {
   createdDate: string;
   nickName: string;
   content: string;
-  setIsClickedCommentContent: React.Dispatch<React.SetStateAction<boolean>>;
-  setDeleteCommentId: React.Dispatch<React.SetStateAction<number>>;
+  isDeleted?: boolean;
+  setIsClickedCommentContent?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsClickedReplyCommentContent?: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCommentId: React.Dispatch<React.SetStateAction<number>>; //댓글 삭제 메뉴 띄우기 위한 트리거
+  setIsCommentInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CommentContent = (props: Props) => {
   const {
@@ -20,8 +23,11 @@ const CommentContent = (props: Props) => {
     nickName,
     content,
     isWriter,
+    isDeleted,
     setIsClickedCommentContent,
-    setDeleteCommentId,
+    setIsClickedReplyCommentContent,
+    setSelectedCommentId,
+    setIsCommentInput,
   } = props;
 
   return (
@@ -31,19 +37,27 @@ const CommentContent = (props: Props) => {
         {isWriter ? (
           <MoreMenuIcon
             onClick={() => {
-              if (usage === "comment") {
-                setDeleteCommentId(commentId);
+              if (usage === "comment" && setIsClickedCommentContent) {
+                setSelectedCommentId(commentId);
                 setIsClickedCommentContent(true);
+              } else if (usage === "replyComment" && setIsClickedReplyCommentContent) {
+                setSelectedCommentId(commentId);
+                setIsClickedReplyCommentContent(true);
               }
             }}
           />
         ) : null}
       </div>
       <div className="flex flex-col gap-y-[5px] ml-9">
-        <div>{content}</div>
+        {isDeleted ? <div className={"text-point"}>삭제된 메시지입니다.</div> : <div>{content}</div>}
         <div className="flex gap-x-4">
           {usage == "comment" ? (
-            <button className="flex gap-x-1 items-center">
+            <button
+              onClick={() => {
+                setSelectedCommentId(commentId);
+                setIsCommentInput(false);
+              }}
+              className="flex gap-x-1 items-center">
               <CommentIcon />
               <div className="text-primaryMid text-h5">답글 달기</div>
             </button>
