@@ -11,9 +11,10 @@ interface Props {
   label: string;
   placeholder: string;
   essential: boolean; //필수로 받는 데이터인지
+  pastContent?: string;
 }
 const ContentInput = (props: Props) => {
-  const { numberOfCharacters, label, placeholder, essential } = props;
+  const { numberOfCharacters, label, placeholder, essential, pastContent } = props;
   const [count, setCount] = useState(0);
   const [postData, setPostData] = useRecoilState(postDataState);
 
@@ -38,6 +39,7 @@ const ContentInput = (props: Props) => {
         <textarea
           maxLength={300}
           placeholder={placeholder}
+          value={pastContent ? pastContent : null}
           className={"focus:outline-0 w-full h-[200px] placeholder focus:placeholder-top"}
           onChange={(e) => {
             setCount(e.target.value.length);

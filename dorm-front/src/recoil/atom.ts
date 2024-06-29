@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
 export const DropDownClick = atom({
@@ -18,4 +18,10 @@ export const selectedDormitory = atom({
 export const homeMenuFilterState = atom<"breakfast" | "lunch" | "dinner">({
   key: "homeMenuFilterState",
   default: "breakfast",
+});
+
+// 프로필 선택
+export const selectedMemberIdAtom = atom<number>({
+  key: "selectedMemberIdAtom",
+  default: 0,
 });

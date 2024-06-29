@@ -1,19 +1,26 @@
 "use client";
+
 import { useParams } from "next/navigation";
+import type { SVGProps } from "react";
 import { useState } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
+import ArticleMenu from "@/components/board/ArticleMenu";
 import CommentContent from "@/components/board/CommentContent";
 import CommentDeleteMenu from "@/components/board/CommentDeleteMenu";
 import CommentInput from "@/components/board/CommentInput";
 import CommunicationBox from "@/components/board/CommunicationBox";
+import DeleteArticleWarningModal from "@/components/board/DeleteArticleWarningModal";
 import PostDetailContent from "@/components/board/PostDetailContent";
 import Profile from "@/components/board/Profile";
+import RecruitmentStatusChangeModal from "@/components/board/RecruitmentStatusChangeModal";
 import ReplyCommentDeleteMenu from "@/components/board/ReplyCommentDeleteMenu";
 import Button from "@/components/common/Button";
+import Header from "@/components/common/Header";
+import ProfileModal from "@/components/common/ProfileModal";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
 import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
 import { selectedCommentIdAtom } from "@/recoil/board/atom";
@@ -23,11 +30,17 @@ const BoardDetail = () => {
   const params = useParams();
   const { articleDetail, articleMutate } = useGetArticleDetail(params.id);
   const { articleDetailComments, commentMutate } = useGetArticleDetailComments(params.id);
+
   const [isClickedCommentContent, setIsClickedCommentContent] = useState<boolean>(false);
   const [isClickedReplyCommentContent, setIsClickedReplyCommentContent] = useState<boolean>(false);
+  const [isClickedArticleMenu, setIsClickedArticleMenu] = useState<boolean>(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
+  const [isArticleFavoritesListClicked, setIsArticleFavoritesListClicked] = useState(false);
+  const [isRecruitmentStatusChangeModalOpen, setIsRecruitmentStatusChangeModal] = useState(false);
+  const [isDeleteArticleWarningModalOpen, setIsDeleteArticleWarningModalOpen] = useState(false);
+
   const [selectedCommentId, setSelectedCommentId] = useRecoilState(selectedCommentIdAtom);
   const [isCommentInput, setIsCommentInput] = useState(true);
-  const [isArticleFavoritesListClicked, setIsArticleFavoritesListClicked] = useState(false);
 
   useEffect(() => {
     console.log("articleDetail", articleDetail);
@@ -36,11 +49,47 @@ const BoardDetail = () => {
 
   return (
     <div>
+      {/* 프로필 클릭 */}
+      {isProfileModalOpen ? <ProfileModal></ProfileModal> : null}
+
       {/* 게시글 찜 목록 */}
       {isArticleFavoritesListClicked ? (
-        <ArticleFavoritesList articleId={params.id} writerId={articleDetail?.memberId} />
+        <ArticleFavoritesList
+          articleId={params.id}
+          writerId={articleDetail?.memberId}
+          setIsProfileModalOpen={setIsProfileModalOpen}
+        />
       ) : null}
-      {/* 댓글 삭제 */}
+
+      {/* 모집 상태 변경 모달창 */}
+      {isRecruitmentStatusChangeModalOpen ? (
+        <RecruitmentStatusChangeModal
+          setIsRecruitmentStatusChangeModal={setIsRecruitmentStatusChangeModal}
+          status={articleDetail?.status}
+          articleId={articleDetail?.articleId}
+          mutate={articleMutate}
+        />
+      ) : null}
+
+      {/* 게시글 삭제 경고 모달창 */}
+      {isDeleteArticleWarningModalOpen ? (
+        <DeleteArticleWarningModal
+          setIsDeleteArticleWarningModalOpen={setIsDeleteArticleWarningModalOpen}
+          articleId={articleDetail?.articleId}
+        />
+      ) : null}
+
+      {/* 글 매뉴*/}
+      {isClickedArticleMenu ? (
+        <ArticleMenu
+          articleId={params.id}
+          setIsClickedArticleMenu={setIsClickedArticleMenu}
+          setIsRecruitmentStatusChangeModal={setIsRecruitmentStatusChangeModal}
+          setIsDeleteArticleWarningModalOpen={setIsDeleteArticleWarningModalOpen}
+        />
+      ) : null}
+
+      {/* 댓글 삭제 매뉴*/}
       {isClickedCommentContent ? (
         <CommentDeleteMenu
           commentId={selectedCommentId}
@@ -48,7 +97,8 @@ const BoardDetail = () => {
           mutate={commentMutate}
         />
       ) : null}
-      {/* 대댓글 삭제 */}
+
+      {/* 대댓글 삭제 매뉴*/}
       {isClickedReplyCommentContent ? (
         <ReplyCommentDeleteMenu
           commentId={selectedCommentId}
@@ -56,6 +106,23 @@ const BoardDetail = () => {
           mutate={commentMutate}
         />
       ) : null}
+
+      {/* 헤더 */}
+      <Header
+        headerType={"dynamic"}
+        title={"긱사생활"}
+        rightElement={
+          articleDetail?.isWriter ? (
+            <MoreIcon
+              onClick={() => {
+                setIsClickedArticleMenu(true);
+              }}
+            />
+          ) : null
+        }></Header>
+      <div className={"h-[60px]"} />
+
+      {/* 게시물 디테일 UI */}
       <div className="flex flex-col m-5 gap-y-4">
         {/*태그*/}
         <div className="flex gap-x-2">
@@ -70,14 +137,15 @@ const BoardDetail = () => {
         <Profile
           usage={"author"}
           createdDate={articleDetail?.createdAt}
-          profileUrl={"/unnimm.jpg"}
-          // profileUrl={articleDetail?.profileUrl}
+          profileUrl={articleDetail?.profileUrl}
           nickName={articleDetail?.nickName}
           dormitory={"양진재"}
         />
 
         {/*게시글 내용*/}
         <PostDetailContent
+          wishCount={articleDetail?.wishCount}
+          commentCount={articleDetailComments?.comments.length}
           title={articleDetail?.title}
           content={articleDetail?.content}
           tags={articleDetail?.tags}
@@ -116,10 +184,9 @@ const BoardDetail = () => {
                           commentId={replyComment.replyCommentId}
                           isWriter={replyComment.isWriter}
                           createdDate={replyComment.createdAt}
-                          nickName={replyComment.nickName}
+                          nickName={replyComment.nickname}
                           content={replyComment.content}
-                          profileUrl={"/unnimm.jpg"}
-                          // profileUrl={replyComment.profileUrl}
+                          profileUrl={replyComment.profileUrl}
                           setIsClickedReplyCommentContent={setIsClickedReplyCommentContent}
                           setSelectedCommentId={setSelectedCommentId}
                           setIsCommentInput={setIsCommentInput}
@@ -161,3 +228,11 @@ const BoardDetail = () => {
   );
 };
 export default BoardDetail;
+const MoreIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={24} height={28} fill="none" {...props}>
+    <path
+      fill="#9E9FA1"
+      d="M12 8.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M12 15.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M12 22.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"
+    />
+  </svg>
+);

@@ -10,10 +10,11 @@ interface Props {
   label: string; // title
   placeholder: string; // 설명글
   essential: boolean; //필수로 받는 데이터인지
+  pastTitle?: string;
 }
 
 const TitleInput = (props: Props) => {
-  const { numberOfCharacters, label, placeholder, essential } = props;
+  const { numberOfCharacters, label, placeholder, essential, pastTitle } = props;
   const [count, setCount] = useState(0);
   const [postData, setPostData] = useRecoilState(postDataState);
 
@@ -36,6 +37,7 @@ const TitleInput = (props: Props) => {
       <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4"}>
         <input
           maxLength={20}
+          value={pastTitle ? pastTitle : null}
           placeholder={placeholder}
           className={"focus:outline-0 w-full"}
           onChange={(e) => {

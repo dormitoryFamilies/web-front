@@ -1,5 +1,6 @@
 //Navbar 리스트 타입
 import React from "react";
+import { ArticleWishListType, ResponseArticleWishListType } from "@/types/board/type";
 
 export type HeaderType = "static" | "dynamic";
 
@@ -35,4 +36,20 @@ export interface FoodMenuList {
   breakfast: string[];
   lunch: string[];
   dinner: string[];
+}
+
+/**
+ * profile
+ */
+
+export interface ResponseProfileType {
+  code: number;
+  data: ProfileType;
+}
+
+export interface ProfileType {
+  memberDormitory: string;
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
 }

@@ -2,20 +2,20 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { SVGProps, useEffect, useRef, useState } from "react";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import { SVGProps, useRef } from "react";
+import { SetterOrUpdater } from "recoil";
 
 import ImageDeleteButton from "@/components/board/ImageDeleteButton";
-import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 
 interface Props {
+  usage: "create" | "edit";
   imgUrlList: string[];
   setImgUrlList: SetterOrUpdater<string[]>;
   fileList: File[];
   setFileList: SetterOrUpdater<File[]>;
 }
 const ImageInput = (props: Props) => {
-  const { imgUrlList, setImgUrlList, fileList, setFileList } = props;
+  const { usage, imgUrlList, setImgUrlList, fileList, setFileList } = props;
   const imgRef = useRef<HTMLInputElement>(null);
 
   // 이미지 업로드 input의 onChange
@@ -30,7 +30,7 @@ const ImageInput = (props: Props) => {
         let reader = new FileReader();
         reader.readAsDataURL(files[i]);
         reader.onloadend = () => {
-          setImgUrlList((prevList) => [...prevList, reader.result as string]);
+          setImgUrlList((prevList: string[]) => [...prevList, reader.result as string]);
         };
       }
 
@@ -51,7 +51,6 @@ const ImageInput = (props: Props) => {
           name="image"
           onChange={saveImgFile}
           multiple
-          required
           ref={imgRef}
           style={{ display: "none" }}></input>
         <div className={"flex items-center mt-2"}>
@@ -65,7 +64,7 @@ const ImageInput = (props: Props) => {
           <div className={"flex gap-x-1 items-center overflow-x-scroll"}>
             {imgUrlList.map((imgUrl, i) => (
               <div key={i} className={"relative pt-[6px] pr-[6px]"}>
-                <ImageDeleteButton i={i} />
+                <ImageDeleteButton i={i} usage={usage} />
                 <div className={"relative h-[80px] w-[80px] rounded-[8px] flex-shrink-0"}>
                   <Image src={imgUrl} alt={imgUrl} fill className={"object-cover rounded-[8px]"}></Image>
                 </div>

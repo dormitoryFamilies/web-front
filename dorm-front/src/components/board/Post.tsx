@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import Button from "@/components/common/Button";
+import { SVGProps } from "react";
 
 interface Props {
   articleId: number;
@@ -13,11 +14,13 @@ interface Props {
   title: string;
   content: string;
   wishCount: number;
+  isWished: boolean;
   commentCount: number;
   status: string;
   createdDate: string;
   thumbnailUrl: string;
   viewCount: number;
+  profileUrl: string;
 }
 const Post = (props: Props) => {
   const {
@@ -25,6 +28,7 @@ const Post = (props: Props) => {
     nickName,
     viewCount,
     boardType,
+    isWished,
     title,
     content,
     wishCount,
@@ -32,6 +36,7 @@ const Post = (props: Props) => {
     status,
     createdDate,
     thumbnailUrl,
+    profileUrl,
   } = props;
   const router = useRouter();
 
@@ -92,26 +97,28 @@ const Post = (props: Props) => {
 
         {/*프로필*/}
         <div className="flex justify-between">
-          <div className="flex text-h5 text-gray4 gap-x-2 items-center justify-center">
-            <div className="flex items-center justify-center gap-x-1">
-              <Image
-                alt={"profile"}
-                src={"/profile.png"}
-                width={15}
-                height={15}
-                className={"w-[15px] h-[15px] mt-1"}></Image>
-              <div>
-                {nickName} <span className="text-[11px]">|</span>
+          <div className="flex items-center justify-center text-h5 text-gray4 gap-x-2 ">
+            <div className="flex items-center justify-center gap-x-[5px]">
+              <div className={"relative w-[15px] h-[15px] mt-1"}>
+                <Image
+                  alt={profileUrl ? profileUrl : "profile"}
+                  src={profileUrl ? profileUrl : "/profile.png"}
+                  fill
+                  className={"object-cover rounded-full"}></Image>
+              </div>
+              <div className={"flex items-center justify-center"}>
+                <span className="text-h5">{nickName}</span>
+                <span className="px-[6px] text-[10px]">|</span>
+                <span className="text-h5">{formatDate(createdDate)}</span>
+                <span className="px-[6px] text-[10px]">|</span>
+                <span className="text-h5">조회</span>
+                <span className="text-h5 pl-1">{viewCount}</span>
               </div>
             </div>
-            <div>
-              {formatDate(createdDate)} <span className="text-[11px]">|</span>
-            </div>
-            <div>조회 {viewCount}</div>
           </div>
           <div className="flex gap-x-2">
             <div className="flex items-center gap-x-1">
-              <HeartIcon />
+              {isWished ? <HeartIcon /> : <EmptyHeartIcon />}
               <div className="text-h6 text-gray5">{wishCount}</div>
             </div>
             <div className="flex items-center gap-x-1">
@@ -126,7 +133,7 @@ const Post = (props: Props) => {
 };
 export default Post;
 
-function HeartIcon(props: React.SVGProps<SVGSVGElement>) {
+function EmptyHeartIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg width={12} height={12} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g clipPath="url(#prefix__clip0_1674_2873)" strokeWidth={0.46}>
@@ -180,3 +187,20 @@ function MoreIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+const HeartIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={12}
+    height={10}
+    fill="none"
+    {...props}
+  >
+    <path
+      fill="#FF7E8D"
+      fillRule="evenodd"
+      d="m9.206 7.954.611-.683c1.21-1.51 1.515-3 1.593-3.63.01-.066.02-.131.02-.197.01-.14.01-.226.01-.226 0-.974-.422-1.865-1.074-2.461l-.003-.008-.008-.002C9.842.283 9.188 0 8.487 0 7.41 0 6.409.407 5.719 1.095 5.028.408 4.029.005 2.953.005 1.351.005 0 1.48 0 3.223c0 0 0 .08.01.226q.006.1.02.192c.101.855.59 3.046 2.868 4.909.564.458 1.204.876 1.91 1.233.282.147.594.217.907.217.312 0 .625-.06.907-.206l.03-.017c.75-.312 1.563-.872 2.394-1.703a2 2 0 0 1 .16-.12m-6.07.309v.002l-.001-.002-.004-.003z"
+      clipRule="evenodd"
+    />
+  </svg>
+);

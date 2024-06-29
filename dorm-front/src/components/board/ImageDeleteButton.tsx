@@ -1,24 +1,45 @@
-import type { SVGProps } from "react";
+import { SVGProps, useEffect } from "react";
 import * as React from "react";
 import { useRecoilState } from "recoil";
 
-import { fileListAtom, imgUrlListAtom } from "@/recoil/board/atom";
+import { deleteS3UrlListAtom, fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 
 interface Props {
+  usage: "create" | "edit";
   i: number;
 }
 
 const ImageDeleteButton = (props: Props) => {
-  const { i } = props;
+  const { usage, i } = props;
   const [imgUrlList, setImgUrlList] = useRecoilState<string[]>(imgUrlListAtom); //이미지 URL string
   const [fileList, setFileList] = useRecoilState<File[]>(fileListAtom); //이미지 file
+  const [postData, setPostData] = useRecoilState(postDataState);
+  const [deleteS3UrlList, setDeleteS3UrlList] = useRecoilState(deleteS3UrlListAtom);
 
   /**
    * 글을 새로 생성할 때(usage==create), 선택된 imageUrl 을 제외하고 남은 imageUrl 로 새로운 리스트를 구성합니다.
    */
-  const deleteImageUrl = () => {
+  const deleteCreateImageUrl = () => {
     const copyImgUrlList = [...imgUrlList];
     const copyFileList = [...fileList];
+    setImgUrlList(copyImgUrlList.filter((imageUrl) => imageUrl != copyImgUrlList[i]));
+    setFileList(copyFileList.filter((file) => file != copyFileList[i]));
+  };
+
+  /**
+   * 글을 수정할 때(usage==edit), 선택된 imageUrl 을 제외하고 남은 imageUrl 로 새로운 리스트를 구성합니다.
+   */
+  const deleteEditImageUrl = () => {
+    const copyImgUrlList = [...imgUrlList];
+    const copyFileList = [...fileList];
+    const copyPostImageUrlList = [...postData.imagesUrls];
+    if (postData.imagesUrls.length !== 0 && copyPostImageUrlList[i] !== undefined) {
+      setDeleteS3UrlList((prevList) => [...prevList, copyPostImageUrlList[i]]);
+      setPostData((prevState) => ({
+        ...prevState,
+        imagesUrls: copyPostImageUrlList.filter((imageUrl) => imageUrl != copyImgUrlList[i]),
+      }));
+    }
     setImgUrlList(copyImgUrlList.filter((imageUrl) => imageUrl != copyImgUrlList[i]));
     setFileList(copyFileList.filter((file) => file != copyFileList[i]));
   };
@@ -27,7 +48,11 @@ const ImageDeleteButton = (props: Props) => {
     <button
       type={"button"} //form 전달 막기
       onClick={() => {
-        deleteImageUrl();
+        if (usage === "create") {
+          deleteCreateImageUrl();
+        } else {
+          deleteEditImageUrl();
+        }
       }}
       className={"absolute bg-gray4 rounded-full p-1 top-0 right-0 z-10"}>
       <DeleteIcon />

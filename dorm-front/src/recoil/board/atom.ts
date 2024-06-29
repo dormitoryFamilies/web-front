@@ -51,12 +51,28 @@ export const selectedCommentIdAtom = atom<number>({
   default: 0,
 });
 
+//선택된 commentId
+export const selectedArticleIdAtom = atom<string | string[]>({
+  key: "selectedArticleIdAtom",
+  default: "",
+});
+
 export const imgUrlListAtom = atom<string[]>({
   key: "imgUrlListAtom",
   default: [],
 });
 
+export const pastImageUrlListAtom = atom<string[]>({
+  key: "pastImageUrlListAtom",
+  default: [],
+});
+
 export const fileListAtom = atom<File[]>({
   key: "fileListAtom",
+  default: [],
+});
+
+export const deleteS3UrlListAtom = atom<string[]>({
+  key: "deleteS3UrlListAtom",
   default: [],
 });

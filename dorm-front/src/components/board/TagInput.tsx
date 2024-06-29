@@ -2,10 +2,6 @@
 
 import * as React from "react";
 import { SVGProps, useEffect, useRef } from "react";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-
-import { postDataState } from "@/recoil/board/atom";
 
 interface Props {
   tags: string[];
@@ -19,8 +15,6 @@ interface Props {
 
 const TagInput = (props: Props) => {
   const { tags, label, placeholder, essential, handleChangeTags, addTags, deleteTags } = props;
-  const [count, setCount] = useState(0);
-  const [postData, setPostData] = useRecoilState(postDataState);
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 

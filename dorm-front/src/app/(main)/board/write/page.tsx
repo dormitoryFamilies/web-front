@@ -4,6 +4,7 @@ import * as React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
 import BoardTypeFilter from "@/components/board/BoardTypeFilter";
 import ContentInput from "@/components/board/ContentInput";
 import DormTypeFilter from "@/components/board/DormTypeFilter";
@@ -15,7 +16,6 @@ import { postArticle, postArticleImage } from "@/lib/api/board";
 import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { DORM_LIST } from "@/utils/dorm";
-import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
 
 const Write = () => {
   const [postData, setPostData] = useRecoilState(postDataState);
@@ -124,11 +124,11 @@ const Write = () => {
           <TitleInput essential={true} numberOfCharacters={20} label={"제목"} placeholder={"제목을 입력해주세요."} />
           <ContentInput essential={true} numberOfCharacters={300} label={"내용"} placeholder={"내용을 입력해주세요."} />
           <ImageInput
+            usage={"create"}
             fileList={fileList}
             imgUrlList={imgUrlList}
             setFileList={setFileList}
             setImgUrlList={setImgUrlList}></ImageInput>
-          {/* 인강 추천 태그 세션*/}
           <TagInput
             label={"태그"}
             tags={tags}

@@ -5,7 +5,7 @@ import { swrGetFetcher } from "@/lib/axios";
 import { ArticleType, ResponseArticleDetailType, ResponseArticleType } from "@/types/board/type";
 
 const useGetArticleDetail = (parameter: string | string[]) => {
-  const { data, error, mutate } = useSWR<AxiosResponse<ResponseArticleDetailType>>(`/articles/${parameter}`, swrGetFetcher);
+  const { data, error, mutate } = useSWR<ResponseArticleDetailType>(`/articles/${parameter}`, swrGetFetcher);
 
   return {
     articleDetail: data ? data.data : null,

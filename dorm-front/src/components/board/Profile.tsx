@@ -1,15 +1,17 @@
 import { format } from "date-fns";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface Props {
   usage: string;
-  profileUrl?: string;
+  isWriter: boolean;
+  profileUrl: string;
   nickName: string;
   createdDate: string;
   dormitory?: string;
 }
 const Profile = (props: Props) => {
-  const { usage, profileUrl, nickName, createdDate, dormitory } = props;
+  const { usage, profileUrl, nickName, createdDate, dormitory, isWriter } = props;
 
   return (
     <div
@@ -20,33 +22,66 @@ const Profile = (props: Props) => {
             ? "flex items-center gap-x-2"
             : "flex gap-x-2"
       }>
+      {/* 프로필 사진 */}
       {usage == "author" ? (
-        <Image src={"/unnimm.jpg"} width={45} height={45} alt={"프로필"} className={"rounded-full w-[45px] h-[45px]"} />
+        <div className={"relative w-[45px] h-[45px]"}>
+          <Image
+            src={profileUrl ? profileUrl : "/profile.png"}
+            fill
+            alt={"프로필"}
+            className={"object-cover rounded-full w-[45px] h-[45px]"}
+          />
+        </div>
       ) : usage == "comment" ? (
-        <Image src={"/unnimm.jpg"} width={32} height={32} alt={"프로필"} className={"rounded-full w-[32px] h-[32px]"} />
+        <div className={"relative w-[32px] h-[32px]"}>
+          <Image
+            src={profileUrl ? profileUrl : "/profile.png"}
+            fill
+            alt={"프로필"}
+            className={"object-cover rounded-full"}
+          />
+        </div>
       ) : (
-        <Image
-          src={"/unnimm.jpg"}
-          width={24}
-          height={24}
-          alt={"프로필"}
-          className={"rounded-full w-[24px] h-[24px] mt-2"}
-        />
+        <div className={"relative w-[24px] h-[24px]"}>
+          <Image
+            src={profileUrl ? profileUrl : "/profile.png"}
+            fill
+            alt={"프로필"}
+            className={"object-cover rounded-full mt-2"}
+          />
+        </div>
       )}
+      {/* 프로필 이름 */}
       <div className="flex flex-col">
         {usage == "author" ? (
-          <div className="font-semibold">
-            {nickName}
-            <span className="text-h5 font-bold"> | </span>
+          <div className="flex justify-start items-center font-semibold gap-x-[6px]">
+            <span>{nickName}</span>
+            <span className="text-h6 font-bold"> | </span>
             <span>{dormitory}</span>
           </div>
+        ) : usage == "comment" ? (
+          <div className={"flex gap-x-1 items-center"}>
+            <div className="font-semibold">{nickName}</div>
+            {isWriter ? (
+              <button className="text-h6 bg-gray0 rounded-[8px] px-2 w-fit text-gray5 items-center h-[18px]">
+                작성자
+              </button>
+            ) : null}
+          </div>
         ) : (
-          <div className="font-semibold">{nickName}</div>
+          <div className={"flex gap-x-1 items-center"}>
+            <div className="font-semibold">{nickName}</div>
+            {isWriter ? (
+              <button className="text-h6 bg-gray0 rounded-[8px] px-2 w-fit text-gray5 items-center h-[18px]">
+                작성자
+              </button>
+            ) : null}
+          </div>
         )}
-        <div className="text-h5 text-gray4">
-          {createdDate
-            ? format(new Date(createdDate), "yy.MM.dd") + " | " + format(new Date(createdDate), "HH:mm")
-            : null}
+        <div className="flex justify-center items-center text-h5 text-gray4 gap-x-[6px]">
+          {createdDate ? format(new Date(createdDate), "yy.MM.dd") : null}
+          <span className={"text-[10px]"}> | </span>
+          {createdDate ? format(new Date(createdDate), "HH:mm") : null}
         </div>
       </div>
     </div>

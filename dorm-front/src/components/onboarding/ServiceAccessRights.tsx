@@ -1,47 +1,49 @@
-import Image from 'next/image';
-
+import type { SVGProps } from "react";
+import * as React from "react";
 const ServiceAccessRights = () => {
   return (
-    <div>
-      <div>서비스 접근 권한 안내</div>
-      <div>원활한 서비스 사용을 위해 다음 권한이 필요합니다.</div>
-
-      <div className="flex gap-x-[22px] items-center">
-        <div className={"p-5 rounded-full border-[1.5px] border-gray1 w-[70px] h-[70px]"}>
-          <CameraIcon />
+    <div className={"flex flex-col min-h-screen"}>
+      <div className={"m-[30px] "}>
+        <div className={"flex flex-col gap-y-[5px]"}>
+          <div className={"text-h1 font-semibold"}>서비스 접근 권한 안내</div>
+          <div className={"text-h5 text-gray4"}>원활한 서비스 사용을 위해 다음 권한이 필요합니다.</div>
         </div>
-        <div className="flex flex-col">
-          <div>사진 / 카메라</div>
-          <div>사진 업로드 및 저장 기능</div>
+
+        <div className={"flex flex-col gap-y-5 mt-[50px] ml-[10px]"}>
+          <div className="flex gap-x-[22px] items-center">
+            <div
+              className={"flex items-center justify-center rounded-full border-[1.5px] border-gray1 w-[70px] h-[70px]"}>
+              <CameraIcon />
+            </div>
+            <div className="flex flex-col">
+              <div className={"text-h3 font-semibold"}>사진 / 카메라</div>
+              <div className={"mt-[3px] text-h5 text-gray4"}>사진 업로드 및 저장 기능</div>
+            </div>
+          </div>
+
+          <div className="flex gap-x-[22px] items-center">
+            <div
+              className={"flex items-center justify-center rounded-full border-[1.5px] border-gray1 w-[70px] h-[70px]"}>
+              <AlarmIcon />
+            </div>
+            <div className="flex flex-col">
+              <div className={"text-h3 font-semibold"}>알림</div>
+              <div className={"mt-[3px] text-h5 text-gray4"}>푸시 알림 및 메시지 수신 안내</div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="flex gap-x-[22px] items-center">
-        <div className={"p-5 rounded-full border-[1.5px] border-gray1 w-[70px] h-[70px]"}>
-          <AlarmIcon />
-        </div>
-        <div className="flex flex-col">
-          <div>알림</div>
-          <div>푸시 알림 및 메시지 수신 안내</div>
-        </div>
-      </div>
-
+      <button className={"left-5 py-[15px] absolute bottom-5 text-white bg-primary rounded-full w-[90%] text-h5"}>
+        동의하고 시작하기
+      </button>
     </div>
-  )
-}
+  );
+};
 export default ServiceAccessRights;
 
-import * as React from 'react';
-
-function CameraIcon(props) {
+function CameraIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width={28}
-      height={24}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width={28} height={24} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g clipPath="url(#prefix__clip0_1199_2033)">
         <path
           d="M14 9.77a3.465 3.465 0 110 6.93 3.465 3.465 0 010-6.93zm0-1.75a5.213 5.213 0 00-5.215 5.214A5.213 5.213 0 0014 18.45a5.213 5.213 0 005.215-5.215A5.213 5.213 0 0014 8.02z"
@@ -51,10 +53,7 @@ function CameraIcon(props) {
           d="M23.333 4.612A2.918 2.918 0 0126.25 7.53v10.897a2.918 2.918 0 01-2.917 2.916H4.667a2.918 2.918 0 01-2.917-2.916V7.529a2.918 2.918 0 012.917-2.917h18.666zm0-1.75H4.667A4.665 4.665 0 000 7.53v10.897a4.665 4.665 0 004.667 4.666h18.666A4.665 4.665 0 0028 18.426V7.529a4.665 4.665 0 00-4.667-4.667z"
           fill="#000"
         />
-        <path
-          d="M21.012 8.276a.933.933 0 100-1.867.933.933 0 000 1.867z"
-          fill="#E70050"
-        />
+        <path d="M21.012 8.276a.933.933 0 100-1.867.933.933 0 000 1.867z" fill="#E70050" />
         <path
           d="M10.138.377H4.842a.881.881 0 00-.875.875c0 .479.396.875.875.875h5.296a.881.881 0 00.875-.875.881.881 0 00-.875-.875z"
           fill="#000"
@@ -69,7 +68,7 @@ function CameraIcon(props) {
   );
 }
 
-function AlarmIcon(props) {
+function AlarmIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={21}

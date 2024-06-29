@@ -119,8 +119,10 @@ const Board = () => {
                         nickName={article.nickName}
                         commentCount={article.commentCount}
                         status={article.status}
+                        isWished={article.isWished}
                         wishCount={article.wishCount}
                         viewCount={article.viewCount}
+                        profileUrl={article.profileUrl}
                         thumbnailUrl={"/unnimm.jpg"}></Post>
                     </div>
                   );
@@ -133,6 +135,8 @@ const Board = () => {
                   return (
                     <div key={index} ref={ref}>
                       <Post
+                        profileUrl={article.profileUrl}
+                        isWished={article.isWished}
                         articleId={article.articleId}
                         title={article.title}
                         content={article.content}

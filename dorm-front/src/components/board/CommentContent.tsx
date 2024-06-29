@@ -33,7 +33,13 @@ const CommentContent = (props: Props) => {
   return (
     <div className={usage == "replyComment" ? "flex flex-col gap-y-[5px] ml-[55px]" : "flex flex-col gap-y-[5px]"}>
       <div className="flex justify-between items-center">
-        <Profile usage={usage} profileUrl={profileUrl} nickName={nickName} createdDate={createdDate} />
+        <Profile
+          usage={usage}
+          profileUrl={profileUrl}
+          nickName={nickName}
+          createdDate={createdDate}
+          isWriter={isWriter}
+        />
         {isWriter ? (
           <MoreMenuIcon
             onClick={() => {

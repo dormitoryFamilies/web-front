@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import DropDownDormModal from "@/components/common/DropDownDormModal";
 import { DropDownClick, selectedDormitory } from "@/recoil/atom";
 import { HeaderType } from "@/types/global";
+import { useRouter } from "next/navigation";
 
 interface Props {
   headerType?: HeaderType;
@@ -15,6 +16,7 @@ const Header = (props: Props) => {
   const { headerType = "static", title, rightElement } = props;
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
   const [isDropDownClick, setIsDropDownClick] = useRecoilState<boolean>(DropDownClick);
+  const router = useRouter();
 
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 함수
   const dropDownOnClick = () => {
@@ -43,7 +45,11 @@ const Header = (props: Props) => {
       case "dynamic":
         return (
           <>
-            <PrevArrow />
+            <PrevArrow
+              onClick={() => {
+                router.back();
+              }}
+            />
             <h1 className="text-black text-h2 font-semibold">{title}</h1>
             {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
           </>
