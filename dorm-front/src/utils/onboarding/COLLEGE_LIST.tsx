@@ -1,4 +1,6 @@
-export const colleges = [
+import { CollegeType } from "@/types/onboarding/type";
+
+export const COLLEGE_LIST: CollegeType[] = [
   "단과대학교",
   "인문대학",
   "사회과학대학",

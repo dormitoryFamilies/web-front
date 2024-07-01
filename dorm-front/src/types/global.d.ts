@@ -1,6 +1,7 @@
 //Navbar 리스트 타입
 import React from "react";
 import { ArticleWishListType, ResponseArticleWishListType } from "@/types/board/type";
+import { CollegeType, DepartmentType } from "@/types/onboarding/type";
 
 export type HeaderType = "static" | "dynamic";
 
@@ -52,4 +53,13 @@ export interface ProfileType {
   memberId: number;
   nickname: string;
   profileUrl: string;
+}
+
+export interface ProfileSettingType {
+  nickname: string;
+  studentCardImageUrl: string;
+  collegeType: CollegeType;
+  departmentType: string;
+  studentNumber: number;
+  dormitoryType: string;
 }
