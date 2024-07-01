@@ -1,13 +1,19 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import qs from "query-string";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as React from "react";
 
 import Header from "@/components/common/Header";
-import { useRouter, useSearchParams } from "next/navigation";
 import useDebounce from "@/hooks/useDebounce";
-import qs from "query-string";
 import { getSearchDuplicateNickName } from "@/lib/api/onboarding";
+import { StepOnboarding } from "@/types/onboarding/type";
 
-const ProfileSetting = () => {
+interface Props {
+  onNext: Dispatch<SetStateAction<StepOnboarding>>;
+}
+
+const NicknameSetting = (props: Props) => {
+  const { onNext } = props;
   const [count, setCount] = useState(0);
   const [isCheckDuplicateButton, setIsCheckDuplicateButton] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -27,15 +33,19 @@ const ProfileSetting = () => {
     router.push(url);
   }, [debouncedValue]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     await getSearchDuplicateNickName(searchValue).then((r) => console.log("검색 결과", r));
     setIsCheckDuplicateButton(!isCheckDuplicateButton);
   };
 
+  const onBack = () => {
+    router.push("/");
+  };
+
   return (
     <>
-      <Header headerType={"dynamic"} title={"프로필 설정"}></Header>
+      <Header headerType={"dynamic"} title={"프로필 설정"} onBack={onBack}></Header>
       <div className={"h-[60px]"}></div>
       <div className={"mx-5"}>
         {/* process bar*/}
@@ -72,9 +82,15 @@ const ProfileSetting = () => {
             중복확인
           </button>
         </div>
-        <button className={"absolute w-[90%] bottom-5 text-white text-h5 bg-gray3 rounded-full py-[14px]"}>다음</button>
+        <button
+          onClick={() => {
+            onNext("SchoolInfoSetting");
+          }}
+          className={"absolute w-[90%] bottom-5 text-white text-h5 bg-gray3 rounded-full py-[14px]"}>
+          다음
+        </button>
       </div>
     </>
   );
 };
-export default ProfileSetting;
+export default NicknameSetting;
