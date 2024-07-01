@@ -1,19 +1,21 @@
-import React, { ReactNode, SVGProps, useState } from "react";
+import React, { Dispatch, ReactNode, SetStateAction, SVGProps, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import DropDownDormModal from "@/components/common/DropDownDormModal";
 import { DropDownClick, selectedDormitory } from "@/recoil/atom";
 import { HeaderType } from "@/types/global";
 import { useRouter } from "next/navigation";
+import { StepOnboarding } from "@/types/onboarding/type";
 
 interface Props {
   headerType?: HeaderType;
   title?: string;
   rightElement?: ReactNode;
+  onBack?: () => void;
 }
 
 const Header = (props: Props) => {
-  const { headerType = "static", title, rightElement } = props;
+  const { headerType = "static", title, rightElement, onBack } = props;
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
   const [isDropDownClick, setIsDropDownClick] = useRecoilState<boolean>(DropDownClick);
   const router = useRouter();
@@ -47,7 +49,7 @@ const Header = (props: Props) => {
           <>
             <PrevArrow
               onClick={() => {
-                router.back();
+                onBack ? onBack() : router.back();
               }}
             />
             <h1 className="text-black text-h2 font-semibold">{title}</h1>
