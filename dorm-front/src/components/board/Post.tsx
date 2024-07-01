@@ -3,9 +3,9 @@ import { ko } from "date-fns/locale";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { SVGProps } from "react";
 
 import Button from "@/components/common/Button";
-import { SVGProps } from "react";
 
 interface Props {
   articleId: number;
