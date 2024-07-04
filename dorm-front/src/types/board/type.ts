@@ -115,3 +115,17 @@ export interface ResponseArticleWishListType {
   code: number;
   data: ArticleWishListType;
 }
+
+//검색 결과 responseType
+export interface ResponseBoardSearchResultType {
+  code: number;
+  data: BoardSearchResultType;
+}
+
+//검색 결과
+export interface BoardSearchResultType {
+  loginMemberId: number;
+  nowPageNumber: number;
+  isLast: boolean;
+  articles: ArticleType[];
+}

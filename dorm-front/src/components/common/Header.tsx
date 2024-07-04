@@ -1,21 +1,21 @@
-import React, { Dispatch, ReactNode, SetStateAction, SVGProps, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { Dispatch, ReactNode, SetStateAction, SVGProps } from "react";
 import { useRecoilState } from "recoil";
 
 import DropDownDormModal from "@/components/common/DropDownDormModal";
 import { DropDownClick, selectedDormitory } from "@/recoil/atom";
 import { HeaderType } from "@/types/global";
-import { useRouter } from "next/navigation";
-import { StepOnboarding } from "@/types/onboarding/type";
 
 interface Props {
   headerType?: HeaderType;
   title?: string;
   rightElement?: ReactNode;
   onBack?: () => void;
+  setSearchValue?: Dispatch<SetStateAction<string>>;
 }
 
 const Header = (props: Props) => {
-  const { headerType = "static", title, rightElement, onBack } = props;
+  const { headerType = "static", title, rightElement, onBack, setSearchValue } = props;
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
   const [isDropDownClick, setIsDropDownClick] = useRecoilState<boolean>(DropDownClick);
   const router = useRouter();
@@ -56,12 +56,31 @@ const Header = (props: Props) => {
             {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
           </>
         );
-
+      case "search":
+        return (
+          <>
+            <PrevArrow
+              onClick={() => {
+                onBack ? onBack() : router.back();
+              }}
+            />
+            <div className={"bg-gray0 rounded-full w-full py-2 px-4 placeholder:text-gray3"}>
+              <input
+                placeholder={"검색어를 입력해주세요."}
+                className={"bg-gray0 w-full outline-none"}
+                onChange={(e) => {
+                  if (setSearchValue) {
+                    setSearchValue(e.target.value);
+                  }
+                }}
+              />
+            </div>
+          </>
+        );
       default:
         break;
     }
   };
-
   return (
     <div>
       <header
