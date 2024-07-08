@@ -22,7 +22,7 @@ const getKey = (
   }
 };
 
-const useBoardWishes = (dormitoryType: DormitoryType, sortType: BoardSortType, statusType: BoardStatusType) => {
+const useMyPageBoardWishes = (dormitoryType: DormitoryType, sortType: BoardSortType, statusType: BoardStatusType) => {
   const { data, isLoading, error, size, setSize, mutate } = useSWRInfinite<ResponseArticleType>(
     (pageIndex, previousPageData) => getKey(pageIndex, previousPageData, dormitoryType, sortType, statusType),
     swrGetFetcher,
@@ -41,4 +41,4 @@ const useBoardWishes = (dormitoryType: DormitoryType, sortType: BoardSortType, s
     setWishPostSize: setSize,
   };
 };
-export default useBoardWishes;
+export default useMyPageBoardWishes;
