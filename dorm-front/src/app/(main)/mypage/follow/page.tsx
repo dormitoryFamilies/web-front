@@ -169,6 +169,29 @@ const MyPageFollow = () => {
                       memberId={memberProfile.memberId}></FollowProfile>
                   );
                 })}
+        </div>
+      </div>
+
+      {/* 페이징 */}
+      {!searchValue ? (
+        followType == "팔로워" ? (
+          <Paging
+            setPageNumber={setFollowerPageNumber}
+            totalPageNumber={followers?.totalPageNumber}
+            handlerBeforeButton={handlerBeforeFollowerPageNumber}
+            pageNumber={followerPageNumber}
+            handlerNextButton={handlerNextFollowerPageNumber}
+          />
+        ) : (
+          <Paging
+            setPageNumber={setFollowingPageNumber}
+            handlerNextButton={handlerNextFollowingPageNumber}
+            pageNumber={followingPageNumber}
+            totalPageNumber={followings?.totalPageNumber}
+            handlerBeforeButton={handlerBeforeFollowingPageNumber}
+          />
+        )
+      ) : null}
     </div>
   );
 };
