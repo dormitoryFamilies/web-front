@@ -1,17 +1,18 @@
 "use client";
 
-import Header from "@/components/common/Header";
-import DormTypeFilter from "@/components/board/DormTypeFilter";
-import { ARTICLE_DORM_LIST } from "@/utils/dorm";
+import * as React from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+
 import BoardTypeFilter from "@/components/board/BoardTypeFilter";
-import { BOARD_TYPE_LIST } from "@/utils/boardType";
-import TitleInput from "@/components/board/TitleInput";
 import ContentInput from "@/components/board/ContentInput";
+import DormTypeFilter from "@/components/board/DormTypeFilter";
 import ImageInput from "@/components/board/ImageInput";
 import TagInput from "@/components/board/TagInput";
-import * as React from "react";
+import TitleInput from "@/components/board/TitleInput";
+import Header from "@/components/common/Header";
+import { deleteArticleImage, postArticle, postArticleImage, putArticle } from "@/lib/api/board";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
-import { useRecoilState } from "recoil";
 import {
   deleteS3UrlListAtom,
   fileListAtom,
@@ -20,9 +21,9 @@ import {
   postDataState,
   selectedArticleIdAtom,
 } from "@/recoil/board/atom";
-import { FormEvent, useEffect, useState } from "react";
 import { ArticleDetailType, ArticlePostType } from "@/types/board/type";
-import { deleteArticleImage, postArticle, postArticleImage, putArticle } from "@/lib/api/board";
+import { BOARD_TYPE_LIST } from "@/utils/boardType";
+import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
 const Edit = () => {
   const [selectedArticleId, setSelectedArticleId] = useRecoilState(selectedArticleIdAtom);

@@ -12,7 +12,7 @@ import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import InterestListDormitoryFilter from "@/components/mypage/InterestListDormitoryFilter";
 import InterestListMenu from "@/components/mypage/InterestListMenu";
-import useBoardWishes from "@/lib/hooks/useBoardWishes";
+import useMyPageBoardWishes from "@/lib/hooks/useMyPageBoardWishes";
 import { ArticleType, BoardSortType, BoardStatusType } from "@/types/board/type";
 import { DormitoryType, InterestListType } from "@/types/mypage/type";
 import { dormitoryFilterContents, sortFilterContents, statusFilterContents } from "@/utils/board/filterContent";
@@ -27,7 +27,7 @@ const InterestList = () => {
   const [isSortingFilterClick, setIsSortingFilterClick] = useState<boolean>(false);
   const [isStatusFilterClick, setIsStatusFilterClick] = useState<boolean>(false);
   const [isDormitoryFilterClick, setIsDormitoryFilterClick] = useState<boolean>(false);
-  const { wishPosts, setWishPostSize } = useBoardWishes(selectedDormitoryType, selectedSortType, selectedStatusType);
+  const { wishPosts, setWishPostSize } = useMyPageBoardWishes(selectedDormitoryType, selectedSortType, selectedStatusType);
 
   // 전체
   const getMoreAllArticleItem = useCallback(async () => {
