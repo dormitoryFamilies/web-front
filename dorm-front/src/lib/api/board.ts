@@ -6,7 +6,7 @@ export const postArticle = async (data: ArticlePostType) => {
     const response = await client.post("/articles", data, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -22,7 +22,7 @@ export const putArticle = async (data: ArticlePostType, articleId: string | stri
     const response = await client.put(`/articles/${articleId}`, data, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -38,7 +38,7 @@ export const deleteArticle = async (articleId: string | string[]) => {
     const response = await client.delete(`/articles/${articleId}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -54,7 +54,7 @@ export const postArticleImage = async (formData: FormData) => {
     const response = await client.post("/images", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -71,7 +71,7 @@ export const deleteArticleImage = async (formData: FormData) => {
       data: formData,
       headers: {
         "Content-Type": "multipart/form-data",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     return response.data;
@@ -102,7 +102,7 @@ export const postArticleWish = async (articleId: string | string[]) => {
     const response = await client.post(`/articles/${articleId}/wishes`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -118,7 +118,7 @@ export const deleteArticleWish = async (articleId: string | string[]) => {
     const response = await client.delete(`/articles/${articleId}/wishes`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -134,7 +134,7 @@ export const postArticleComment = async (articleId: string | string[], data: Pos
     const response = await client.post(`/articles/${articleId}/comments`, data, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -150,7 +150,7 @@ export const deleteArticleComment = async (commentId: number) => {
     const response = await client.delete(`/comments/${commentId}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -166,7 +166,7 @@ export const postArticleReplyComments = async (commentId: number, data: PostComm
     const response = await client.post(`/comments/${commentId}/reply-comments`, data, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -182,7 +182,7 @@ export const deleteArticleReplyComment = async (replyCommentId: number) => {
     const response = await client.delete(`/reply-comments/${replyCommentId}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -200,7 +200,7 @@ export const getSearchResult = async (dormitoryType: string, searchValue: string
     const response = await client.get(`/dormitories/${dormitoryType}/articles/search?q=${searchValue}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리

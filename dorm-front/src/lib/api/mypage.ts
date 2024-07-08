@@ -4,7 +4,7 @@ export const getSearchFollowers = async (searchValue: string) => {
     const response = await client.get(`/members/followers/search?q=${searchValue}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -19,7 +19,7 @@ export const getSearchFollowings = async (searchValue: string) => {
     const response = await client.get(`/members/followings/search?q=${searchValue}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리

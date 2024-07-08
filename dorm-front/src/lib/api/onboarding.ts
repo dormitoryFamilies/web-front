@@ -6,7 +6,7 @@ export const getSearchDuplicateNickName = async (searchValue: string) => {
     const response = await client.get(`/members/check?nickname=${searchValue}`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
@@ -22,7 +22,7 @@ export const putProfileData = async (data: ProfileSettingType) => {
     const response = await client.put(`/api/members/initial-profiles`, data, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리

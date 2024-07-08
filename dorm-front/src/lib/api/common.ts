@@ -6,7 +6,7 @@ export const postFollow = async (memberId: number | undefined) => {
     const response = await client.post(`/members/${memberId}/follows`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
       },
     });
     // 성공적인 응답 처리
