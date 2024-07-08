@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 
 import { DropDownClick, selectedDormitory } from "@/recoil/atom";
-import { DORM_LIST } from "@/utils/dorm";
+import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
 const DropDownDormModal = () => {
   //선택된 기숙사
@@ -52,7 +52,7 @@ const DropDownDormModal = () => {
         >
           기숙사 선택
         </div>
-        {DORM_LIST.map((dormitory, item) => {
+        {ARTICLE_DORM_LIST.map((dormitory, item) => {
           return (
             <div
               className="

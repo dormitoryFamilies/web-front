@@ -10,7 +10,7 @@ import OnboardingDormitoryFilter from "@/components/onboarding/OnboardingDormito
 import { putProfileData } from "@/lib/api/onboarding";
 import { profileSettingAtom } from "@/recoil/onboarding/atom";
 import { StepOnboarding } from "@/types/onboarding/type";
-import { DORM_LIST } from "@/utils/dorm";
+import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 import { COLLEGE_LIST } from "@/utils/onboarding/COLLEGE_LIST";
 import { DEPARTMENT_LIST } from "@/utils/onboarding/departments";
 
@@ -198,7 +198,7 @@ const SchoolInfoSetting = (props: Props) => {
             </div>
             {isDormFilterClick ? (
               <OnboardingDormitoryFilter
-                dormList={DORM_LIST}
+                dormList={ARTICLE_DORM_LIST}
                 setPostData={setPostData}
                 setIsClickFilter={setIsDormFilterClick}
               />
