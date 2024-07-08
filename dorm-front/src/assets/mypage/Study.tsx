@@ -1,18 +1,19 @@
 import type { SVGProps } from "react";
 import * as React from "react";
 const StudyIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" {...props}>
-    <g strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} clipPath="url(#a)">
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
+    <g strokeLinecap="round" strokeLinejoin="round" clipPath="url(#a)">
       <path
         stroke="#000"
-        d="M12 4.63 6.26 2.72C3.67 1.86 1 3.79 1 6.52v9.9c0 1.72 1.1 3.25 2.74 3.8l7 2.33c.82.27 1.71.27 2.53 0l7-2.33a4 4 0 0 0 2.74-3.8v-9.9c0-2.73-2.67-4.66-5.26-3.8l-5.74 1.91z"
+        strokeWidth={1.2}
+        d="M10.972 4.359 6.189 2.767c-2.159-.717-4.384.892-4.384 3.167v8.25c0 1.433.917 2.708 2.284 3.166l5.833 1.942a3.38 3.38 0 0 0 2.108 0l5.833-1.942a3.34 3.34 0 0 0 2.284-3.166v-8.25c0-2.275-2.225-3.884-4.383-3.167L10.98 4.359z"
       />
-      <path stroke="#E70050" d="M19.46 1.78v4" />
-      <path stroke="#000" d="M6 9.49h12M6 12.66h4M6 15.78h8" />
+      <path stroke="#E70050" strokeWidth={2} d="M17.189 1.983v3.334" />
+      <path stroke="#000" strokeWidth={1.2} d="M5.972 8.408h10M5.972 11.05h3.333M5.972 13.65h6.667" />
     </g>
     <defs>
       <clipPath id="a">
-        <path fill="#fff" d="M0 0h24v24H0z" />
+        <path fill="#fff" d="M.972.5h20v20h-20z" />
       </clipPath>
     </defs>
   </svg>

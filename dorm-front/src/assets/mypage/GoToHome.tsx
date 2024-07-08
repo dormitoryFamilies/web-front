@@ -1,25 +1,25 @@
 import type { SVGProps } from "react";
 import * as React from "react";
 const GoToHomeIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" {...props}>
-    <g strokeWidth={2} clipPath="url(#a)">
-      <path stroke="#000" strokeLinecap="round" strokeLinejoin="round" d="m22.92 14.02-8.38-8.39-8.39 8.39" />
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
+    <g strokeWidth={1.2} clipPath="url(#a)">
+      <path stroke="#000" strokeLinecap="round" strokeLinejoin="round" d="m20.072 12.183-6.983-6.992-6.992 6.992" />
       <path
         stroke="#000"
         strokeLinecap="square"
         strokeMiterlimit={10}
-        d="M21.35 13.44v6.92c0 1.39-1.36 2.51-3.03 2.51h-7.57c-1.67 0-3.03-1.13-3.03-2.51v-6.92"
+        d="M18.764 11.7v5.767c0 1.158-1.134 2.092-2.525 2.092H9.93c-1.391 0-2.525-.942-2.525-2.092V11.7"
       />
       <path
         stroke="#E70050"
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M10.27 3.209H1.06M9.94 5.43 12 3.21 9.94 1"
+        d="M9.53 3.175H1.855M9.255 5.025l1.717-1.85-1.717-1.841"
       />
     </g>
     <defs>
       <clipPath id="a">
-        <path fill="#fff" d="M0 0h24v24H0z" />
+        <path fill="#fff" d="M.972.5h20v20h-20z" />
       </clipPath>
     </defs>
   </svg>
