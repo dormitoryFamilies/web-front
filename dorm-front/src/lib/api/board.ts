@@ -33,7 +33,7 @@ export const putArticle = async (data: ArticlePostType, articleId: string | stri
   }
 };
 
-export const deleteArticle = async (articleId: string | string[]) => {
+export const deleteArticle = async (articleId: number | string | string[]) => {
   try {
     const response = await client.delete(`/articles/${articleId}`, {
       headers: {

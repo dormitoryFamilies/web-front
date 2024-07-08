@@ -52,7 +52,7 @@ export const selectedCommentIdAtom = atom<number>({
 });
 
 //선택된 commentId
-export const selectedArticleIdAtom = atom<string | string[]>({
+export const selectedArticleIdAtom = atom<number | string | string[]>({
   key: "selectedArticleIdAtom",
   default: "",
 });
