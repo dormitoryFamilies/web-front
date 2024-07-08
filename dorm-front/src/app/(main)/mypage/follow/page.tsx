@@ -100,9 +100,17 @@ const MyPageFollow = () => {
     }
   };
 
+  //뒤로가기
+  const onBack = () => {
+    router.push("/mypage");
+  };
+
   return (
     <div className={"min-h-screen"}>
-      <Header headerType={"dynamic"} title={followType === "팔로워" ? "팔로워 목록" : "팔로잉 목록"}></Header>
+      <Header
+        headerType={"dynamic"}
+        title={followType === "팔로워" ? "팔로워 목록" : "팔로잉 목록"}
+        onBack={onBack}></Header>
       <div className={"h-[60px]"} />
       <MyPageFollowMenu
         followType={followType}
