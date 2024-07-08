@@ -15,7 +15,7 @@ import Header from "@/components/common/Header";
 import { postArticle, postArticleImage } from "@/lib/api/board";
 import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
-import { DORM_LIST } from "@/utils/dorm";
+import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
 const Write = () => {
   const [postData, setPostData] = useRecoilState(postDataState);
@@ -118,7 +118,7 @@ const Write = () => {
       <form onSubmit={handleSubmit} className={"relative"}>
         <div className="flex flex-col m-5 gap-y-5">
           <div className="flex justify-between gap-x-4">
-            <DormTypeFilter content={DORM_LIST} title={"기숙사"} />
+            <DormTypeFilter content={ARTICLE_DORM_LIST} title={"기숙사"} />
             <BoardTypeFilter content={BOARD_TYPE_LIST} title={"게시판"} />
           </div>
           <TitleInput essential={true} numberOfCharacters={20} label={"제목"} placeholder={"제목을 입력해주세요."} />

@@ -44,3 +44,9 @@ export interface EditMyProfileType {
   memberDormitoryType: string;
   profileUrl: string;
 }
+
+////////////////////////////////////////////////////////
+
+export type InterestListType = "둠즈" | "게시판";
+
+export type DormitoryType = "기숙사" | "본관" | "양성재" | "양진재";
