@@ -11,7 +11,7 @@ import ImageInput from "@/components/board/ImageInput";
 import TagInput from "@/components/board/TagInput";
 import TitleInput from "@/components/board/TitleInput";
 import Header from "@/components/common/Header";
-import { deleteArticleImage, postArticle, postArticleImage, putArticle } from "@/lib/api/board";
+import { deleteArticleImage, postArticleImage, putArticle } from "@/lib/api/board";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
 import {
   deleteS3UrlListAtom,

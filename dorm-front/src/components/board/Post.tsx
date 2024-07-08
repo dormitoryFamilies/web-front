@@ -6,7 +6,6 @@ import * as React from "react";
 import { SVGProps } from "react";
 
 import Button from "@/components/common/Button";
-import { ResponseArticleType } from "@/types/board/type";
 
 interface Props {
   articleId: number;

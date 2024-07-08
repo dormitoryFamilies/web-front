@@ -1,21 +1,20 @@
 "use client";
-import * as React from "react";
-
-import Header from "@/components/common/Header";
 import { useRouter } from "next/navigation";
-import InterestListMenu from "@/components/mypage/InterestListMenu";
-import FilterMenu from "@/components/board/FilterMenu";
+import * as React from "react";
 import { SVGProps, useCallback, useEffect, useState } from "react";
-import { ArticleType, BoardSortType, BoardStatusType, BoardType } from "@/types/board/type";
-import { DormitoryType } from "@/types/mypage/type";
-import Button from "@/components/common/Button";
-import InterestListDormitoryFilter from "@/components/mypage/InterestListDormitoryFilter";
-import { dormitoryFilterContents, sortFilterContents, statusFilterContents } from "@/utils/board/filterContent";
+import { useInView } from "react-intersection-observer";
+
 import ArticleSortFilter from "@/components/board/ArticleSortFilter";
 import ArticleStatusFilter from "@/components/board/ArticleStatusFilter";
-import useMyComments from "@/lib/hooks/useMyComments";
+import FilterMenu from "@/components/board/FilterMenu";
 import Post from "@/components/board/Post";
-import { useInView } from "react-intersection-observer";
+import Button from "@/components/common/Button";
+import Header from "@/components/common/Header";
+import InterestListDormitoryFilter from "@/components/mypage/InterestListDormitoryFilter";
+import useMyComments from "@/lib/hooks/useMyComments";
+import { ArticleType, BoardSortType, BoardStatusType, BoardType } from "@/types/board/type";
+import { DormitoryType } from "@/types/mypage/type";
+import { dormitoryFilterContents, sortFilterContents, statusFilterContents } from "@/utils/board/filterContent";
 
 const MyComment = () => {
   const [ref, inView] = useInView();
