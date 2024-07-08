@@ -6,6 +6,7 @@ import * as React from "react";
 import { SVGProps } from "react";
 
 import Button from "@/components/common/Button";
+import { ResponseArticleType } from "@/types/board/type";
 
 interface Props {
   articleId: number;
@@ -21,6 +22,7 @@ interface Props {
   thumbnailUrl: string;
   viewCount: number;
   profileUrl: string;
+  bottomElement?: React.JSX.Element | null;
 }
 const Post = (props: Props) => {
   const {
@@ -37,6 +39,7 @@ const Post = (props: Props) => {
     createdDate,
     thumbnailUrl,
     profileUrl,
+    bottomElement,
   } = props;
   const router = useRouter();
 
@@ -69,8 +72,8 @@ const Post = (props: Props) => {
   }
 
   return (
-    <div onClick={() => onMove(articleId)} className="rounded-[20px] p-4 border-[1px] border-gray1">
-      <div className="flex flex-col gap-y-2">
+    <div className="rounded-[20px] p-4 border-[1px] border-gray1">
+      <div onClick={() => onMove(articleId)} className="flex flex-col gap-y-2">
         {/*태그*/}
         <div className="flex gap-x-2">
           <Button className={"board-type-tag"}>{boardType}</Button>
@@ -128,6 +131,8 @@ const Post = (props: Props) => {
           </div>
         </div>
       </div>
+      {/*수정, 삭제버튼*/}
+      {bottomElement ? bottomElement : null}
     </div>
   );
 };
