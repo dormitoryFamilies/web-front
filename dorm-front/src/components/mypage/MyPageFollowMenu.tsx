@@ -1,12 +1,14 @@
-import { FollowType } from "@/types/mypage/type";
+import { FollowType, MemberProfile } from "@/types/mypage/type";
 
 interface Props {
   followType: FollowType;
   setFollowType: React.Dispatch<React.SetStateAction<FollowType>>;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchResults: React.Dispatch<React.SetStateAction<MemberProfile[] | undefined>>;
 }
 
 const MyPageFollowMenu = (props: Props) => {
-  const { followType, setFollowType } = props;
+  const { followType, setFollowType, setSearchValue, setSearchResults } = props;
 
   const changeBoardType = (type: FollowType) => {
     setFollowType(type);
@@ -18,6 +20,8 @@ const MyPageFollowMenu = (props: Props) => {
         <button
           onClick={() => {
             changeBoardType("팔로워");
+            setSearchValue("");
+            setSearchResults(undefined);
           }}
           className={
             followType === "팔로워"
@@ -29,6 +33,8 @@ const MyPageFollowMenu = (props: Props) => {
         <button
           onClick={() => {
             changeBoardType("팔로잉");
+            setSearchValue("");
+            setSearchResults(undefined);
           }}
           className={
             followType === "팔로잉"
@@ -40,5 +46,5 @@ const MyPageFollowMenu = (props: Props) => {
       </div>
     </>
   );
-}
+};
 export default MyPageFollowMenu;
