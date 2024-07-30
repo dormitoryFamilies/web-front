@@ -3,14 +3,15 @@ import React, { useState } from "react";
 
 import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
+import { LateNightSnackType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const Food = (props: Props) => {
   const {onNext, onBefore} = props;
-  const [clickedMidNightMeal, setClickedMidNightMeal] = useState<"" | "안먹어요" | "가끔" | "자주">("");
-  const [clickedInRoomMidnightMeal, setClickedInRoomMidnightMeal] = useState<"" | "괜찮아요" | "싫어요">("");
+  const [clickedMidNightMeal, setClickedMidNightMeal] = useState<LateNightSnackType>("");
+  const [clickedInRoomMidnightMeal, setClickedInRoomMidnightMeal] = useState<>("");
 
   const midNightMeal = ["안먹어요", "가끔", "자주"];
   const inRoomMidnightMeal = ["괜찮아요", "싫어요"];

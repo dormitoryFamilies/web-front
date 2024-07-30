@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import Header from "@/components/room-mate/Header";
 import Image from "next/image";
 import Item from "@/components/room-mate/Item";
+import { DrinkingFrequencyType, SmokingType } from "@/types/room-mate/type";
 
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const SmokingAndDrinking = (props: Props) => {
-  const [clickedSmokingStatus, setClickedSmokingStatus] = useState<"" | "비흡연" | "흡연">("");
-  const [clickedDrinkingFrequency, setClickedDrinkingFrequency] = useState<"" | "없음" | "가끔" | "종종" | "자주">("");
+  const [clickedSmokingStatus, setClickedSmokingStatus] = useState<SmokingType>("");
+  const [clickedDrinkingFrequency, setClickedDrinkingFrequency] = useState<DrinkingFrequencyType>("");
   const [afterAlcoholBehavior, setAfterAlcoholBehavior] = useState<string>("");
   const smokingStatus = ["비흡연", "흡연"];
   const drinkingFrequency = ["없음", "가끔", "종종", "자주"];

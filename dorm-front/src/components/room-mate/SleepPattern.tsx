@@ -5,6 +5,10 @@ import React, { useState } from "react";
 
 import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
+import { SleepingHabitType, SleepingSensitivityType, SleepTimeType, WakeUpTimeType } from "@/types/room-mate/type";
+import { bedTime, sleepHabits, sleepSensitivity, wakeUpTime } from "@/utils/room-mate/lifestyles";
+import { useRecoilState } from "recoil";
+import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 
 interface Props {
   onNext?: React.Dispatch<React.SetStateAction<string>>;
@@ -12,67 +16,15 @@ interface Props {
 }
 const SleepPattern = (props: Props) => {
   const { onNext, onBefore } = props;
-  const [clickedBedTime, setClickedBedTime] = useState<
-    | ""
-    | "오후 9시 이전"
-    | "오후 9시"
-    | "오후 10시"
-    | "오후 11시"
-    | "오전 12시"
-    | "오전 1시"
-    | "오전 2시"
-    | "오전 3시"
-    | "오전 3시 이후"
-  >("");
-  const [clickedWakeUpTime, setClickedWakeUpTime] = useState<
-    | ""
-    | "오전 4시 이전"
-    | "오전 4시"
-    | "오전 5시"
-    | "오전 6시"
-    | "오전 7시"
-    | "오전 8시"
-    | "오전 9시"
-    | "오전 10시"
-    | "오전 10시 이후"
-  >("");
-  const [clickedSleepHabits, setClickedSleepHabits] = useState<
-    | ""
-    | "이갈이"
-    | "코골이"
-    | "잠꼬대"
-    | "없음"
-  >("");
-  const [clickedSleepSensitivity, setSleepSensitivity] = useState<
-    | ""
-    | "어두움"
-    | "밝음"
-    | "없음"
-  >("");
-  const bedTime = [
-    "오후 9시 이전",
-    "오후 9시",
-    "오후 10시",
-    "오후 11시",
-    "오전 12시",
-    "오전 1시",
-    "오전 2시",
-    "오전 3시",
-    "오전 3시 이후",
-  ];
-  const wakeUpTime = [
-    "오전 4시 이전",
-    "오전 4시",
-    "오전 5시",
-    "오전 6시",
-    "오전 7시",
-    "오전 8시",
-    "오전 9시",
-    "오전 10시",
-    "오전 10시 이후",
-  ];
-  const sleepHabits = ["이갈이", "코골이", "잠꼬대", "없음"];
-  const sleepSensitivity = ["어두움", "밝음", "없음"];
+  const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
+
+  const updateLifeStylePostData = (lifeStyleData) => {
+    setLifeStylePostData((prevState) => ({
+      ...prevState,
+      ...lifeStyleData,
+    }));
+  };
+
   return (
     <div className={"flex flex-col p-5"}>
       <Header />
@@ -106,31 +58,31 @@ const SleepPattern = (props: Props) => {
         <Item
           title={"취침시간"}
           data={bedTime}
+          onClick={updateLifeStylePostData}
           className={"grid-cols-3"}
-          setIsClickedItem={setClickedBedTime}
-          isClickedItem={clickedBedTime}
+          isClickedItem={lifeStylePostData.sleepTime}
         />
         <Item
           title={"기상시간"}
           data={wakeUpTime}
+          onClick={updateLifeStylePostData}
           className={"grid-cols-3"}
-          setIsClickedItem={setClickedWakeUpTime}
-          isClickedItem={clickedWakeUpTime}
+          isClickedItem={lifeStylePostData.wakeUpTime}
         />
         <Item
           title={"잠버릇"}
           data={sleepHabits}
+          onClick={updateLifeStylePostData}
           className={"grid-cols-4"}
-          setIsClickedItem={setClickedSleepHabits}
-          isClickedItem={clickedSleepHabits}
+          isClickedItem={lifeStylePostData.sleepingHabit}
           secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
         />
         <Item
-          title={"기상시간"}
+          title={"잠귀"}
           data={sleepSensitivity}
+          onClick={updateLifeStylePostData}
           className={"grid-cols-3"}
-          setIsClickedItem={setSleepSensitivity}
-          isClickedItem={clickedSleepSensitivity}
+          isClickedItem={lifeStylePostData.sleepingSensitivity}
         />
         <button
           onClick={onNext}

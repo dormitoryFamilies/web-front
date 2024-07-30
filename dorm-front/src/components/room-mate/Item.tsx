@@ -6,11 +6,11 @@ interface Props {
   data: string[];
   className?: string;
   secondClassName?: string;
-  setIsClickedItem: React.Dispatch<React.SetStateAction<string>>;
+  onClick: (datum: string) => void;
   isClickedItem: string;
 }
 const Item = (props: Props) => {
-  const { title, data, className, secondClassName, setIsClickedItem, isClickedItem } = props;
+  const { title, data, className, secondClassName, isClickedItem, onClick } = props;
   return (
     <div className={"flex flex-col gap-y-2"}>
       <div className={"text-gray5 text-h4"}>{title}</div>
@@ -20,7 +20,7 @@ const Item = (props: Props) => {
             <button
               key={index}
               onClick={() => {
-                setIsClickedItem(datum);
+                onClick({});
               }}
               className={
                 isClickedItem === datum

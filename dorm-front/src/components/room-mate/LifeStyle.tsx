@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import Header from "@/components/room-mate/Header";
 import Image from "next/image";
 import Item from "@/components/room-mate/Item";
+import { CleaningFrequencyType, ShowerTimeType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
-const LifeStyle = (props:Props) => {
-  const {onNext, onBefore} = props;
-  const [clickedShowerTime, setClickedShowerTime] = useState<"" | "아침" | "저녁">("");
-  const [clickedCleaningFrequency, setClickedCleaningFrequency] = useState<"" | "바로바로" | "가끔" | "몰아서">("");
+const LifeStyle = (props: Props) => {
+  const { onNext, onBefore } = props;
+  const [clickedShowerTime, setClickedShowerTime] = useState<ShowerTimeType>("");
+  const [clickedCleaningFrequency, setClickedCleaningFrequency] = useState<CleaningFrequencyType>("");
 
   const showerTime = ["아침", "저녁"];
   const cleaningFrequency = ["바로바로", "가끔", "몰아서"];

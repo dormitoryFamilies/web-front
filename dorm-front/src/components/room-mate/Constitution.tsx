@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import Header from "@/components/room-mate/Header";
 import Image from "next/image";
 import Item from "@/components/room-mate/Item";
+import { HeatToleranceType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
-const Constitution = (props:Props) => {
-  const {onNext, onBefore} = props;
-  const [clickedHeatIndex, setClickedHeatIndex] = useState<"" | "적게 탐" | "조금 탐" | "많이 탐">("");
-  const [clickedColdIndex, setClickedColdIndex] = useState<"" | "적게 탐" | "조금 탐" | "많이 탐">("");
+const Constitution = (props: Props) => {
+  const { onNext, onBefore } = props;
+  const [clickedHeatIndex, setClickedHeatIndex] = useState<HeatToleranceType>("");
+  const [clickedColdIndex, setClickedColdIndex] = useState<HeatToleranceType>("");
 
   const heatIndex = ["적게 탐", "조금 탐", "많이 탐"];
   const coldIndex = ["적게 탐", "조금 탐", "많이 탐"];

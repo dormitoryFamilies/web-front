@@ -24,7 +24,7 @@ export default function page() {
         <div className={"h-[36px]"}></div>
       </div>
       <Link
-        href={"/onboarding"}
+        href={"http://43.202.254.127:8080/oauth2/authorization/kakao"}
         className={
           "absolute bottom-5 flex gap-x-2 items-center justify-center w-[90%] bg-[#F9E000] rounded-full font-semibold py-[14px]"
         }>
@@ -35,13 +35,7 @@ export default function page() {
   );
 }
 const LogoIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={253}
-    height={80}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={253} height={80} fill="none" {...props}>
     <path
       fill="#FF7E8D"
       d="M221.529 65.252a3.63 3.63 0 0 1-2.577-1.074c-1.42-1.42-1.42-3.732 0-5.169 4.294-4.294 6.408-8.637 6.276-12.931-.165-6.078-4.773-10.372-4.822-10.405a3.64 3.64 0 0 1-.281-5.153 3.64 3.64 0 0 1 5.153-.28c.28.247 6.986 6.358 7.25 15.656.181 6.391-2.659 12.552-8.423 18.315a3.7 3.7 0 0 1-2.576 1.04"

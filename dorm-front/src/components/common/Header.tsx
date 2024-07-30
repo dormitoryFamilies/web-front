@@ -44,6 +44,14 @@ const Header = (props: Props) => {
             <AlarmIcon className="absolute right-5" />
           </>
         );
+      case "chattingHome":
+        return (
+          <>
+            <Logo />
+            <div className="text-h2 font-bold">{title}</div>
+            {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
+          </>
+        );
       case "dynamic":
         return (
           <>

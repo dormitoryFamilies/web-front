@@ -3,13 +3,14 @@ import React, { useState } from "react";
 
 import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
+import { LateNightSnackType, VisitHomeFrequencyType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const CycleToReturnHome = (props: Props) => {
   const {onNext, onBefore} = props;
-  const [clickedCycleToReturnHome, setClickedCycleToReturnHome] = useState<"" | "안먹어요" | "가끔" | "자주">("");
+  const [clickedCycleToReturnHome, setClickedCycleToReturnHome] = useState<VisitHomeFrequencyType>("");
 
   const cycleToReturnHome = ["거의안감", "2,3달에 한번", "1달에 한번", "주에 한번"];
   return (

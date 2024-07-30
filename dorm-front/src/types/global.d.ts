@@ -3,7 +3,7 @@ import React from "react";
 
 import { CollegeType } from "@/types/onboarding/type";
 
-export type HeaderType = "static" | "dynamic" | "search";
+export type HeaderType = "static" | "chattingHome" | "dynamic" | "search";
 
 export interface MenuList {
   id: number;

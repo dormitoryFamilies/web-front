@@ -2,14 +2,15 @@ import Header from "@/components/room-mate/Header";
 import Image from "next/image";
 import React, { useState } from "react";
 import Item from "@/components/room-mate/Item";
+import { ExerciseType, InsectToleranceType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const OtherLifestyles = (props: Props) => {
   const { onNext, onBefore} = props;
-  const [clickedBug, setClickedBug] = useState<"" | "잘잡아요" | "작은것만" | "못잡아요">("");
-  const [clickedExercise, setClickedExercise] = useState<"" | "안해요" | "긱사에서" | "헬스장에서">("");
+  const [clickedExercise, setClickedExercise] = useState<ExerciseType>("");
+  const [clickedBug, setClickedBug] = useState<InsectToleranceType>("");
 
   const bug = ["잘잡아요", "작은것만", "못잡아요"];
   const exercise = ["안해요", "긱사에서", "헬스장에서"];

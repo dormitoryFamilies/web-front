@@ -2,14 +2,15 @@ import Header from "@/components/room-mate/Header";
 import Image from "next/image";
 import Item from "@/components/room-mate/Item";
 import React, { useState } from "react";
+import { PerfumeUsageType, PhoneSoundType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const SoundAndPerfume = (props: Props) => {
   const { onNext, onBefore} = props;
-  const [clickedPhoneSound, setClickedPhoneSound] = useState<"" | "비흡연" | "흡연">("");
-  const [clickedPerfume, setClickedPerfume] = useState<"" | "비흡연" | "흡연">("");
+  const [clickedPhoneSound, setClickedPhoneSound] = useState<PhoneSoundType>("");
+  const [clickedPerfume, setClickedPerfume] = useState<PerfumeUsageType>("");
 
   const phoneSound = ["이어폰", "스피커", "유동적"];
   const perfume = ["미사용", "가끔", "자주"];

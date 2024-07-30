@@ -3,14 +3,15 @@ import Image from "next/image";
 import Header from "@/components/room-mate/Header";
 import React, { useState } from "react";
 import Item from "@/components/room-mate/Item";
+import { ExamPreparationType, StudyLocationType } from "@/types/room-mate/type";
 interface Props {
   onNext: React.Dispatch<React.SetStateAction<string>>;
   onBefore?: React.Dispatch<React.SetStateAction<string>>;
 }
 const Exam = (props: Props) => {
   const {onNext, onBefore} = props;
-  const [clickedStudySpace, setClickedStudySpace] = useState<"" | "기숙사" | "기숙사외" | "유동적">("");
-  const [clickedExam, setClickedExam] = useState<"" | "시험 준비" | "해당없어요">("");
+  const [clickedStudySpace, setClickedStudySpace] = useState<StudyLocationType>("");
+  const [clickedExam, setClickedExam] = useState<ExamPreparationType>("");
 
   const studySpace = ["기숙사", "기숙사외", "유동적"];
   const exam = ["시험 준비", "해당없어요"];

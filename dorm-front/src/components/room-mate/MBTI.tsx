@@ -8,7 +8,7 @@ interface Props {
 }
 const MBTI = (props: Props) => {
   const {onNext, onBefore} = props;
-  const [clickedMbti, setClickedMbti] = useState<"" | "E" | "I" | "S" | "N" | "F" | "T" | "P" | "J">("");
+  const [clickedMbti, setClickedMbti] = useState<>("");
   const mbti = ["E", "I", "S", "N", "F", "T", "P", "J"];
 
   return (

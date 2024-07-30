@@ -46,7 +46,7 @@ const useMyArticles = (
     isError: error,
     myArticleSize: size,
     setMyArticleSize: setSize,
-    mutate: mutate
+    mutate: mutate,
   };
 };
 export default useMyArticles;
