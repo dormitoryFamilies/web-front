@@ -9,6 +9,7 @@ import { SleepingHabitType, SleepingSensitivityType, SleepTimeType, WakeUpTimeTy
 import { bedTime, sleepHabits, sleepSensitivity, wakeUpTime } from "@/utils/room-mate/lifestyles";
 import { useRecoilState } from "recoil";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import SleepTimeSelectComponent from "@/components/room-mate/lifestyle/SleepTimeSelectComponent";
 
 interface Props {
   onNext?: React.Dispatch<React.SetStateAction<string>>;
@@ -55,13 +56,13 @@ const SleepPattern = (props: Props) => {
       </div>
 
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
-        <Item
-          title={"취침시간"}
-          data={bedTime}
-          onClick={updateLifeStylePostData}
+        <SleepTimeSelectComponent
+          sleepTimeContents={bedTime}
           className={"grid-cols-3"}
-          isClickedItem={lifeStylePostData.sleepTime}
-        />
+          title={"취침시간"}
+          setSelectedSleepTime={setLifeStylePostData}
+          selectedSleepTime={lifeStylePostData.sleepTime}
+        ></SleepTimeSelectComponent>
         <Item
           title={"기상시간"}
           data={wakeUpTime}

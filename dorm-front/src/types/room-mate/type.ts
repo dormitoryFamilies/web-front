@@ -52,13 +52,13 @@ export interface LifeStylePostType {
   cleaningFrequency: CleaningFrequencyType;
   heatTolerance: HeatToleranceType;
   coldTolerance: HeatToleranceType;
-  MBTI: MBTIType;
+  MBTI?: MBTIType;
   visitHomeFrequency: VisitHomeFrequencyType;
   lateNightSnack: LateNightSnackType;
   snackInRoom: SnackInRoomType;
   phoneSound: PhoneSoundType;
-  perfumeUsage: PerfumeUsageType;
-  studyLocation: StudyLocationType;
+  perfumeUsage?: PerfumeUsageType;
+  studyLocation?: StudyLocationType;
   examPreparation: ExamPreparationType;
   exercise: ExerciseType;
   insectTolerance: InsectToleranceType;

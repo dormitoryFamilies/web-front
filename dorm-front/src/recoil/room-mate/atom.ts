@@ -4,5 +4,25 @@ import { LifeStylePostType } from "@/types/room-mate/type";
 
 export const lifeStylePostAtom = atom<LifeStylePostType>({
   key: "lifeStylePostAtom",
-  default: {},
+  default: {
+    sleepTime: "",
+    wakeUpTime: "",
+    sleepingHabit: "",
+    sleepingSensitivity: "",
+    smoking: "",
+    drinkingFrequency: "",
+    drunkHabit: "",
+    showerTime: "",
+    showerDuration: "",
+    cleaningFrequency: "",
+    heatTolerance: "",
+    coldTolerance: "",
+    visitHomeFrequency: "",
+    lateNightSnack: "",
+    snackInRoom: "",
+    phoneSound: "",
+    examPreparation: "",
+    exercise: "",
+    insectTolerance: "",
+  },
 });

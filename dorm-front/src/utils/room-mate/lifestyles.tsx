@@ -1,4 +1,6 @@
-export const bedTime = [
+import { SleepTimeType } from "@/types/room-mate/type";
+
+export const bedTime: SleepTimeType[] = [
   "오후 9시 이전",
   "오후 9시",
   "오후 10시",
