@@ -27,7 +27,7 @@ const RoommateMatchEditor = () => {
 
   return (
     <div>
-      {step === "SleepPattern" && <SleepPattern onNext={() => setStep("SmokingDrinking")} />}
+      {step === "SleepPattern" && <SleepPattern setStep={setStep} />}
       {step === "SmokingDrinking" && (
         <SmokingAndDrinking onNext={() => setStep("LifeStyle")} onBefore={() => setStep("SleepPattern")} />
       )}

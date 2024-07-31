@@ -38,7 +38,10 @@ const Item = (props: Props) => {
 
   return (
     <div className={"flex flex-col gap-y-2"}>
-      <div className={"text-gray5 text-h4"}>{title}</div>
+      <div className={"text-gray5 text-h4"}>
+        {title}
+        {isRequired ? <span className={"text-primary ml-1"}>*</span> : null}
+      </div>
       <div className={twMerge("grid gap-2", className)}>
         {contents.map((content: RoomMateLifeStyleType, index: number) => {
           return (
