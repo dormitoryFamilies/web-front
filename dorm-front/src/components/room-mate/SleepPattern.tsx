@@ -116,9 +116,12 @@ const SleepPattern = (props: Props) => {
             setSelectedContent={setSleepingSensitivity}
             className={"grid-cols-2"}></Item>
           <button
+            disabled={sleepTime === "" || wakeUpTime === ""}
             onClick={handleNextClick}
             className={
-              "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:bg-primary hover:text-white transition"
+              sleepTime === "" || wakeUpTime === ""
+                ? "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+                : "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
             }>
             다음
           </button>
