@@ -43,6 +43,13 @@ const SleepPattern = (props: Props) => {
   const [sleepingSensitivity, setSleepingSensitivity] = useState<SleepingSensitivityType>("");
 
   const handleNextClick = () => {
+    setLifeStylePostData((prevState) => ({
+      ...prevState,
+      sleepTime: sleepTime,
+      wakeUpTime: wakeUpTime,
+      ...(sleepingHabit !== "" && { sleepingHabit: sleepingHabit }),
+      ...(sleepingSensitivity !== "" && { sleepingSensitivity: sleepingSensitivity }),
+    }));
     setStep("SmokingDrinking");
   };
 
