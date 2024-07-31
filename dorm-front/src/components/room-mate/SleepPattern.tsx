@@ -47,8 +47,8 @@ const SleepPattern = (props: Props) => {
       ...prevState,
       sleepTime: sleepTime,
       wakeUpTime: wakeUpTime,
-      ...(sleepingHabit !== "" && { sleepingHabit: sleepingHabit }),
-      ...(sleepingSensitivity !== "" && { sleepingSensitivity: sleepingSensitivity }),
+      sleepingHabit: sleepingHabit,
+      sleepingSensitivity: sleepingSensitivity,
     }));
     setStep("SmokingDrinking");
   };
@@ -102,24 +102,24 @@ const SleepPattern = (props: Props) => {
             className={"grid-cols-3"}
           />
           <Item
-            isRequired={false}
+            isRequired={true}
             title={"잠버릇"}
             contents={sleepHabitsContents}
             selectedContent={sleepingHabit}
             setSelectedContent={setSleepingHabit}
             className={"grid-cols-4"}></Item>
           <Item
-            isRequired={false}
+            isRequired={true}
             title={"잠귀"}
             contents={sleepSensitivityContents}
             selectedContent={sleepingSensitivity}
             setSelectedContent={setSleepingSensitivity}
             className={"grid-cols-2"}></Item>
           <button
-            disabled={sleepTime === "" || wakeUpTime === ""}
+            disabled={sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""}
             onClick={handleNextClick}
             className={
-              sleepTime === "" || wakeUpTime === ""
+              sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""
                 ? "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
                 : "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
             }>
