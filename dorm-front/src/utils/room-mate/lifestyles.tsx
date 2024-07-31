@@ -1,6 +1,6 @@
-import { SleepTimeType } from "@/types/room-mate/type";
+import { SleepingHabitType, SleepingSensitivityType, SleepTimeType, WakeUpTimeType } from "@/types/room-mate/type";
 
-export const bedTime: SleepTimeType[] = [
+export const bedTimeContents: SleepTimeType[] = [
   "오후 9시 이전",
   "오후 9시",
   "오후 10시",
@@ -12,7 +12,7 @@ export const bedTime: SleepTimeType[] = [
   "오전 3시 이후",
 ];
 
-export const wakeUpTime = [
+export const wakeUpTimeContents: WakeUpTimeType[] = [
   "오전 6시 이전",
   "오전 6시",
   "오전 7시",
@@ -24,6 +24,6 @@ export const wakeUpTime = [
   "오후 12시 이후",
 ];
 
-export const sleepHabits = ["이갈이", "코골이", "잠꼬대", "없음"];
+export const sleepHabitsContents: SleepingHabitType[] = ["이갈이", "코골이", "잠꼬대", "없음"];
 
-export const sleepSensitivity = ["어두움", "밝음", "없음"];
+export const sleepSensitivityContents: SleepingSensitivityType[] = ["어두움", "밝음"];

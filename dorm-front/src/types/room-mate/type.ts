@@ -1,3 +1,24 @@
+export type RoomMateLifeStyleType =
+  | SleepTimeType
+  | WakeUpTimeType
+  | SleepingHabitType
+  | SleepingSensitivityType
+  | SmokingType
+  | DrinkingFrequencyType
+  | ShowerTimeType
+  | ShowerDurationType
+  | CleaningFrequencyType
+  | HeatToleranceType
+  | MBTIType
+  | VisitHomeFrequencyType
+  | LateNightSnackType
+  | SnackInRoomType
+  | PhoneSoundType
+  | PerfumeUsageType
+  | StudyLocationType
+  | ExamPreparationType
+  | ExerciseType
+  | InsectToleranceType;
 export type SleepTimeType =
   | ""
   | "오후 9시 이전"

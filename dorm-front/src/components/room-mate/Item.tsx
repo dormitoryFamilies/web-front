@@ -1,36 +1,63 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
+import {
+  RoomMateLifeStyleType,
+  SleepingHabitType,
+  SleepingSensitivityType,
+  SleepTimeType,
+  WakeUpTimeType,
+} from "@/types/room-mate/type";
+
 interface Props {
   title: string;
-  data: string[];
+  contents: RoomMateLifeStyleType[];
   className?: string;
   secondClassName?: string;
-  onClick: (datum: string) => void;
-  isClickedItem: string;
+  selectedContent: RoomMateLifeStyleType;
+  setSelectedContent:
+    | React.Dispatch<React.SetStateAction<SleepTimeType>>
+    | React.Dispatch<React.SetStateAction<WakeUpTimeType>>
+    | React.Dispatch<React.SetStateAction<SleepingHabitType>>
+    | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>;
+  isRequired: boolean;
 }
 const Item = (props: Props) => {
-  const { title, data, className, secondClassName, isClickedItem, onClick } = props;
+  const { title, contents, className, secondClassName, selectedContent, setSelectedContent, isRequired } = props;
+  const updateSelectedSleepTime = (content: RoomMateLifeStyleType) => {
+    setSelectedContent(content);
+  };
+
+  const resetSelectedSleepTime = (content: RoomMateLifeStyleType) => {
+    if (selectedContent === content) {
+      setSelectedContent("");
+    } else {
+      updateSelectedSleepTime(content);
+    }
+  };
+
   return (
     <div className={"flex flex-col gap-y-2"}>
       <div className={"text-gray5 text-h4"}>{title}</div>
       <div className={twMerge("grid gap-2", className)}>
-        {data.map((datum: string, index: number) => {
+        {contents.map((content: RoomMateLifeStyleType, index: number) => {
           return (
             <button
               key={index}
               onClick={() => {
-                onClick({});
+                resetSelectedSleepTime(content);
               }}
               className={
-                isClickedItem === datum
+                selectedContent === content
                   ? twMerge(
                       "py-[9px] px-[10px] rounded-[12px] border-[1px] border-primaryMid bg-secondary text-primary",
                       secondClassName,
                     )
                   : twMerge("py-[9px] px-[10px] rounded-[12px] border-[1px] border-gray1", secondClassName)
               }>
-              <span className={isClickedItem === datum ? "text-h5 text-primary" : "text-h5 text-gray4 "}>{datum}</span>
+              <span className={selectedContent === content ? "text-h5 text-primary" : "text-h5 text-gray4 "}>
+                {content}
+              </span>
             </button>
           );
         })}
