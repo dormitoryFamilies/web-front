@@ -45,11 +45,11 @@ const CycleToReturnHome = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"본가가는 빈도"}
-          data={cycleToReturnHome}
+          contents={cycleToReturnHome}
           className={"grid-cols-4"}
           secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
           setIsClickedItem={setClickedCycleToReturnHome}
-          isClickedItem={clickedCycleToReturnHome}
+          selectedContent={clickedCycleToReturnHome}
         />
         <button
           onClick={onNext}

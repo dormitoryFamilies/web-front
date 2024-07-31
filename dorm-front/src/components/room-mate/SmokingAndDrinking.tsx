@@ -46,18 +46,18 @@ const SmokingAndDrinking = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"흡연여부"}
-          data={smokingStatus}
+          contents={smokingStatus}
           className={"grid-cols-2"}
           setIsClickedItem={setClickedSmokingStatus}
-          isClickedItem={clickedSmokingStatus}
+          selectedContent={clickedSmokingStatus}
         />
         <Item
           title={"음주빈도"}
-          data={drinkingFrequency}
+          contents={drinkingFrequency}
           className={"grid-cols-4"}
           secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
           setIsClickedItem={setClickedDrinkingFrequency}
-          isClickedItem={clickedDrinkingFrequency}
+          selectedContent={clickedDrinkingFrequency}
         />
         <div className={"flex flex-col gap-y-2"}>
           <label className={"text-gray5 text-h4"}>주사</label>

@@ -43,11 +43,11 @@ const MBTI = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"MBTI"}
-          data={mbti}
+          contents={mbti}
           className={"grid-cols-4"}
           secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
           setIsClickedItem={setClickedMbti}
-          isClickedItem={clickedMbti}
+          selectedContent={clickedMbti}
         />
         <button
           onClick={onNext}

@@ -47,17 +47,17 @@ const LifeStyle = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"샤워시간대"}
-          data={showerTime}
+          contents={showerTime}
           className={"grid-cols-4"}
           setIsClickedItem={setClickedShowerTime}
-          isClickedItem={clickedShowerTime}
+          selectedContent={clickedShowerTime}
         />
         <Item
           title={"청소"}
-          data={cleaningFrequency}
+          contents={cleaningFrequency}
           className={"grid-cols-4"}
           setIsClickedItem={setClickedCleaningFrequency}
-          isClickedItem={clickedCleaningFrequency}
+          selectedContent={clickedCleaningFrequency}
         />
         <button
           onClick={onNext}

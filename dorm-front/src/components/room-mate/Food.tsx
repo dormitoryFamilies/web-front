@@ -47,17 +47,17 @@ const Food = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"야식"}
-          data={midNightMeal}
+          contents={midNightMeal}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedMidNightMeal}
-          isClickedItem={clickedMidNightMeal}
+          selectedContent={clickedMidNightMeal}
         />
         <Item
           title={"방 안에서"}
-          data={inRoomMidnightMeal}
+          contents={inRoomMidnightMeal}
           className={"grid-cols-2"}
           setIsClickedItem={setClickedInRoomMidnightMeal}
-          isClickedItem={clickedInRoomMidnightMeal}
+          selectedContent={clickedInRoomMidnightMeal}
         />
         <button
           onClick={onNext}

@@ -41,17 +41,17 @@ const OtherLifestyles = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"운동"}
-          data={exercise}
+          contents={exercise}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedExercise}
-          isClickedItem={clickedExercise}
+          selectedContent={clickedExercise}
         />
         <Item
           title={"벌레"}
-          data={bug}
+          contents={bug}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedBug}
-          isClickedItem={clickedBug}
+          selectedContent={clickedBug}
         />
         <button
           onClick={onNext}

@@ -47,17 +47,17 @@ const Constitution = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"더위"}
-          data={heatIndex}
+          contents={heatIndex}
           className={"grid-cols-4"}
           setIsClickedItem={setClickedHeatIndex}
-          isClickedItem={clickedHeatIndex}
+          selectedContent={clickedHeatIndex}
         />
         <Item
           title={"추위"}
-          data={coldIndex}
+          contents={coldIndex}
           className={"grid-cols-4"}
           setIsClickedItem={setClickedColdIndex}
-          isClickedItem={clickedColdIndex}
+          selectedContent={clickedColdIndex}
         />
         <button
           onClick={onNext}

@@ -46,17 +46,17 @@ const SoundAndPerfume = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"휴대폰 소리"}
-          data={phoneSound}
+          contents={phoneSound}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedPhoneSound}
-          isClickedItem={clickedPhoneSound}
+          selectedContent={clickedPhoneSound}
         />
         <Item
           title={"향수"}
-          data={perfume}
+          contents={perfume}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedPerfume}
-          isClickedItem={clickedPerfume}
+          selectedContent={clickedPerfume}
         />
         <button
           onClick={onNext}

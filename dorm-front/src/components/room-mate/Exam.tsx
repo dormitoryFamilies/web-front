@@ -42,17 +42,17 @@ const Exam = (props: Props) => {
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
         <Item
           title={"공부장소"}
-          data={studySpace}
+          contents={studySpace}
           className={"grid-cols-3"}
           setIsClickedItem={setClickedStudySpace}
-          isClickedItem={clickedStudySpace}
+          selectedContent={clickedStudySpace}
         />
         <Item
           title={"음주빈도"}
-          data={exam}
+          contents={exam}
           className={"grid-cols-2"}
           setIsClickedItem={setClickedExam}
-          isClickedItem={clickedExam}
+          selectedContent={clickedExam}
         />
         <button
           onClick={onNext}
