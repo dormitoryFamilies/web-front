@@ -51,10 +51,6 @@ const SleepPattern = (props: Props) => {
       <Header />
       <RequirementBanner />
       <div className={"flex flex-col p-5"}>
-
-        <div>
-
-        </div>
         <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>
           <div className={"flex flex-col gap-y-2"}>
             <div className={"flex justify-center"}>
