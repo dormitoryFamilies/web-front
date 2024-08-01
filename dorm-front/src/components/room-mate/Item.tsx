@@ -2,8 +2,9 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
+  CleaningFrequencyType,
   DrinkingFrequencyType,
-  RoomMateLifeStyleType,
+  RoomMateLifeStyleType, ShowerDurationType, ShowerTimeType,
   SleepingHabitType,
   SleepingSensitivityType,
   SleepTimeType, SmokingType,
@@ -22,7 +23,10 @@ interface Props {
     | React.Dispatch<React.SetStateAction<SleepingHabitType>>
     | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>
     | React.Dispatch<React.SetStateAction<SmokingType>>
-    | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>;
+    | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>
+    | React.Dispatch<React.SetStateAction<ShowerTimeType>>
+    | React.Dispatch<React.SetStateAction<ShowerDurationType>>
+    | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>;
   isRequired: boolean;
 }
 const Item = (props: Props) => {
