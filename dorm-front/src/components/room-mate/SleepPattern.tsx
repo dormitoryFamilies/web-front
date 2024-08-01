@@ -8,7 +8,13 @@ import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { SleepingHabitType, SleepingSensitivityType, SleepTimeType, WakeUpTimeType } from "@/types/room-mate/type";
+import {
+  RoomMateLifeStyleStepType,
+  SleepingHabitType,
+  SleepingSensitivityType,
+  SleepTimeType,
+  WakeUpTimeType,
+} from "@/types/room-mate/type";
 import {
   bedTimeContents,
   sleepHabitsContents,
@@ -17,21 +23,7 @@ import {
 } from "@/utils/room-mate/lifestyles";
 
 interface Props {
-  setStep: Dispatch<
-    SetStateAction<
-      | "SleepPattern"
-      | "SmokingDrinking"
-      | "LifeStyle"
-      | "Constitution"
-      | "MBTI"
-      | "CycleToReturnHome"
-      | "Food"
-      | "SoundAndPerfume"
-      | "Exam"
-      | "OtherLifestyles"
-      | "Done"
-    >
-  >;
+  setStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 
 const SleepPattern = (props: Props) => {

@@ -11,7 +11,6 @@ export const lifeStylePostAtom = atom<LifeStylePostType>({
     sleepingSensitivity: "",
     smoking: "",
     drinkingFrequency: "",
-    drunkHabit: "",
     showerTime: "",
     showerDuration: "",
     cleaningFrequency: "",

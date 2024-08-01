@@ -1,4 +1,11 @@
-import { SleepingHabitType, SleepingSensitivityType, SleepTimeType, WakeUpTimeType } from "@/types/room-mate/type";
+import {
+  DrinkingFrequencyType,
+  SleepingHabitType,
+  SleepingSensitivityType,
+  SleepTimeType,
+  SmokingType,
+  WakeUpTimeType,
+} from "@/types/room-mate/type";
 
 export const bedTimeContents: SleepTimeType[] = [
   "오후 9시 이전",
@@ -27,3 +34,5 @@ export const wakeUpTimeContents: WakeUpTimeType[] = [
 export const sleepHabitsContents: SleepingHabitType[] = ["이갈이", "코골이", "잠꼬대", "없음"];
 
 export const sleepSensitivityContents: SleepingSensitivityType[] = ["어두움", "밝음"];
+export const smokingStatusContents: SmokingType[] = ["비흡연", "흡연"];
+export const drinkingFrequencyContents: DrinkingFrequencyType[] = ["없음", "가끔", "종종", "자주"];

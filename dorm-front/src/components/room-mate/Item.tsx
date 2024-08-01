@@ -2,10 +2,11 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
+  DrinkingFrequencyType,
   RoomMateLifeStyleType,
   SleepingHabitType,
   SleepingSensitivityType,
-  SleepTimeType,
+  SleepTimeType, SmokingType,
   WakeUpTimeType,
 } from "@/types/room-mate/type";
 
@@ -19,7 +20,9 @@ interface Props {
     | React.Dispatch<React.SetStateAction<SleepTimeType>>
     | React.Dispatch<React.SetStateAction<WakeUpTimeType>>
     | React.Dispatch<React.SetStateAction<SleepingHabitType>>
-    | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>;
+    | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>
+    | React.Dispatch<React.SetStateAction<SmokingType>>
+    | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>;
   isRequired: boolean;
 }
 const Item = (props: Props) => {

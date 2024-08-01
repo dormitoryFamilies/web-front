@@ -1,3 +1,16 @@
+export type RoomMateLifeStyleStepType =
+  | "SleepPattern"
+  | "SmokingDrinking"
+  | "LifeStyle"
+  | "Constitution"
+  | "MBTI"
+  | "CycleToReturnHome"
+  | "Food"
+  | "SoundAndPerfume"
+  | "Exam"
+  | "OtherLifestyles"
+  | "Done";
+
 export type RoomMateLifeStyleType =
   | SleepTimeType
   | WakeUpTimeType
@@ -19,6 +32,7 @@ export type RoomMateLifeStyleType =
   | ExamPreparationType
   | ExerciseType
   | InsectToleranceType;
+
 export type SleepTimeType =
   | ""
   | "오후 9시 이전"

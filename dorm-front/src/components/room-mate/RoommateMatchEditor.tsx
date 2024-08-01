@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import Constitution from "@/components/room-mate/Constitution";
 import CycleToReturnHome from "@/components/room-mate/CycleToReturnHome";
@@ -10,27 +10,14 @@ import OtherLifestyles from "@/components/room-mate/OtherLifestyles";
 import SleepPattern from "@/components/room-mate/SleepPattern";
 import SmokingAndDrinking from "@/components/room-mate/SmokingAndDrinking";
 import SoundAndPerfume from "@/components/room-mate/SoundAndPerfume";
+import { RoomMateLifeStyleStepType } from "@/types/room-mate/type";
 const RoommateMatchEditor = () => {
-  const [step, setStep] = useState<
-    | "SleepPattern"
-    | "SmokingDrinking"
-    | "LifeStyle"
-    | "Constitution"
-    | "MBTI"
-    | "CycleToReturnHome"
-    | "Food"
-    | "SoundAndPerfume"
-    | "Exam"
-    | "OtherLifestyles"
-    | "Done"
-  >("SleepPattern");
+  const [step, setStep] = useState<RoomMateLifeStyleStepType>("SleepPattern");
 
   return (
     <div>
       {step === "SleepPattern" && <SleepPattern setStep={setStep} />}
-      {step === "SmokingDrinking" && (
-        <SmokingAndDrinking onNext={() => setStep("LifeStyle")} onBefore={() => setStep("SleepPattern")} />
-      )}
+      {step === "SmokingDrinking" && <SmokingAndDrinking setStep={setStep} />}
       {step === "LifeStyle" && (
         <LifeStyle onNext={() => setStep("Constitution")} onBefore={() => setStep("SmokingDrinking")} />
       )}
