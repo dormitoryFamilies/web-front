@@ -1,6 +1,8 @@
 import {
   CleaningFrequencyType,
-  DrinkingFrequencyType, ShowerTimeType,
+  DrinkingFrequencyType, ExtrovertOrIntrovertType,
+  HeatToleranceType, HeterosexualOrEmotionalType, IntuitiveOrThinkingType, PlannedOrSpontaneousType,
+  ShowerTimeType,
   SleepingHabitType,
   SleepingSensitivityType,
   SleepTimeType,
@@ -40,3 +42,11 @@ export const drinkingFrequencyContents: DrinkingFrequencyType[] = ["없음", "�
 
 export const showerTimeContents: ShowerTimeType[] = ["아침", "저녁"];
 export const cleaningFrequencyContents: CleaningFrequencyType[] = ["바로바로", "가끔", "몰아서"];
+
+export const heatToleranceContents: HeatToleranceType[] = ["적게 탐", "조금 탐", "많이 탐"];
+export const coldToleranceContents: HeatToleranceType[] = ["적게 탐", "조금 탐", "많이 탐"];
+
+export const extrovertOrIntrovertContents: ExtrovertOrIntrovertType[] = ["E", "I"];
+export const intuitiveOrThinkingContents: IntuitiveOrThinkingType[] = ["S", "N"];
+export const heterosexualOrEmotionalContents: HeterosexualOrEmotionalType[] = ["T", "F"];
+export const plannedOrSpontaneousContents: PlannedOrSpontaneousType[] = ["J", "P"];

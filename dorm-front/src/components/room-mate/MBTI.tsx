@@ -1,15 +1,50 @@
-import React, { useState } from "react";
-import Header from "@/components/room-mate/Header";
 import Image from "next/image";
-import Item from "@/components/room-mate/Item";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+
+import Header from "@/components/room-mate/Header";
+import MBTIItem from "@/components/room-mate/MBTIItem";
+import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  ExtrovertOrIntrovertType,
+  HeterosexualOrEmotionalType,
+  IntuitiveOrThinkingType,
+  PlannedOrSpontaneousType,
+  RoomMateLifeStyleStepType,
+} from "@/types/room-mate/type";
 interface Props {
-  onNext: React.Dispatch<React.SetStateAction<string>>;
-  onBefore?: React.Dispatch<React.SetStateAction<string>>;
+  setStep: React.Dispatch<React.SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const MBTI = (props: Props) => {
-  const {onNext, onBefore} = props;
-  const [clickedMbti, setClickedMbti] = useState<>("");
-  const mbti = ["E", "I", "S", "N", "F", "T", "P", "J"];
+  const { setStep } = props;
+  const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
+  const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<ExtrovertOrIntrovertType>("");
+  const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<IntuitiveOrThinkingType>("");
+  const [heterosexualOrEmotional, setHeterosexualOrEmotional] = useState<HeterosexualOrEmotionalType>("");
+  const [plannedOrSpontaneous, setPlannedOrSpontaneous] = useState<PlannedOrSpontaneousType>("");
+  const [selectedMBTI, setSelectedMBTI] = useState<string>("");
+  const [updateMBTITrigger, setUpdateMBTITrigger] = useState(false);
+
+  const updateMBTI = () => {
+    setSelectedMBTI(extrovertOrIntrovert + intuitiveOrThinking + heterosexualOrEmotional + plannedOrSpontaneous);
+    setUpdateMBTITrigger(true);
+  };
+
+  const handleNextClick = () => {
+    setLifeStylePostData((prevState) => ({
+      ...prevState,
+      ...(selectedMBTI !== "" && { MBTI: selectedMBTI }),
+    }));
+    setStep("CycleToReturnHome");
+    setUpdateMBTITrigger(false);
+  };
+
+  useEffect(() => {
+    if (updateMBTITrigger) {
+      handleNextClick();
+      setUpdateMBTITrigger(false);
+    }
+  }, [updateMBTITrigger, selectedMBTI]);
 
   return (
     <div className={"flex flex-col p-5"}>
@@ -29,30 +64,59 @@ const MBTI = (props: Props) => {
 
         <div className={"flex flex-col items-center justify-center"}>
           <div className={"relative w-[200px] h-[140px]"}>
-            <Image
-              src={"/room-mate/MBTI.png"}
-              alt={"/room-mate/MBTI.png"}
-              className={"absolute object-cover"}
-              fill
-            />
+            <Image src={"/room-mate/MBTI.png"} alt={"/room-mate/MBTI.png"} className={"absolute object-cover"} fill />
           </div>
         </div>
         <div className={"text-h3 font-semibold"}>나의 MBTI는?</div>
       </div>
 
       <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
-        <Item
-          title={"MBTI"}
-          contents={mbti}
-          className={"grid-cols-4"}
-          secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
-          setIsClickedItem={setClickedMbti}
-          selectedContent={clickedMbti}
-        />
+        <div className={"flex flex-col gap-y-2"}>
+          <div className={"text-gray5 text-h4"}>MBTI</div>
+          <div className={"flex gap-x-3"}>
+            <MBTIItem
+              selectedContent={extrovertOrIntrovert}
+              contents={extrovertOrIntrovertContents}
+              setSelectedContent={setExtrovertOrIntrovert}></MBTIItem>
+            <MBTIItem
+              selectedContent={intuitiveOrThinking}
+              contents={intuitiveOrThinkingContents}
+              setSelectedContent={setIntuitiveOrThinking}></MBTIItem>
+            <MBTIItem
+              selectedContent={heterosexualOrEmotional}
+              contents={heterosexualOrEmotionalContents}
+              setSelectedContent={setHeterosexualOrEmotional}></MBTIItem>
+            <MBTIItem
+              selectedContent={plannedOrSpontaneous}
+              contents={plannedOrSpontaneousContents}
+              setSelectedContent={setPlannedOrSpontaneous}></MBTIItem>
+          </div>
+        </div>
         <button
-          onClick={onNext}
+          disabled={
+            !(
+              (extrovertOrIntrovert === "" &&
+                intuitiveOrThinking === "" &&
+                heterosexualOrEmotional === "" &&
+                plannedOrSpontaneous === "") ||
+              (extrovertOrIntrovert !== "" &&
+                intuitiveOrThinking !== "" &&
+                heterosexualOrEmotional !== "" &&
+                plannedOrSpontaneous !== "")
+            )
+          }
+          onClick={updateMBTI}
           className={
-            "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:bg-primary hover:text-white transition"
+            (extrovertOrIntrovert === "" &&
+              intuitiveOrThinking === "" &&
+              heterosexualOrEmotional === "" &&
+              plannedOrSpontaneous === "") ||
+            (extrovertOrIntrovert !== "" &&
+              intuitiveOrThinking !== "" &&
+              heterosexualOrEmotional !== "" &&
+              plannedOrSpontaneous !== "")
+              ? "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+              : "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
           }>
           다음
         </button>

@@ -63,7 +63,29 @@ export type ShowerTimeType = "" | "아침" | "저녁";
 export type ShowerDurationType = string;
 export type CleaningFrequencyType = "" | "바로바로" | "가끔" | "몰아서";
 export type HeatToleranceType = "" | "적게 탐" | "조금 탐" | "많이 탐";
-export type MBTIType = "" | "E" | "I" | "S" | "N" | "F" | "T" | "P" | "J";
+//MBTI
+export type ExtrovertOrIntrovertType = "" | "E" | "I";
+export type IntuitiveOrThinkingType = "" | "S" | "N";
+export type HeterosexualOrEmotionalType = "" | "T" | "F";
+export type PlannedOrSpontaneousType = "" | "J" | "P";
+export type MBTIType =
+  | ""
+  | "ISTJ"
+  | "ISFJ"
+  | "INFJ"
+  | "INTJ"
+  | "ISTP"
+  | "ISFP"
+  | "INFP"
+  | "INTP"
+  | "ESTP"
+  | "ESFP"
+  | "ENFP"
+  | "ENTP"
+  | "ESTJ"
+  | "ESFJ"
+  | "ENFJ"
+  | "ENTJ";
 export type VisitHomeFrequencyType = "" | "거의안감" | "2,3달에 한번" | "1달에 한번" | "주에 한번";
 export type LateNightSnackType = "" | "안 먹어요" | "가끔" | "자주";
 export type SnackInRoomType = "" | "괜찮아요" | "싫어요";
@@ -87,7 +109,7 @@ export interface LifeStylePostType {
   cleaningFrequency: CleaningFrequencyType;
   heatTolerance: HeatToleranceType;
   coldTolerance: HeatToleranceType;
-  MBTI?: MBTIType;
+  MBTI?: string;
   visitHomeFrequency: VisitHomeFrequencyType;
   lateNightSnack: LateNightSnackType;
   snackInRoom: SnackInRoomType;

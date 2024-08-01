@@ -19,8 +19,8 @@ const RoommateMatchEditor = () => {
       {step === "SleepPattern" && <SleepPattern setStep={setStep} />}
       {step === "SmokingDrinking" && <SmokingAndDrinking setStep={setStep} />}
       {step === "LifeStyle" && <LifeStyle setStep={setStep} />}
-      {step === "Constitution" && <Constitution onNext={() => setStep("MBTI")} onBefore={() => setStep("LifeStyle")} />}
-      {step === "MBTI" && <MBTI onNext={() => setStep("CycleToReturnHome")} onBefore={() => setStep("Constitution")} />}
+      {step === "Constitution" && <Constitution setStep={setStep} />}
+      {step === "MBTI" && <MBTI setStep={setStep} />}
       {step === "CycleToReturnHome" && (
         <CycleToReturnHome onNext={() => setStep("Food")} onBefore={() => setStep("MBTI")} />
       )}
