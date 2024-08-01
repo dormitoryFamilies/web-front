@@ -4,10 +4,14 @@ import { twMerge } from "tailwind-merge";
 import {
   CleaningFrequencyType,
   DrinkingFrequencyType,
-  RoomMateLifeStyleType, ShowerDurationType, ShowerTimeType,
+  HeatToleranceType,
+  RoomMateLifeStyleType,
+  ShowerDurationType,
+  ShowerTimeType,
   SleepingHabitType,
   SleepingSensitivityType,
-  SleepTimeType, SmokingType,
+  SleepTimeType,
+  SmokingType,
   WakeUpTimeType,
 } from "@/types/room-mate/type";
 
@@ -26,20 +30,21 @@ interface Props {
     | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>
     | React.Dispatch<React.SetStateAction<ShowerTimeType>>
     | React.Dispatch<React.SetStateAction<ShowerDurationType>>
-    | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>;
+    | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>
+    | React.Dispatch<React.SetStateAction<HeatToleranceType>>;
   isRequired: boolean;
 }
 const Item = (props: Props) => {
   const { title, contents, className, secondClassName, selectedContent, setSelectedContent, isRequired } = props;
-  const updateSelectedSleepTime = (content: RoomMateLifeStyleType) => {
+  const updateSelectedContent = (content: RoomMateLifeStyleType) => {
     setSelectedContent(content);
   };
 
-  const resetSelectedSleepTime = (content: RoomMateLifeStyleType) => {
+  const resetSelectedContent = (content: RoomMateLifeStyleType) => {
     if (selectedContent === content) {
       setSelectedContent("");
     } else {
-      updateSelectedSleepTime(content);
+      updateSelectedContent(content);
     }
   };
 
@@ -55,7 +60,7 @@ const Item = (props: Props) => {
             <button
               key={index}
               onClick={() => {
-                resetSelectedSleepTime(content);
+                resetSelectedContent(content);
               }}
               className={
                 selectedContent === content
