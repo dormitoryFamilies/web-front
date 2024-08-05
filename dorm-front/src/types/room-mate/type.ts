@@ -86,7 +86,7 @@ export type MBTIType =
   | "ESFJ"
   | "ENFJ"
   | "ENTJ";
-export type VisitHomeFrequencyType = "" | "거의안감" | "2,3달에 한번" | "1달에 한번" | "주에 한번";
+export type VisitHomeFrequencyType = "" | "거의 안감" | "2,3달에 한 번" | "1달에 한 번" | "주에 한 번";
 export type LateNightSnackType = "" | "안 먹어요" | "가끔" | "자주";
 export type SnackInRoomType = "" | "괜찮아요" | "싫어요";
 export type PhoneSoundType = "" | "이어폰" | "스피커" | "유동적";
@@ -103,20 +103,25 @@ export interface LifeStylePostType {
   sleepingSensitivity: SleepingSensitivityType;
   smoking: SmokingType;
   drinkingFrequency: DrinkingFrequencyType;
-  drunkHabit: string;
-  showerTime: ShowerTimeType;
-  showerDuration: ShowerDurationType;
+  drunkHabit?: string;
+  showerTime?: ShowerTimeType;
+  showerDuration?: ShowerDurationType;
   cleaningFrequency: CleaningFrequencyType;
   heatTolerance: HeatToleranceType;
   coldTolerance: HeatToleranceType;
   MBTI?: string;
-  visitHomeFrequency: VisitHomeFrequencyType;
-  lateNightSnack: LateNightSnackType;
-  snackInRoom: SnackInRoomType;
-  phoneSound: PhoneSoundType;
-  perfumeUsage?: PerfumeUsageType;
+  visitHomeFrequency?: VisitHomeFrequencyType;
+  lateNightSnack?: LateNightSnackType;
+  snackInRoom?: SnackInRoomType;
+  phoneSound?: PhoneSoundType;
+  perfumeUsage: PerfumeUsageType;
   studyLocation?: StudyLocationType;
   examPreparation: ExamPreparationType;
-  exercise: ExerciseType;
-  insectTolerance: InsectToleranceType;
+  exercise?: ExerciseType;
+  insectTolerance?: InsectToleranceType;
+}
+
+export interface LifeStyleResponseType {
+  code: number;
+  data: LifeStylePostType
 }
