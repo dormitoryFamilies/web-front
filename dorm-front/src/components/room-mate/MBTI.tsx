@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/room-mate/Header";
 import MBTIItem from "@/components/room-mate/MBTIItem";
+import RequirementBanner from "@/components/room-mate/RequirementBanner";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import {
   ExtrovertOrIntrovertType,
@@ -12,12 +13,16 @@ import {
   PlannedOrSpontaneousType,
   RoomMateLifeStyleStepType,
 } from "@/types/room-mate/type";
-import RequirementBanner from "@/components/room-mate/RequirementBanner";
+import {
+  extrovertOrIntrovertContents,
+  heterosexualOrEmotionalContents,
+  intuitiveOrThinkingContents, plannedOrSpontaneousContents,
+} from "@/utils/room-mate/lifestyles";
 interface Props {
-  setStep: React.Dispatch<React.SetStateAction<RoomMateLifeStyleStepType>>;
+  setLifeStyleStep: React.Dispatch<React.SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const MBTI = (props: Props) => {
-  const { setStep } = props;
+  const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<ExtrovertOrIntrovertType>("");
   const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<IntuitiveOrThinkingType>("");
@@ -36,7 +41,7 @@ const MBTI = (props: Props) => {
       ...prevState,
       ...(selectedMBTI !== "" && { MBTI: selectedMBTI }),
     }));
-    setStep("CycleToReturnHome");
+    setLifeStyleStep("CycleToReturnHome");
     setUpdateMBTITrigger(false);
   };
 

@@ -10,10 +10,10 @@ import { DrinkingFrequencyType, RoomMateLifeStyleStepType, SmokingType } from "@
 import { drinkingFrequencyContents, smokingStatusContents } from "@/utils/room-mate/lifestyles";
 
 interface Props {
-  setStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
+  setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const SmokingAndDrinking = (props: Props) => {
-  const { setStep } = props;
+  const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [smoking, setSmoking] = useState<SmokingType>("");
   const [drinkingFrequency, setDrinkingFrequency] = useState<DrinkingFrequencyType>("");
@@ -30,7 +30,7 @@ const SmokingAndDrinking = (props: Props) => {
       drinkingFrequency: drinkingFrequency,
       ...(drunkHabit !== "" && { drunkHabit: drunkHabit }),
     }));
-    setStep("LifeStyle");
+    setLifeStyleStep("LifeStyle");
   };
 
   return (

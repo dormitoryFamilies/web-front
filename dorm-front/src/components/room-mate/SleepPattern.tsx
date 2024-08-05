@@ -23,11 +23,11 @@ import {
 } from "@/utils/room-mate/lifestyles";
 
 interface Props {
-  setStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
+  setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 
 const SleepPattern = (props: Props) => {
-  const { setStep } = props;
+  const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [sleepTime, setSleepTime] = useState<SleepTimeType>("");
   const [wakeUpTime, setWakeUpTime] = useState<WakeUpTimeType>("");
@@ -42,7 +42,7 @@ const SleepPattern = (props: Props) => {
       sleepingHabit: sleepingHabit,
       sleepingSensitivity: sleepingSensitivity,
     }));
-    setStep("SmokingDrinking");
+    setLifeStyleStep("SmokingDrinking");
   };
 
   return (

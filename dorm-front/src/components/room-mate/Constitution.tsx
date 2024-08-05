@@ -9,10 +9,10 @@ import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import { HeatToleranceType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
 import { coldToleranceContents, heatToleranceContents } from "@/utils/room-mate/lifestyles";
 interface Props {
-  setStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
+  setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const Constitution = (props: Props) => {
-  const { setStep } = props;
+  const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [heatTolerance, setHeatTolerance] = useState<HeatToleranceType>("");
   const [coldTolerance, setColdTolerance] = useState<HeatToleranceType>("");
@@ -27,7 +27,7 @@ const Constitution = (props: Props) => {
       heatTolerance: heatTolerance,
       coldTolerance: coldTolerance,
     }));
-    setStep("MBTI");
+    setLifeStyleStep("MBTI");
   };
 
   return (

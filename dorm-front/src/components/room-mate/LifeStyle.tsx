@@ -10,10 +10,10 @@ import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import { CleaningFrequencyType, RoomMateLifeStyleStepType, ShowerTimeType } from "@/types/room-mate/type";
 import { cleaningFrequencyContents, showerTimeContents } from "@/utils/room-mate/lifestyles";
 interface Props {
-  setStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
+  setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const LifeStyle = (props: Props) => {
-  const { setStep } = props;
+  const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [showerTime, setShowerTime] = useState<ShowerTimeType>("");
   const [showerDuration, setShowerDuration] = useState<string>("0");
@@ -30,7 +30,7 @@ const LifeStyle = (props: Props) => {
       ...(showerDuration !== "0" && { showerDuration: showerDuration + "분" }),
       cleaningFrequency: cleaningFrequency,
     }));
-    setStep("Constitution");
+    setLifeStyleStep("Constitution");
   };
 
   return (
