@@ -1,12 +1,21 @@
 import {
   CleaningFrequencyType,
-  DrinkingFrequencyType, ExtrovertOrIntrovertType,
-  HeatToleranceType, HeterosexualOrEmotionalType, IntuitiveOrThinkingType, PlannedOrSpontaneousType,
+  DrinkingFrequencyType, ExamPreparationType, ExerciseType,
+  ExtrovertOrIntrovertType,
+  HeatToleranceType,
+  HeterosexualOrEmotionalType, InsectToleranceType,
+  IntuitiveOrThinkingType,
+  LateNightSnackType,
+  PerfumeUsageType,
+  PhoneSoundType,
+  PlannedOrSpontaneousType,
   ShowerTimeType,
   SleepingHabitType,
   SleepingSensitivityType,
   SleepTimeType,
   SmokingType,
+  SnackInRoomType, StudyLocationType,
+  VisitHomeFrequencyType,
   WakeUpTimeType,
 } from "@/types/room-mate/type";
 
@@ -50,3 +59,18 @@ export const extrovertOrIntrovertContents: ExtrovertOrIntrovertType[] = ["E", "I
 export const intuitiveOrThinkingContents: IntuitiveOrThinkingType[] = ["S", "N"];
 export const heterosexualOrEmotionalContents: HeterosexualOrEmotionalType[] = ["T", "F"];
 export const plannedOrSpontaneousContents: PlannedOrSpontaneousType[] = ["J", "P"];
+export const visitHomeFrequencyContents: VisitHomeFrequencyType[] = [
+  "거의 안감",
+  "2,3달에 한 번",
+  "1달에 한 번",
+  "주에 한 번",
+];
+export const lateNightSnackContents: LateNightSnackType[] = ["안 먹어요", "가끔", "자주"];
+export const snackInRoomContents: SnackInRoomType[] = ["괜찮아요", "싫어요"];
+export const phoneSoundContents: PhoneSoundType[] = ["이어폰", "스피커", "유동적"];
+export const perfumeUsageContents: PerfumeUsageType[] = ["미사용", "가끔", "자주"];
+export const studyLocationContents: StudyLocationType[] = ["기숙사", "기숙사 외", "유동적"];
+export const examPreparationContents: ExamPreparationType[] = ["시험 준비", "해당 없어요"];
+
+export const insectToleranceContents: InsectToleranceType[] = ["잘잡아요", "작은것만", "못잡아요"];
+export const exerciseContents: ExerciseType[] = ["안해요", "긱사에서", "헬스장에서"];
