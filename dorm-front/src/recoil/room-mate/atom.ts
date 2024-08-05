@@ -14,12 +14,8 @@ export const lifeStylePostAtom = atom<LifeStylePostType>({
     cleaningFrequency: "",
     heatTolerance: "",
     coldTolerance: "",
-    visitHomeFrequency: "",
-    lateNightSnack: "",
-    snackInRoom: "",
-    phoneSound: "",
+    perfumeUsage: "",
     examPreparation: "",
-    exercise: "",
     insectTolerance: "",
   },
 });
