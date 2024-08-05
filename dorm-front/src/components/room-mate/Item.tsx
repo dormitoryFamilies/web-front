@@ -81,9 +81,9 @@ const Item = (props: Props) => {
 
   return (
     <div className={"flex flex-col gap-y-2"}>
-      <div className={"text-gray5 text-h4"}>
+      <div className={"flex items-center gap-x-1 text-gray5 text-h4"}>
         {title}
-        {isRequired ? <span className={"text-primary ml-1"}>*</span> : null}
+        {isRequired ? <span className={"text-primary"}>*</span> : null}
         {showGuideMessage ? (
           <GuideMessageIcon
             onClick={() => {
