@@ -1,11 +1,17 @@
-import React from "react";
+import type { SVGProps } from "react";
+import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
   CleaningFrequencyType,
   DrinkingFrequencyType,
   ExamPreparationType,
+  ExerciseType,
   HeatToleranceType,
+  InsectToleranceType,
+  LateNightSnackType,
+  PerfumeUsageType,
+  PhoneSoundType,
   RoomMateLifeStyleType,
   ShowerDurationType,
   ShowerTimeType,
@@ -13,6 +19,9 @@ import {
   SleepingSensitivityType,
   SleepTimeType,
   SmokingType,
+  SnackInRoomType,
+  StudyLocationType,
+  VisitHomeFrequencyType,
   WakeUpTimeType,
 } from "@/types/room-mate/type";
 
@@ -32,8 +41,16 @@ interface Props {
     | React.Dispatch<React.SetStateAction<ShowerTimeType>>
     | React.Dispatch<React.SetStateAction<ShowerDurationType>>
     | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>
-    | React.Dispatch<React.SetStateAction<HeatToleranceType>>;
+    | React.Dispatch<React.SetStateAction<HeatToleranceType>>
+    | React.Dispatch<React.SetStateAction<VisitHomeFrequencyType>>
+    | React.Dispatch<React.SetStateAction<LateNightSnackType>>
+    | React.Dispatch<React.SetStateAction<SnackInRoomType>>
+    | React.Dispatch<React.SetStateAction<PhoneSoundType>>
+    | React.Dispatch<React.SetStateAction<PerfumeUsageType>>
+    | React.Dispatch<React.SetStateAction<StudyLocationType>>
     | React.Dispatch<React.SetStateAction<ExamPreparationType>>
+    | React.Dispatch<React.SetStateAction<ExerciseType>>
+    | React.Dispatch<React.SetStateAction<InsectToleranceType>>;
   isRequired: boolean;
   showGuideMessage?: boolean;
   setIsClickedGuideMessage?: React.Dispatch<React.SetStateAction<boolean>>;
