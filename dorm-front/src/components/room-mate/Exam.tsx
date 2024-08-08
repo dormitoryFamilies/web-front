@@ -28,6 +28,13 @@ const Exam = (props: Props) => {
     setLifeStyleStep("OtherLifestyles");
   };
 
+  useEffect(() => {
+    if (lifeStylePostData.studyLocation !== "" || lifeStylePostData.examPreparation !== "") {
+      setStudyLocation(lifeStylePostData.studyLocation);
+      setExamPreparation(lifeStylePostData.examPreparation);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       {isClickedGuideMessage ? <GuideMessageModal setIsClickedGuideMessage={setIsClickedGuideMessage} /> : null}

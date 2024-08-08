@@ -29,6 +29,14 @@ const Food = (props: Props) => {
     }));
     setLifeStyleStep("SoundAndPerfume");
   };
+
+  useEffect(() => {
+    if (lifeStylePostData.lateNightSnack !== "" || lifeStylePostData.snackInRoom !== "") {
+      setLateNightSnack(lifeStylePostData.lateNightSnack);
+      setSnackInRoom(lifeStylePostData.snackInRoom);
+    }
+  }, [lifeStylePostData]);
+
   const skipButton = () => {
     return (
       <button

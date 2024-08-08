@@ -25,6 +25,13 @@ const SoundAndPerfume = (props: Props) => {
     setLifeStyleStep("Exam");
   };
 
+  useEffect(() => {
+    if (lifeStylePostData.phoneSound !== "" || lifeStylePostData.perfumeUsage !== "") {
+      setPhoneSound(lifeStylePostData.phoneSound);
+      setPerfumeUsage(lifeStylePostData.perfumeUsage);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("Food")} />

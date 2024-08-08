@@ -52,6 +52,13 @@ const OtherLifestyles = (props: Props) => {
     }
   }, [isLifestyleComplete]);
 
+  useEffect(() => {
+    if (lifeStylePostData.exercise !== "" || lifeStylePostData.insectTolerance !== "") {
+      setExercise(lifeStylePostData.exercise);
+      setInsectTolerance(lifeStylePostData.insectTolerance);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("Exam")} />

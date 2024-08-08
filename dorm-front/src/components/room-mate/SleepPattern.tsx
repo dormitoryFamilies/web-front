@@ -45,6 +45,20 @@ const SleepPattern = (props: Props) => {
     setLifeStyleStep("SmokingDrinking");
   };
 
+  useEffect(() => {
+    if (
+      lifeStylePostData.sleepTime !== "" ||
+      lifeStylePostData.wakeUpTime !== "" ||
+      lifeStylePostData.sleepingHabit !== "" ||
+      lifeStylePostData.sleepingSensitivity !== ""
+    ) {
+      setSleepTime(lifeStylePostData.sleepTime);
+      setWakeUpTime(lifeStylePostData.wakeUpTime);
+      setSleepingHabit(lifeStylePostData.sleepingHabit);
+      setSleepingSensitivity(lifeStylePostData.sleepingSensitivity);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} />

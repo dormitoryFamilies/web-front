@@ -33,6 +33,18 @@ const LifeStyle = (props: Props) => {
     setLifeStyleStep("Constitution");
   };
 
+  useEffect(() => {
+    if (
+      lifeStylePostData.showerTime !== "" ||
+      lifeStylePostData.showerDuration !== "0분" ||
+      lifeStylePostData.cleaningFrequency !== ""
+    ) {
+      setShowerTime(lifeStylePostData.showerTime);
+      setShowerDuration(lifeStylePostData.showerDuration ? lifeStylePostData.showerDuration.replace("분", "") : "0");
+      setCleaningFrequency(lifeStylePostData.cleaningFrequency);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("SmokingDrinking")} />

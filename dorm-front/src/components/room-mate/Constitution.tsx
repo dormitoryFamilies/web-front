@@ -30,6 +30,13 @@ const Constitution = (props: Props) => {
     setLifeStyleStep("MBTI");
   };
 
+  useEffect(() => {
+    if (lifeStylePostData.heatTolerance !== "" || lifeStylePostData.coldTolerance !== "") {
+      setHeatTolerance(lifeStylePostData.heatTolerance);
+      setColdTolerance(lifeStylePostData.coldTolerance);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("LifeStyle")} />

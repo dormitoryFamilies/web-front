@@ -50,6 +50,16 @@ const MBTI = (props: Props) => {
       setUpdateMBTITrigger(false);
     }
   }, [updateMBTITrigger, selectedMBTI]);
+
+  useEffect(() => {
+    if (lifeStylePostData.MBTI && lifeStylePostData.MBTI !== "") {
+      setExtrovertOrIntrovert(lifeStylePostData.MBTI.substring(0, 1));
+      setIntuitiveOrThinking(lifeStylePostData.MBTI.substring(1, 2));
+      setHeterosexualOrEmotional(lifeStylePostData.MBTI.substring(2, 3));
+      setPlannedOrSpontaneous(lifeStylePostData.MBTI.substring(3, 4));
+    }
+  }, [lifeStylePostData]);
+
   const skipButton = () => {
     return (
       <button

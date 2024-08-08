@@ -26,6 +26,13 @@ const CycleToReturnHome = (props: Props) => {
     }));
     setLifeStyleStep("Food");
   };
+
+  useEffect(() => {
+    if (lifeStylePostData.visitHomeFrequency && lifeStylePostData.visitHomeFrequency !== "") {
+      setVisitHomeFrequency(lifeStylePostData.visitHomeFrequency);
+    }
+  }, [lifeStylePostData]);
+
   const skipButton = () => {
     return (
       <button

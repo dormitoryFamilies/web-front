@@ -33,6 +33,18 @@ const SmokingAndDrinking = (props: Props) => {
     setLifeStyleStep("LifeStyle");
   };
 
+  useEffect(() => {
+    if (
+      lifeStylePostData.smoking !== "" ||
+      lifeStylePostData.drinkingFrequency !== "" ||
+      lifeStylePostData.drunkHabit !== ""
+    ) {
+      setSmoking(lifeStylePostData.smoking);
+      setDrinkingFrequency(lifeStylePostData.drinkingFrequency);
+      setDrunkHabit(lifeStylePostData.drunkHabit);
+    }
+  }, [lifeStylePostData]);
+
   return (
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("SleepPattern")} />
