@@ -17,16 +17,27 @@ const Food = (props: Props) => {
   const [lateNightSnack, setLateNightSnack] = useState<LateNightSnackType>("");
   const [snackInRoom, setSnackInRoom] = useState<SnackInRoomType>("");
 
-  useEffect(() => {
-    console.log(lifeStylePostData);
-  }, [lifeStylePostData]);
-
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(lateNightSnack !== "" && { lateNightSnack: lateNightSnack }),
-      ...(snackInRoom !== "" && { snackInRoom: snackInRoom }),
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+      };
+
+      if (lateNightSnack !== "") {
+        updatedState.lateNightSnack = lateNightSnack;
+      } else {
+        delete updatedState.lateNightSnack;
+      }
+
+      if (snackInRoom !== "") {
+        updatedState.snackInRoom = snackInRoom;
+      } else {
+        delete updatedState.snackInRoom;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("SoundAndPerfume");
   };
 

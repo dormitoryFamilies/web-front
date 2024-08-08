@@ -19,18 +19,31 @@ const OtherLifestyles = (props: Props) => {
   const [isLifestyleComplete, setIsLifestyleComplete] = useState(false);
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(exercise !== "" && { exercise: exercise }),
-      ...(insectTolerance !== "" && { insectTolerance: insectTolerance }),
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+      };
+
+      if (exercise !== "") {
+        updatedState.exercise = exercise;
+      } else {
+        delete updatedState.exercise;
+      }
+
+      if (insectTolerance !== "") {
+        updatedState.insectTolerance = insectTolerance;
+      } else {
+        delete updatedState.insectTolerance;
+      }
+      return updatedState;
+    });
+
     setIsLifestyleComplete(true);
   };
 
   useEffect(() => {
     if (isLifestyleComplete) {
       postLifestyles(lifeStylePostData).then((r) => {
-        console.log(r);
         setIsLifestyleComplete(false);
         setLifeStylePostData((prevState) => ({
           ...prevState,

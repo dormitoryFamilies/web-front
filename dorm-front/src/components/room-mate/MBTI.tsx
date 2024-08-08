@@ -15,7 +15,8 @@ import {
 import {
   extrovertOrIntrovertContents,
   heterosexualOrEmotionalContents,
-  intuitiveOrThinkingContents, plannedOrSpontaneousContents,
+  intuitiveOrThinkingContents,
+  plannedOrSpontaneousContents,
 } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: React.Dispatch<React.SetStateAction<RoomMateLifeStyleStepType>>;

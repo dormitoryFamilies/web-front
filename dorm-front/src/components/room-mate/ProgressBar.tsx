@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 interface Props {
   title: string;
   isRequired: boolean;
-  showerDuration: string;
-  setShowerDuration: React.Dispatch<React.SetStateAction<string>>;
+  showerDuration: string | undefined;
+  setShowerDuration: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 const ProgressBar = (props: Props) => {
-  const { title, isRequired, showerDuration, setShowerDuration } = props
+  const { title, isRequired, showerDuration, setShowerDuration } = props;
+
   return (
     <div className={"flex flex-col gap-y-2"}>
       <div className={"flex justify-between items-center"}>
@@ -23,7 +24,7 @@ const ProgressBar = (props: Props) => {
         type={"range"}
         min="0"
         max="25"
-        defaultValue={"0"}
+        value={showerDuration}
         step="5"
         className={"w-full"}></input>
     </div>

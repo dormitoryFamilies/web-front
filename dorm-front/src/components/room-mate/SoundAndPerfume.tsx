@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
@@ -16,12 +16,23 @@ const SoundAndPerfume = (props: Props) => {
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [phoneSound, setPhoneSound] = useState<PhoneSoundType>("");
   const [perfumeUsage, setPerfumeUsage] = useState<PerfumeUsageType>("");
+
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(phoneSound !== "" && { phoneSound: phoneSound }),
-      perfumeUsage: perfumeUsage,
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+        perfumeUsage: perfumeUsage,
+      };
+
+      if (phoneSound !== "") {
+        updatedState.phoneSound = phoneSound;
+      } else {
+        delete updatedState.phoneSound;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("Exam");
   };
 

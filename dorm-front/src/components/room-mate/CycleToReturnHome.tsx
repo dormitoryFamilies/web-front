@@ -15,15 +15,21 @@ const CycleToReturnHome = (props: Props) => {
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [visitHomeFrequency, setVisitHomeFrequency] = useState<VisitHomeFrequencyType>("");
 
-  useEffect(() => {
-    console.log(lifeStylePostData);
-  }, [lifeStylePostData]);
-
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(visitHomeFrequency !== "" && { visitHomeFrequency: visitHomeFrequency }),
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+      };
+
+      if (visitHomeFrequency !== "") {
+        updatedState.visitHomeFrequency = visitHomeFrequency;
+      } else {
+        delete updatedState.visitHomeFrequency;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("Food");
   };
 

@@ -17,19 +17,25 @@ const SmokingAndDrinking = (props: Props) => {
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [smoking, setSmoking] = useState<SmokingType>("");
   const [drinkingFrequency, setDrinkingFrequency] = useState<DrinkingFrequencyType>("");
-  const [drunkHabit, setDrunkHabit] = useState<string>("");
-
-  useEffect(() => {
-    console.log(lifeStylePostData);
-  }, [lifeStylePostData]);
+  const [drunkHabit, setDrunkHabit] = useState<string | undefined>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      smoking: smoking,
-      drinkingFrequency: drinkingFrequency,
-      ...(drunkHabit !== "" && { drunkHabit: drunkHabit }),
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+        smoking: smoking,
+        drinkingFrequency: drinkingFrequency,
+      };
+
+      if (drunkHabit !== undefined) {
+        updatedState.drunkHabit = drunkHabit;
+      } else {
+        delete updatedState.drunkHabit;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("LifeStyle");
   };
 
@@ -98,8 +104,13 @@ const SmokingAndDrinking = (props: Props) => {
           <div className={"flex flex-col gap-y-2"}>
             <label className={"text-gray5 text-h4"}>주사</label>
             <input
+              value={drunkHabit}
               onChange={(e) => {
-                setDrunkHabit(e.target.value);
+                if (drunkHabit === undefined || null) {
+                  setDrunkHabit("");
+                } else {
+                  setDrunkHabit(e.target.value);
+                }
               }}
               placeholder={"나의 주사를 적어주세요."}
               className={"p-3 outline-none rounded-[12px] border-[1px] border-gray1 placeholder:text-h4"}></input>

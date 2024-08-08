@@ -15,21 +15,32 @@ interface Props {
 const LifeStyle = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [showerTime, setShowerTime] = useState<ShowerTimeType>("");
-  const [showerDuration, setShowerDuration] = useState<string>("0");
+  const [showerTime, setShowerTime] = useState<ShowerTimeType | undefined>("");
+  const [showerDuration, setShowerDuration] = useState<string | undefined>("0");
   const [cleaningFrequency, setCleaningFrequency] = useState<CleaningFrequencyType>("");
 
-  useEffect(() => {
-    console.log(lifeStylePostData);
-  }, [lifeStylePostData]);
-
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(showerTime !== "" && { showerTime: showerTime }),
-      ...(showerDuration !== "0" && { showerDuration: showerDuration + "분" }),
-      cleaningFrequency: cleaningFrequency,
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+        cleaningFrequency: cleaningFrequency,
+      };
+
+      if (showerTime !== "") {
+        updatedState.showerTime = showerTime;
+      } else {
+        delete updatedState.showerTime;
+      }
+
+      if (showerDuration !== "0") {
+        updatedState.showerDuration = showerDuration + "분";
+      } else {
+        delete updatedState.showerDuration;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("Constitution");
   };
 
@@ -90,7 +101,7 @@ const LifeStyle = (props: Props) => {
             title={"샤워시간"}
             isRequired={false}
             setShowerDuration={setShowerDuration}
-            showerDuration={showerDuration}></ProgressBar>
+            showerDuration={showerDuration !== "0" ? showerDuration?.replace("분", "") : showerDuration}></ProgressBar>
           <Item
             title={"청소"}
             isRequired={true}

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
@@ -20,11 +20,21 @@ const Exam = (props: Props) => {
   const [isClickedGuideMessage, setIsClickedGuideMessage] = useState<boolean>(false);
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(studyLocation !== "" && { studyLocation: studyLocation }),
-      examPreparation: examPreparation,
-    }));
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+        examPreparation: examPreparation,
+      };
+
+      if (studyLocation !== "") {
+        updatedState.studyLocation = studyLocation;
+      } else {
+        delete updatedState.studyLocation;
+      }
+
+      return updatedState;
+    });
+
     setLifeStyleStep("OtherLifestyles");
   };
 

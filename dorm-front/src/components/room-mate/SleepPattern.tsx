@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
