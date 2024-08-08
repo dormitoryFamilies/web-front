@@ -120,8 +120,8 @@ const SmokingAndDrinking = (props: Props) => {
             onClick={handleNextClick}
             className={
               smoking === "" || drinkingFrequency === ""
-                ? "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
             }>
             다음
           </button>
