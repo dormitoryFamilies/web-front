@@ -1,65 +1,112 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
-import Header from "@/components/room-mate/Header";
+import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import { LateNightSnackType, VisitHomeFrequencyType } from "@/types/room-mate/type";
+import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import { RoomMateLifeStyleStepType, VisitHomeFrequencyType } from "@/types/room-mate/type";
+import { visitHomeFrequencyContents } from "@/utils/room-mate/lifestyles";
 interface Props {
-  onNext: React.Dispatch<React.SetStateAction<string>>;
-  onBefore?: React.Dispatch<React.SetStateAction<string>>;
+  setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const CycleToReturnHome = (props: Props) => {
-  const {onNext, onBefore} = props;
-  const [clickedCycleToReturnHome, setClickedCycleToReturnHome] = useState<VisitHomeFrequencyType>("");
+  const { setLifeStyleStep } = props;
+  const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
+  const [visitHomeFrequency, setVisitHomeFrequency] = useState<VisitHomeFrequencyType>("");
 
-  const cycleToReturnHome = ["거의안감", "2,3달에 한번", "1달에 한번", "주에 한번"];
+  const handleNextClick = () => {
+    setLifeStylePostData((prevState) => {
+      const updatedState = {
+        ...prevState,
+      };
+
+      if (visitHomeFrequency !== "") {
+        updatedState.visitHomeFrequency = visitHomeFrequency;
+      } else {
+        delete updatedState.visitHomeFrequency;
+      }
+
+      return updatedState;
+    });
+
+    setLifeStyleStep("Food");
+  };
+
+  useEffect(() => {
+    if (lifeStylePostData.visitHomeFrequency && lifeStylePostData.visitHomeFrequency !== "") {
+      setVisitHomeFrequency(lifeStylePostData.visitHomeFrequency);
+    }
+  }, [lifeStylePostData]);
+
+  const skipButton = () => {
+    return (
+      <button
+        onClick={() => {
+          setLifeStyleStep("Food");
+        }}
+        className={"home-button"}>
+        건너뛰기
+      </button>
+    );
+  };
+
   return (
-    <div className={"flex flex-col p-5"}>
-      <Header />
-      <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>
-        <div className={"flex flex-col gap-y-2"}>
-          <div className={"flex justify-center"}>
-            <div className={"text-gray5"}>6 / 10</div>
-          </div>
+    <>
+      <Header
+        headerType={"dynamic"}
+        title={"긱사생활 설정"}
+        onBack={() => setLifeStyleStep("MBTI")}
+        rightElement={skipButton()}
+      />
+      <div className={"h-[60px]"} />
+      <div className={"flex flex-col p-5"}>
+        <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>
+          <div className={"flex flex-col gap-y-2"}>
+            <div className={"flex justify-center"}>
+              <div className={"text-gray5"}>6 / 10</div>
+            </div>
 
-          <div className={"flex items-center justify-center"}>
-            <div className={"absolute w-[148px] h-1 bg-gray1 rounded-full "}>
-              <div className={"absolute w-[88px] h-1 rounded-full bg-primaryMid"}></div>
+            <div className={"flex items-center justify-center"}>
+              <div className={"absolute w-[148px] h-1 bg-gray1 rounded-full "}>
+                <div className={"absolute w-[88px] h-1 rounded-full bg-primaryMid"}></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={"flex flex-col items-center justify-center"}>
-          <div className={"relative w-[200px] h-[140px]"}>
-            <Image
-              src={"/room-mate/본가주기.png"}
-              alt={"/room-mate/본가주기.png"}
-              className={"absolute object-cover"}
-              fill
-            />
+          <div className={"flex flex-col items-center justify-center"}>
+            <div className={"relative w-[200px] h-[140px]"}>
+              <Image
+                src={"/room-mate/본가주기.png"}
+                alt={"/room-mate/본가주기.png"}
+                className={"absolute object-cover"}
+                fill
+              />
+            </div>
           </div>
+          <div className={"text-h3 font-semibold"}>나의 본가 주기는?</div>
         </div>
-        <div className={"text-h3 font-semibold"}>나의 본가 주기는?</div>
-      </div>
 
-      <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
-        <Item
-          title={"본가가는 빈도"}
-          data={cycleToReturnHome}
-          className={"grid-cols-4"}
-          secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
-          setIsClickedItem={setClickedCycleToReturnHome}
-          isClickedItem={clickedCycleToReturnHome}
-        />
-        <button
-          onClick={onNext}
-          className={
-            "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:bg-primary hover:text-white transition"
-          }>
-          다음
-        </button>
+        <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
+          <Item
+            title={"본가가는 빈도"}
+            isRequired={false}
+            contents={visitHomeFrequencyContents}
+            className={"grid-cols-4"}
+            secondClassName={"rounded-full p-2 w-[72px] h-[72px]"}
+            setSelectedContent={setVisitHomeFrequency}
+            selectedContent={visitHomeFrequency}
+          />
+        </div>
       </div>
-    </div>
+      <button
+        onClick={handleNextClick}
+        className={
+          "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+        }>
+        다음
+      </button>
+    </>
   );
 };
 export default CycleToReturnHome;

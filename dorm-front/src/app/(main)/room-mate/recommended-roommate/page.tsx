@@ -37,19 +37,7 @@ const RecommendedRoommate = () => {
 export default RecommendedRoommate;
 
 const MoveIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={13}
-    height={15}
-    fill="none"
-    {...props}
-  >
-    <path
-      stroke="#9E9FA1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="m3.729 13.5 6-6-6-6"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" width={13} height={15} fill="none" {...props}>
+    <path stroke="#9E9FA1" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m3.729 13.5 6-6-6-6" />
   </svg>
 );
