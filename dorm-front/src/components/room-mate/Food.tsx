@@ -2,9 +2,8 @@ import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import Header from "@/components/room-mate/Header";
+import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import RequirementBanner from "@/components/room-mate/RequirementBanner";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import { LateNightSnackType, RoomMateLifeStyleStepType, SnackInRoomType } from "@/types/room-mate/type";
 import { lateNightSnackContents, snackInRoomContents } from "@/utils/room-mate/lifestyles";
@@ -30,11 +29,27 @@ const Food = (props: Props) => {
     }));
     setLifeStyleStep("SoundAndPerfume");
   };
+  const skipButton = () => {
+    return (
+      <button
+        onClick={() => {
+          setLifeStyleStep("SoundAndPerfume");
+        }}
+        className={"home-button"}>
+        건너뛰기
+      </button>
+    );
+  };
 
   return (
     <>
-      <Header />
-      <RequirementBanner />
+      <Header
+        headerType={"dynamic"}
+        title={"긱사생활 설정"}
+        onBack={() => setLifeStyleStep("CycleToReturnHome")}
+        rightElement={skipButton()}
+      />
+      <div className={"h-[60px]"} />
       <div className={"flex flex-col p-5"}>
         <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>
           <div className={"flex flex-col gap-y-2"}>

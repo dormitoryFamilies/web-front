@@ -2,9 +2,8 @@ import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import Header from "@/components/room-mate/Header";
+import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import RequirementBanner from "@/components/room-mate/RequirementBanner";
 import { postLifestyles } from "@/lib/api/room-mate";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import { ExerciseType, InsectToleranceType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
@@ -55,8 +54,8 @@ const OtherLifestyles = (props: Props) => {
 
   return (
     <>
-      <Header />
-      <RequirementBanner />
+      <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("Exam")} />
+      <div className={"h-[60px]"} />
       <div className={"flex flex-col p-5"}>
         <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>
           <div className={"flex flex-col gap-y-2"}>

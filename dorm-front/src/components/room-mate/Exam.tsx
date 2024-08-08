@@ -2,8 +2,8 @@ import Image from "next/image";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import Header from "@/components/common/Header";
 import GuideMessageModal from "@/components/room-mate/GuideMessageModal";
-import Header from "@/components/room-mate/Header";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
 import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
@@ -30,8 +30,9 @@ const Exam = (props: Props) => {
 
   return (
     <>
-      {isClickedGuideMessage ? <GuideMessageModal setIsClickedGuideMessage={setIsClickedGuideMessage}/> : null}
-      <Header />
+      {isClickedGuideMessage ? <GuideMessageModal setIsClickedGuideMessage={setIsClickedGuideMessage} /> : null}
+      <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("SoundAndPerfume")} />
+      <div className={"h-[60px]"} />
       <RequirementBanner />
       <div className={"flex flex-col p-5"}>
         <div className={"flex flex-col gap-y-4 relative justify-center items-center"}>

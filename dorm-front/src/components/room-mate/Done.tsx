@@ -17,7 +17,8 @@ const Done = (props: Props) => {
 
   return (
     <>
-      <Header headerType={"dynamic"} title={"긱사생활 설정"} />
+      <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("OtherLifestyles")} />
+      <div className={"h-[60px]"} />
       <div className={"flex flex-col justify-center items-center min-h-screen"}>
         <div className={"flex flex-col justify-center items-center"}>
           <div className={"text-h3 flex flex-col justify-center items-center"}>
