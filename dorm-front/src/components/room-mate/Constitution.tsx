@@ -17,10 +17,6 @@ const Constitution = (props: Props) => {
   const [heatTolerance, setHeatTolerance] = useState<HeatToleranceType>("");
   const [coldTolerance, setColdTolerance] = useState<HeatToleranceType>("");
 
-  useEffect(() => {
-    console.log(lifeStylePostData);
-  }, [lifeStylePostData]);
-
   const handleNextClick = () => {
     setLifeStylePostData((prevState) => ({
       ...prevState,
