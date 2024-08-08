@@ -38,7 +38,7 @@ interface Props {
     | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>
     | React.Dispatch<React.SetStateAction<SmokingType>>
     | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>
-    | React.Dispatch<React.SetStateAction<ShowerTimeType>>
+    | React.Dispatch<React.SetStateAction<ShowerTimeType | undefined>>
     | React.Dispatch<React.SetStateAction<ShowerDurationType>>
     | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>
     | React.Dispatch<React.SetStateAction<HeatToleranceType>>

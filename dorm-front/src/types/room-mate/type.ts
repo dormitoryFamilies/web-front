@@ -31,7 +31,8 @@ export type RoomMateLifeStyleType =
   | StudyLocationType
   | ExamPreparationType
   | ExerciseType
-  | InsectToleranceType;
+  | InsectToleranceType
+  | undefined;
 
 export type SleepTimeType =
   | ""
