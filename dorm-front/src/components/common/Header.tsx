@@ -60,7 +60,7 @@ const Header = (props: Props) => {
                 onBack ? onBack() : router.back();
               }}
             />
-            <h1 className="text-black text-h2 font-semibold">{title}</h1>
+            <h1 className="text-black text-h2 font-semibold bg-white">{title}</h1>
             {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
           </>
         );
