@@ -1,3 +1,5 @@
+import { preferenceOrdersAtom } from "@/recoil/room-mate/atom";
+
 export type RoomMateLifeStyleStepType =
   | "SleepPattern"
   | "SmokingDrinking"
@@ -124,5 +126,12 @@ export interface LifeStylePostType {
 
 export interface LifeStyleResponseType {
   code: number;
-  data: LifeStylePostType
+  data: LifeStylePostType;
+}
+
+export interface PreferenceOrdersType {
+  firstPreference: string;
+  secondPreference: string;
+  thirdPreference: string;
+  fourthPreference: string;
 }
