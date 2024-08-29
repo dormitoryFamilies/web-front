@@ -87,21 +87,15 @@ const RoommateMatching = () => {
             </div>
           </div>
         </div>
-
       </div>
+      <NavBar />
     </>
   );
 };
 export default RoommateMatching;
 
 const MoveWhiteIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={21}
-    height={21}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
     <path
       stroke="#fff"
       strokeLinecap="round"
@@ -115,13 +109,7 @@ const MoveWhiteIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 const MoveBlackIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={21}
-    height={21}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
     <path
       stroke="#191919"
       strokeLinecap="round"
