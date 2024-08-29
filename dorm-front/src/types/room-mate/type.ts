@@ -129,9 +129,44 @@ export interface LifeStyleResponseType {
   data: LifeStylePostType;
 }
 
+export interface PreferenceOrdersResponseType {
+  code: number;
+  data: PreferenceOrdersType;
+}
+
 export interface PreferenceOrdersType {
   firstPreference: string;
   secondPreference: string;
   thirdPreference: string;
   fourthPreference: string;
+}
+
+///////////////////////////////////////////////////////////
+
+export interface RecommendResultResponseType {
+  code: number;
+  data: RecommendResultType;
+}
+export interface RecommendResultType {
+  recommendationId: number;
+  recommendedAt: string;
+  candidateIds: number[];
+}
+
+///////////////////////////////////////////////////////////
+
+export interface RecommendResultProfileResponseType {
+  code: number;
+  data: RecommendResultProfileType;
+}
+export interface RecommendResultProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+  followerCount: number;
+  followingCount: number;
+  name: string;
+  birthDate: string;
+  studentNumber: string;
+  departmentType: string;
 }

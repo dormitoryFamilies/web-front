@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
+      "s3.amazonaws.com",
       "github.com",
       "k.kakaocdn.net",
       "storage.googleapis.com",

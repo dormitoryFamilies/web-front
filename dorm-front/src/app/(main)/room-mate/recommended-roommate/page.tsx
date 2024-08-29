@@ -1,43 +1,65 @@
 "use client";
 
-import type { SVGProps } from "react";
+import { useState } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
-import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
+import ConfirmRoommateMatch from "@/components/room-mate/ConfirmRoommateMatch";
+import ConfirmRoommateMatchCancel from "@/components/room-mate/ConfirmRoommateMatchCancel";
+import RoommateMatchCancel from "@/components/room-mate/RoommateMatchCancel";
+import RoommateMatchList from "@/components/room-mate/RoommateMatchList";
+import RoommateMatchPending from "@/components/room-mate/RoommateMatchPending";
+import RoommateMatchSuccess from "@/components/room-mate/RoommateMatchSuccess";
+import { candidateIdsAtom, selectedRoomMateMemberIdAtom } from "@/recoil/room-mate/atom";
 const RecommendedRoommate = () => {
+  const [candidateIds, setCandidateIds] = useRecoilState(candidateIdsAtom);
+  const [selectedRoomMateMemberId, setSelectedRoomMateMemberId] = useRecoilState(selectedRoomMateMemberIdAtom);
+  const [isConfirmRoommateMatchOpen, setIsConfirmRoommateMatchOpen] = useState(false);
+  const [isRoommateMatchSuccessOpen, setIsRoommateMatchSuccessOpen] = useState(false);
+  const [isConfirmRoommateMatchCancelOpen, setIsConfirmRoommateMatchCancelOpen] = useState(false);
+  const [isRoommateMatchCancelOpen, setIsRoommateMatchCancelOpen] = useState(false);
+  const [isRoommateMatchListOpen, setIsRoommateMatchListOpen] = useState(false);
+
   return (
     <>
-      <div className={"pt-[24px] px-5 flex flex-col gap-y-[20px]"}>
-        {/*안내 문구*/}
-        <div className={"px-[3px] flex justify-between items-end"}>
-          <div className={"flex flex-col"}>
-            <div className={"text-h2 font-semibold"}>
-              닉네임<span className={"text-h4 font-normal"}>님의</span>
-            </div>
-            <div className={"text-h2 font-semibold"}>추천 룸메 입니다!</div>
-          </div>
-
-          <div className={"flex items-center text-gray4"}>
-            <div>전체 둠즈 목록</div>
-            <MoveIcon></MoveIcon>
-          </div>
-        </div>
-
-        <div className={"flex justify-center items-center"}>
-          <RoommateMatchCard />
-        </div>
-      </div>
-      <button className={"fixed bottom-0 w-full rounded-full py-4 px-[10px] bg-primary text-white text-h5"}>
-        룸메 신청하기
-      </button>
+      {/* 룸메 매칭 신청 확인 컴포넌트*/}
+      {isRoommateMatchListOpen ? (
+        <RoommateMatchList setIsRoommateMatchListOpen={setIsRoommateMatchListOpen} />
+      ) : isConfirmRoommateMatchOpen ? (
+        <ConfirmRoommateMatch
+          memberId={candidateIds[selectedRoomMateMemberId]}
+          setIsConfirmRoommateMatchOpen={setIsConfirmRoommateMatchOpen}
+          setIsRoommateMatchSuccessOpen={setIsRoommateMatchSuccessOpen}
+        />
+      ) : isConfirmRoommateMatchCancelOpen ? (
+        // 룸메 매칭 취소 확인 컴포넌트
+        <ConfirmRoommateMatchCancel
+          memberId={candidateIds[selectedRoomMateMemberId]}
+          setIsConfirmRoommateMatchCancelOpen={setIsConfirmRoommateMatchCancelOpen}
+          setIsRoommateMatchCancelOpen={setIsRoommateMatchCancelOpen}
+        />
+      ) : isRoommateMatchCancelOpen ? (
+        // 룸메 매칭 취소 컴포넌트
+        <RoommateMatchCancel
+          memberId={candidateIds[selectedRoomMateMemberId]}
+          setIsRoommateMatchCancelOpen={setIsRoommateMatchCancelOpen}
+        />
+      ) : isRoommateMatchSuccessOpen ? (
+        // 룸메 매칭 신청 완료 컴포넌트
+        <RoommateMatchSuccess
+          memberId={candidateIds[selectedRoomMateMemberId]}
+          setIsRoommateMatchSuccessOpen={setIsRoommateMatchSuccessOpen}
+          setIsConfirmRoommateMatchCancelOpen={setIsConfirmRoommateMatchCancelOpen}
+        />
+      ) : (
+        //룸메 매칭 홈화면
+        <RoommateMatchPending
+          setIsConfirmRoommateMatchOpen={setIsConfirmRoommateMatchOpen}
+          setIsRoommateMatchListOpen={setIsRoommateMatchListOpen}
+        />
+      )}
     </>
   );
 };
 
 export default RecommendedRoommate;
-
-const MoveIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={13} height={15} fill="none" {...props}>
-    <path stroke="#9E9FA1" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m3.729 13.5 6-6-6-6" />
-  </svg>
-);

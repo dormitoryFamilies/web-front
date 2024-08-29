@@ -5,32 +5,43 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps, useState } from "react";
 
+import Header from "@/components/common/Header";
+import NavBar from "@/components/common/NavBar";
+import RoommateMatchComplete from "@/components/room-mate/RoommateMatchComplete";
+
 const RoommateMatching = () => {
   const router = useRouter();
   const [roomMateStep, setRoomMateStep] = useState();
+  const [recommendState, setRecommendState] = useState<"Before" | "After">("Before");
+  const [isConfirmRoommateMatchCancelOpen, setIsConfirmRoommateMatchCancelOpen] = useState(false);
 
   return (
     <>
-      <div className={"h-[43px]"} />
+      <Header />
+      <div className={"h-[60px] mb-[43px]"} />
       <div className={"px-5 flex flex-col gap-y-4"}>
         {/*추천 룸메*/}
-        <div className={"relative flex flex-col rounded-[24px] w-full p-5 bg-primaryMid"}>
-          <MoveWhiteIcon
-            className={"absolute right-5"}
-            onClick={() => {
-              router.push("/room-mate/recommended-roommate");
-            }}
-          />
-          <Image
-            src={"/room-mate/룸메매칭_추천룸메.png"}
-            alt={"/room-mate/룸메매칭_추천룸메.png"}
-            height={160}
-            width={290}></Image>
-          <div className={"flex flex-col text-white text-h3 font-semibold"}>
-            <div>닉네임닉네임닉네임의 </div>
-            <div>추천룸메</div>
+        {recommendState === "Before" ? (
+          <div className={"relative flex flex-col rounded-[24px] w-full p-5 bg-primaryMid"}>
+            <MoveWhiteIcon
+              className={"absolute right-5"}
+              onClick={() => {
+                router.push("/room-mate/recommended-roommate");
+              }}
+            />
+            <Image
+              src={"/room-mate/룸메매칭_추천룸메.png"}
+              alt={"/room-mate/룸메매칭_추천룸메.png"}
+              height={160}
+              width={290}></Image>
+            <div className={"flex flex-col text-white text-h3 font-semibold"}>
+              <div>닉네임닉네임닉네임의 </div>
+              <div>추천룸메</div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <RoommateMatchComplete setIsConfirmRoommateMatchCancelOpen={setIsConfirmRoommateMatchCancelOpen} />
+        )}
         <div className={"flex gap-x-4"}>
           {/*룸메 신청 목록*/}
           <div className={"rounded-[24px] w-full p-5 bg-secondary "}>
@@ -76,21 +87,15 @@ const RoommateMatching = () => {
             </div>
           </div>
         </div>
-
       </div>
+      <NavBar />
     </>
   );
 };
 export default RoommateMatching;
 
 const MoveWhiteIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={21}
-    height={21}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
     <path
       stroke="#fff"
       strokeLinecap="round"
@@ -104,13 +109,7 @@ const MoveWhiteIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 const MoveBlackIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={21}
-    height={21}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} fill="none" {...props}>
     <path
       stroke="#191919"
       strokeLinecap="round"
