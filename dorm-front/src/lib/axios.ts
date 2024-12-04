@@ -60,7 +60,6 @@ const getTokensFromLocalStorage = () => {
 const sendRequest = async (config: any) => {
   try {
     console.log("In send Request" + localStorage.getItem("accessToken"));
-    console.log("최종", client.defaults.baseURL + config.url);
     return await client(config);
   } catch (error) {
     const axiosError = error as AxiosError; // AxiosError로 캐스팅
