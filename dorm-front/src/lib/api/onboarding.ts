@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { client } from "@/lib/axios";
+import { client, sendRequest } from "@/lib/axios";
 import { ProfileSettingType } from "@/types/global";
 
 export const getKaKaoAccessToken = async (code: string | null) => {
@@ -25,6 +25,20 @@ export const getKaKaoAccessToken = async (code: string | null) => {
   } catch (error) {
     // 에러 처리
     console.error("카카오 엑세스토큰 가져오는데 에러 발생:", error);
+  }
+};
+
+export const getJWTToken = async (accessToken: string) => {
+  try {
+    const response = await sendRequest({
+      method: "POST",
+      data: { accessToken: accessToken },
+      url: "/api/login",
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("JWT 에러 발생:", error);
   }
 };
 
