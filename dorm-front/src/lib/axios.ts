@@ -71,11 +71,11 @@ const sendRequest = async (config: any) => {
       if (refreshToken) {
         try {
           const response = await client.post(
-            config.url,
+            "/api/reissue",
             {}, // 여기에 요청 바디 데이터를 넣어줘야 함
             {
               headers: {
-                RefreshToken: refreshToken,
+                RefreshToken: "Bearer " + refreshToken,
               },
             },
           );
