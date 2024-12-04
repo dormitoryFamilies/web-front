@@ -24,7 +24,7 @@ export default function page() {
         <div className={"h-[36px]"}></div>
       </div>
       <Link
-        href={"http://43.202.254.127:8080/oauth2/authorization/kakao"}
+        href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`}
         className={
           "absolute bottom-5 flex gap-x-2 items-center justify-center w-[90%] bg-[#F9E000] rounded-full font-semibold py-[14px]"
         }>
