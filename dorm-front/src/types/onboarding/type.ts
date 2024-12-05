@@ -39,4 +39,9 @@ export interface DepartmentType {
   바이오헬스학부: string[];
 }
 
-export type StepOnboarding = "NicknameSetting" | "SchoolInfoSetting" | "PhotoStudentIDCard" | "WaitForCompletion";
+export type StepOnboarding =
+  | "ServiceAccessRights"
+  | "NicknameSetting"
+  | "SchoolInfoSetting"
+  | "PhotoStudentIDCard"
+  | "WaitForCompletion";
