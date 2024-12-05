@@ -44,17 +44,17 @@ export const getJWTToken = async (accessToken: string) => {
 
 export const getSearchDuplicateNickName = async (searchValue: string) => {
   try {
-    const response = await client.get(`/members/check?nickname=${searchValue}`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        AccessToken: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "GET",
+      url: `/api/members/check?nickname=${searchValue}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("nickname 검색 에러 발생", error);
+    console.error("닉네임 중복:", error);
   }
 };
 

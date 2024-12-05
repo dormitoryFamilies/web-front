@@ -4,7 +4,7 @@ const client = axios.create({
   baseURL: "http://13.124.186.20:8080",
   headers: {
     "Content-type": "application/json",
-    AccessToken: localStorage.getItem("accessToken"),
+    AccessToken: "Bearer " + localStorage.getItem("accessToken"),
   },
   transformResponse: [
     (data, headers) => {
