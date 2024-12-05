@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import qs from "query-string";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, SVGProps, useEffect, useState } from "react";
 import * as React from "react";
 
 import Header from "@/components/common/Header";
@@ -140,3 +140,9 @@ const NicknameSetting = (props: Props) => {
   );
 };
 export default NicknameSetting;
+
+const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={13} fill="none" {...props}>
+    <path stroke="#FF7E8D" strokeLinecap="round" strokeWidth={2} d="m1 5.149 5.025 5.378a2 2 0 0 0 2.923 0L17 1.909" />
+  </svg>
+);
