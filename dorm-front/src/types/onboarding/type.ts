@@ -1,4 +1,5 @@
-import { string } from "prop-types";
+import { number, string } from "prop-types";
+import { AxiosHeaders } from "axios";
 
 export type CollegeType =
   | "단과대학교"
@@ -45,3 +46,15 @@ export type StepOnboarding =
   | "SchoolInfoSetting"
   | "PhotoStudentIDCard"
   | "WaitForCompletion";
+
+export interface SearchDuplicateNickNameResponseType {
+  data: SearchDuplicateNickNameType;
+  headers: AxiosHeaders;
+}
+
+export interface SearchDuplicateNickNameType {
+  code: number;
+  data: {
+    isDuplicated: boolean;
+  };
+}

@@ -6,7 +6,11 @@ import * as React from "react";
 import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchDuplicateNickName } from "@/lib/api/onboarding";
-import { StepOnboarding } from "@/types/onboarding/type";
+import {
+  SearchDuplicateNickNameResponseType,
+  SearchDuplicateNickNameType,
+  StepOnboarding,
+} from "@/types/onboarding/type";
 
 interface Props {
   onNext: Dispatch<SetStateAction<StepOnboarding>>;
@@ -19,6 +23,7 @@ const NicknameSetting = (props: Props) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const debouncedValue = useDebounce<string>(searchValue, 100);
   const router = useRouter();
+  const [duplicateStatus, setDuplicateStatus] = useState<boolean | null>(null);
 
   useEffect(() => {
     const query = {
@@ -35,8 +40,15 @@ const NicknameSetting = (props: Props) => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    await getSearchDuplicateNickName(searchValue).then((r) => console.log("검색 결과", r));
-    setIsCheckDuplicateButton(!isCheckDuplicateButton);
+
+    try {
+      const response: SearchDuplicateNickNameResponseType = await getSearchDuplicateNickName(searchValue);
+      if (response.data.code === 200) {
+        setDuplicateStatus(response.data.data.isDuplicated);
+      }
+    } catch (error) {
+      console.error("닉네임 중복 검사 중 오류 발생:", error);
+    }
   };
 
   const onBack = () => {
@@ -59,18 +71,36 @@ const NicknameSetting = (props: Props) => {
 
         {/* 입력창 */}
         <div className={"mt-5 flex gap-x-[3px]"}>
-          <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"}>
+          <div
+            className={
+              duplicateStatus === null
+                ? duplicateStatus
+                  ? "relative flex justify-between rounded-[12px] border-[1px] border-point py-3 px-4 w-full"
+                  : "relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"
+                : "relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"
+            }>
             <input
               placeholder={"닉네임을 입력해주세요"}
               maxLength={20}
               className={"focus:outline-0 w-full placeholder focus:placeholder-top"}
               onChange={(e) => {
+                setDuplicateStatus(null);
                 setSearchValue(e.target.value);
                 setCount(e.target.value.length);
               }}></input>
-            <div className={"absolute right-3 text-gray4 text-h5"}>
-              <span className="font-semibold">{count}</span>/20
-            </div>
+            {duplicateStatus === null ? (
+              <div className={"absolute right-3 text-gray4 text-h5"}>
+                <span className="font-semibold">{count}</span>/20
+              </div>
+            ) : duplicateStatus ? (
+              <div className={"absolute right-3 text-gray4 text-h5"}>
+                <span className="font-semibold">{count}</span>/20
+              </div>
+            ) : (
+              <div className={"absolute right-3 text-black text-h5 mt-1"}>
+                <CheckIcon />
+              </div>
+            )}
           </div>
           <button
             onClick={(e) => {
@@ -82,11 +112,27 @@ const NicknameSetting = (props: Props) => {
             중복확인
           </button>
         </div>
+        {duplicateStatus === null ? null : duplicateStatus ? (
+          <div className={"mt-2 py-1 flex justify-center items-center bg-primaryLight rounded-[12px] text-primaryMid"}>
+            사용 불가능한 닉네임이에요. 다시 입력해주세요.
+          </div>
+        ) : (
+          <div className={"mt-2 py-1 flex justify-center items-center bg-primaryLight rounded-[12px] text-primaryMid"}>
+            사용 가능한 닉네임이에요.
+          </div>
+        )}
         <button
+          disabled={duplicateStatus === null ? true : duplicateStatus}
           onClick={() => {
             onNext("SchoolInfoSetting");
           }}
-          className={"absolute w-[90%] bottom-5 text-white text-h5 bg-gray3 rounded-full py-[14px]"}>
+          className={
+            duplicateStatus === null
+              ? "absolute w-[90%] bottom-5 text-white text-h5 bg-gray3 rounded-full py-[14px]"
+              : duplicateStatus
+                ? "absolute w-[90%] bottom-5 text-white text-h5 bg-gray3 rounded-full py-[14px]"
+                : "absolute w-[90%] bottom-5 text-white text-h5 bg-primary rounded-full py-[14px]"
+          }>
           다음
         </button>
       </div>
