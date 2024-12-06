@@ -74,3 +74,41 @@ export const putProfileInitialData = async (data: ProfileSettingType) => {
     console.error("프로필 처음 설정시 에러:", error);
   }
 };
+
+/**
+ * 회원가입 관리자 멤버 승인
+ */
+export const putMemberApproval = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PUT",
+      url: `/api/verify/members/${memberId}/approvals`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("프로필 처음 설정시 에러:", error);
+  }
+};
+
+/**
+ * 회원가입 관리자 멤버 거절
+ */
+export const putMemberRejection = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PUT",
+      url: `/api/verify/members/${memberId}/rejections`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("프로필 처음 설정시 에러:", error);
+  }
+};
