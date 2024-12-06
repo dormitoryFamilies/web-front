@@ -20,7 +20,7 @@ const OnboardingCollegeFilter = (props: Props) => {
 
   return (
     <>
-      <div className="absolute bg-white z-10 w-[90%] rounded-[20px] border-[1px] border-gray1 h-[335px] overflow-y-scroll">
+      <div className="absolute top-[85px] bg-white z-10 w-full rounded-[20px] border-[1px] border-gray1 h-[335px] overflow-y-scroll">
         {colleges.slice(1).map((college, index) => {
           return (
             <div

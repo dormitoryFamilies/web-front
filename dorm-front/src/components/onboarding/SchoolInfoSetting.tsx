@@ -198,12 +198,12 @@ const SchoolInfoSetting = (props: Props) => {
             </div>
             {isDormFilterClick ? (
               <OnboardingDormitoryFilter
-                dormList={ARTICLE_DORM_LIST}
+                dormList={MEMBER_DORM_LIST}
                 setPostData={setPostData}
                 setIsClickFilter={setIsDormFilterClick}
               />
             ) : null}
-          </div>
+          </section>
         </div>
       </div>
       <button
