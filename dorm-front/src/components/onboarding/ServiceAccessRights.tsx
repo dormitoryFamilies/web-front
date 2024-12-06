@@ -1,9 +1,16 @@
-import type { SVGProps } from "react";
+import type { Dispatch, SetStateAction, SVGProps } from "react";
 import * as React from "react";
-const ServiceAccessRights = () => {
+
+import { StepOnboarding } from "@/types/onboarding/type";
+
+interface Props {
+  onNext: Dispatch<SetStateAction<StepOnboarding>>;
+}
+const ServiceAccessRights = (props: Props) => {
+  const { onNext } = props;
   return (
     <div className={"flex flex-col min-h-screen"}>
-      <div className={"m-[30px] "}>
+      <div className={"mt-[40px] px-[30px]"}>
         <div className={"flex flex-col gap-y-[5px]"}>
           <div className={"text-h1 font-semibold"}>서비스 접근 권한 안내</div>
           <div className={"text-h5 text-gray4"}>원활한 서비스 사용을 위해 다음 권한이 필요합니다.</div>
@@ -33,7 +40,11 @@ const ServiceAccessRights = () => {
           </div>
         </div>
       </div>
-      <button className={"left-5 py-[15px] absolute bottom-5 text-white bg-primary rounded-full w-[90%] text-h5"}>
+      <button
+        onClick={() => {
+          onNext("NicknameSetting");
+        }}
+        className={"left-5 py-[15px] absolute bottom-5 text-white bg-primary rounded-full w-[90%] text-h5"}>
         동의하고 시작하기
       </button>
     </div>
@@ -70,43 +81,12 @@ function CameraIcon(props: SVGProps<SVGSVGElement>) {
 
 function AlarmIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width={21}
-      height={25}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M2.77 9.713a7.633 7.633 0 0115.266 0V20.48H2.77V9.713z"
-        stroke="#000"
-        strokeWidth={1.6}
-      />
+    <svg width={21} height={25} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M2.77 9.713a7.633 7.633 0 0115.266 0V20.48H2.77V9.713z" stroke="#000" strokeWidth={1.6} />
       <rect y={19.713} width={20.491} height={1.6} rx={0.8} fill="#000" />
-      <rect
-        x={7.014}
-        y={23.048}
-        width={6.463}
-        height={1.6}
-        rx={0.8}
-        fill="#000"
-      />
-      <rect
-        x={4.641}
-        y={17.048}
-        width={3.861}
-        height={1.537}
-        rx={0.768}
-        fill="#E70050"
-      />
-      <rect
-        x={11.045}
-        width={2.56}
-        height={1.6}
-        rx={0.8}
-        transform="rotate(90 11.045 0)"
-        fill="#000"
-      />
+      <rect x={7.014} y={23.048} width={6.463} height={1.6} rx={0.8} fill="#000" />
+      <rect x={4.641} y={17.048} width={3.861} height={1.537} rx={0.768} fill="#E70050" />
+      <rect x={11.045} width={2.56} height={1.6} rx={0.8} transform="rotate(90 11.045 0)" fill="#000" />
     </svg>
   );
 }

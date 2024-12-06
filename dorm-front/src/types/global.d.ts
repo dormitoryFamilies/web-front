@@ -60,6 +60,6 @@ export interface ProfileSettingType {
   studentCardImageUrl: string;
   collegeType: CollegeType;
   departmentType: string;
-  studentNumber: number;
+  studentNumber: number | null;
   dormitoryType: string;
 }

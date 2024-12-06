@@ -4,7 +4,7 @@ const client = axios.create({
   baseURL: "http://13.124.186.20:8080",
   headers: {
     "Content-type": "application/json",
-    AccessToken: localStorage.getItem("accessToken"),
+    AccessToken: "Bearer " + localStorage.getItem("accessToken"),
   },
   transformResponse: [
     (data, headers) => {
@@ -63,7 +63,6 @@ const sendRequest = async (config: any) => {
     return await client(config);
   } catch (error) {
     const axiosError = error as AxiosError; // AxiosError로 캐스팅
-    console.log("axiosError", axiosError);
     if (axiosError.response && axiosError.response.status === 401) {
       // 만료된 액세스 ㅇ토큰일 경우 리프레시 토큰으로 갱신
       const { refreshToken } = getTokensFromLocalStorage();
@@ -121,7 +120,7 @@ export const swrGetFetcher = async (url: any) => {
 
     const response = await sendRequest({
       headers: {
-        AccessToken: localStorage.getItem("accessToken"),
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
       method: "GET",
       url: url,

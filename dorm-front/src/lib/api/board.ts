@@ -1,4 +1,4 @@
-import { client } from "@/lib/axios";
+import { client, sendRequest } from "@/lib/axios";
 import { ArticlePostType, PostCommentType } from "@/types/board/type";
 
 export const postArticle = async (data: ArticlePostType) => {
@@ -51,17 +51,19 @@ export const deleteArticle = async (articleId: number | string | string[]) => {
 
 export const postArticleImage = async (formData: FormData) => {
   try {
-    const response = await client.post("/images", formData, {
+    const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: formData,
+      url: `/api/images`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("사진 업로드 에러:", error);
   }
 };
 

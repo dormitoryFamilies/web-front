@@ -43,33 +43,68 @@ export const getJWTToken = async (accessToken: string) => {
 };
 
 export const getSearchDuplicateNickName = async (searchValue: string) => {
+  const response = await sendRequest({
+    headers: {
+      AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+    },
+    method: "GET",
+    url: `/api/members/check?nickname=${searchValue}`,
+  });
+  console.log(response.data);
+  return response.data;
+};
+
+export const putProfileInitialData = async (data: ProfileSettingType) => {
   try {
-    const response = await client.get(`/members/check?nickname=${searchValue}`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        AccessToken: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PUT",
+      data: data,
+      url: `/api/members/initial-profiles`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("nickname 검색 에러 발생", error);
+    console.error("프로필 처음 설정시 에러:", error);
   }
 };
 
-export const putProfileData = async (data: ProfileSettingType) => {
+/**
+ * 회원가입 관리자 멤버 승인
+ */
+export const putMemberApproval = async (memberId: number) => {
   try {
-    const response = await client.put(`/api/members/initial-profiles`, data, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        AccessToken: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PUT",
+      url: `/api/verify/members/${memberId}/approvals`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("put 설정 에러", error);
+    console.error("프로필 처음 설정시 에러:", error);
+  }
+};
+
+/**
+ * 회원가입 관리자 멤버 거절
+ */
+export const putMemberRejection = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PUT",
+      url: `/api/verify/members/${memberId}/rejections`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("프로필 처음 설정시 에러:", error);
   }
 };
