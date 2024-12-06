@@ -36,9 +36,9 @@ const SchoolInfoSetting = (props: Props) => {
       postData.departmentType === "학과 선택" ||
       postData.collegeType === "단과대학교" ||
       postData.nickname === "" ||
-      postData.studentCardImageUrl === "" ||
       postData.dormitoryType === "" ||
-      postData.studentNumber === 0
+      postData.studentNumber === null ||
+      String(Math.abs(postData.studentNumber)).length !== 10
     );
   };
 
@@ -48,19 +48,16 @@ const SchoolInfoSetting = (props: Props) => {
       console.log("데이터가 불완전합니다.");
       return;
     }
-    try {
-      await putProfileData(postData).then(() => {
-        onNext("PhotoStudentIDCard");
-      });
-      console.log("성공");
-    } catch (error) {
-      console.log("실패:", error);
-    }
+    onNext("PhotoStudentIDCard");
   };
 
   const onBack = () => {
     onBefore("NicknameSetting");
   };
+
+  useEffect(() => {
+    console.log(postData);
+  }, [postData]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -168,14 +165,21 @@ const SchoolInfoSetting = (props: Props) => {
             <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4"}>
               <input
                 type={"number"}
-                maxLength={20}
+                maxLength={10}
+                defaultValue={postData.studentNumber || 0}
                 placeholder={"학번을 입력해주세요."}
                 className={"focus:outline-0 w-full"}
                 onChange={(e) => {
                   setPostData((prevState) => ({ ...prevState, studentNumber: parseInt(e.target.value) }));
                 }}></input>
             </div>
-          </div>
+            {postData.studentNumber === null ? null : String(Math.abs(postData.studentNumber)).length !== 10 ? (
+              <div
+                className={"mt-2 py-1 flex justify-center items-center bg-primaryLight rounded-[12px] text-primaryMid"}>
+                10글자를 입력해주세요.
+              </div>
+            ) : null}
+          </section>
 
           {/*기숙사*/}
           <div className={"flex flex-col gap-y-2"}>
