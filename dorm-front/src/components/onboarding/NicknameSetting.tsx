@@ -2,15 +2,18 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, SVGProps, useEffect, useState } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchDuplicateNickName } from "@/lib/api/onboarding";
+import { profileSettingAtom } from "@/recoil/onboarding/atom";
 import {
   SearchDuplicateNickNameResponseType,
   SearchDuplicateNickNameType,
   StepOnboarding,
 } from "@/types/onboarding/type";
+import { ProfileSettingType } from "@/types/global";
 
 interface Props {
   onNext: Dispatch<SetStateAction<StepOnboarding>>;
@@ -24,6 +27,7 @@ const NicknameSetting = (props: Props) => {
   const debouncedValue = useDebounce<string>(searchValue, 100);
   const router = useRouter();
   const [duplicateStatus, setDuplicateStatus] = useState<boolean | null>(null);
+  const [profileInitialSetting, setProfileInitialSetting] = useRecoilState<ProfileSettingType>(profileSettingAtom);
 
   useEffect(() => {
     const query = {
@@ -124,6 +128,10 @@ const NicknameSetting = (props: Props) => {
         <button
           disabled={duplicateStatus === null ? true : duplicateStatus}
           onClick={() => {
+            setProfileInitialSetting((prevState: ProfileSettingType) => ({
+              ...prevState,
+              nickname: searchValue,
+            }));
             onNext("SchoolInfoSetting");
           }}
           className={
