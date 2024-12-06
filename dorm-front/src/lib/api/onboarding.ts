@@ -58,18 +58,19 @@ export const getSearchDuplicateNickName = async (searchValue: string) => {
   }
 };
 
-export const putProfileData = async (data: ProfileSettingType) => {
+export const putProfileInitialData = async (data: ProfileSettingType) => {
   try {
-    const response = await client.put(`/api/members/initial-profiles`, data, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        AccessToken: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PUT",
+      data: data,
+      url: `/api/members/initial-profiles`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("put 설정 에러", error);
+    console.error("프로필 처음 설정시 에러:", error);
   }
 };
