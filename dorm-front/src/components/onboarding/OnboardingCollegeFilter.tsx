@@ -2,17 +2,18 @@ import React from "react";
 import { SetterOrUpdater } from "recoil";
 
 import { ProfileSettingType } from "@/types/global";
+import { CollegeType } from "@/types/onboarding/type";
 
 interface Props {
-  colleges: string[];
+  colleges: CollegeType[];
   setPostData: SetterOrUpdater<ProfileSettingType>;
   setIsClickFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const OnboardingCollegeFilter = (props: Props) => {
   const { colleges, setIsClickFilter, setPostData } = props;
 
-  const updatePostData = (college: string) => {
-    setPostData((prevState) => ({
+  const updatePostData = (college: CollegeType) => {
+    setPostData((prevState: ProfileSettingType) => ({
       ...prevState,
       collegeType: college,
     }));
