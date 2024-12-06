@@ -7,10 +7,9 @@ import Header from "@/components/common/Header";
 import OnboardingCollegeFilter from "@/components/onboarding/OnboardingCollegeFilter";
 import OnboardingDepartmentFilter from "@/components/onboarding/OnboardingDepartmentFilter";
 import OnboardingDormitoryFilter from "@/components/onboarding/OnboardingDormitoryFilter";
-import { putProfileData } from "@/lib/api/onboarding";
 import { profileSettingAtom } from "@/recoil/onboarding/atom";
 import { StepOnboarding } from "@/types/onboarding/type";
-import { ARTICLE_DORM_LIST } from "@/utils/dorm";
+import { MEMBER_DORM_LIST } from "@/utils/dorm";
 import { COLLEGE_LIST } from "@/utils/onboarding/COLLEGE_LIST";
 import { DEPARTMENT_LIST } from "@/utils/onboarding/departments";
 
@@ -75,7 +74,7 @@ const SchoolInfoSetting = (props: Props) => {
 
         <div className={"flex flex-col gap-y-4 mt-5"}>
           {/*단과대학교*/}
-          <div className={"flex flex-col gap-y-2"}>
+          <section className={"relative flex flex-col gap-y-2"}>
             {/*label*/}
             <div className="text-gray5">
               단과대학교
@@ -109,10 +108,10 @@ const SchoolInfoSetting = (props: Props) => {
                 setIsClickFilter={setIsCollegeFilterClick}
               />
             ) : null}
-          </div>
+          </section>
 
           {/*학과*/}
-          <div className={"flex flex-col gap-y-2"}>
+          <section className={"relative flex flex-col gap-y-2"}>
             {/*label*/}
             <div className="text-gray5">
               학과
@@ -151,10 +150,10 @@ const SchoolInfoSetting = (props: Props) => {
                 setIsClickFilter={setIsDepartmentFilterClick}
               />
             ) : null}
-          </div>
+          </section>
 
           {/*학번*/}
-          <div className={"flex flex-col gap-y-2"}>
+          <section className={"flex flex-col gap-y-2"}>
             {/*label*/}
             <div className="text-gray5">
               학번
@@ -182,7 +181,7 @@ const SchoolInfoSetting = (props: Props) => {
           </section>
 
           {/*기숙사*/}
-          <div className={"flex flex-col gap-y-2"}>
+          <section className={"relative flex flex-col gap-y-2"}>
             {/*label*/}
             <div className="text-gray5">
               기숙사
