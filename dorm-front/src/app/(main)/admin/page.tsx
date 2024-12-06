@@ -56,7 +56,7 @@ const AdminPage = () => {
                         onClick={() => {
                           putMemberApproval(nonVerifiedStudentCard.memberId).then(() => {
                             mutate();
-                          });;
+                          });
                         }}
                         className={"border border-gray1 text-gray5 py-[6px] rounded-full px-5"}>
                         승인
