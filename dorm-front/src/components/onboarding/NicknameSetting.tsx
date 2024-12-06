@@ -8,12 +8,8 @@ import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchDuplicateNickName } from "@/lib/api/onboarding";
 import { profileSettingAtom } from "@/recoil/onboarding/atom";
-import {
-  SearchDuplicateNickNameResponseType,
-  SearchDuplicateNickNameType,
-  StepOnboarding,
-} from "@/types/onboarding/type";
 import { ProfileSettingType } from "@/types/global";
+import { SearchDuplicateNickNameResponseType, StepOnboarding } from "@/types/onboarding/type";
 
 interface Props {
   onNext: Dispatch<SetStateAction<StepOnboarding>>;
