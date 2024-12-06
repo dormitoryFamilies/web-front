@@ -9,7 +9,7 @@ export const profileSettingAtom = atom<ProfileSettingType>({
     studentCardImageUrl: "",
     collegeType: "단과대학교",
     departmentType: "학과선택",
-    studentNumber: 0,
+    studentNumber: null,
     dormitoryType: "",
   },
 });
