@@ -121,7 +121,7 @@ export const swrGetFetcher = async (url: any) => {
 
     const response = await sendRequest({
       headers: {
-        AccessToken: localStorage.getItem("accessToken"),
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
       method: "GET",
       url: url,
