@@ -29,13 +29,13 @@ const AdminPage = () => {
     <div>
       {isOpenStudentCardUrl ? <></> : null}
       <Header headerType={"dynamic"} title={"학생증 승인"} />
-      <section className={"mt-20 px-5 py-3"}>
+      <section className={"flex flex-col gap-y-3 mt-10 px-5 py-3"}>
         {nonVerifiedStudentCardList && nonVerifiedStudentCardList.length !== 0
           ? nonVerifiedStudentCardList.map((nonVerifiedStudentCardResponse) => {
               // console.log('nonVerifiedStudentCardList', nonVerifiedStudentCardList)
               return nonVerifiedStudentCardResponse?.data.nonVerifiedStudentCards.map((nonVerifiedStudentCard) => {
                 return (
-                  <div ref={ref} key={nonVerifiedStudentCard.memberId} className={"flex justify-between items-center"}>
+                  <div ref={ref} key={nonVerifiedStudentCard.memberId} className={"border-b border-gray1 py-4"}>
                     <div
                       className={"flex "}
                       onClick={() => {
