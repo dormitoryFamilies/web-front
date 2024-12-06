@@ -25,10 +25,6 @@ const AdminPage = () => {
     }
   }, [inView]);
 
-  useEffect(() => {
-    console.log("nonVerifiedStudentCardList", nonVerifiedStudentCardList);
-  }, [nonVerifiedStudentCardList]);
-
   return (
     <div>
       {isOpenStudentCardUrl ? <></> : null}
