@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -9,6 +10,7 @@ import { VerifyMembersResponseType } from "@/types/onboarding/type";
 
 const AdminPage = () => {
   const [isOpenStudentCardUrl, setIsOpenStudentCardUrl] = useState(false);
+  const [studentCardIdUrl, setStudentCardIdUrl] = useState("");
   const [ref, inView] = useInView();
   const { nonVerifiedStudentCardList, setSize, mutate } = useVerifyMembers();
 
@@ -28,7 +30,9 @@ const AdminPage = () => {
 
   return (
     <div>
-      {isOpenStudentCardUrl ? <></> : null}
+      {isOpenStudentCardUrl ? (
+        <Image alt={studentCardIdUrl} src={studentCardIdUrl} width={300} height={300}></Image>
+      ) : null}
       <Header headerType={"dynamic"} title={"학생증 승인"} />
       <section className={"flex flex-col gap-y-3 mt-10 px-5 py-3"}>
         {nonVerifiedStudentCardList && nonVerifiedStudentCardList.length !== 0
@@ -39,9 +43,14 @@ const AdminPage = () => {
                     <div
                       className={"flex "}
                       onClick={() => {
+                        setStudentCardIdUrl(nonVerifiedStudentCard.studentCardUrl);
                         setIsOpenStudentCardUrl(true);
                       }}>
-                      <div className={"flex flex-col text-h5"}>
+                      <div
+                        onClick={() => {
+                          setIsOpenStudentCardUrl(true);
+                        }}
+                        className={"flex flex-col text-h5"}>
                         <div className={"flex"}>
                           <span>{nonVerifiedStudentCard.name}</span>
                           <span>/</span>
