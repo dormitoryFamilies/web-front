@@ -43,19 +43,15 @@ export const getJWTToken = async (accessToken: string) => {
 };
 
 export const getSearchDuplicateNickName = async (searchValue: string) => {
-  try {
-    const response = await sendRequest({
-      headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
-      },
-      method: "GET",
-      url: `/api/members/check?nickname=${searchValue}`,
-    });
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error("닉네임 중복:", error);
-  }
+  const response = await sendRequest({
+    headers: {
+      AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+    },
+    method: "GET",
+    url: `/api/members/check?nickname=${searchValue}`,
+  });
+  console.log(response.data);
+  return response.data;
 };
 
 export const putProfileInitialData = async (data: ProfileSettingType) => {

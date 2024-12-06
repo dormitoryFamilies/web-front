@@ -1,3 +1,4 @@
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, SVGProps, useEffect, useState } from "react";
@@ -18,7 +19,6 @@ interface Props {
 const NicknameSetting = (props: Props) => {
   const { onNext } = props;
   const [count, setCount] = useState(0);
-  const [isCheckDuplicateButton, setIsCheckDuplicateButton] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const debouncedValue = useDebounce<string>(searchValue, 100);
   const router = useRouter();
@@ -43,13 +43,20 @@ const NicknameSetting = (props: Props) => {
 
     try {
       const response: SearchDuplicateNickNameResponseType = await getSearchDuplicateNickName(searchValue);
-      if (response.data.code === 200) {
+      if (response && response.data && response.data.code === 200) {
         setDuplicateStatus(response.data.data.isDuplicated);
       }
-    } catch (error) {
-      console.error("닉네임 중복 검사 중 오류 발생:", error);
+    } catch (error: any) {
+      const axiosError = error as AxiosError; // AxiosError로 캐스팅
+      console.log("axiosError", axiosError.response?.status);
+      if (axiosError.response?.status === 409) {
+        setDuplicateStatus(true);
+      }
     }
   };
+  useEffect(() => {
+    console.log("duplicateStatus", duplicateStatus);
+  }, [duplicateStatus]);
 
   const onBack = () => {
     router.push("/");
@@ -74,10 +81,10 @@ const NicknameSetting = (props: Props) => {
           <div
             className={
               duplicateStatus === null
-                ? duplicateStatus
+                ? "relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"
+                : duplicateStatus
                   ? "relative flex justify-between rounded-[12px] border-[1px] border-point py-3 px-4 w-full"
                   : "relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"
-                : "relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4 w-full"
             }>
             <input
               placeholder={"닉네임을 입력해주세요"}
