@@ -1,17 +1,17 @@
+import Image from "next/image";
 import * as React from "react";
 
 import Button from "@/components/common/Button";
-
 interface Props {
-  title: string;
-  content: string;
-  wishCount: number;
-  commentCount: number;
-  tags: string;
-  // images?: ImageType[];
+  title: string | undefined;
+  content: string | undefined;
+  wishCount: number | undefined;
+  commentCount: number | undefined;
+  tags: string | undefined;
+  images: string[] | undefined;
 }
 const PostDetailContent = (props: Props) => {
-  const { title, content, tags, wishCount, commentCount } = props;
+  const { title, content, tags, wishCount, commentCount, images } = props;
 
   const parseTags = (tagsString: string) => {
     // 문자열을 #을 기준으로 나눈 후, 빈 문자열을 제외한 나머지를 필터링
@@ -24,23 +24,25 @@ const PostDetailContent = (props: Props) => {
         <div className="text-h3 font-bold">{title}</div>
         <div className="font-normal">{content}</div>
       </div>
-      <div className="flex gap-x-[18px]">
-        {/*{images.map((image,index) => {*/}
-        {/*  return (*/}
-        {/*    <div key={index} className={"relative rounded-[8px] w-[100px] h-[100px] overflow-hidden"}>*/}
-        {/*      <Image alt={image.imageName} src={image.s3Url} fill className={"object-cover"} />*/}
-        {/*    </div>*/}
-        {/*  );*/}
-        {/*})}*/}
-      </div>
+      {/*<div className="flex gap-x-[18px]">*/}
+      {/*  {images &&*/}
+      {/*    images.map((image, index) => {*/}
+      {/*      return (*/}
+      {/*        <div key={index} className={"relative rounded-[8px] w-[100px] h-[100px] overflow-hidden"}>*/}
+      {/*          <Image alt={image} src={image} fill className={"object-cover"} />*/}
+      {/*        </div>*/}
+      {/*      );*/}
+      {/*    })}*/}
+      {/*</div>*/}
       <div className="flex gap-x-1">
-        {parseTags(tags)?.map((tag, index) => {
-          return (
-            <Button className={"tag"} key={index}>
-              #{tag}
-            </Button>
-          );
-        })}
+        {tags &&
+          parseTags(tags)?.map((tag, index) => {
+            return (
+              <Button className={"tag"} key={index}>
+                #{tag}
+              </Button>
+            );
+          })}
       </div>
       <div className={"flex items-center text-h6 text-gray5"}>
         <span>관심</span>

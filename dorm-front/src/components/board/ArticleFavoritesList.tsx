@@ -9,7 +9,7 @@ import { selectedMemberIdAtom } from "@/recoil/atom";
 
 interface Props {
   articleId: string | string[];
-  writerId: number;
+  writerId: number | undefined;
   setIsProfileModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const ArticleFavoritesList = (props: Props) => {

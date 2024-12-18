@@ -1,15 +1,14 @@
-import { AxiosResponse } from "axios";
 import { FormEvent } from "react";
 import { KeyedMutator } from "swr";
 
 import { putArticleStatus } from "@/lib/api/board";
-import { ResponseArticleDetailType } from "@/types/board/type";
+import { ResponseAxiosArticleDetailType } from "@/types/board/type";
 
 interface Props {
-  articleId: string | string[];
-  status: string;
+  articleId: string | string[] | number | undefined;
+  status: string | undefined;
   setIsRecruitmentStatusChangeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  mutate: KeyedMutator<AxiosResponse<ResponseArticleDetailType, any>>;
+  mutate: KeyedMutator<ResponseAxiosArticleDetailType>;
 }
 const RecruitmentStatusChangeModal = (props: Props) => {
   const { articleId, setIsRecruitmentStatusChangeModal, status, mutate } = props;
