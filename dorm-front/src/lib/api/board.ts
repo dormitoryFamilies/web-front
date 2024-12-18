@@ -1,4 +1,4 @@
-import { client, sendRequest } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 import { ArticlePostType, PostCommentType } from "@/types/board/type";
 
 export const postArticle = async (data: ArticlePostType) => {
@@ -105,7 +105,7 @@ export const putArticleStatus = async (articleId: string | string[], formData: F
   }
 };
 
-export const postArticleWish = async (articleId: string | string[]) => {
+export const postArticleWish = async (articleId: string | number | string[] | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
@@ -121,7 +121,7 @@ export const postArticleWish = async (articleId: string | string[]) => {
   }
 };
 
-export const deleteArticleWish = async (articleId: string | string[]) => {
+export const deleteArticleWish = async (articleId: string | number | string[] | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
