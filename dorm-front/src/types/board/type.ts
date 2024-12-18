@@ -1,5 +1,4 @@
 import { AxiosHeaders } from "axios";
-import { SearchDuplicateNickNameType } from "@/types/onboarding/type";
 
 export type BoardType = "전체" | "도와주세요" | "함께해요" | "나눔해요" | "궁금해요" | "분실신고";
 
@@ -37,6 +36,11 @@ export interface ArticleType {
   thumbnailUrl: string;
 }
 
+export interface ResponseAxiosArticleDetailType {
+  data: ResponseArticleDetailType;
+  headers: AxiosHeaders;
+}
+
 export interface ResponseArticleDetailType {
   code: number;
   data: ArticleDetailType;
@@ -44,7 +48,7 @@ export interface ResponseArticleDetailType {
 export interface ArticleDetailType {
   articleId: number;
   memberId: number;
-  nickName: string;
+  nickname: string;
   profileUrl: string;
   memberDormitory: string;
   articleDormitory: string;
@@ -54,12 +58,18 @@ export interface ArticleDetailType {
   content: string;
   wishCount: number;
   isWished: boolean;
+  isWriter: boolean;
   status: string;
   createdAt: string;
   imagesUrls: string[];
 }
 
 //댓글
+export interface ResponseAxiosArticleDetailAllCommentsType {
+  data: ResponseArticleDetailAllCommentsType;
+  headers: AxiosHeaders;
+}
+
 export interface ResponseArticleDetailAllCommentsType {
   code: number;
   data: ArticleDetailAllCommentsType;
@@ -73,10 +83,10 @@ export interface ArticleDetailCommentType {
   commentId: number;
   memberId: number;
   profileUrl: string;
-  nickName: string;
+  nickname: string;
   createdAt: string;
   content: string;
-  isWriter: boolean;
+  isArticleWriter: boolean;
   isDeleted: boolean;
   replyComments?: ArticleDetailReplyCommentsType[];
 }
@@ -84,10 +94,10 @@ export interface ArticleDetailReplyCommentsType {
   replyCommentId: number;
   memberId: number;
   profileUrl: string;
-  nickName: string;
+  nickname: string;
   createdAt: string;
   content: string;
-  isWriter: boolean;
+  isArticleWriter: boolean;
 }
 
 // 댓글 post Type
