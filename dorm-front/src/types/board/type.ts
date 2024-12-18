@@ -22,7 +22,7 @@ export interface Paging {
 }
 export interface ArticleType {
   articleId: number;
-  nickName: string;
+  nickname: string;
   profileUrl: string;
   boardType: string;
   title: string;

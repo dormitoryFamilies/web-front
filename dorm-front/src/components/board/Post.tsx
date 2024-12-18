@@ -9,7 +9,7 @@ import Button from "@/components/common/Button";
 
 interface Props {
   articleId: number;
-  nickName: string;
+  nickname: string;
   boardType: string;
   title: string;
   content: string;
@@ -26,7 +26,7 @@ interface Props {
 const Post = (props: Props) => {
   const {
     articleId,
-    nickName,
+    nickname,
     viewCount,
     boardType,
     isWished,
@@ -109,7 +109,7 @@ const Post = (props: Props) => {
                   className={"object-cover rounded-full"}></Image>
               </div>
               <div className={"flex items-center justify-center"}>
-                <span className="text-h5">{nickName}</span>
+                <span className="text-h5">{nickname}</span>
                 <span className="px-[6px] text-[10px]">|</span>
                 <span className="text-h5">{formatDate(createdDate)}</span>
                 <span className="px-[6px] text-[10px]">|</span>

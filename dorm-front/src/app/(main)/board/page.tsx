@@ -126,7 +126,7 @@ const Board = () => {
                         content={article.content}
                         createdDate={article.createdAt}
                         boardType={article.boardType}
-                        nickName={article.nickName}
+                        nickname={article.nickname}
                         commentCount={article.commentCount}
                         status={article.status}
                         isWished={article.isWished}
@@ -152,7 +152,7 @@ const Board = () => {
                         content={article.content}
                         createdDate={article.createdAt}
                         boardType={article.boardType}
-                        nickName={article.nickName}
+                        nickname={article.nickname}
                         commentCount={article.commentCount}
                         status={article.status}
                         wishCount={article.wishCount}
