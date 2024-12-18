@@ -155,11 +155,7 @@ function EmptyHeartIcon(props: React.SVGProps<SVGSVGElement>) {
       </g>
       <defs>
         <clipPath id="prefix__clip0_1674_2873">
-          <path
-            fill="#fff"
-            transform="translate(.007 .947)"
-            d="M0 0h12v10.105H0z"
-          />
+          <path fill="#fff" transform="translate(.007 .947)" d="M0 0h12v10.105H0z" />
         </clipPath>
       </defs>
     </svg>
@@ -193,13 +189,7 @@ function MoreIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 const HeartIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={12}
-    height={10}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={12} height={10} fill="none" {...props}>
     <path
       fill="#FF7E8D"
       fillRule="evenodd"
