@@ -17,11 +17,10 @@ import {
   deleteS3UrlListAtom,
   fileListAtom,
   imgUrlListAtom,
-  pastImageUrlListAtom,
   postDataState,
   selectedArticleIdAtom,
 } from "@/recoil/board/atom";
-import { ArticleDetailType, ArticlePostType } from "@/types/board/type";
+import { ResponseArticleDetailType } from "@/types/board/type";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
@@ -32,7 +31,6 @@ const Edit = () => {
   const [imgUrlList, setImgUrlList] = useRecoilState<string[]>(imgUrlListAtom); //이미지 URL string
   const [fileList, setFileList] = useRecoilState<File[]>(fileListAtom); //이미지 file
   const [deleteS3UrlList, setDeleteS3UrlList] = useRecoilState(deleteS3UrlListAtom);
-  const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 상태를 관리
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false); //비동기 제출 트리거
   // 입력 필드 목록을 관리하는 상태
   const [tags, setTags] = useState<string[]>([]);
@@ -40,14 +38,14 @@ const Edit = () => {
   /**
    * Recoil 초기화 함수
    */
-  const initializeEditPostData = (apiResponse: ArticleDetailType) => {
+  const initializeEditPostData = (apiResponse: ResponseArticleDetailType) => {
     return {
-      dormitoryType: apiResponse.articleDormitory,
-      boardType: apiResponse.boardType,
-      title: apiResponse.title,
-      content: apiResponse.content,
-      tags: apiResponse.tags,
-      imagesUrls: apiResponse.imagesUrls,
+      dormitoryType: apiResponse.data.articleDormitory,
+      boardType: apiResponse.data.boardType,
+      title: apiResponse.data.title,
+      content: apiResponse.data.content,
+      tags: apiResponse.data.tags,
+      imagesUrls: apiResponse.data.imagesUrls,
     };
   };
 
@@ -56,10 +54,10 @@ const Edit = () => {
     if (articleDetail) {
       const initialState = initializeEditPostData(articleDetail);
       setPostData(initialState);
-      setImgUrlList(articleDetail.imagesUrls);
+      setImgUrlList(articleDetail.data.imagesUrls);
 
       // tags 문자열을 분리하여 state로 설정
-      const tagArray = articleDetail.tags.split("#").filter(tag => tag.trim() !== "");
+      const tagArray = articleDetail.data.tags.split("#").filter((tag) => tag.trim() !== "");
       setTags(tagArray);
     }
   }, [articleDetail, setPostData]);
@@ -121,7 +119,7 @@ const Edit = () => {
             console.log("Uploading:", file.name);
             const response = await postArticleImage(formData);
             console.log("S3 업로드 성공", response);
-            uploadedImgUrls.push(response.data.imageUrl);
+            uploadedImgUrls.push(response.data.data.imageUrl);
           }
 
           const updatedPostData = {

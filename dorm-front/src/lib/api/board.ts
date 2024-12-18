@@ -18,7 +18,7 @@ export const postArticle = async (data: ArticlePostType) => {
   }
 };
 
-export const putArticle = async (data: ArticlePostType, articleId: string | string[]) => {
+export const putArticle = async (data: ArticlePostType, articleId: string | string[] | number) => {
   try {
     const response = await sendRequest({
       headers: {

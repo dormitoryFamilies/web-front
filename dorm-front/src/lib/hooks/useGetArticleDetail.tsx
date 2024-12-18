@@ -5,7 +5,7 @@ import {
   ResponseAxiosArticleDetailType,
 } from "@/types/board/type";
 
-const useGetArticleDetail = (parameter: string | string[]) => {
+const useGetArticleDetail = (parameter: string | string[] | number) => {
   const { data, error, mutate } = useSWR<ResponseAxiosArticleDetailType>(`/api/articles/${parameter}`, swrGetFetcher);
 
   return {
