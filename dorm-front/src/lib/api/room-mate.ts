@@ -1,4 +1,4 @@
-import { client } from "@/lib/axios";
+import { client, sendRequest } from "@/lib/axios";
 import { LifeStylePostType, PreferenceOrdersType } from "@/types/room-mate/type";
 
 export const postLifestyles = async (data: LifeStylePostType) => {
@@ -78,5 +78,56 @@ export const deleteMatchingRequest = async (memberId: number) => {
   } catch (error) {
     // 에러 처리
     console.error("룸메 매칭 post 에러 발생:", error);
+  }
+};
+
+export const getAllDoomzList = async (searchValue: string) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "GET",
+      url: `/api/matchings/members/search?q=${searchValue}&page=0&size=5`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("검색 결과 에러:", error);
+  }
+};
+
+export const postRoomMateWish = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "POST",
+      url: `/api/members/${memberId}/roommate-wishes`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("룸메매칭 찜 누르기 에러:", error);
+  }
+};
+
+export const deleteRoomMateWish = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/members/${memberId}/roommate-wishes`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("룸메매칭 찜 취소 누르기 에러:", error);
   }
 };

@@ -23,7 +23,7 @@ export const deleteFollowing = async (memberId: number | undefined) => {
         AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
       method: "DELETE",
-      url: `/api/members/${memberId}/follows`,
+      url: `/api/members/${memberId}/followings`,
     });
     console.log(response.data);
     return response.data;

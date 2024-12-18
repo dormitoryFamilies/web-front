@@ -1,4 +1,6 @@
 import { preferenceOrdersAtom } from "@/recoil/room-mate/atom";
+import { AxiosHeaders } from "axios";
+import { ResponseArticleWishListType } from "@/types/board/type";
 
 export type RoomMateLifeStyleStepType =
   | "SleepPattern"
@@ -155,10 +157,16 @@ export interface RecommendResultType {
 
 ///////////////////////////////////////////////////////////
 
+export interface RecommendResultProfileAxiosResponseType {
+  data: RecommendResultProfileResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface RecommendResultProfileResponseType {
   code: number;
   data: RecommendResultProfileType;
 }
+
 export interface RecommendResultProfileType {
   memberId: number;
   nickname: string;
@@ -169,4 +177,43 @@ export interface RecommendResultProfileType {
   birthDate: string;
   studentNumber: string;
   departmentType: string;
+}
+
+///////////////////////////////////////////////////////////
+
+export interface AllDoomzListAxiosResponseType {
+  data: AllDoomzListResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface AllDoomzListResponseType {
+  code: number;
+  data: AllDoomzListType;
+}
+
+export interface AllDoomzListType {
+  totalPageNumber: number;
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: MemberProfileType[];
+}
+
+export interface MemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+  isFollowing: boolean;
+  isRoommateWished: boolean;
+}
+
+//////////////////////////////////////////////////////////
+
+export interface RoomMateWishStatusAxiosResponseType {
+  data: RoomMateWishStatusResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateWishStatusResponseType {
+  code: number;
+  data: { isRoommateWished: boolean };
 }
