@@ -78,7 +78,7 @@ const Profile = (props: Props) => {
             ) : null}
           </div>
         )}
-        <div className="flex justify-center items-center text-h5 text-gray4 gap-x-[6px]">
+        <div className="flex items-center text-h5 text-gray4 gap-x-[6px]">
           {createdDate ? format(new Date(createdDate), "yy.MM.dd") : null}
           <span className={"text-[10px]"}> | </span>
           {createdDate ? format(new Date(createdDate), "HH:mm") : null}

@@ -94,8 +94,8 @@ const Header = (props: Props) => {
       <header
         className={
           headerType === "static"
-            ? "h-[52px] fixed top-0 bg-white flex items-center justify-evenly w-full"
-            : "px-5 h-[52px] fixed top-0 bg-white flex items-center justify-between w-full"
+            ? "h-[52px] fixed z-20 top-0 bg-white flex items-center justify-evenly w-full"
+            : "px-5 h-[52px] z-20 fixed top-0 bg-white flex items-center justify-between w-full"
         }>
         {renderHeader(headerType)}
       </header>
