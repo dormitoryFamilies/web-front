@@ -24,16 +24,16 @@ const PostDetailContent = (props: Props) => {
         <div className="text-h3 font-bold">{title}</div>
         <div className="font-normal">{content}</div>
       </div>
-      {/*<div className="flex gap-x-[18px]">*/}
-      {/*  {images &&*/}
-      {/*    images.map((image, index) => {*/}
-      {/*      return (*/}
-      {/*        <div key={index} className={"relative rounded-[8px] w-[100px] h-[100px] overflow-hidden"}>*/}
-      {/*          <Image alt={image} src={image} fill className={"object-cover"} />*/}
-      {/*        </div>*/}
-      {/*      );*/}
-      {/*    })}*/}
-      {/*</div>*/}
+      <div className="flex gap-x-[18px]">
+        {images &&
+          images.map((image, index) => {
+            return (
+              <div key={index} className={"relative rounded-[8px] w-[100px] h-[100px] overflow-hidden"}>
+                <Image alt={image} src={image} fill className={"object-cover"} />
+              </div>
+            );
+          })}
+      </div>
       <div className="flex gap-x-1">
         {tags &&
           parseTags(tags)?.map((tag, index) => {

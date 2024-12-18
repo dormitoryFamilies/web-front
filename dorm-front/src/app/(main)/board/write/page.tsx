@@ -75,7 +75,7 @@ const Write = () => {
           try {
             const response = await postArticleImage(formData);
             console.log("S3성공", response);
-            return response.data.imageUrl; // 이미지 URL 반환
+            return response.data.data.imageUrl; // 이미지 URL 반환
           } catch (error) {
             console.error("이미지 업로드 중 오류 발생:", error);
             throw error; // 오류 발생 시 throw하여 Promise.all이 멈추도록 함
