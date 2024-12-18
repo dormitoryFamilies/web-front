@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { SVGProps } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -20,6 +21,7 @@ import { sortFilterContents, statusFilterContents } from "@/utils/board/filterCo
 
 const Board = () => {
   const [ref, inView] = useInView();
+  const router = useRouter();
   const [boardType, setBoardType] = useState<BoardType>("전체");
   const [selectedSortType, setSelectedSortType] = useState<BoardSortType>("createdAt");
   const [selectedStatusType, setSelectedStatusType] = useState<BoardStatusType>("전체");
@@ -80,7 +82,14 @@ const Board = () => {
 
   return (
     <div className="relative">
-      <Header></Header>
+      <Header
+        rightElement={
+          <SearchIcon
+            onClick={() => {
+              router.push("/board/search");
+            }}
+          />
+        }></Header>
       <div className={"h-[60px]"} />
       <FilterMenu boardType={boardType} setBoardType={setBoardType}></FilterMenu>
       {/* filter */}
@@ -188,5 +197,28 @@ const DropUpIcon = (props: SVGProps<SVGSVGElement>) => (
       fill="#727375"
       d="m5.707.707 3.586 3.586c.63.63.184 1.707-.707 1.707H1.414C.524 6 .077 4.923.707 4.293L4.293.707a1 1 0 0 1 1.414 0"
     />
+  </svg>
+);
+const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={40} height={40} fill="none" {...props}>
+    <g clipPath="url(#a)">
+      <path
+        fill="#000"
+        d="M17.026 9.504a7.525 7.525 0 0 1 7.522 7.522 7.525 7.525 0 0 1-7.522 7.522 7.525 7.525 0 0 1-7.522-7.522 7.525 7.525 0 0 1 7.522-7.522m0-1.504a9.027 9.027 0 1 0 .002 18.054A9.027 9.027 0 0 0 17.026 8"
+      />
+      <path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="m24.739 24.739 6.509 6.509"
+      />
+      <path fill="#191919" d="M20.396 15.03a1.003 1.003 0 1 0 0-2.005 1.003 1.003 0 0 0 0 2.005" />
+    </g>
+    <defs>
+      <clipPath id="a">
+        <path fill="#fff" d="M8 8h24v24H8z" />
+      </clipPath>
+    </defs>
   </svg>
 );

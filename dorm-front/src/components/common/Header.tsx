@@ -41,7 +41,10 @@ const Header = (props: Props) => {
               <div className="text-h2 font-bold z-20">{selectedDorm}</div>
               {isDropDownClick ? <DropDownOnIcon /> : <DropDownOffIcon />}
             </div>
-            <AlarmIcon className="absolute right-5" />
+            <div className={"flex absolute right-5"}>
+              {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
+              <AlarmIcon className="" />
+            </div>
           </>
         );
       case "chattingHome":
