@@ -1,12 +1,11 @@
-import { AxiosResponse } from "axios";
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { ResponseArticleDetailAllCommentsType } from "@/types/board/type";
+import { ResponseAxiosArticleDetailAllCommentsType } from "@/types/board/type";
 
 const useGetArticleDetail = (parameter: string | string[]) => {
-  const { data, error, mutate } = useSWR<AxiosResponse<ResponseArticleDetailAllCommentsType>>(
-    `/articles/${parameter}/comments`,
+  const { data, error, mutate } = useSWR<ResponseAxiosArticleDetailAllCommentsType>(
+    `/api/articles/${parameter}/comments`,
     swrGetFetcher,
   );
 

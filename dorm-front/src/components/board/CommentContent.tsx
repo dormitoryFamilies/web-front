@@ -3,10 +3,10 @@ import Profile from "@/components/board/Profile";
 interface Props {
   usage: string; //replyComment, comment
   commentId: number;
-  isWriter: boolean;
+  isArticleWriter: boolean;
   profileUrl: string;
   createdDate: string;
-  nickName: string;
+  nickname: string;
   content: string;
   isDeleted?: boolean;
   setIsClickedCommentContent?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,9 +20,9 @@ const CommentContent = (props: Props) => {
     commentId,
     profileUrl,
     createdDate,
-    nickName,
+    nickname,
     content,
-    isWriter,
+    isArticleWriter,
     isDeleted,
     setIsClickedCommentContent,
     setIsClickedReplyCommentContent,
@@ -36,11 +36,11 @@ const CommentContent = (props: Props) => {
         <Profile
           usage={usage}
           profileUrl={profileUrl}
-          nickName={nickName}
+          nickname={nickname}
           createdDate={createdDate}
-          isWriter={isWriter}
+          isWriter={isArticleWriter}
         />
-        {isWriter ? (
+        {isDeleted !== true && isArticleWriter ? (
           <MoreMenuIcon
             onClick={() => {
               if (usage === "comment" && setIsClickedCommentContent) {
@@ -57,7 +57,7 @@ const CommentContent = (props: Props) => {
       <div className="flex flex-col gap-y-[5px] ml-9">
         {isDeleted ? <div className={"text-point"}>삭제된 메시지입니다.</div> : <div>{content}</div>}
         <div className="flex gap-x-4">
-          {usage == "comment" ? (
+          {isDeleted !== true && usage == "comment" ? (
             <button
               onClick={() => {
                 setSelectedCommentId(commentId);

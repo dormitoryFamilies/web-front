@@ -1,17 +1,16 @@
-import { AxiosResponse } from "axios";
 import { FormEvent } from "react";
 import { useRecoilState } from "recoil";
 import { KeyedMutator } from "swr";
 
 import { postArticleComment, postArticleReplyComments } from "@/lib/api/board";
 import { articleCommentDataAtom } from "@/recoil/board/atom";
-import { ResponseArticleDetailAllCommentsType } from "@/types/board/type";
+import { ResponseAxiosArticleDetailAllCommentsType } from "@/types/board/type";
 
 interface Props {
   isCommentInput: boolean;
   articleId: string | string[];
   commentId: number;
-  mutate: KeyedMutator<AxiosResponse<ResponseArticleDetailAllCommentsType, any>>;
+  mutate: KeyedMutator<ResponseAxiosArticleDetailAllCommentsType>;
   setIsCommentInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -24,16 +23,16 @@ const CommentInput = (props: Props) => {
    * form 형식 제출 함수
    */
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault(); // 폼 제출 시 새로고침 방지
-
     try {
       if (isCommentInput) {
         await postArticleComment(articleId, articleComment).then(async () => {
           await mutate();
+          setArticleComment((prevState) => ({ ...prevState, content: "" }));
         });
       } else {
         await postArticleReplyComments(commentId, articleReplyComment).then(async () => {
           await mutate();
+          setArticleReplyComment((prevState) => ({ ...prevState, content: "" }));
           setIsCommentInput(true);
         });
       }

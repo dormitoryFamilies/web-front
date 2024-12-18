@@ -1,13 +1,12 @@
-import { AxiosResponse } from "axios";
 import { KeyedMutator } from "swr";
 
 import { deleteArticleReplyComment } from "@/lib/api/board";
-import { ResponseArticleDetailAllCommentsType } from "@/types/board/type";
+import { ResponseAxiosArticleDetailAllCommentsType } from "@/types/board/type";
 
 interface Props {
   commentId: number;
   setIsClickedReplyCommentContent: React.Dispatch<React.SetStateAction<boolean>>;
-  mutate: KeyedMutator<AxiosResponse<ResponseArticleDetailAllCommentsType, any>>;
+  mutate: KeyedMutator<ResponseAxiosArticleDetailAllCommentsType>;
 }
 const ReplyCommentDeleteMenu = (props: Props) => {
   const { commentId, setIsClickedReplyCommentContent, mutate } = props;

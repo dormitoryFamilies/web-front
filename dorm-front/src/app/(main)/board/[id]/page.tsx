@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import { useState } from "react";
 import * as React from "react";
@@ -28,6 +28,7 @@ import { ArticleDetailCommentType } from "@/types/board/type";
 
 const BoardDetail = () => {
   const params = useParams();
+  const router = useRouter();
   const { articleDetail, articleMutate } = useGetArticleDetail(params.id);
   const { articleDetailComments, commentMutate } = useGetArticleDetailComments(params.id);
 
@@ -41,6 +42,10 @@ const BoardDetail = () => {
 
   const [selectedCommentId, setSelectedCommentId] = useRecoilState(selectedCommentIdAtom);
   const [isCommentInput, setIsCommentInput] = useState(true);
+
+  const onBack = () => {
+    router.push("/board");
+  };
 
   useEffect(() => {
     console.log("articleDetail", articleDetail);
@@ -56,7 +61,7 @@ const BoardDetail = () => {
       {isArticleFavoritesListClicked ? (
         <ArticleFavoritesList
           articleId={params.id}
-          writerId={articleDetail?.memberId}
+          writerId={articleDetail?.data.memberId}
           setIsProfileModalOpen={setIsProfileModalOpen}
         />
       ) : null}
@@ -65,8 +70,8 @@ const BoardDetail = () => {
       {isRecruitmentStatusChangeModalOpen ? (
         <RecruitmentStatusChangeModal
           setIsRecruitmentStatusChangeModal={setIsRecruitmentStatusChangeModal}
-          status={articleDetail?.status}
-          articleId={articleDetail?.articleId}
+          status={articleDetail?.data.status}
+          articleId={articleDetail?.data.articleId}
           mutate={articleMutate}
         />
       ) : null}
@@ -75,7 +80,7 @@ const BoardDetail = () => {
       {isDeleteArticleWarningModalOpen ? (
         <DeleteArticleWarningModal
           setIsDeleteArticleWarningModalOpen={setIsDeleteArticleWarningModalOpen}
-          articleId={articleDetail?.articleId}
+          articleId={articleDetail?.data.articleId}
         />
       ) : null}
 
@@ -110,9 +115,10 @@ const BoardDetail = () => {
       {/* 헤더 */}
       <Header
         headerType={"dynamic"}
+        onBack={onBack}
         title={"긱사생활"}
         rightElement={
-          articleDetail?.isWriter ? (
+          articleDetail?.data.isWriter ? (
             <MoreIcon
               onClick={() => {
                 setIsClickedArticleMenu(true);
@@ -126,48 +132,49 @@ const BoardDetail = () => {
       <div className="flex flex-col m-5 gap-y-4">
         {/*태그*/}
         <div className="flex gap-x-2">
-          <Button className={"board-type-tag"}>{articleDetail?.boardType}</Button>
-          {articleDetail?.status == "모집중" ? (
+          <Button className={"board-type-tag"}>{articleDetail?.data.boardType}</Button>
+          {articleDetail?.data.status == "모집중" ? (
             <Button className={"recruiting-tag"}>모집중</Button>
           ) : (
             <Button className={"recruitment-completed-tag"}>모집완료</Button>
           )}
         </div>
+
         {/*프로필*/}
         <Profile
+          isWriter={true}
           usage={"author"}
-          createdDate={articleDetail?.createdAt}
-          profileUrl={articleDetail?.profileUrl}
-          nickName={articleDetail?.nickName}
+          createdDate={articleDetail?.data.createdAt}
+          profileUrl={articleDetail?.data.profileUrl}
+          nickname={articleDetail?.data.nickname}
           dormitory={"양진재"}
         />
 
         {/*게시글 내용*/}
         <PostDetailContent
-          wishCount={articleDetail?.wishCount}
-          commentCount={articleDetailComments?.comments.length}
-          title={articleDetail?.title}
-          content={articleDetail?.content}
-          tags={articleDetail?.tags}
-          // images={"/unnimm.jpg"}
-          // images={articleDetail?.imagesUrls}
+          wishCount={articleDetail?.data.wishCount}
+          commentCount={articleDetailComments?.data.comments.length}
+          title={articleDetail?.data.title}
+          content={articleDetail?.data.content}
+          tags={articleDetail?.data.tags}
+          images={articleDetail?.data.imagesUrls}
         />
       </div>
       <div className="h-1 bg-gray1"></div>
       {/*댓글*/}
       <div className="flex flex-col m-5 gap-y-6">
-        {articleDetailComments?.comments.map((comment: ArticleDetailCommentType, index: number) => {
+        {articleDetailComments?.data.comments.map((comment: ArticleDetailCommentType, index: number) => {
           return (
             <div key={index} className="flex flex-col gap-y-6">
               <div>
                 <CommentContent
                   usage={"comment"}
                   commentId={comment.commentId}
-                  isWriter={comment.isWriter}
+                  isArticleWriter={comment.isArticleWriter}
                   isDeleted={comment.isDeleted}
                   createdDate={comment.createdAt}
                   profileUrl={comment.profileUrl}
-                  nickName={comment.nickName}
+                  nickname={comment.nickname}
                   content={comment.content}
                   setIsClickedCommentContent={setIsClickedCommentContent}
                   setSelectedCommentId={setSelectedCommentId}
@@ -182,9 +189,9 @@ const BoardDetail = () => {
                           key={index}
                           usage={"replyComment"}
                           commentId={replyComment.replyCommentId}
-                          isWriter={replyComment.isWriter}
+                          isArticleWriter={replyComment.isArticleWriter}
                           createdDate={replyComment.createdAt}
-                          nickName={replyComment.nickname}
+                          nickname={replyComment.nickname}
                           content={replyComment.content}
                           profileUrl={replyComment.profileUrl}
                           setIsClickedReplyCommentContent={setIsClickedReplyCommentContent}
@@ -209,11 +216,11 @@ const BoardDetail = () => {
             }>
             <CommunicationBox
               setIsArticleFavoritesList={setIsArticleFavoritesListClicked}
-              isWriter={articleDetail?.isWriter}
-              articleId={articleDetail?.articleId}
+              isWriter={articleDetail?.data.isWriter}
+              articleId={articleDetail?.data.articleId}
               articleMutate={articleMutate}
-              wishCount={articleDetail?.wishCount}
-              isWished={articleDetail?.isWished}></CommunicationBox>
+              wishCount={articleDetail?.data.wishCount}
+              isWished={articleDetail?.data.isWished}></CommunicationBox>
             <CommentInput
               isCommentInput={isCommentInput}
               setIsCommentInput={setIsCommentInput}
