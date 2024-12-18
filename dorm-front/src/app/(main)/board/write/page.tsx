@@ -4,7 +4,6 @@ import * as React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
 import BoardTypeFilter from "@/components/board/BoardTypeFilter";
 import ContentInput from "@/components/board/ContentInput";
 import DormTypeFilter from "@/components/board/DormTypeFilter";
@@ -67,10 +66,6 @@ const Write = () => {
         fileList.map(async (file) => {
           const formData = new FormData();
           formData.append("file", file);
-
-          for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-          }
 
           try {
             const response = await postArticleImage(formData);
