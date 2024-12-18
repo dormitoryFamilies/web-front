@@ -88,6 +88,7 @@ const BoardDetail = () => {
       {isClickedArticleMenu ? (
         <ArticleMenu
           articleId={params.id}
+          status={articleDetail?.data.status}
           setIsClickedArticleMenu={setIsClickedArticleMenu}
           setIsRecruitmentStatusChangeModal={setIsRecruitmentStatusChangeModal}
           setIsDeleteArticleWarningModalOpen={setIsDeleteArticleWarningModalOpen}
