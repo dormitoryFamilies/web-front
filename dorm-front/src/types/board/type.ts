@@ -118,15 +118,21 @@ export interface ArticlePostType {
  * 찜 목록
  */
 
+export interface ResponseAxiosArticleWishType {
+  data: ResponseArticleWishListType;
+  headers: AxiosHeaders;
+}
+
 export interface ArticleWishType {
   memberId: number;
-  nickName: string;
+  nickname: string;
   dormitoryType: string;
   profileUrl: string;
+  isFollowing: boolean;
 }
 
 export interface ArticleWishListType {
-  members: ArticleWishType[];
+  memberProfiles: ArticleWishType[];
 }
 
 export interface ResponseArticleWishListType {

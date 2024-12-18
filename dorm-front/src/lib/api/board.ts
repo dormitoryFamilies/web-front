@@ -87,7 +87,7 @@ export const deleteArticleImage = async (formData: FormData) => {
   }
 };
 
-export const putArticleStatus = async (articleId: string | string[], formData: FormData) => {
+export const putArticleStatus = async (articleId: string | string[] | number | undefined, formData: FormData) => {
   try {
     const response = await sendRequest({
       headers: {

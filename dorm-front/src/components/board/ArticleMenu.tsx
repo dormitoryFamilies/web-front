@@ -1,15 +1,23 @@
 import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
+
 import { selectedArticleIdAtom } from "@/recoil/board/atom";
 
 interface Props {
   articleId: string | string[];
+  status: string | undefined;
   setIsClickedArticleMenu: React.Dispatch<React.SetStateAction<boolean>>;
   setIsRecruitmentStatusChangeModal: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDeleteArticleWarningModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const ArticleMenu = (props: Props) => {
-  const { articleId, setIsClickedArticleMenu, setIsRecruitmentStatusChangeModal, setIsDeleteArticleWarningModalOpen } = props;
+  const {
+    articleId,
+    setIsClickedArticleMenu,
+    setIsRecruitmentStatusChangeModal,
+    setIsDeleteArticleWarningModalOpen,
+    status,
+  } = props;
   const router = useRouter();
   const [selectedArticleId, setSelectedArticleId] = useRecoilState(selectedArticleIdAtom);
 
@@ -41,7 +49,7 @@ const ArticleMenu = (props: Props) => {
               setIsRecruitmentStatusChangeModal(true);
             }}
             className={"flex justify-center items-center text-gray5 py-4"}>
-            모집 완료하기
+            {status === "모집완료" ? "모집하기" : "모집 완료하기"}
           </div>
         </div>
         <div className={"rounded-full bg-white border-[1px] border-gray0"}>
