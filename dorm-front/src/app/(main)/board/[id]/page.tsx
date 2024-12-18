@@ -7,6 +7,11 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
+import BoardTypeHelpTagIcon from "@/assets/board/BoardTypeHelpTagIcon";
+import BoardTypeReportLossTagIcon from "@/assets/board/BoardTypeReportLossTagIcon";
+import BoardTypeShareTagIcon from "@/assets/board/BoardTypeShareTagIcon";
+import BoardTypeTogetherTagIcon from "@/assets/board/BoardTypeTogetherTagIcon";
+import BoardTypeWonderTagIcon from "@/assets/board/BoardTypeWonderTagIcon";
 import ArticleFavoritesList from "@/components/board/ArticleFavoritesList";
 import ArticleMenu from "@/components/board/ArticleMenu";
 import CommentContent from "@/components/board/CommentContent";
@@ -51,6 +56,21 @@ const BoardDetail = () => {
     console.log("articleDetail", articleDetail);
     console.log("articleDetailComments", articleDetailComments);
   }, [articleDetail, articleDetailComments]);
+
+  const renderBoardTypeIcon = (boardType: string | undefined) => {
+    switch (boardType) {
+      case "함께해요":
+        return <BoardTypeTogetherTagIcon />;
+      case "도와주세요":
+        return <BoardTypeHelpTagIcon />;
+      case "나눔해요":
+        return <BoardTypeShareTagIcon />;
+      case "궁금해요":
+        return <BoardTypeWonderTagIcon />;
+      case "분실신고":
+        return <BoardTypeReportLossTagIcon />;
+    }
+  };
 
   return (
     <div>
@@ -133,7 +153,10 @@ const BoardDetail = () => {
       <div className="flex flex-col m-5 gap-y-4">
         {/*태그*/}
         <div className="flex gap-x-2">
-          <Button className={"board-type-tag"}>{articleDetail?.data.boardType}</Button>
+          <div className={"flex items-center gap-x-1 board-type-tag py-1 px-3 rounded-full"}>
+            {renderBoardTypeIcon(articleDetail?.data.boardType)}
+            {articleDetail?.data.boardType}
+          </div>
           {articleDetail?.data.status == "모집중" ? (
             <Button className={"recruiting-tag"}>모집중</Button>
           ) : (
