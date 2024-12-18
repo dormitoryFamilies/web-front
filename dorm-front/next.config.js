@@ -8,6 +8,7 @@ const nextConfig = {
       "storage.googleapis.com",
       "dormitory-family-images-bucket.s3.ap-northeast-2.amazonaws.com",
       "t1.kakaocdn.net",
+      "doomz.s3.ap-northeast-2.amazonaws.com",
     ],
   },
   reactStrictMode: false,

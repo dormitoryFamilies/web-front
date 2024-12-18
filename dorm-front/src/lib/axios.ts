@@ -92,7 +92,7 @@ const sendRequest = async (config: any) => {
             // 이전 요청 재시도
             return await client({
               headers: {
-                AccessToken: newAccessToken,
+                AccessToken: "Bearer " + newAccessToken,
               },
               method: config.method,
               data: config.data,

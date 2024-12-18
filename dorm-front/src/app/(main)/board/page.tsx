@@ -60,6 +60,11 @@ const Board = () => {
     }
   }, [inView]);
 
+  useEffect(() => {
+    // console.log("boardArticles", boardArticles);
+    console.log("allArticles", allArticles);
+  }, [boardArticles, allArticles]);
+
   const formatSortContent = () => {
     if (selectedSortType === "createdAt") {
       return "최신순";
@@ -67,6 +72,11 @@ const Board = () => {
       return "인기순";
     }
   };
+
+  useEffect(() => {
+    console.log("accessToken", localStorage.getItem("accessToken"));
+    console.log("refreshToken", localStorage.getItem("refreshToken"));
+  }, [localStorage.getItem("accessToken"), localStorage.getItem("refreshToken")]);
 
   return (
     <div className="relative">
@@ -106,8 +116,8 @@ const Board = () => {
         {/*post*/}
         <div className="flex flex-col gap-y-3">
           {allArticles && boardType === "전체"
-            ? allArticles.map((data, index: number) => {
-                return data.data.articles.map((article: ArticleType, index: number) => {
+            ? allArticles.map((allArticleList, index: number) => {
+                return allArticleList?.data.data.articles.map((article: ArticleType, index: number) => {
                   return (
                     <div key={index} ref={ref}>
                       <Post
@@ -130,8 +140,8 @@ const Board = () => {
               })
             : null}
           {boardArticles
-            ? boardArticles.map((data, index: number) => {
-                return data.data.articles.map((article: ArticleType, index: number) => {
+            ? boardArticles.map((allArticleList, index: number) => {
+                return allArticleList?.data.data.articles.map((article: ArticleType, index: number) => {
                   return (
                     <div key={index} ref={ref}>
                       <Post
