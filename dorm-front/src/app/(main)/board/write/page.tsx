@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -17,6 +18,7 @@ import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
 const Write = () => {
+  const router = useRouter();
   const [postData, setPostData] = useRecoilState(postDataState);
   const [imgUrlList, setImgUrlList] = useRecoilState<string[]>(imgUrlListAtom); //이미지 URL string
   const [fileList, setFileList] = useRecoilState<File[]>(fileListAtom); //이미지 file
@@ -98,6 +100,7 @@ const Write = () => {
         console.error("폼 제출 중 오류 발생:", error);
       } finally {
         setIsSubmitting(false); // 제출 후 상태를 false로 변경
+        router.push("/board");
       }
     }
   };
