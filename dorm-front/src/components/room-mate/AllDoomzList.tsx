@@ -75,7 +75,6 @@ const AllDoomzList = (props: Props) => {
                     allDoomzListMutate={mutate}
                     memberId={memberProfile.memberId}
                     key={memberProfile.memberId}
-                    isFollowing={memberProfile.isFollowing}
                   />
                 );
               })}
@@ -89,7 +88,6 @@ const AllDoomzList = (props: Props) => {
                     allDoomzListMutate={mutate}
                     memberId={memberProfile.memberId}
                     key={memberProfile.memberId}
-                    isFollowing={memberProfile.isFollowing}
                   />
                 );
               })}

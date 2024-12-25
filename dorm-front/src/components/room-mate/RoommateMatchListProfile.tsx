@@ -5,20 +5,21 @@ import { SVGProps, useEffect, useState } from "react";
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
 import { deleteFollowing, postFollow } from "@/lib/api/common";
 import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
+import useFollowStatus from "@/lib/hooks/useFollowStatus";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 
 interface Props {
   memberId: number;
-  isFollowing: boolean | undefined;
-  allDoomzListMutate: any;
+  allDoomzListMutate?: any;
 }
 
 const RoommateMatchListProfile = (props: Props) => {
-  const { memberId, isFollowing, allDoomzListMutate } = props;
+  const { memberId, allDoomzListMutate } = props;
   const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
   const { wishStatus, wishStatusMutate } = useRoomMateWishStatus(memberId);
   const [isPreferredLifestyleReviewerOpen, setIsPreferredLifestyleReviewerOpen] = useState(false);
+  const { followStatus } = useFollowStatus(memberId);
 
   useEffect(() => {
     console.log("recommendRoomMateProfile", recommendRoomMateProfile);
@@ -83,7 +84,7 @@ const RoommateMatchListProfile = (props: Props) => {
           </button>
           <button
             onClick={() => {
-              if (isFollowing) {
+              if (followStatus?.data.isFollowing) {
                 deleteFollowing(memberId).then(() => {
                   console.log("팔로우 취소 성공");
                   allDoomzListMutate();
@@ -96,11 +97,11 @@ const RoommateMatchListProfile = (props: Props) => {
               }
             }}
             className={
-              isFollowing
+              followStatus?.data.isFollowing
                 ? "bg-gray1 rounded-full text-h5 px-5 py-[6px] text-gray5 items-center"
                 : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
             }>
-            {isFollowing ? "팔로우 취소" : "팔로우"}
+            {followStatus?.data.isFollowing ? "팔로우 취소" : "팔로우"}
           </button>
         </div>
         <button

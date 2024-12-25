@@ -2,6 +2,7 @@
 import React from "react";
 
 import { CollegeType } from "@/types/onboarding/type";
+import { AxiosHeaders } from "axios";
 
 export type HeaderType = "static" | "chattingHome" | "dynamic" | "search";
 
@@ -62,4 +63,17 @@ export interface ProfileSettingType {
   departmentType: string;
   studentNumber: number | null;
   dormitoryType: string;
+}
+///////////////////////////////////////////////////////////
+
+export interface FollowStatusAxiosResponseType {
+  data: FollowStatusResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface FollowStatusResponseType {
+  code: number;
+  data: {
+    isFollowing: false;
+  };
 }
