@@ -145,6 +145,11 @@ export interface PreferenceOrdersType {
 
 ///////////////////////////////////////////////////////////
 
+export interface RecommendResultAxiosResponseType {
+  data: RecommendResultResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface RecommendResultResponseType {
   code: number;
   data: RecommendResultType;

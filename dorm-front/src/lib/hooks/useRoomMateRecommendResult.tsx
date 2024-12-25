@@ -1,10 +1,10 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { RecommendResultResponseType } from "@/types/room-mate/type";
+import { RecommendResultAxiosResponseType, RecommendResultResponseType } from "@/types/room-mate/type";
 
 const useRoomMateRecommendResult = () => {
-  const { data, error } = useSWR<RecommendResultResponseType>(`/matchings/recommendations`, swrGetFetcher);
+  const { data, error } = useSWR<RecommendResultAxiosResponseType>(`/api/matchings/recommendations`, swrGetFetcher);
 
   return {
     recommendations: data ? data.data : null,

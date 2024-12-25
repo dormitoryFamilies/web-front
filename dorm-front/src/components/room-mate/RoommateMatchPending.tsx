@@ -26,9 +26,9 @@ const RoommateMatchPending = (props: Props) => {
 
   useEffect(() => {
     if (recommendations && candidateIds.length === 0) {
-      setCandidateIds((prevState) => [...prevState, ...recommendations.candidateIds]);
+      setCandidateIds((prevState) => [...prevState, ...recommendations.data.candidateIds]);
     }
-  }, [recommendations, candidateIds]);
+  }, [recommendations]);
 
   return (
     <div>

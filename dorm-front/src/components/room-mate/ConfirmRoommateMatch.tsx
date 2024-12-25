@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
-import { postMatchingRequest } from "@/lib/api/room-mate";
+import { postRoomMateMatchingRequest } from "@/lib/api/room-mate";
 
 interface Props {
   memberId: number;
@@ -17,7 +17,7 @@ const ConfirmRoommateMatch = (props: Props) => {
   };
 
   const handleNextClick = () => {
-    postMatchingRequest(memberId).then((r) => {
+    postRoomMateMatchingRequest(memberId).then((r) => {
       console.log(r);
     });
     setIsConfirmRoommateMatchOpen(false);
