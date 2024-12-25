@@ -6,7 +6,7 @@ interface Props {
   handlerNextButton: () => void;
   pageNumber: number;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-  totalPageNumber: number | undefined;
+  totalPageNumber: number | undefined | null;
 }
 const Paging = (props: Props) => {
   const { handlerBeforeButton, handlerNextButton, pageNumber, setPageNumber, totalPageNumber } = props;
@@ -18,18 +18,19 @@ const Paging = (props: Props) => {
         {totalPageNumber
           ? Array.from({ length: totalPageNumber }, (_, i) => i + 1).map((num) => {
               return (
-                <button
-                  key={totalPageNumber}
-                  onClick={() => {
-                    setPageNumber(num - 1);
-                  }}
-                  className={
-                    pageNumber + 1 === num
-                      ? "flex items-center justify-center text-white bg-primaryMid rounded-full w-[28px] h-[28px]"
-                      : "flex items-center justify-center text-gray3 w-[28px] h-[28px]"
-                  }>
-                  {num}
-                </button>
+                <div key={totalPageNumber}>
+                  <button
+                    onClick={() => {
+                      setPageNumber(num - 1);
+                    }}
+                    className={
+                      pageNumber + 1 === num
+                        ? "flex items-center justify-center text-white bg-primaryMid rounded-full w-[28px] h-[28px]"
+                        : "flex items-center justify-center text-gray3 w-[28px] h-[28px]"
+                    }>
+                    {num}
+                  </button>
+                </div>
               ); // 원하는 로직을 이곳에 추가하세요
             })
           : null}
