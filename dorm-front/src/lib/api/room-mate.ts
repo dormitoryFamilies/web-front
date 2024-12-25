@@ -131,3 +131,83 @@ export const deleteRoomMateWish = async (memberId: number) => {
     console.error("룸메매칭 찜 취소 누르기 에러:", error);
   }
 };
+
+/**
+ * 룸메 매칭 신청
+ */
+export const postRoomMateMatchingRequest = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "POST",
+      url: `/api/members/${memberId}/matching-requests`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("룸메매칭 신청 에러:", error);
+  }
+};
+
+/**
+ * 내가 받은/보낸 신청 거절/취소
+ */
+export const deleteRoomMateMatchingRequest = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/members/${memberId}/matching-requests`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("룸메매칭 거절/취소 에러:", error);
+  }
+};
+
+/**
+ * 내가 받은 매칭 신청 수락
+ */
+export const postAcceptMatchingRequest = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "POST",
+      url: `/api/members/${memberId}/matching-results`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("내가 받은 매칭 신청 수락 에러:", error);
+  }
+};
+
+/**
+ * 이미 맺어진 매칭 취소
+ */
+export const deleteCancelMatchingRequest = async (memberId: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/members/${memberId}/matching-results`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("이미 맺어진 매칭 취소 에러:", error);
+  }
+};

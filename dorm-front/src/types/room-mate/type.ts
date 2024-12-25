@@ -205,7 +205,31 @@ export interface MemberProfileType {
   isFollowing: boolean;
   isRoommateWished: boolean;
 }
+/////////////////////////////////////////////////////////
 
+export interface MatchingRequestsAxiosResponseType {
+  data: MatchingRequestsResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MatchingRequestsResponseType {
+  code: number;
+  data: MatchingRequestsType;
+}
+
+export interface MatchingRequestsType {
+  totalPageNumber: number;
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: MatchingRequestMemberProfileType[];
+}
+
+export interface MatchingRequestMemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+  isMatchable: boolean;
+}
 //////////////////////////////////////////////////////////
 
 export interface RoomMateWishStatusAxiosResponseType {
