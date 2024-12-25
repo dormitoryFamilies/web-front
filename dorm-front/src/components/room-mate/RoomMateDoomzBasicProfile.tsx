@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import * as React from "react";
 import { SVGProps } from "react";
@@ -8,7 +10,7 @@ import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendR
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 
 interface Props {
-  memberId: number;
+  memberId: string | string[] | number;
 }
 const RoomMateDoomzBasicProfile = (props: Props) => {
   const { memberId } = props;
@@ -44,7 +46,7 @@ const RoomMateDoomzBasicProfile = (props: Props) => {
       </section>
 
       {/* 선호 룸메 라이프 스타일 */}
-      {/*<PreferredLifestyleReviewer memberId={memberId} />*/}
+      <PreferredLifestyleReviewer memberId={memberId} />
 
       {/* 좋아요, 채팅, 룸메 신청하기 버튼 */}
       <section className={"flex justify-between"}>

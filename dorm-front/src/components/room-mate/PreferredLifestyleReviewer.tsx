@@ -12,7 +12,7 @@ import WakeUpTimeIcon from "@/assets/room-mate/WakeUpTimeIcon";
 import useRoomMatePreferenceOrders from "@/lib/hooks/useRoomMatePreferenceOrders";
 
 interface Props {
-  memberId: number | undefined;
+  memberId: string | string[] | number | undefined;
 }
 
 const PreferredLifestyleReviewer = (props: Props) => {

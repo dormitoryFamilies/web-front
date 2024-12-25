@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { swrGetFetcher } from "@/lib/axios";
 import { PreferenceOrdersAxiosResponseType } from "@/types/room-mate/type";
 
-const useRoomMatePreferenceOrders = (memberId: number | undefined) => {
+const useRoomMatePreferenceOrders = (memberId: string | string[] | number | undefined) => {
   const { data, error } = useSWR<PreferenceOrdersAxiosResponseType>(
     `/api/members/${memberId}/preference-orders`,
     swrGetFetcher,

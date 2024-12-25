@@ -1,8 +1,10 @@
+"use client";
+
 import useRoomMateDoomzProfile from "@/lib/hooks/useRoomMateDoomzProfile";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 
 interface Props {
-  memberId: number;
+  memberId: string | string[] | number;
   profileMenu: "프로필" | "생활 습관" | "기타 습관";
 }
 const RoomMateDoomzMatchingProfile = (props: Props) => {

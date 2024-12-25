@@ -71,7 +71,7 @@ export const getAllDoomzList = async (searchValue: string) => {
   }
 };
 
-export const postRoomMateWish = async (memberId: number | undefined) => {
+export const postRoomMateWish = async (memberId: string | string[] | number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
@@ -88,7 +88,7 @@ export const postRoomMateWish = async (memberId: number | undefined) => {
   }
 };
 
-export const deleteRoomMateWish = async (memberId: number | undefined) => {
+export const deleteRoomMateWish = async (memberId: string | string[] | number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
@@ -108,7 +108,7 @@ export const deleteRoomMateWish = async (memberId: number | undefined) => {
 /**
  * 룸메 매칭 신청
  */
-export const postRoomMateMatchingRequest = async (memberId: number) => {
+export const postRoomMateMatchingRequest = async (memberId: string | string[] | number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
