@@ -48,84 +48,66 @@ const AllDoomzList = (props: Props) => {
     console.log("allDoomzList", allDoomzList);
   }, [allDoomzList]);
 
-  // 팔로우 페이징 이전 버튼 클릭시
-  const handlerBeforePageNumber = () => {
-    if (pageNumber === 0) {
-      setPageNumber(0);
-    } else {
-      setPageNumber(pageNumber - 1);
-    }
-  };
-
-  // 팔로우 페이징 다음 버튼 클릭시
-  const handlerNextPageNumber = () => {
-    if (allDoomzList && pageNumber >= allDoomzList[0]?.data.data.totalPageNumber - 1) {
-      setPageNumber(allDoomzList[0]?.data.data.totalPageNumber - 1);
-    } else {
-      setPageNumber(pageNumber + 1);
-    }
-  };
-
   return (
-    <div className={"px-5"}>
-      {/* 검색창 */}
-      <section className={"mt-[20px] flex gap-x-2 items-center bg-gray0 rounded-full w-full py-2 px-4 "}>
-        <SearchIcon />
-        <input
-          placeholder={"검색"}
-          className={"bg-gray0 w-full outline-none placeholder:text-gray3 text-gray5"}
-          onChange={(e) => {
-            if (setSearchValue) {
-              setSearchValue(e.target.value);
-            }
-          }}
-        />
-      </section>
+    <>
+      <main className={"px-5"}>
+        {/* 검색창 */}
+        <section className={"mt-[20px] flex gap-x-2 items-center bg-gray0 rounded-full w-full py-2 px-4 "}>
+          <SearchIcon />
+          <input
+            placeholder={"검색"}
+            className={"bg-gray0 w-full outline-none placeholder:text-gray3 text-gray5"}
+            onChange={(e) => {
+              if (setSearchValue) {
+                setSearchValue(e.target.value);
+              }
+            }}
+          />
+        </section>
 
-      {/* 검색 결과 */}
-      {searchResults && searchValue !== "" ? (
-        <section className={"flex flex-col gap-y-3 mt-2"}>
-          {searchResults &&
-            searchResults.map((memberProfile) => {
-              return (
-                <RoommateMatchListProfile
-                  allDoomzListMutate={mutate}
-                  memberId={memberProfile.memberId}
-                  key={memberProfile.memberId}
-                  isFollowing={memberProfile.isFollowing}
-                />
-              );
-            })}
-        </section>
-      ) : (
-        <section className={"flex flex-col gap-y-3 mt-2"}>
-          {allDoomzList &&
-            allDoomzList[0]?.data?.data.memberProfiles.map((memberProfile) => {
-              return (
-                <RoommateMatchListProfile
-                  allDoomzListMutate={mutate}
-                  memberId={memberProfile.memberId}
-                  key={memberProfile.memberId}
-                  isFollowing={memberProfile.isFollowing}
-                />
-              );
-            })}
-        </section>
-      )}
+        {/* 검색 결과 */}
+        {searchResults && searchValue !== "" ? (
+          <section className={"flex flex-col gap-y-3 mt-2"}>
+            {searchResults &&
+              searchResults.map((memberProfile) => {
+                return (
+                  <RoommateMatchListProfile
+                    allDoomzListMutate={mutate}
+                    memberId={memberProfile.memberId}
+                    key={memberProfile.memberId}
+                    isFollowing={memberProfile.isFollowing}
+                  />
+                );
+              })}
+          </section>
+        ) : (
+          <section className={"flex flex-col gap-y-3 mt-2"}>
+            {allDoomzList &&
+              allDoomzList[0]?.data?.data.memberProfiles.map((memberProfile) => {
+                return (
+                  <RoommateMatchListProfile
+                    allDoomzListMutate={mutate}
+                    memberId={memberProfile.memberId}
+                    key={memberProfile.memberId}
+                    isFollowing={memberProfile.isFollowing}
+                  />
+                );
+              })}
+          </section>
+        )}
+      </main>
 
       {/* 페이징 */}
       {searchResults && searchValue ? null : (
         <section>
           <Paging
             setPageNumber={setPageNumber}
-            handlerNextButton={handlerNextPageNumber}
             pageNumber={pageNumber}
             totalPageNumber={allDoomzList && allDoomzList[0]?.data.data.totalPageNumber}
-            handlerBeforeButton={handlerBeforePageNumber}
           />
         </section>
       )}
-    </div>
+    </>
   );
 };
 export default AllDoomzList;
