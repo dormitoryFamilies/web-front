@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
 import * as React from "react";
 

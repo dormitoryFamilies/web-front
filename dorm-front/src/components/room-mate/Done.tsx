@@ -1,9 +1,9 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction } from "react";
 
 import Header from "@/components/common/Header";
 import { RoomMateLifeStyleStepType } from "@/types/room-mate/type";
-import { useRouter } from "next/navigation";
 
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;

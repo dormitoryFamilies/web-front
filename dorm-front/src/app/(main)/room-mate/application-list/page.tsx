@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import Header from "@/components/common/Header";
-import ApplicationSentList from "@/components/room-mate/ApplicationSentList";
 import AllDoomzList from "@/components/room-mate/AllDoomzList";
 import ApplicationReceivedList from "@/components/room-mate/ApplicationReceivedList";
+import ApplicationSentList from "@/components/room-mate/ApplicationSentList";
 import RoomMateApplicationMenu from "@/components/room-mate/RoomMateApplicationMenu";
 
 const ApplicationList = () => {
