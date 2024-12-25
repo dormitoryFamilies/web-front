@@ -12,7 +12,7 @@ import WakeUpTimeIcon from "@/assets/room-mate/WakeUpTimeIcon";
 import useRoomMatePreferenceOrders from "@/lib/hooks/useRoomMatePreferenceOrders";
 
 interface Props {
-  memberId: number;
+  memberId: number | undefined;
 }
 
 const PreferredLifestyleReviewer = (props: Props) => {
@@ -194,13 +194,13 @@ const PreferredLifestyleReviewer = (props: Props) => {
       <div className={"mt-2 bg-gray0 rounded-[24px] p-3"}>
         <div className={"grid grid-cols-2 justify-between gap-y-3"}>
           {/* 첫번째 선호 라이프 스타일 */}
-          {preferenceOrders ? renderItem(preferenceOrders.firstPreference) : null}
+          {preferenceOrders ? renderItem(preferenceOrders.data.firstPreference) : null}
           {/* 두번째 선호 라이프 스타일 */}
-          {preferenceOrders ? renderItem(preferenceOrders.secondPreference) : null}
+          {preferenceOrders ? renderItem(preferenceOrders.data.secondPreference) : null}
           {/* 세번째 선호 라이프 스타일 */}
-          {preferenceOrders ? renderItem(preferenceOrders.thirdPreference) : null}
+          {preferenceOrders ? renderItem(preferenceOrders.data.thirdPreference) : null}
           {/* 네번째 선호 라이프 스타일 */}
-          {preferenceOrders ? renderItem(preferenceOrders.fourthPreference) : null}
+          {preferenceOrders ? renderItem(preferenceOrders.data.fourthPreference) : null}
         </div>
       </div>
     </div>

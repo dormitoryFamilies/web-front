@@ -7,6 +7,7 @@ import CleanIcon from "@/assets/mypage/CleanIcon";
 import GoToHomeIcon from "@/assets/mypage/GoToHome";
 import SoundIcon from "@/assets/mypage/SoundIcon";
 import StudyIcon from "@/assets/mypage/Study";
+import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
 
 interface Props {
   memberId: number | undefined;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const RoommateMatchCard = (props: Props) => {
+  const {memberId, topElement, bottomButton} = props;
   return (
     <div className={"relative flex flex-col gap-y-5 p-5 w-[300px] h-[440px] rounded-[32px] border-gray1 border-[1px]"}>
       {/*유저 프로필*/}
@@ -68,47 +70,7 @@ const RoommateMatchCard = (props: Props) => {
       </section>
 
       {/*선호 라이프 스타일*/}
-      <section className={"flex flex-col gap-y-2"}>
-        <div className={"text-primary text-h4 font-semibold"}>선호 라이프 스타일</div>
-        <div className={"bg-gray0 rounded-[24px] p-3 flex justify-between"}>
-          <div className={"flex flex-col gap-y-1 justify-center items-center"}>
-            <div
-              className={
-                "flex justify-center items-center w-[50px] h-[50px] rounded-full border-gray1 border-[1px] bg-white"
-              }>
-              <CleanIcon />
-            </div>
-            <div className={"text-h5 text-gray5"}>청소</div>
-          </div>
-          <div className={"flex flex-col gap-y-1 justify-center items-center"}>
-            <div
-              className={
-                "flex justify-center items-center w-[50px] h-[50px] rounded-full border-gray1 border-[1px] bg-white"
-              }>
-              <SoundIcon />
-            </div>
-            <div className={"text-h5 text-gray5"}>소리</div>
-          </div>
-          <div className={"flex flex-col gap-y-1 justify-center items-center"}>
-            <div
-              className={
-                "flex justify-center items-center w-[50px] h-[50px] rounded-full border-gray1 border-[1px] bg-white"
-              }>
-              <GoToHomeIcon />
-            </div>
-            <div className={"text-h5 text-gray5"}>본가 주기</div>
-          </div>
-          <div className={"flex flex-col gap-y-1 justify-center items-center"}>
-            <div
-              className={
-                "flex justify-center items-center w-[50px] h-[50px] rounded-full border-gray1 border-[1px] bg-white"
-              }>
-              <StudyIcon />
-            </div>
-            <div className={"text-h5 text-gray5"}>공부</div>
-          </div>
-        </div>
-      </section>
+      <PreferredLifestyleReviewer memberId={memberId} />
 
       {/*button*/}
       <section className={"absolute bottom-5 left-5 right-5 flex justify-between"}>

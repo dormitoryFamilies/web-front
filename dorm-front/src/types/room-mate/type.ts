@@ -131,6 +131,11 @@ export interface LifeStyleResponseType {
   data: LifeStylePostType;
 }
 
+export interface PreferenceOrdersAxiosResponseType {
+  data: PreferenceOrdersResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface PreferenceOrdersResponseType {
   code: number;
   data: PreferenceOrdersType;
