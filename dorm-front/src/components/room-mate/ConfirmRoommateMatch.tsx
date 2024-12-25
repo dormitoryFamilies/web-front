@@ -3,6 +3,7 @@ import * as React from "react";
 import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
 import { postRoomMateMatchingRequest } from "@/lib/api/room-mate";
+import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 
 interface Props {
   memberId: number;
@@ -12,16 +13,17 @@ interface Props {
 
 const ConfirmRoommateMatch = (props: Props) => {
   const { memberId, setIsConfirmRoommateMatchOpen, setIsRoommateMatchSuccessOpen } = props;
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
+
   const onBack = () => {
     setIsConfirmRoommateMatchOpen(false);
   };
 
   const handleNextClick = () => {
     postRoomMateMatchingRequest(memberId).then((r) => {
-      console.log(r);
+      setIsConfirmRoommateMatchOpen(false);
+      setIsRoommateMatchSuccessOpen(true);
     });
-    setIsConfirmRoommateMatchOpen(false);
-    setIsRoommateMatchSuccessOpen(true);
   };
 
   const topElement = () => {
@@ -37,7 +39,8 @@ const ConfirmRoommateMatch = (props: Props) => {
           {/* 안내문구 */}
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
-              닉네임<span className={"text-h4 font-normal"}>님에게</span> <br />
+              {recommendRoomMateProfile?.data.nickname}
+              <span className={"text-h4 font-normal"}>님에게</span> <br />
               룸메 매칭을 신청할까요?{" "}
             </div>
             <div className={""}>
@@ -50,9 +53,11 @@ const ConfirmRoommateMatch = (props: Props) => {
               </div>
             </div>
           </div>
+
           {/* 카드 */}
           <RoommateMatchCard memberId={memberId} topElement={topElement} bottomButton={false} />
         </div>
+
         <button
           onClick={() => {
             handleNextClick();

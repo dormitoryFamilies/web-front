@@ -4,6 +4,7 @@ import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
 import { deleteCancelMatchingRequest, deleteRoomMateMatchingRequest } from "@/lib/api/room-mate";
 import useMyRoomMateMatchingStatus from "@/lib/hooks/useMyRoomMateMatchingStatus";
+import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 
 interface Props {
   memberId: number | undefined;
@@ -13,6 +14,7 @@ interface Props {
 const ConfirmRoommateMatchCancel = (props: Props) => {
   const { memberId, setIsConfirmRoommateMatchCancelOpen, setIsRoommateMatchCancelOpen } = props;
   const { myRoomMateProfile } = useMyRoomMateMatchingStatus();
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
 
   const handleCancelClick = () => {
     if (myRoomMateProfile && myRoomMateProfile.data.matchedId === 0) {
@@ -47,7 +49,7 @@ const ConfirmRoommateMatchCancel = (props: Props) => {
           {/* 안내문구 */}
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
-              닉네임<span className={"text-h4 font-normal"}>님과의</span> <br />
+              {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 font-normal"}>님과의</span> <br />
               매칭 신청을 취소할껀가요?{" "}
             </div>
             <div className={""}>
