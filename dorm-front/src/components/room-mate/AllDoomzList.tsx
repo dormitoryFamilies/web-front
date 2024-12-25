@@ -114,15 +114,17 @@ const AllDoomzList = (props: Props) => {
       )}
 
       {/* 페이징 */}
-      <section>
-        <Paging
-          setPageNumber={setPageNumber}
-          handlerNextButton={handlerNextPageNumber}
-          pageNumber={pageNumber}
-          totalPageNumber={allDoomzList && allDoomzList[0].data.data.totalPageNumber}
-          handlerBeforeButton={handlerBeforePageNumber}
-        />
-      </section>
+      {searchResults && searchValue ? null : (
+        <section>
+          <Paging
+            setPageNumber={setPageNumber}
+            handlerNextButton={handlerNextPageNumber}
+            pageNumber={pageNumber}
+            totalPageNumber={allDoomzList && allDoomzList[0]?.data.data.totalPageNumber}
+            handlerBeforeButton={handlerBeforePageNumber}
+          />
+        </section>
+      )}
     </div>
   );
 };
