@@ -3,80 +3,53 @@ import { LifeStylePostType, PreferenceOrdersType } from "@/types/room-mate/type"
 
 export const postLifestyles = async (data: LifeStylePostType) => {
   try {
-    const response = await client.post("/my/lifestyles", data, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: data,
+      url: "/api/my/lifestyles",
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
     console.error("lifestyle 설정 post 에러 발생:", error);
   }
 };
 
-export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
+export const postPreferenceOrders = async (data: LifeStylePostType) => {
   try {
-    const response = await client.post("/my/preference-orders", data, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: data,
+      url: `/api/my/preference-orders`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
     console.error("lifestyle 설정 post 에러 발생:", error);
   }
 };
 
 export const postRoomMateMatching = async () => {
   try {
-    const response = await client.post("/matchings/recommendations", {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      url: `/api/matchings/recommendations`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("룸메 매칭 post 에러 발생:", error);
-  }
-};
-
-export const postMatchingRequest = async (memberId: number) => {
-  try {
-    const response = await client.post(`/members/${memberId}/matching-requests`, {
-      headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
-    });
-    // 성공적인 응답 처리
-    return response.data;
-  } catch (error) {
-    // 에러 처리
-    console.error("룸메 매칭 post 에러 발생:", error);
-  }
-};
-
-export const deleteMatchingRequest = async (memberId: number) => {
-  try {
-    const response = await client.delete(`/members/${memberId}/matching-requests`, {
-      headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
-    });
-    // 성공적인 응답 처리
-    return response.data;
-  } catch (error) {
-    // 에러 처리
     console.error("룸메 매칭 post 에러 발생:", error);
   }
 };
