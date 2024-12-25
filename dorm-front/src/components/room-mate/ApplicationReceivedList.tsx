@@ -32,7 +32,7 @@ const ApplicationReceivedList = () => {
   };
 
   return (
-    <div className={"px-5 "}>
+    <main className={"px-5"}>
       <section className={"mt-[22px] flex flex-col gap-y-2"}>
         {matchingRequests &&
           matchingRequests.map((matchingRequest) => {
@@ -50,6 +50,7 @@ const ApplicationReceivedList = () => {
             });
           })}
       </section>
+
       {/* 페이징 */}
       <section>
         <Paging
@@ -60,7 +61,7 @@ const ApplicationReceivedList = () => {
           handlerBeforeButton={handlerBeforePageNumber}
         />
       </section>
-    </div>
+    </main>
   );
 };
 export default ApplicationReceivedList;
