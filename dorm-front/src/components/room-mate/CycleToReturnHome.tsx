@@ -34,6 +34,7 @@ const CycleToReturnHome = (props: Props) => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     if (lifeStylePostData.visitHomeFrequency && lifeStylePostData.visitHomeFrequency !== "") {
       setVisitHomeFrequency(lifeStylePostData.visitHomeFrequency);
     }

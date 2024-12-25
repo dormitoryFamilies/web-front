@@ -24,10 +24,10 @@ interface Props {
 const MBTI = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<ExtrovertOrIntrovertType>("");
-  const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<IntuitiveOrThinkingType>("");
-  const [heterosexualOrEmotional, setHeterosexualOrEmotional] = useState<HeterosexualOrEmotionalType>("");
-  const [plannedOrSpontaneous, setPlannedOrSpontaneous] = useState<PlannedOrSpontaneousType>("");
+  const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<string | ExtrovertOrIntrovertType>("");
+  const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<string | IntuitiveOrThinkingType>("");
+  const [heterosexualOrEmotional, setHeterosexualOrEmotional] = useState<string | HeterosexualOrEmotionalType>("");
+  const [plannedOrSpontaneous, setPlannedOrSpontaneous] = useState<string | PlannedOrSpontaneousType>("");
   const [selectedMBTI, setSelectedMBTI] = useState<string>("");
   const [updateMBTITrigger, setUpdateMBTITrigger] = useState(false);
 

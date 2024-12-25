@@ -14,8 +14,8 @@ interface Props {
 const OtherLifestyles = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [exercise, setExercise] = useState<ExerciseType>("");
-  const [insectTolerance, setInsectTolerance] = useState<InsectToleranceType>("");
+  const [exercise, setExercise] = useState<ExerciseType | undefined>("");
+  const [insectTolerance, setInsectTolerance] = useState<InsectToleranceType | undefined>("");
   const [isLifestyleComplete, setIsLifestyleComplete] = useState(false);
 
   const handleNextClick = () => {
@@ -44,6 +44,7 @@ const OtherLifestyles = (props: Props) => {
   useEffect(() => {
     if (isLifestyleComplete) {
       postLifestyles(lifeStylePostData).then((r) => {
+        console.log("r", r);
         setIsLifestyleComplete(false);
         setLifeStylePostData((prevState) => ({
           ...prevState,

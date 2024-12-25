@@ -69,6 +69,11 @@ export type ShowerDurationType = string;
 export type CleaningFrequencyType = "" | "바로바로" | "가끔" | "몰아서";
 export type HeatToleranceType = "" | "적게 탐" | "조금 탐" | "많이 탐";
 //MBTI
+export type MBTIContentType =
+  | ExtrovertOrIntrovertType
+  | IntuitiveOrThinkingType
+  | HeterosexualOrEmotionalType
+  | PlannedOrSpontaneousType;
 export type ExtrovertOrIntrovertType = "" | "E" | "I";
 export type IntuitiveOrThinkingType = "" | "S" | "N";
 export type HeterosexualOrEmotionalType = "" | "T" | "F";
