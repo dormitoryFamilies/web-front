@@ -1,14 +1,20 @@
-
-import * as React from "react";
 import type { SVGProps } from "react";
-import ProfileIcon from "@/assets/common/ProfileIcon";
-import CleanIcon from "@/assets/mypage/CleanIcon";
-import SoundIcon from "@/assets/mypage/SoundIcon";
-import GoToHomeIcon from "@/assets/mypage/GoToHome";
-import StudyIcon from "@/assets/mypage/Study";
+import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
-const RoommateMatchCard = () => {
+import ProfileIcon from "@/assets/common/ProfileIcon";
+import CleanIcon from "@/assets/mypage/CleanIcon";
+import GoToHomeIcon from "@/assets/mypage/GoToHome";
+import SoundIcon from "@/assets/mypage/SoundIcon";
+import StudyIcon from "@/assets/mypage/Study";
+
+interface Props {
+  memberId: number | undefined;
+  topElement: () => React.JSX.Elemen;
+  bottomButton: boolean;
+}
+
+const RoommateMatchCard = (props: Props) => {
   return (
     <div className={"relative flex flex-col gap-y-5 p-5 w-[300px] h-[440px] rounded-[32px] border-gray1 border-[1px]"}>
       {/*유저 프로필*/}
@@ -172,13 +178,7 @@ const LikeIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 const ChatIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={17}
-    height={16}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={17} height={16} fill="none" {...props}>
     <g fill="#727375" clipPath="url(#a)">
       <path d="M13.833 1.945c.92 0 1.667.814 1.667 1.817v5.814c0 1.003-.747 1.817-1.667 1.817H11.08a.98.98 0 0 0-.807.444L8.5 13.8l-1.773-1.964a.96.96 0 0 0-.807-.444H3.167c-.92 0-1.667-.814-1.667-1.817V3.762c0-1.003.747-1.817 1.667-1.817zm0-1.09H3.167C1.693.855.5 2.155.5 3.762v5.814c0 1.606 1.193 2.907 2.667 2.907H5.92l2.04 2.364a.65.65 0 0 0 .54.299.65.65 0 0 0 .54-.299l2.04-2.363h2.753c1.474 0 2.667-1.302 2.667-2.908V3.762c0-1.606-1.193-2.907-2.667-2.907" />
       <path d="M5 7a.667.667 0 1 0 0-1.334A.667.667 0 0 0 5 7M8.5 7a.667.667 0 1 0 0-1.334A.667.667 0 0 0 8.5 7M12 7a.667.667 0 1 0 0-1.333A.667.667 0 0 0 12 7" />
