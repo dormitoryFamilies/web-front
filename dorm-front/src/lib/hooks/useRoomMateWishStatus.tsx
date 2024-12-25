@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { swrGetFetcher } from "@/lib/axios";
 import { RoomMateWishStatusAxiosResponseType } from "@/types/room-mate/type";
 
-const useRoomMateWishStatus = (memberId: number) => {
+const useRoomMateWishStatus = (memberId: number | undefined) => {
   const { data, error, mutate } = useSWR<RoomMateWishStatusAxiosResponseType>(
     `/api/members/${memberId}/roommate-wishes`,
     swrGetFetcher,

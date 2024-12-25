@@ -277,3 +277,26 @@ export interface RoomMateWishStatusResponseType {
   code: number;
   data: { isRoommateWished: boolean };
 }
+
+/////////////////////////////////////////////////////////
+export interface RoomMateHomeInfoAxiosResponseType {
+  data: RoomMateHomeInfoResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateHomeInfoResponseType {
+  code: number;
+  data: { nickname: string; requestReceivedCount: number };
+}
+
+///////////////////////////////////////////////////////////
+
+export interface MyRoomMateMatchingStatusAxiosResponseType {
+  data: MyRoomMateMatchingStatusResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MyRoomMateMatchingStatusResponseType {
+  code: number;
+  data: { matchedId: number };
+}
