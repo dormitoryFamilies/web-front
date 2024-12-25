@@ -1,9 +1,9 @@
-import { router } from "next/client";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";
 
 import Header from "@/components/common/Header";
 import { RoomMateLifeStyleStepType } from "@/types/room-mate/type";
+import { useRouter } from "next/navigation";
 
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
@@ -11,6 +11,7 @@ interface Props {
 
 const Done = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const router = useRouter();
   const handleNextClick = () => {
     router.push("/room-mate/lifestyle-priority");
   };
