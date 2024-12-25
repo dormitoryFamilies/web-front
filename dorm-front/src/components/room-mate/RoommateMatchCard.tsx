@@ -10,8 +10,8 @@ import StudyIcon from "@/assets/mypage/Study";
 
 interface Props {
   memberId: number | undefined;
-  topElement: () => React.JSX.Elemen;
-  bottomButton: boolean;
+  topElement?: () => React.JSX.Element;
+  bottomButton?: boolean;
 }
 
 const RoommateMatchCard = (props: Props) => {
