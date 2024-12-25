@@ -1,66 +1,53 @@
 import Image from "next/image";
 import * as React from "react";
-import { SVGProps, useEffect, useState } from "react";
+import { SVGProps } from "react";
 
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
-import { deleteFollowing, postFollow } from "@/lib/api/common";
-import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
+import { deleteRoomMateWish, postRoomMateMatchingRequest, postRoomMateWish } from "@/lib/api/room-mate";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 
 interface Props {
   memberId: number;
-  isFollowing: boolean | undefined;
-  allDoomzListMutate: any;
 }
-
-const RoommateMatchListProfile = (props: Props) => {
-  const { memberId, isFollowing, allDoomzListMutate } = props;
-  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
+const RoomMateDoomzBasicProfile = (props: Props) => {
+  const { memberId } = props;
   const { wishStatus, wishStatusMutate } = useRoomMateWishStatus(memberId);
-  const [isPreferredLifestyleReviewerOpen, setIsPreferredLifestyleReviewerOpen] = useState(false);
-
-  useEffect(() => {
-    console.log("recommendRoomMateProfile", recommendRoomMateProfile);
-  }, [recommendRoomMateProfile]);
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
 
   return (
-    <div
-      className={
-        isPreferredLifestyleReviewerOpen
-          ? "flex flex-col gap-y-3 rounded-[24px] border-[1px] border-gray1 px-4 py-3"
-          : "flex flex-col gap-y-1 rounded-[24px] border-[1px] border-gray1 px-4 py-3"
-      }>
-      {/* 이미지, 닉네임 */}
-      <div className={"flex justify-between items-center"}>
-        <div className={"flex items-center gap-x-2"}>
-          <div className={"relative w-[40px] h-[40px]"}>
-            <Image
-              src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/profile.png"}
-              fill
-              className={"object-cover rounded-full"}
-              alt={String(memberId)}></Image>
+    <section className={"mx-5 flex flex-col gap-y-5"}>
+      {/* 기본 프로필 */}
+      <section className={"flex items-center gap-x-3"}>
+        <Image
+          src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/unnimm.jpg"}
+          alt={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/unnimm.jpg"}
+          width={60}
+          height={60}
+          className={"rounded-full"}
+        />
+        <div className={"flex flex-col"}>
+          <div className={"flex gap-x-1"}>
+            <span className={"font-semibold"}>{recommendRoomMateProfile?.data.nickname}</span>님
           </div>
-          <div>{recommendRoomMateProfile?.data.nickname}</div>
+          <div className={"flex gap-x-5"}>
+            <div className={"flex gap-x-1 items-center"}>
+              <span className={"text-primaryMid"}>{recommendRoomMateProfile?.data.followingCount}</span>
+              <span className={"text-gray4 text-h5"}>팔로잉</span>
+            </div>
+            <div className={"flex gap-x-1 items-center"}>
+              <span className={"text-primaryMid"}>{recommendRoomMateProfile?.data.followerCount}</span>
+              <span className={"text-gray4 text-h5"}>팔로워</span>
+            </div>
+          </div>
         </div>
-        {isPreferredLifestyleReviewerOpen ? (
-          <DropUpIcon
-            onClick={() => {
-              setIsPreferredLifestyleReviewerOpen(!isPreferredLifestyleReviewerOpen);
-            }}
-          />
-        ) : (
-          <DropDownIcon
-            onClick={() => {
-              setIsPreferredLifestyleReviewerOpen(!isPreferredLifestyleReviewerOpen);
-            }}
-          />
-        )}
-      </div>
-      {isPreferredLifestyleReviewerOpen ? <PreferredLifestyleReviewer memberId={memberId} /> : null}
+      </section>
 
-      {/* 찜, 채팅, 팔로우 */}
-      <div className={"flex justify-between"}>
+      {/* 선호 룸메 라이프 스타일 */}
+      {/*<PreferredLifestyleReviewer memberId={memberId} />*/}
+
+      {/* 좋아요, 채팅, 룸메 신청하기 버튼 */}
+      <section className={"flex justify-between"}>
         <div className={"flex gap-x-2"}>
           <button
             onClick={() => {
@@ -76,43 +63,35 @@ const RoommateMatchListProfile = (props: Props) => {
             }}
             className={
               wishStatus?.data.isRoommateWished
-                ? "bg-primaryMid text-white text-h5 rounded-full py-[6px] px-[20px] items-center"
-                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
+                ? "bg-primaryMid text-white text-h5 rounded-full py-[9px] px-4 items-center"
+                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[9px] px-4 items-center"
             }>
             {wishStatus?.data.isRoommateWished ? <WhiteHeartIcon /> : <HeartIcon />}
           </button>
           <button
-            onClick={() => {
-              if (isFollowing) {
-                deleteFollowing(memberId).then(() => {
-                  console.log("팔로우 취소 성공");
-                  allDoomzListMutate();
-                });
-              } else {
-                postFollow(memberId).then((r) => {
-                  console.log("팔로우 성공", r);
-                  allDoomzListMutate();
-                });
-              }
-            }}
+            //TODO: 채팅이동
             className={
-              isFollowing
-                ? "bg-gray1 rounded-full text-h5 px-5 py-[6px] text-gray5 items-center"
-                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
+              "flex py-[5px] px-5 rounded-full border-[1px] border-gray1 items-center gap-x-1 text-gray5 text-h5"
             }>
-            {isFollowing ? "팔로우 취소" : "팔로우"}
+            <FollowChatIcon />
+            채팅
           </button>
         </div>
+
         <button
-          //TODO: 채팅이동
-          className={"p-[10px] rounded-full border-[1px] border-gray1 items-center gap-x-1"}>
-          <FollowChatIcon />
+          onClick={() => {
+            //TODO: 비활성화
+            postRoomMateMatchingRequest(memberId);
+          }}
+          className={"bg-primaryMid text-white text-h5 rounded-full px-5 py-1"}>
+          룸메 신청하기
         </button>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
-export default RoommateMatchListProfile;
+export default RoomMateDoomzBasicProfile;
+
 const HeartIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={16} height={14} fill="none" {...props}>
     <g fill="#727375" clipPath="url(#a)">
@@ -151,17 +130,5 @@ const FollowChatIcon = (props: SVGProps<SVGSVGElement>) => (
       fill="#727375"
       d="M11.401 7.333a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333M8.604 7.42a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333M5.808 7.42a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333"
     />
-  </svg>
-);
-
-const DropDownIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={29} height={24} fill="none" {...props}>
-    <path fill="#666" d="m14.108 15.7-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4z" />
-  </svg>
-);
-
-const DropUpIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={28} height={24} fill="none" {...props}>
-    <path fill="#666" d="m14 8.3 6 6-1.4 1.4-4.6-4.6-4.6 4.6L8 14.3z" />
   </svg>
 );

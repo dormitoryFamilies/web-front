@@ -181,6 +181,42 @@ export interface RecommendResultProfileType {
 
 ///////////////////////////////////////////////////////////
 
+export interface RoomMateDoomzProfileAxiosResponseType {
+  data: RoomMateDoomzProfileResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateDoomzProfileResponseType {
+  code: number;
+  data: RoomMateDoomzProfileType;
+}
+
+export interface RoomMateDoomzProfileType {
+  drunkHabit: string;
+  sleepTime: string;
+  wakeUpTime: string;
+  sleepingHabit: string;
+  sleepingSensitivity: string;
+  smoking: string;
+  drinkingFrequency: string;
+  cleaningFrequency: string;
+  heatTolerance: string;
+  coldTolerance: string;
+  perfumeUsage: string;
+  examPreparation: string;
+  showerTime: string;
+  showerDuration: string;
+  MBTI: string;
+  visitHomeFrequency: string;
+  lateNightSnack: string;
+  snackInRoom: string;
+  phoneSound: string;
+  studyLocation: string;
+  exercise: string;
+  insectTolerance: string;
+}
+///////////////////////////////////////////////////////////
+
 export interface AllDoomzListAxiosResponseType {
   data: AllDoomzListResponseType;
   headers: AxiosHeaders;

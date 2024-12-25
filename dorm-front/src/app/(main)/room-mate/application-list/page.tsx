@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import Header from "@/components/common/Header";
-import ApplicationSentList from "@/components/room-mate/ ApplicationSentList";
+import ApplicationSentList from "@/components/room-mate/ApplicationSentList";
 import AllDoomzList from "@/components/room-mate/AllDoomzList";
 import ApplicationReceivedList from "@/components/room-mate/ApplicationReceivedList";
 import RoomMateApplicationMenu from "@/components/room-mate/RoomMateApplicationMenu";
