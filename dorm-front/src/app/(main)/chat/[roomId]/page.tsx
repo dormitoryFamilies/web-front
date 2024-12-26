@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import { FormEvent, SVGProps, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { useRecoilState } from "recoil";
-import SockJS from "sockjs-client";
 
 import ChattingRoomMenu from "@/components/chat/ChattingRoomMenu";
 import LeaveChatRoomAlertModal from "@/components/chat/LeaveChatRoomAlertModal";
@@ -14,30 +13,49 @@ import MyChatContent from "@/components/chat/MyChatContent";
 import OtherUserChatContent from "@/components/chat/OtherUserChatContent";
 import { deleteNoMessageChatRoom } from "@/lib/api/chat";
 import useChatMessages from "@/lib/hooks/useChatMessages";
+import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
-import { messageAtom, messagesAtom } from "@/recoil/chat/atom";
+import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
 const ChatRoom = () => {
   const params = useParams();
   // STOMP 클라이언트를 위한 ref. 웹소켓 연결을 유지하기 위해 사용
   const stompClient = useRef();
   const chatContainerRef = useRef(null); // 채팅 컨테이너에 대한 참조 생성
   const { chatMessages, mutate } = useChatMessages(params.roomId);
-  const { userProfileData } = useUserProfile(params.roomId);
   const [isClickedMenu, setIsClickedMenu] = useState(false);
   const [isClickedLeaveChatRoomAlertModal, setIsClickedLeaveChatRoomAlertModal] = useState(false);
   // 메시지 입력 상태
   const [message, setMessage] = useRecoilState(messageAtom);
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const { userProfileData } = useUserProfile(memberIdState);
+  const { myMemberId } = useMyMemberId();
 
   // 웹소켓 연결 설정
-  const connectChattingRoom = (roomId: number) => {
-    const socket = new WebSocket("ws://43.202.254.127:8080/stomp");
+  const connectChattingRoom = (roomId: string | string[], roomUUID: string) => {
+    const socket = new WebSocket("ws://13.124.186.20:8080/stomp");
+    socket.onopen = () => console.log("WebSocket connection opened");
+    socket.onclose = (event) => console.log("WebSocket connection closed", event);
+    socket.onerror = (error) => console.error("WebSocket error:", error);
+
     stompClient.current = Stomp.over(socket);
-    stompClient.current.connect({}, () => {
-      stompClient.current.subscribe(`/chat/members/${roomId}`, (message) => {
-        const newMessage = JSON.parse(message.body);
-        console.log(newMessage);
-      });
-    });
+    stompClient.current.connect(
+      { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+      (frame) => {
+        console.log("STOMP Connected:", frame);
+
+        stompClient.current.subscribe(
+          `/sub/chat/room/${chatRoomUUID}`,
+          { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+          (frame: { body: string }) => {
+            console.log("frame", frame);
+          },
+        );
+      },
+      (error) => {
+        console.error("STOMP 연결 에러:", error);
+      },
+    );
     console.log("방 번호", roomId);
   };
 
@@ -45,18 +63,21 @@ const ChatRoom = () => {
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
     console.log("sendMessage called"); // 디버깅 로그 추가
-    if (stompClient.current && message) {
+    if (stompClient.current && stompClient.current.connected && message) {
       const messageObj = {
-        roomUUID: "ab4556a2-29b0-4361-a773-d8218698a7a0",
-        senderId: userProfileData?.memberId,
+        roomUUID: chatRoomUUID,
+        senderId: myMemberId?.data.memberId,
         message: message,
       };
-      stompClient.current.send(`/pub/message`, {}, JSON.stringify(messageObj));
+      console.log("Attempting to send message:", messageObj);
+      stompClient.current.send(
+        `/pub/message`,
+        { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+        JSON.stringify(messageObj),
+      );
       await mutate();
-      setMessage(""); // 입력 필드 초기화
     }
   };
-
 
   // 스크롤을 맨 아래로 이동시키는 함수
   const scrollToBottom = () => {
@@ -67,7 +88,7 @@ const ChatRoom = () => {
 
   //소캣 연결
   useEffect(() => {
-    connectChattingRoom(5);
+    connectChattingRoom(params.roomId, chatRoomUUID);
   }, []);
 
   // 메시지 추가될 때마다 스크롤을 아래로 이동
@@ -76,8 +97,16 @@ const ChatRoom = () => {
   }, [chatMessages]);
 
   useEffect(() => {
-    console.log(chatMessages?.chatHistory);
+    console.log(chatMessages);
   }, [chatMessages]);
+
+  useEffect(() => {
+    console.log("chatRoomUUID", chatRoomUUID);
+  }, [chatRoomUUID]);
+
+  useEffect(() => {
+    console.log("memberId", memberIdState);
+  }, [memberIdState]);
 
   return (
     <form onSubmit={sendMessage}>
@@ -86,8 +115,8 @@ const ChatRoom = () => {
         <LeaveChatRoomAlertModal
           roomId={params.roomId}
           setClickedMenu={setIsClickedMenu}
-          userProfileUrl={userProfileData?.profileUrl}
-          userNickName={userProfileData?.nickname}
+          userProfileUrl={userProfileData?.data.profileUrl}
+          userNickName={userProfileData?.data.nickname}
         />
       ) : null}
 
@@ -108,18 +137,18 @@ const ChatRoom = () => {
         <div className={"flex items-center"}>
           <BackIcon
             onClick={() => {
-              if (chatMessages && chatMessages?.chatHistory.length === 0) {
+              if (chatMessages && chatMessages?.data.chatHistory.length === 0) {
                 deleteNoMessageChatRoom(params.roomId).then((r) => {
                   console.log("빈 채팅방 삭제", r);
                 });
               }
             }}
           />
-          {userProfileData?.profileUrl ? (
+          {userProfileData?.data.profileUrl ? (
             <div className={"ml-4 relative w-[36px] h-[36px]"}>
               <Image
-                src={userProfileData?.profileUrl}
-                alt={userProfileData?.profileUrl}
+                src={userProfileData?.data.profileUrl}
+                alt={userProfileData?.data.profileUrl}
                 fill
                 className={"object-cover rounded-full"}
               />
@@ -127,7 +156,7 @@ const ChatRoom = () => {
           ) : (
             <ProfileIcon className={"ml-4"} />
           )}
-          <div className={"ml-3 text-h3 font-semibold"}>{userProfileData?.nickname}</div>
+          <div className={"ml-3 text-h3 font-semibold"}>{userProfileData?.data.nickname}</div>
         </div>
         <MenuIcon
           onClick={() => {
@@ -139,10 +168,10 @@ const ChatRoom = () => {
       <div className={"h-[80px]"} />
 
       {/*경고 문구*/}
-      {chatMessages?.chatHistory.length === 0 ? (
+      {chatMessages?.data.chatHistory.length === 0 ? (
         <div className={"fixed top-[61px] w-full px-5 py-3 flex gap-x-4 items-center bg-primaryLight"}>
           <AlertIcon />
-          <div className={"flex flex-col text-gray5 font-medium"}>
+          <div className={"flex flex-col text-gray5 text-h5"}>
             <span>카카오톡 ID 등으로 대화를 유도하는 경우</span>
             <span>피해가 있을 수 있으니 주의하세요!</span>
           </div>
@@ -153,11 +182,11 @@ const ChatRoom = () => {
       <div
         ref={chatContainerRef}
         className={
-          chatMessages?.chatHistory.length === 0
+          chatMessages?.data.chatHistory.length === 0
             ? "flex flex-col justify-center min-h-screen overflow-y-scroll" // 메시지 없을 때는 중앙정렬
             : "flex flex-col justify-end min-h-screen overflow-y-scroll" //메시지 있을 때는 끝 정렬
         }>
-        {chatMessages?.chatHistory.length === 0 ? (
+        {chatMessages?.data.chatHistory.length === 0 ? (
           <div className={"flex flex-col items-center"}>
             <Image width={147} height={121} src={"/chat/noMessages.png"} alt={"/chat/noMessages.png"}></Image>
             <div className={"mt-[7px] flex flex-col text-gray3 items-center"}>
@@ -167,13 +196,13 @@ const ChatRoom = () => {
           </div>
         ) : (
           <div className={"flex flex-col gap-y-5 justify-end"}>
-            {chatMessages?.chatHistory.map((chatMessage) => {
-              return chatMessage.senderId === 5 ? (
-                <MyChatContent message={chatMessage.message} sentTime={chatMessage.sentTime} />
+            {chatMessages?.data.chatHistory.map((chatMessage) => {
+              return chatMessage.isSender ? (
+                <MyChatContent message={chatMessage.chatMessage} sentTime={chatMessage.sentTime} />
               ) : (
                 <OtherUserChatContent
-                  message={chatMessage.message}
-                  memberId={chatMessage.senderId}
+                  message={chatMessage.chatMessage}
+                  memberId={chatMessage.memberId}
                   sentTime={chatMessage.sentTime}
                 />
               );
@@ -213,7 +242,7 @@ const BackIcon = (props: SVGProps<SVGSVGElement>) => (
 const ProfileIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={49} height={48} fill="none" {...props}>
     <g clipPath="url(#a)">
-    <path fill="#E4E5E7" d="M24.507 48c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24" />
+      <path fill="#E4E5E7" d="M24.507 48c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24" />
       <path
         fill="#191919"
         d="M24.507 8.76c2.6 0 4.72 2.12 4.72 4.72s-2.12 4.72-4.72 4.72-4.72-2.12-4.72-4.72 2.12-4.72 4.72-4.72m0-3c-4.26 0-7.72 3.46-7.72 7.72s3.46 7.72 7.72 7.72 7.72-3.46 7.72-7.72-3.46-7.72-7.72-7.72M39.647 35.14c-.48 0-.96-.24-1.26-.68-3.1-4.68-8.28-7.46-13.88-7.46s-10.78 2.8-13.88 7.46c-.46.7-1.38.88-2.08.42a1.49 1.49 0 0 1-.42-2.08c3.66-5.52 9.78-8.82 16.38-8.82s12.74 3.3 16.38 8.82c.46.7.26 1.62-.42 2.08-.26.16-.54.24-.82.24z"

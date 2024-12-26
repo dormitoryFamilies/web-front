@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useEffect } from "react";
 
 import useUserProfile from "@/lib/hooks/useUserProfile";
 interface Props {
@@ -25,18 +26,22 @@ const OtherUserChatContent = (props: Props) => {
     return `${period} ${hours}:${formattedMinutes}`;
   };
 
+  useEffect(() => {
+    console.log("내 채팅", message)
+  }, [message]);
+
   return (
     <div className={"flex items-end px-5 w-full gap-x-2"}>
       <div className={"flex justify-start gap-x-1"}>
         <div className={"relative w-[36px] h-[36px]"}>
           <Image
-            src={userProfileData?.profileUrl}
-            alt={userProfileData?.profileUrl}
+            src={userProfileData?.data.profileUrl}
+            alt={userProfileData?.data.profileUrl}
             fill
             className={"object-cover rounded-full"}></Image>
         </div>
         <div className={"flex flex-col gap-y-1"}>
-          <div className={"text-h5"}>{userProfileData?.nickname}</div>
+          <div className={"text-h5"}>{userProfileData?.data.nickname}</div>
           <div>
             <div className={"bg-gray1 w-[8px] h-[8px] rounded-full"} />
             <div className={"py-2 px-4 rounded-full bg-gray1"}>{message}</div>
