@@ -40,6 +40,18 @@ export interface FoodMenuList {
   dinner: string[];
 }
 
+export interface MyMemberIdAxiosResponseType {
+  data: MyMemberIdResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MyMemberIdResponseType {
+  code: number;
+  data: {
+    memberId: number;
+  };
+};
+
 /**
  * profile
  */
