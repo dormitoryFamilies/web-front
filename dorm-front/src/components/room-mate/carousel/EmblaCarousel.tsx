@@ -7,8 +7,6 @@ import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
 import { selectedRoomMateMemberIdAtom } from "@/recoil/room-mate/atom";
 
 import { SelectedSnapDisplay, useSelectedSnapDisplay } from "./EmblaCarouselSelectedSnapDisplay";
-import { deleteRoomMateWish, postRoomMateMatchingRequest, postRoomMateWish } from "@/lib/api/room-mate";
-import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 
 type PropType = {
   slides: number[];

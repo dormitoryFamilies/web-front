@@ -2,7 +2,7 @@ import Image from "next/image";
 import { SVGProps } from "react";
 import * as React from "react";
 
-import { deleteCancelMatchingRequest, deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
+import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 

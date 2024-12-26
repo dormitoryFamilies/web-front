@@ -19,7 +19,7 @@ export const postLifestyles = async (data: LifeStylePostType) => {
   }
 };
 
-export const postPreferenceOrders = async (data: LifeStylePostType) => {
+export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
   try {
     const response = await sendRequest({
       headers: {
