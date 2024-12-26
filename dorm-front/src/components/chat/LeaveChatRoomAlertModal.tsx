@@ -21,7 +21,12 @@ const LeaveChatRoomAlertModal = (props: Props) => {
         {/*사용자 프로필*/}
         <div className={"flex flex-col gap-y-2"}>
           <div className={"relative w-[80px] h-[80px]"}>
-            <Image src={userProfileUrl} alt={userProfileUrl} className={"object-cover rounded-full"} fill />
+            <Image
+              src={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+              alt={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+              className={"object-cover rounded-full"}
+              fill
+            />
           </div>
           <div className={"text-h3 font-semibold"}>{userNickName}</div>
         </div>
