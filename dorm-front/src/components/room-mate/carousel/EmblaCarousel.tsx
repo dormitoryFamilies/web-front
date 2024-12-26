@@ -26,7 +26,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [selectedSnap]);
 
   useEffect(() => {
-    console.log("selectedRoomMateMemberId", selectedRoomMateMemberId)
+    console.log("selectedRoomMateMemberId", selectedRoomMateMemberId);
   }, [selectedRoomMateMemberId]);
 
   const embla_styles: React.CSSProperties = {
@@ -44,7 +44,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               key={index}
               className="transform-gpu flex-shrink-0 flex-grow-0 "
               style={{ flexBasis: "var(--slide-size)", paddingLeft: "var(--slide-spacing)" }}>
-              <RoommateMatchCard memberId={index} />
+              <RoommateMatchCard memberId={index} bottomButton={true} />
             </div>
           ))}
         </div>

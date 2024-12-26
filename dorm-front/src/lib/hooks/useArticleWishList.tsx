@@ -1,44 +1,19 @@
-import { AxiosResponse } from "axios";
-import useSWRInfinite from "swr/infinite";
+import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { ArticleType, BoardSortType, BoardStatusType, BoardType, ResponseArticleType } from "@/types/board/type";
+import { ResponseAxiosArticleWishType } from "@/types/board/type";
 
-const getKey = (
-  size: number,
-  previousPageData: ResponseArticleType,
-  boardType: BoardType,
-  sortType: BoardSortType,
-  statusType: BoardStatusType,
-) => {
-  if (size === 0) {
-    return `/dormitories/본관/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
-  }
-  if (previousPageData && !previousPageData.data.isLast) {
-    return `/dormitories/본관/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
-  }
-  if (previousPageData.data.isLast) {
-    return null;
-  }
-};
-
-const useBoardArticles = (boardType: BoardType, sortType: BoardSortType, statusType: BoardStatusType) => {
-  const { data, isLoading, error, size, setSize, mutate } = useSWRInfinite<AxiosResponse<ResponseArticleType>>(
-    (pageIndex, previousPageData) => getKey(pageIndex, previousPageData, boardType, sortType, statusType),
+const useArticleWishList = (articleId: string | string[]) => {
+  const { data, error, mutate } = useSWR<ResponseAxiosArticleWishType>(
+    `/api/articles/${articleId}/wish-members`,
     swrGetFetcher,
-    {
-      revalidateAll: true,
-    },
   );
 
-  const parseResultList = data ? data.map((article: ArticleType) => article).flat() : null;
-
   return {
-    boardArticles: parseResultList ? parseResultList : null,
+    articleWishList: data ? data : null,
     isLoading: !error && !data,
     isError: error,
-    boardArticlesSize: size,
-    setBoardArticlesSize: setSize,
+    mutate: mutate,
   };
 };
-export default useBoardArticles;
+export default useArticleWishList;

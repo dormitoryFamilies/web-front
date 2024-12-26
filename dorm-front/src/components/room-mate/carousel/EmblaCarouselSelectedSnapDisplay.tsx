@@ -38,9 +38,13 @@ export const SelectedSnapDisplay: React.FC<PropType> = (props) => {
   const { selectedSnap, snapCount } = props;
 
   return (
-    <div className="mt-2 flex justify-center items-center">
-      <span className={"text-primary text-h5"}>{selectedSnap + 1}</span>
-      <span className={"text-gray2 text-h5"}>/{snapCount}</span>
-    </div>
+    <>
+      {snapCount === 0 ? null : (
+        <div className="mt-2 flex justify-center items-center">
+          <span className={"text-primary text-h5"}>{selectedSnap + 1}</span>
+          <span className={"text-gray2 text-h5"}>/{snapCount}</span>
+        </div>
+      )}
+    </>
   );
 };

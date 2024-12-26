@@ -14,8 +14,8 @@ const Food = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
 
-  const [lateNightSnack, setLateNightSnack] = useState<LateNightSnackType>("");
-  const [snackInRoom, setSnackInRoom] = useState<SnackInRoomType>("");
+  const [lateNightSnack, setLateNightSnack] = useState<LateNightSnackType | undefined>("");
+  const [snackInRoom, setSnackInRoom] = useState<SnackInRoomType | undefined>("");
 
   const handleNextClick = () => {
     setLifeStylePostData((prevState) => {

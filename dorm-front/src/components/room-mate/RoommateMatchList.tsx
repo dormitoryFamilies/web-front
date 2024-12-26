@@ -10,7 +10,6 @@ interface Props {
 }
 const RoommateMatchList = (props: Props) => {
   const [candidateIds, setCandidateIds] = useRecoilState(candidateIdsAtom);
-
   return (
     <>
       <Header headerType={"dynamic"} title={"전체 추천 목록"} />

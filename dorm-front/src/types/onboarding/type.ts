@@ -1,4 +1,5 @@
-import { string } from "prop-types";
+import { AxiosHeaders } from "axios";
+import { number, string } from "prop-types";
 
 export type CollegeType =
   | "단과대학교"
@@ -39,4 +40,47 @@ export interface DepartmentType {
   바이오헬스학부: string[];
 }
 
-export type StepOnboarding = "NicknameSetting" | "SchoolInfoSetting" | "PhotoStudentIDCard" | "WaitForCompletion";
+export type StepOnboarding =
+  | "ServiceAccessRights"
+  | "NicknameSetting"
+  | "SchoolInfoSetting"
+  | "PhotoStudentIDCard"
+  | "WaitForCompletion";
+
+export interface SearchDuplicateNickNameResponseType {
+  data: SearchDuplicateNickNameType;
+  headers: AxiosHeaders;
+}
+
+export interface SearchDuplicateNickNameType {
+  code: number;
+  data: {
+    isDuplicated: boolean;
+  };
+}
+
+/**
+ * 관리자페이지 승인 멤버 데이터
+ */
+export interface VerifyMembersResponseType {
+  data: VerifyMembersType;
+  headers: AxiosHeaders;
+}
+
+export interface VerifyMembersType {
+  code: number;
+  data: {
+    totalElements: number;
+    totalPages: number;
+    currentPage: number;
+    nonVerifiedStudentCards: NonVerifiedStudentCardsType[];
+  };
+}
+
+export interface NonVerifiedStudentCardsType {
+  memberId: number;
+  name: string;
+  studentNumber: string;
+  Department: string;
+  studentCardUrl: string;
+}

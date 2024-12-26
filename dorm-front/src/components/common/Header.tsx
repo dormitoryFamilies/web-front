@@ -41,7 +41,10 @@ const Header = (props: Props) => {
               <div className="text-h2 font-bold z-20">{selectedDorm}</div>
               {isDropDownClick ? <DropDownOnIcon /> : <DropDownOffIcon />}
             </div>
-            <AlarmIcon className="absolute right-5" />
+            <div className={"flex absolute right-5"}>
+              {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
+              <AlarmIcon className="" />
+            </div>
           </>
         );
       case "chattingHome":
@@ -72,7 +75,7 @@ const Header = (props: Props) => {
                 onBack ? onBack() : router.back();
               }}
             />
-            <div className={"bg-gray0 rounded-full w-full py-2 px-4 placeholder:text-gray3"}>
+            <div className={"ml-4 bg-gray0 rounded-full w-full py-2 px-4 placeholder:text-gray3"}>
               <input
                 placeholder={"검색어를 입력해주세요."}
                 className={"bg-gray0 w-full outline-none"}
@@ -94,8 +97,8 @@ const Header = (props: Props) => {
       <header
         className={
           headerType === "static"
-            ? "h-[52px] fixed top-0 bg-white flex items-center justify-evenly w-full"
-            : "px-5 h-[52px] fixed top-0 bg-white flex items-center justify-between w-full"
+            ? "h-[52px] fixed z-20 top-0 bg-white flex items-center justify-evenly w-full"
+            : "px-5 h-[52px] z-20 fixed top-0 bg-white flex items-center justify-between w-full"
         }>
         {renderHeader(headerType)}
       </header>

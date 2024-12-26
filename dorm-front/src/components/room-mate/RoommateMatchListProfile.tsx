@@ -1,19 +1,29 @@
 import Image from "next/image";
 import * as React from "react";
-import { SVGProps, useState } from "react";
+import { SVGProps, useEffect, useState } from "react";
 
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
-import { postFollow } from "@/lib/api/common";
+import { deleteFollowing, postFollow } from "@/lib/api/common";
+import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
+import useFollowStatus from "@/lib/hooks/useFollowStatus";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
+import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 
 interface Props {
   memberId: number;
+  allDoomzListMutate?: any;
 }
 
 const RoommateMatchListProfile = (props: Props) => {
-  const { memberId } = props;
+  const { memberId, allDoomzListMutate } = props;
   const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
+  const { wishStatus, wishStatusMutate } = useRoomMateWishStatus(memberId);
   const [isPreferredLifestyleReviewerOpen, setIsPreferredLifestyleReviewerOpen] = useState(false);
+  const { followStatus } = useFollowStatus(memberId);
+
+  useEffect(() => {
+    console.log("recommendRoomMateProfile", recommendRoomMateProfile);
+  }, [recommendRoomMateProfile]);
 
   return (
     <div
@@ -27,12 +37,12 @@ const RoommateMatchListProfile = (props: Props) => {
         <div className={"flex items-center gap-x-2"}>
           <div className={"relative w-[40px] h-[40px]"}>
             <Image
-              src={recommendRoomMateProfile ? recommendRoomMateProfile.profileUrl : "/profile.png"}
+              src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/profile.png"}
               fill
               className={"object-cover rounded-full"}
-              alt={memberId}></Image>
+              alt={String(memberId)}></Image>
           </div>
-          <div>{recommendRoomMateProfile?.nickname}</div>
+          <div>{recommendRoomMateProfile?.data.nickname}</div>
         </div>
         {isPreferredLifestyleReviewerOpen ? (
           <DropUpIcon
@@ -54,17 +64,44 @@ const RoommateMatchListProfile = (props: Props) => {
       <div className={"flex justify-between"}>
         <div className={"flex gap-x-2"}>
           <button
-            className={"border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"}>
-            <HeartIcon />
+            onClick={() => {
+              if (wishStatus?.data.isRoommateWished) {
+                deleteRoomMateWish(memberId).then(() => {
+                  wishStatusMutate();
+                });
+              } else {
+                postRoomMateWish(memberId).then(() => {
+                  wishStatusMutate();
+                });
+              }
+            }}
+            className={
+              wishStatus?.data.isRoommateWished
+                ? "bg-primaryMid text-white text-h5 rounded-full py-[6px] px-[20px] items-center"
+                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
+            }>
+            {wishStatus?.data.isRoommateWished ? <WhiteHeartIcon /> : <HeartIcon />}
           </button>
           <button
             onClick={() => {
-              postFollow(memberId).then((r) => {
-                console.log("팔로우 성공", r);
-              });
+              if (followStatus?.data.isFollowing) {
+                deleteFollowing(memberId).then(() => {
+                  console.log("팔로우 취소 성공");
+                  allDoomzListMutate();
+                });
+              } else {
+                postFollow(memberId).then((r) => {
+                  console.log("팔로우 성공", r);
+                  allDoomzListMutate();
+                });
+              }
             }}
-            className={"border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"}>
-            팔로우
+            className={
+              followStatus?.data.isFollowing
+                ? "bg-gray1 rounded-full text-h5 px-5 py-[6px] text-gray5 items-center"
+                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
+            }>
+            {followStatus?.data.isFollowing ? "팔로우 취소" : "팔로우"}
           </button>
         </div>
         <button
@@ -90,6 +127,21 @@ const HeartIcon = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
+
+const WhiteHeartIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={15} height={14} fill="none" {...props}>
+    <g fill="#fff" clipPath="url(#a)">
+      <path d="M9.132 12.554a.47.47 0 0 0-.647-.199l-.16.084a1.83 1.83 0 0 1-1.65 0 13 13 0 0 1-2.298-1.485C1.683 8.753 1.113 6.187.992 5.175l-.02-.21C.96 4.83.96 4.746.96 4.733c0-1.792 1.414-3.366 3.027-3.366 1.51 0 2.867.717 3.545 1.868a.481.481 0 1 0 .832-.486C7.513 1.304 5.836.408 3.994.408 1.83.408 0 2.392 0 4.734c0 0 0 .115.013.307 0 .09.013.173.025.256.135 1.12.768 3.974 3.731 6.4a13.5 13.5 0 0 0 2.464 1.593c.397.198.832.3 1.26.3.43 0 .865-.102 1.261-.3l.173-.09a.47.47 0 0 0 .198-.646zM10.322 12.286a.5.5 0 1 0 0-.999.5.5 0 0 0 0 .999" />
+      <path d="M11.666 11.141a.483.483 0 0 1-.34-.825c2.1-2.055 2.567-4.275 2.67-5.139.005-.07.018-.14.018-.211.013-.141.013-.224.013-.23 0-1.799-1.414-3.373-3.027-3.373-1.51 0-2.867.717-3.545 1.869a.481.481 0 1 1-.832-.487C7.474 1.3 9.151.403 10.993.403c2.164 0 3.988 1.984 3.988 4.332 0 0 0 .116-.013.308 0 .083-.013.172-.026.256-.115.953-.633 3.436-2.95 5.701a.5.5 0 0 1-.333.135z" />
+    </g>
+    <defs>
+      <clipPath id="a">
+        <path fill="#fff" d="M0 .408h15v13.183H0z" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
 const FollowChatIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={17} height={16} fill="none" {...props}>
     <path
@@ -102,11 +154,13 @@ const FollowChatIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
 const DropDownIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={29} height={24} fill="none" {...props}>
     <path fill="#666" d="m14.108 15.7-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4z" />
   </svg>
 );
+
 const DropUpIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={28} height={24} fill="none" {...props}>
     <path fill="#666" d="m14 8.3 6 6-1.4 1.4-4.6-4.6-4.6 4.6L8 14.3z" />

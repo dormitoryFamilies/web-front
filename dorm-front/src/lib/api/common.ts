@@ -1,18 +1,33 @@
-import { client } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 
-//팔로우 post
 export const postFollow = async (memberId: number | undefined) => {
   try {
-    const response = await client.post(`/members/${memberId}/follows`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      url: `/api/members/${memberId}/follows`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("팔로우 post 에러 발생:", error);
+  }
+};
+
+export const deleteFollowing = async (memberId: number | undefined) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/members/${memberId}/followings`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("팔로우 delete 에러 발생:", error);
   }
 };

@@ -20,7 +20,7 @@ const OnboardingDormitoryFilter = (props: Props) => {
 
   return (
     <>
-      <div className="absolute bg-white z-10 w-[90%] rounded-[20px] border-[1px] border-gray1">
+      <div className="absolute top-[85px] bg-white z-10 w-full rounded-[20px] border-[1px] border-gray1">
         {dormList.map((dorm, index) => {
           return (
             <div

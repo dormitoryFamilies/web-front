@@ -2,60 +2,21 @@ import type { SVGProps } from "react";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
-import {
-  CleaningFrequencyType,
-  DrinkingFrequencyType,
-  ExamPreparationType,
-  ExerciseType,
-  HeatToleranceType,
-  InsectToleranceType,
-  LateNightSnackType,
-  PerfumeUsageType,
-  PhoneSoundType,
-  RoomMateLifeStyleType,
-  ShowerDurationType,
-  ShowerTimeType,
-  SleepingHabitType,
-  SleepingSensitivityType,
-  SleepTimeType,
-  SmokingType,
-  SnackInRoomType,
-  StudyLocationType,
-  VisitHomeFrequencyType,
-  WakeUpTimeType,
-} from "@/types/room-mate/type";
+import { RoomMateLifeStyleType } from "@/types/room-mate/type";
 
-interface Props {
+interface Props<T extends RoomMateLifeStyleType> {
   title: string;
-  contents: RoomMateLifeStyleType[];
+  contents: T[];
   className?: string;
   secondClassName?: string;
-  selectedContent: RoomMateLifeStyleType;
-  setSelectedContent:
-    | React.Dispatch<React.SetStateAction<SleepTimeType>>
-    | React.Dispatch<React.SetStateAction<WakeUpTimeType>>
-    | React.Dispatch<React.SetStateAction<SleepingHabitType>>
-    | React.Dispatch<React.SetStateAction<SleepingSensitivityType>>
-    | React.Dispatch<React.SetStateAction<SmokingType>>
-    | React.Dispatch<React.SetStateAction<DrinkingFrequencyType>>
-    | React.Dispatch<React.SetStateAction<ShowerTimeType | undefined>>
-    | React.Dispatch<React.SetStateAction<ShowerDurationType>>
-    | React.Dispatch<React.SetStateAction<CleaningFrequencyType>>
-    | React.Dispatch<React.SetStateAction<HeatToleranceType>>
-    | React.Dispatch<React.SetStateAction<VisitHomeFrequencyType>>
-    | React.Dispatch<React.SetStateAction<LateNightSnackType>>
-    | React.Dispatch<React.SetStateAction<SnackInRoomType>>
-    | React.Dispatch<React.SetStateAction<PhoneSoundType>>
-    | React.Dispatch<React.SetStateAction<PerfumeUsageType>>
-    | React.Dispatch<React.SetStateAction<StudyLocationType>>
-    | React.Dispatch<React.SetStateAction<ExamPreparationType>>
-    | React.Dispatch<React.SetStateAction<ExerciseType>>
-    | React.Dispatch<React.SetStateAction<InsectToleranceType>>;
+  selectedContent: T;
+  setSelectedContent: React.Dispatch<React.SetStateAction<T>>;
   isRequired: boolean;
   showGuideMessage?: boolean;
   setIsClickedGuideMessage?: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const Item = (props: Props) => {
+
+const Item = <T extends RoomMateLifeStyleType>(props: Props<T>) => {
   const {
     title,
     contents,
@@ -67,13 +28,13 @@ const Item = (props: Props) => {
     showGuideMessage,
     setIsClickedGuideMessage,
   } = props;
-  const updateSelectedContent = (content: RoomMateLifeStyleType) => {
+  const updateSelectedContent = (content: T) => {
     setSelectedContent(content);
   };
 
-  const resetSelectedContent = (content: RoomMateLifeStyleType) => {
+  const resetSelectedContent = (content: T) => {
     if (selectedContent === content) {
-      setSelectedContent("");
+      setSelectedContent("" as T);
     } else {
       updateSelectedContent(content);
     }
@@ -95,7 +56,7 @@ const Item = (props: Props) => {
         ) : null}
       </div>
       <div className={twMerge("grid gap-2", className)}>
-        {contents.map((content: RoomMateLifeStyleType, index: number) => {
+        {contents.map((content: T, index: number) => {
           return (
             <button
               key={index}

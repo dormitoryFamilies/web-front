@@ -1,195 +1,209 @@
-import { client } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 import { ArticlePostType, PostCommentType } from "@/types/board/type";
 
 export const postArticle = async (data: ArticlePostType) => {
   try {
-    const response = await client.post("/articles", data, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: data,
+      url: `/api/articles`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
     console.error("게시글 post 에러 발생:", error);
   }
 };
 
-export const putArticle = async (data: ArticlePostType, articleId: string | string[]) => {
+export const putArticle = async (data: ArticlePostType, articleId: string | string[] | number) => {
   try {
-    const response = await client.put(`/articles/${articleId}`, data, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PUT",
+      data: data,
+      url: `/api/articles/${articleId}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
     console.error("게시글 put 에러 발생:", error);
   }
 };
 
 export const deleteArticle = async (articleId: number | string | string[]) => {
   try {
-    const response = await client.delete(`/articles/${articleId}`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "DELETE",
+      url: `/api/articles/${articleId}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 delete 에러 발생:", error);
   }
 };
 
 export const postArticleImage = async (formData: FormData) => {
   try {
-    const response = await client.post("/images", formData, {
+    const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: formData,
+      url: `/api/images`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("사진 업로드 에러:", error);
   }
 };
 
 export const deleteArticleImage = async (formData: FormData) => {
   try {
-    const response = await client.delete("/images", {
+    const response = await sendRequest({
+      headers: {
+        "Content-Type": "multipart/form-data",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
       data: formData,
+      url: `/api/images`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("사진 제거 에러:", error);
+  }
+};
+
+export const putArticleStatus = async (articleId: string | string[] | number | undefined, formData: FormData) => {
+  try {
+    const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PUT",
+      data: formData,
+      url: `/api/articles/${articleId}/status`,
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("There was a problem with your axios operation:", error);
+    console.error("게시글 모집중 상태변경 에러 발생:", error);
   }
 };
 
-//모집중 모집완료
-export const putArticleStatus = async (articleId: string | string[], formData: FormData) => {
+export const postArticleWish = async (articleId: string | number | string[] | undefined) => {
   try {
-    const response = await client.put(`/articles/${articleId}/status`, formData, {
+    const response = await sendRequest({
       headers: {
-        "Content-Type": "multipart/form-data",
-        "Authorization": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      url: `/api/articles/${articleId}/wishes`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 put 에러 발생:", error);
   }
 };
 
-export const postArticleWish = async (articleId: string | string[]) => {
+export const deleteArticleWish = async (articleId: string | number | string[] | undefined) => {
   try {
-    const response = await client.post(`/articles/${articleId}/wishes`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "DELETE",
+      url: `/api/articles/${articleId}/wishes`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
-  }
-};
-
-export const deleteArticleWish = async (articleId: string | string[]) => {
-  try {
-    const response = await client.delete(`/articles/${articleId}/wishes`, {
-      headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
-    });
-    // 성공적인 응답 처리
-    return response.data;
-  } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 wish 삭제 에러 발생:", error);
   }
 };
 
 export const postArticleComment = async (articleId: string | string[], data: PostCommentType) => {
   try {
-    const response = await client.post(`/articles/${articleId}/comments`, data, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: data,
+      url: `/api/articles/${articleId}/comments`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 댓글 생성 에러 발생:", error);
   }
 };
 
 export const deleteArticleComment = async (commentId: number) => {
   try {
-    const response = await client.delete(`/comments/${commentId}`, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "DELETE",
+      url: `/api/comments/${commentId}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 댓글 삭제 에러 발생:", error);
   }
 };
 
 export const postArticleReplyComments = async (commentId: number, data: PostCommentType) => {
   try {
-    const response = await client.post(`/comments/${commentId}/reply-comments`, data, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "POST",
+      data: data,
+      url: `/api/comments/${commentId}/reply-comments`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 대댓글 생성 에러 발생:", error);
   }
 };
 
 export const deleteArticleReplyComment = async (replyCommentId: number) => {
   try {
-    const response = await client.delete(`/reply-comments/${replyCommentId}`, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "DELETE",
+      url: `/api/reply-comments/${replyCommentId}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("게시글 post 에러 발생:", error);
+    console.error("게시글 대댓글 삭제 에러 발생:", error);
   }
 };
 
@@ -197,16 +211,17 @@ export const deleteArticleReplyComment = async (replyCommentId: number) => {
 
 export const getSearchResult = async (dormitoryType: string, searchValue: string) => {
   try {
-    const response = await client.get(`/dormitories/${dormitoryType}/articles/search?q=${searchValue}`, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "GET",
+      url: `/api/dormitories/${dormitoryType}/articles/search?q=${searchValue}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("검색 결과:", error);
+    console.error("검색 결과 에러:", error);
   }
 };

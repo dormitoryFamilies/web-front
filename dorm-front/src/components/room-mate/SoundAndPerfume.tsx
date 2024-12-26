@@ -14,7 +14,7 @@ interface Props {
 const SoundAndPerfume = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [phoneSound, setPhoneSound] = useState<PhoneSoundType>("");
+  const [phoneSound, setPhoneSound] = useState<PhoneSoundType | undefined>("");
   const [perfumeUsage, setPerfumeUsage] = useState<PerfumeUsageType>("");
 
   const handleNextClick = () => {

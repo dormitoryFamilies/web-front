@@ -2,17 +2,18 @@ import React from "react";
 import { SetterOrUpdater } from "recoil";
 
 import { ProfileSettingType } from "@/types/global";
+import { CollegeType } from "@/types/onboarding/type";
 
 interface Props {
-  colleges: string[];
+  colleges: CollegeType[];
   setPostData: SetterOrUpdater<ProfileSettingType>;
   setIsClickFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const OnboardingCollegeFilter = (props: Props) => {
   const { colleges, setIsClickFilter, setPostData } = props;
 
-  const updatePostData = (college: string) => {
-    setPostData((prevState) => ({
+  const updatePostData = (college: CollegeType) => {
+    setPostData((prevState: ProfileSettingType) => ({
       ...prevState,
       collegeType: college,
     }));
@@ -20,7 +21,7 @@ const OnboardingCollegeFilter = (props: Props) => {
 
   return (
     <>
-      <div className="absolute bg-white z-10 w-[90%] rounded-[20px] border-[1px] border-gray1 h-[335px] overflow-y-scroll">
+      <div className="absolute top-[85px] bg-white z-10 w-full rounded-[20px] border-[1px] border-gray1 h-[335px] overflow-y-scroll">
         {colleges.slice(1).map((college, index) => {
           return (
             <div

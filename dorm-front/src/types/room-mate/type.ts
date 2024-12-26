@@ -1,4 +1,6 @@
 import { preferenceOrdersAtom } from "@/recoil/room-mate/atom";
+import { AxiosHeaders } from "axios";
+import { ResponseArticleWishListType } from "@/types/board/type";
 
 export type RoomMateLifeStyleStepType =
   | "SleepPattern"
@@ -67,6 +69,11 @@ export type ShowerDurationType = string;
 export type CleaningFrequencyType = "" | "바로바로" | "가끔" | "몰아서";
 export type HeatToleranceType = "" | "적게 탐" | "조금 탐" | "많이 탐";
 //MBTI
+export type MBTIContentType =
+  | ExtrovertOrIntrovertType
+  | IntuitiveOrThinkingType
+  | HeterosexualOrEmotionalType
+  | PlannedOrSpontaneousType;
 export type ExtrovertOrIntrovertType = "" | "E" | "I";
 export type IntuitiveOrThinkingType = "" | "S" | "N";
 export type HeterosexualOrEmotionalType = "" | "T" | "F";
@@ -129,6 +136,11 @@ export interface LifeStyleResponseType {
   data: LifeStylePostType;
 }
 
+export interface PreferenceOrdersAxiosResponseType {
+  data: PreferenceOrdersResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface PreferenceOrdersResponseType {
   code: number;
   data: PreferenceOrdersType;
@@ -143,6 +155,11 @@ export interface PreferenceOrdersType {
 
 ///////////////////////////////////////////////////////////
 
+export interface RecommendResultAxiosResponseType {
+  data: RecommendResultResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface RecommendResultResponseType {
   code: number;
   data: RecommendResultType;
@@ -155,10 +172,16 @@ export interface RecommendResultType {
 
 ///////////////////////////////////////////////////////////
 
+export interface RecommendResultProfileAxiosResponseType {
+  data: RecommendResultProfileResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface RecommendResultProfileResponseType {
   code: number;
   data: RecommendResultProfileType;
 }
+
 export interface RecommendResultProfileType {
   memberId: number;
   nickname: string;
@@ -169,4 +192,126 @@ export interface RecommendResultProfileType {
   birthDate: string;
   studentNumber: string;
   departmentType: string;
+}
+
+///////////////////////////////////////////////////////////
+
+export interface RoomMateDoomzProfileAxiosResponseType {
+  data: RoomMateDoomzProfileResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateDoomzProfileResponseType {
+  code: number;
+  data: RoomMateDoomzProfileType;
+}
+
+export interface RoomMateDoomzProfileType {
+  drunkHabit: string;
+  sleepTime: string;
+  wakeUpTime: string;
+  sleepingHabit: string;
+  sleepingSensitivity: string;
+  smoking: string;
+  drinkingFrequency: string;
+  cleaningFrequency: string;
+  heatTolerance: string;
+  coldTolerance: string;
+  perfumeUsage: string;
+  examPreparation: string;
+  showerTime: string;
+  showerDuration: string;
+  MBTI: string;
+  visitHomeFrequency: string;
+  lateNightSnack: string;
+  snackInRoom: string;
+  phoneSound: string;
+  studyLocation: string;
+  exercise: string;
+  insectTolerance: string;
+}
+///////////////////////////////////////////////////////////
+
+export interface AllDoomzListAxiosResponseType {
+  data: AllDoomzListResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface AllDoomzListResponseType {
+  code: number;
+  data: AllDoomzListType;
+}
+
+export interface AllDoomzListType {
+  totalPageNumber: number;
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: MemberProfileType[];
+}
+
+export interface MemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+  isFollowing: boolean;
+  isRoommateWished: boolean;
+}
+/////////////////////////////////////////////////////////
+
+export interface MatchingRequestsAxiosResponseType {
+  data: MatchingRequestsResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MatchingRequestsResponseType {
+  code: number;
+  data: MatchingRequestsType;
+}
+
+export interface MatchingRequestsType {
+  totalPageNumber: number;
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: MatchingRequestMemberProfileType[];
+}
+
+export interface MatchingRequestMemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+  isMatchable: boolean;
+}
+//////////////////////////////////////////////////////////
+
+export interface RoomMateWishStatusAxiosResponseType {
+  data: RoomMateWishStatusResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateWishStatusResponseType {
+  code: number;
+  data: { isRoommateWished: boolean };
+}
+
+/////////////////////////////////////////////////////////
+export interface RoomMateHomeInfoAxiosResponseType {
+  data: RoomMateHomeInfoResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface RoomMateHomeInfoResponseType {
+  code: number;
+  data: { nickname: string; requestReceivedCount: number };
+}
+
+///////////////////////////////////////////////////////////
+
+export interface MyRoomMateMatchingStatusAxiosResponseType {
+  data: MyRoomMateMatchingStatusResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MyRoomMateMatchingStatusResponseType {
+  code: number;
+  data: { matchedId: number };
 }

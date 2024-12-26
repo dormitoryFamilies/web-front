@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { deleteArticle } from "@/lib/api/board";
 
 interface Props {
-  articleId: string | string[];
+  articleId: string | string[] | number | undefined;
   setIsDeleteArticleWarningModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const DeleteArticleWarningModal = (props: Props) => {

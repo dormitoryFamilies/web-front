@@ -15,7 +15,7 @@ interface Props {
 const Exam = (props: Props) => {
   const { setLifeStyleStep } = props;
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [studyLocation, setStudyLocation] = useState<StudyLocationType>("");
+  const [studyLocation, setStudyLocation] = useState<StudyLocationType | undefined>("");
   const [examPreparation, setExamPreparation] = useState<ExamPreparationType>("");
   const [isClickedGuideMessage, setIsClickedGuideMessage] = useState<boolean>(false);
 

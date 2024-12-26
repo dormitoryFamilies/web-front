@@ -5,26 +5,14 @@ import {
   ExtrovertOrIntrovertType,
   HeterosexualOrEmotionalType,
   IntuitiveOrThinkingType,
+  MBTIContentType,
   PlannedOrSpontaneousType,
 } from "@/types/room-mate/type";
 
 interface Props {
-  contents: (
-    | ExtrovertOrIntrovertType
-    | IntuitiveOrThinkingType
-    | HeterosexualOrEmotionalType
-    | PlannedOrSpontaneousType
-  )[];
-  selectedContent:
-    | ExtrovertOrIntrovertType
-    | IntuitiveOrThinkingType
-    | HeterosexualOrEmotionalType
-    | PlannedOrSpontaneousType;
-  setSelectedContent:
-    | React.Dispatch<React.SetStateAction<ExtrovertOrIntrovertType>>
-    | React.Dispatch<React.SetStateAction<IntuitiveOrThinkingType>>
-    | React.Dispatch<React.SetStateAction<HeterosexualOrEmotionalType>>
-    | React.Dispatch<React.SetStateAction<PlannedOrSpontaneousType>>;
+  contents: MBTIContentType[];
+  selectedContent: MBTIContentType | string;
+  setSelectedContent: React.Dispatch<React.SetStateAction<MBTIContentType | string>>;
 }
 
 const MBTIItem = (props: Props) => {
@@ -32,6 +20,7 @@ const MBTIItem = (props: Props) => {
 
   const updateSelectedContent = (
     content:
+      | string
       | ExtrovertOrIntrovertType
       | IntuitiveOrThinkingType
       | HeterosexualOrEmotionalType

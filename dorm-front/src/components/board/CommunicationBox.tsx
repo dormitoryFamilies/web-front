@@ -1,21 +1,21 @@
-import { deleteArticleWish, postArticleWish } from "@/lib/api/board";
 import * as React from "react";
-import { SVGProps, useState } from "react";
+import { SVGProps } from "react";
 import { KeyedMutator } from "swr";
-import { AxiosResponse } from "axios";
-import { ResponseArticleDetailType } from "@/types/board/type";
+
+import { deleteArticleWish, postArticleWish } from "@/lib/api/board";
+import { ResponseAxiosArticleDetailType } from "@/types/board/type";
 
 interface Props {
-  isWriter: boolean;
-  isWished: boolean;
-  articleId: string | string[];
-  wishCount: number;
-  articleMutate: KeyedMutator<AxiosResponse<ResponseArticleDetailType, any>>;
+  isWriter: boolean | undefined;
+  isWished: boolean | undefined;
+  articleId: string | string[] | number | undefined;
+  wishCount: number | undefined;
+  articleMutate: KeyedMutator<ResponseAxiosArticleDetailType>;
   setIsArticleFavoritesList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CommunicationBox = (props: Props) => {
   const { isWriter, isWished, articleId, wishCount, articleMutate, setIsArticleFavoritesList } = props;
-  const renderCommunicationBox = (isWriter: boolean) => {
+  const renderCommunicationBox = (isWriter: boolean | undefined) => {
     switch (isWriter) {
       case true:
         return (
@@ -34,7 +34,9 @@ const CommunicationBox = (props: Props) => {
               className={
                 "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
               }>
-              <ChatIcon />
+              <div className={"w-[16px] h-[16px]"}>
+                <ChatIcon />
+              </div>
               채팅하기
             </button>
           </div>
@@ -72,7 +74,9 @@ const CommunicationBox = (props: Props) => {
               className={
                 "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
               }>
-              <ChatIcon />
+              <div className={"w-[16px] h-[16px]"}>
+                <ChatIcon />
+              </div>
               채팅보내기
             </button>
           </div>
@@ -84,9 +88,9 @@ const CommunicationBox = (props: Props) => {
 };
 export default CommunicationBox;
 
-const GrayHeartIcon = (props: SVGProps<SVGSVGElement>) => (
+const WhiteHeartIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={15} height={14} fill="none" {...props}>
-    <g fill="#727375" clipPath="url(#a)">
+    <g fill="#fff" clipPath="url(#a)">
       <path d="M9.132 12.554a.47.47 0 0 0-.647-.199l-.16.084a1.83 1.83 0 0 1-1.65 0 13 13 0 0 1-2.298-1.485C1.683 8.753 1.113 6.187.992 5.175l-.02-.21C.96 4.83.96 4.746.96 4.733c0-1.792 1.414-3.366 3.027-3.366 1.51 0 2.867.717 3.545 1.868a.481.481 0 1 0 .832-.486C7.513 1.304 5.836.408 3.994.408 1.83.408 0 2.392 0 4.734c0 0 0 .115.013.307 0 .09.013.173.025.256.135 1.12.768 3.974 3.731 6.4a13.5 13.5 0 0 0 2.464 1.593c.397.198.832.3 1.26.3.43 0 .865-.102 1.261-.3l.173-.09a.47.47 0 0 0 .198-.646zM10.322 12.286a.5.5 0 1 0 0-.999.5.5 0 0 0 0 .999" />
       <path d="M11.666 11.141a.483.483 0 0 1-.34-.825c2.1-2.055 2.567-4.275 2.67-5.139.005-.07.018-.14.018-.211.013-.141.013-.224.013-.23 0-1.799-1.414-3.373-3.027-3.373-1.51 0-2.867.717-3.545 1.869a.481.481 0 1 1-.832-.487C7.474 1.3 9.151.403 10.993.403c2.164 0 3.988 1.984 3.988 4.332 0 0 0 .116-.013.308 0 .083-.013.172-.026.256-.115.953-.633 3.436-2.95 5.701a.5.5 0 0 1-.333.135z" />
     </g>
@@ -98,9 +102,9 @@ const GrayHeartIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const WhiteHeartIcon = (props: SVGProps<SVGSVGElement>) => (
+const GrayHeartIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={15} height={14} fill="none" {...props}>
-    <g fill="#fff" clipPath="url(#a)">
+    <g fill="#727375" clipPath="url(#a)">
       <path d="M9.132 12.554a.47.47 0 0 0-.647-.199l-.16.084a1.83 1.83 0 0 1-1.65 0 13 13 0 0 1-2.298-1.485C1.683 8.753 1.113 6.187.992 5.175l-.02-.21C.96 4.83.96 4.746.96 4.733c0-1.792 1.414-3.366 3.027-3.366 1.51 0 2.867.717 3.545 1.868a.481.481 0 1 0 .832-.486C7.513 1.304 5.836.408 3.994.408 1.83.408 0 2.392 0 4.734c0 0 0 .115.013.307 0 .09.013.173.025.256.135 1.12.768 3.974 3.731 6.4a13.5 13.5 0 0 0 2.464 1.593c.397.198.832.3 1.26.3.43 0 .865-.102 1.261-.3l.173-.09a.47.47 0 0 0 .198-.646zM10.322 12.286a.5.5 0 1 0 0-.999.5.5 0 0 0 0 .999" />
       <path d="M11.666 11.141a.483.483 0 0 1-.34-.825c2.1-2.055 2.567-4.275 2.67-5.139.005-.07.018-.14.018-.211.013-.141.013-.224.013-.23 0-1.799-1.414-3.373-3.027-3.373-1.51 0-2.867.717-3.545 1.869a.481.481 0 1 1-.832-.487C7.474 1.3 9.151.403 10.993.403c2.164 0 3.988 1.984 3.988 4.332 0 0 0 .116-.013.308 0 .083-.013.172-.026.256-.115.953-.633 3.436-2.95 5.701a.5.5 0 0 1-.333.135z" />
     </g>

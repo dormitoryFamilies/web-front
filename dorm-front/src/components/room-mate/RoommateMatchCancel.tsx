@@ -2,6 +2,7 @@ import * as React from "react";
 
 import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
+import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 
 interface Props {
   memberId: number;
@@ -9,6 +10,8 @@ interface Props {
 }
 const RoommateMatchCancel = (props: Props) => {
   const { memberId, setIsRoommateMatchCancelOpen } = props;
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
+
   const handleCloseClick = () => {
     setIsRoommateMatchCancelOpen(false);
   };
@@ -30,7 +33,8 @@ const RoommateMatchCancel = (props: Props) => {
           {/* 안내문구 */}
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
-              닉네임<span className={"text-h4 font-normal"}>님과의</span> <br />
+              {recommendRoomMateProfile?.data.nickname}
+              <span className={"text-h4 font-normal"}>님과의</span> <br />
               매칭 신청이 취소되었어요.{" "}
             </div>
           </div>

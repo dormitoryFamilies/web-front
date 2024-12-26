@@ -2,19 +2,32 @@ import * as React from "react";
 
 import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
-import { deleteMatchingRequest } from "@/lib/api/room-mate";
+import { deleteCancelMatchingRequest, deleteRoomMateMatchingRequest } from "@/lib/api/room-mate";
+import useMyRoomMateMatchingStatus from "@/lib/hooks/useMyRoomMateMatchingStatus";
+import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 
 interface Props {
-  memberId: number;
+  memberId: number | undefined;
   setIsConfirmRoommateMatchCancelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsRoommateMatchCancelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const ConfirmRoommateMatchCancel = (props: Props) => {
   const { memberId, setIsConfirmRoommateMatchCancelOpen, setIsRoommateMatchCancelOpen } = props;
+  const { myRoomMateProfile } = useMyRoomMateMatchingStatus();
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
+
   const handleCancelClick = () => {
-    deleteMatchingRequest(memberId).then((r) => {
-      console.log(r);
-    });
+    if (myRoomMateProfile && myRoomMateProfile.data.matchedId === 0) {
+      //맺어진 룸메가 없는 경우에는 보낸/받은 신청 취소만
+      deleteRoomMateMatchingRequest(memberId).then((r) => {
+        console.log(r);
+      });
+    } else {
+      //맺어진 룸메가 있는 경우에는 맺은 룸메와의 맺어진 관계 삭제
+      deleteCancelMatchingRequest(memberId).then((r) => {
+        console.log(r);
+      });
+    }
     setIsConfirmRoommateMatchCancelOpen(false);
     setIsRoommateMatchCancelOpen(true);
   };
@@ -36,7 +49,7 @@ const ConfirmRoommateMatchCancel = (props: Props) => {
           {/* 안내문구 */}
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
-              닉네임<span className={"text-h4 font-normal"}>님과의</span> <br />
+              {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 font-normal"}>님과의</span> <br />
               매칭 신청을 취소할껀가요?{" "}
             </div>
             <div className={""}>

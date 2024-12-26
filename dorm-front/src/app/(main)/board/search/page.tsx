@@ -10,7 +10,7 @@ import Post from "@/components/board/Post";
 import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchResult } from "@/lib/api/board";
-import { ArticleType, ResponseBoardSearchResultType } from "@/types/board/type";
+import { ArticleType } from "@/types/board/type";
 
 const BoardSearch = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -35,12 +35,12 @@ const BoardSearch = () => {
   //단어가 바뀔 때 마다 검색하여 요청
   useEffect(() => {
     if (!searchValue) {
-      getSearchResult("본관", " ").then((r: ResponseBoardSearchResultType) => {
-        setSearchResults(r?.data.articles);
+      getSearchResult("본관", " ").then((r) => {
+        setSearchResults(r?.data.data.articles);
       });
     } else {
       getSearchResult("본관", searchValue).then((r) => {
-        setSearchResults(r?.data.articles);
+        setSearchResults(r?.data.data.articles);
       });
     }
   }, [searchValue]);
@@ -49,10 +49,14 @@ const BoardSearch = () => {
     router.push("/board");
   };
 
+  useEffect(() => {
+    console.log("searchResults", searchResults);
+  }, [searchResults]);
+
   return (
     <div>
       <Header headerType={"search"} setSearchValue={setSearchValue} onBack={onBack}></Header>
-      <div className={"flex px-5  mt-[12px]"}>
+      <div className="flex flex-col mx-[20px] gap-y-5 mt-4">
         {/* 검색 결과가 있을 때 */}
         {searchResults ? (
           <div className={"flex flex-col gap-y-5 pt-[52px] min-h-screen"}>
@@ -65,7 +69,7 @@ const BoardSearch = () => {
                     content={searchResult.content}
                     createdDate={searchResult.createdAt}
                     boardType={searchResult.boardType}
-                    nickName={searchResult.nickName}
+                    nickname={searchResult.nickname}
                     commentCount={searchResult.commentCount}
                     status={searchResult.status}
                     isWished={searchResult.isWished}
