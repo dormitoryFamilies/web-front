@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { patchLeaveChatRoom } from "@/lib/api/chat";
-import Image from "next/image";
+import { deleteChatRoom, patchLeaveChatRoom } from "@/lib/api/chat";
 
 interface Props {
   roomId: string | string[];
@@ -37,7 +37,7 @@ const LeaveChatRoomAlertModal = (props: Props) => {
           <button className={"w-full bg-gray1 rounded-[20px] text-h5 text-gray5 py-[14px] px-[35px]"}>취소</button>
           <button
             onClick={() => {
-              patchLeaveChatRoom(roomId).then((r) => {
+              deleteChatRoom(roomId).then((r) => {
                 setClickedMenu(false);
                 router.push("/chat");
               });

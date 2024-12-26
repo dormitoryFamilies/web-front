@@ -2,7 +2,7 @@
 
 import { Stomp } from "@stomp/stompjs";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FormEvent, SVGProps, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { useRecoilState } from "recoil";
@@ -11,12 +11,13 @@ import ChattingRoomMenu from "@/components/chat/ChattingRoomMenu";
 import LeaveChatRoomAlertModal from "@/components/chat/LeaveChatRoomAlertModal";
 import MyChatContent from "@/components/chat/MyChatContent";
 import OtherUserChatContent from "@/components/chat/OtherUserChatContent";
-import { deleteNoMessageChatRoom } from "@/lib/api/chat";
+import { deleteNoMessageChatRoom, patchLeaveChatRoom } from "@/lib/api/chat";
 import useChatMessages from "@/lib/hooks/useChatMessages";
 import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
 const ChatRoom = () => {
+  const router = useRouter();
   const params = useParams();
   // STOMP 클라이언트를 위한 ref. 웹소켓 연결을 유지하기 위해 사용
   const stompClient = useRef();
@@ -109,7 +110,7 @@ const ChatRoom = () => {
   }, [memberIdState]);
 
   return (
-    <form onSubmit={sendMessage}>
+    <form className={"flex flex-col min-h-screen"} onSubmit={sendMessage}>
       {/* 채팅방 나가기 경고 모달 */}
       {isClickedLeaveChatRoomAlertModal ? (
         <LeaveChatRoomAlertModal
@@ -140,6 +141,12 @@ const ChatRoom = () => {
               if (chatMessages && chatMessages?.data.chatHistory.length === 0) {
                 deleteNoMessageChatRoom(params.roomId).then((r) => {
                   console.log("빈 채팅방 삭제", r);
+                  router.push("/chat");
+                });
+              } else {
+                patchLeaveChatRoom(params.roomId).then((r) => {
+                  console.log("채팅방 나가기", r);
+                  router.push("/chat");
                 });
               }
             }}
@@ -169,7 +176,7 @@ const ChatRoom = () => {
 
       {/*경고 문구*/}
       {chatMessages?.data.chatHistory.length === 0 ? (
-        <div className={"fixed top-[61px] w-full px-5 py-3 flex gap-x-4 items-center bg-primaryLight"}>
+        <div className={"fixed top-[71px] w-full px-5 py-3 flex gap-x-4 items-center bg-primaryLight"}>
           <AlertIcon />
           <div className={"flex flex-col text-gray5 text-h5"}>
             <span>카카오톡 ID 등으로 대화를 유도하는 경우</span>
@@ -178,13 +185,15 @@ const ChatRoom = () => {
         </div>
       ) : null}
 
+      <div className={"h-[57px]"} />
+
       {/* 내용 */}
       <div
         ref={chatContainerRef}
         className={
           chatMessages?.data.chatHistory.length === 0
-            ? "flex flex-col justify-center min-h-screen overflow-y-scroll" // 메시지 없을 때는 중앙정렬
-            : "flex flex-col justify-end min-h-screen overflow-y-scroll" //메시지 있을 때는 끝 정렬
+            ? "flex flex-col justify-center flex-grow overflow-y-scroll" // 메시지 없을 때는 중앙정렬
+            : "flex flex-col justify-end flex-grow overflow-y-scroll" //메시지 있을 때는 끝 정렬
         }>
         {chatMessages?.data.chatHistory.length === 0 ? (
           <div className={"flex flex-col items-center"}>

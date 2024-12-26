@@ -16,39 +16,68 @@ export const createChatRoom = async (roomId: number | undefined) => {
   return response.data;
 };
 
+/**
+ * 채팅방 나가기
+ */
 export const patchLeaveChatRoom = async (roomId: string | string[]) => {
   try {
-    const response = await client.patch(`/chats/rooms/${roomId}`, {
+    const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "PATCH",
+      url: `/chats/rooms/${roomId}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("채팅방 나가기 에러:", error);
-  }
-};
-export const deleteNoMessageChatRoom = async (roomId: string | string[]) => {
-  try {
-    const response = await client.delete(`/chats/rooms/${roomId}/no-messages`, {
-      headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
-    });
-    // 성공적인 응답 처리
-    return response.data;
-  } catch (error) {
-    // 에러 처리
     console.error("채팅방 나가기 에러:", error);
   }
 };
 
 /**
- * 룸메 매칭 신청
+ * 채팅방 나가기
+ */
+export const deleteChatRoom = async (roomId: string | string[]) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/chats/rooms/${roomId}`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("채팅방 삭제 에러:", error);
+  }
+};
+
+/**
+ * 채팅 내역이 없을 경우 채팅방 없애기 api
+ */
+export const deleteNoMessageChatRoom = async (roomId: string | string[]) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: `/api/chats/rooms/${roomId}/no-messages`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("채팅방 나가기 에러:", error);
+  }
+};
+
+/**
+ * memberId로 채팅방 ID 불러오는 api
  */
 export const getRoomId = async (memberId: string | string[] | number | undefined) => {
   try {
