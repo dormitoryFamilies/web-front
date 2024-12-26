@@ -56,16 +56,22 @@ export interface MyMemberIdResponseType {
  * profile
  */
 
+export interface ProfileAxiosResponseType {
+  data: ResponseProfileType;
+  headers: AxiosHeaders;
+}
+
 export interface ResponseProfileType {
   code: number;
   data: ProfileType;
 }
 
 export interface ProfileType {
-  memberDormitory: string;
   memberId: number;
+  dormitoryType: string;
   nickname: string;
   profileUrl: string;
+  isFollowing: boolean;
 }
 
 export interface ProfileSettingType {

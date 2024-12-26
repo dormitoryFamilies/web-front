@@ -1,3 +1,5 @@
+import { AxiosHeaders } from "axios";
+
 export type FollowType = "팔로워" | "팔로잉";
 export interface FollowSearchResponseType {
   code: number;
@@ -5,11 +7,15 @@ export interface FollowSearchResponseType {
     MemberProfiles: MemberProfile[];
   };
 }
-export interface FollowResponseType {
-  code: number;
-  data: FollowDataType;
+export interface FollowingAxiosResponseType {
+  data: FollowingResponseType;
+  headers: AxiosHeaders;
 }
-export interface FollowDataType {
+export interface FollowingResponseType {
+  code: number;
+  data: FollowingType;
+}
+export interface FollowingType {
   totalPageNumber: number;
   nowPageNumber: number;
   isLast: boolean;
