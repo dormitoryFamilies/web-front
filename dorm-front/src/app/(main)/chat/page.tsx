@@ -1,43 +1,46 @@
 "use client";
 
-import * as StompJs from "@stomp/stompjs";
-import { CompatClient, Stomp } from "@stomp/stompjs";
-import { SVGProps, useEffect, useRef, useState } from "react";
-import * as React from "react";
-import SockJS from "sockjs-client";
-import useChatRooms from "@/lib/hooks/useChatRooms";
-import { createChatRoom } from "@/lib/api/chat";
-import { useRecoilState } from "recoil";
-import { chatRoomIdAtom, messageAtom, messagesAtom } from "@/recoil/chat/atom";
-import Header from "@/components/common/Header";
-import useMyFollowings from "@/lib/hooks/useMyFollowings";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { SVGProps, useCallback, useEffect, useState } from "react";
+import * as React from "react";
+import { useInView } from "react-intersection-observer";
+
+import Header from "@/components/common/Header";
+import ProfileModal from "@/components/common/ProfileModal";
+import useChatRooms from "@/lib/hooks/useChatRooms";
+import useMyFollowings from "@/lib/hooks/useMyFollowings";
 const Chat = () => {
-  const router = useRouter();
-  // STOMP 클라이언트를 위한 ref. 웹소켓 연결을 유지하기 위해 사용
-  const stompClient = useRef();
-  const { chatRooms } = useChatRooms();
+  const { chatRooms, setChatRoomsSize } = useChatRooms();
   const { followings } = useMyFollowings(0);
-  const [chatRoomId, setChatRoomId] = useRecoilState(chatRoomIdAtom);
-  // 채팅 메시지 상태
-  const [messages, setMessages] = useRecoilState(messagesAtom);
-  // 메시지 입력 상태
-  const [message, setMessage] = useRecoilState(messageAtom);
+  const [ref, inView] = useInView();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | undefined>();
+
+  // 전체
+  const getMoreAllArticleItem = useCallback(async () => {
+    if (chatRooms) {
+      await setChatRoomsSize((prev: number) => prev + 1);
+    }
+    return;
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      getMoreAllArticleItem();
+    }
+  }, [inView]);
 
   useEffect(() => {
     console.log("chatRooms", chatRooms);
   }, [chatRooms]);
-  useEffect(() => {
-    console.log("messages", messages);
-  }, [messages]);
 
   return (
     <>
+      {isProfileOpen ? <ProfileModal memberId={selectedMemberId} /> : null}
       <Header headerType={"chattingHome"} title={"채팅"} rightElement={<SearchIcon />} />
       <div className={"h-[60px]"} />
       <div className={""}>
-        <div className={"py-3 px-5 border-b-[1px] border-gray1"}>
+        <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
           <div className={"flex justify-between"}>
             <div className={"text-h3 font-semibold"}>팔로잉</div>
             <button className={"flex items-center gap-x-1 home-button"}>
@@ -47,25 +50,16 @@ const Chat = () => {
           </div>
 
           {/*팔로우*/}
-          <div className={"pt-[12px] flex flex-col gap-y-3"}>
+          <div className={" overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
             <div className={"flex gap-x-3"}>
-              {followings?.memberProfiles.map((memberProfile) => {
+              {followings?.data.memberProfiles.map((memberProfile) => {
                 return (
                   <div
-                    key={memberProfile.memberId}
                     onClick={() => {
-                      // router.push("/chat/3");
-                      // createChatRoom(memberProfile.memberId).then((r) => {
-                      //   if (r?.code === 200) {
-                      //     // connectChattingRoom(r?.data.chatRoomId);
-                      //   } else if (r?.code === 409) {
-                      //     //이미 채팅방이 존재할 경우
-                      //   }
-                      //   setChatRoomId(r?.data.chatRoomId);
-                      //   console.log("chatRoomId", chatRoomId);
-                      //   router.push(`/chat/${memberProfile.memberId}`);
-                      // });
+                      setSelectedMemberId(memberProfile.memberId);
+                      setIsProfileOpen(true);
                     }}
+                    key={memberProfile.memberId}
                     className={"flex flex-col gap-y-1 justify-center items-center"}>
                     {memberProfile.profileUrl ? (
                       <div className={"relative w-[48px] h-[48px]"}>
@@ -83,66 +77,36 @@ const Chat = () => {
                   </div>
                 );
               })}
-
-              {/*<div className={"flex flex-col gap-y-1 justify-center items-center"}>*/}
-              {/*  <ProfileIcon />*/}
-              {/*  <div className={"text-h6 text-gray3"}>닉네임</div>*/}
-              {/*</div>*/}
-              {/*<div className={"flex flex-col gap-y-1 justify-center items-center"}>*/}
-              {/*  <ProfileIcon />*/}
-              {/*  <div className={"text-h6 text-gray3"}>닉네임</div>*/}
-              {/*</div>*/}
-              {/*<div className={"flex flex-col gap-y-1 justify-center items-center"}>*/}
-              {/*  <ProfileIcon />*/}
-              {/*  <div className={"text-h6 text-gray3"}>닉네임</div>*/}
-              {/*</div>*/}
             </div>
           </div>
-        </div>
+        </section>
 
         {/*채팅 목록*/}
-        <div className={"px-5 pt-2 flex flex-col gap-y-5"}>
+        <section className={"px-5 pt-2 flex flex-col gap-y-5"}>
           <div className={"text-h3 font-semibold py-3"}>채팅목록</div>
-          <div className={"flex justify-between"}>
-            <div className={"flex gap-x-3"}>
-              <SecondProfileIcon />
-              <div className={"flex flex-col gap-y-1"}>
-                <div className={"text-h4 font-semibold"}>닉네임</div>
-                <div className={"text-h5 text-gray5"}>양진재 1층에서 만날까요?</div>
-              </div>
-            </div>
-            <div className={"flex flex-col items-end gap-y-1"}>
-              <div className={"text-gray3 text-h6"}>오후 18:00</div>
-              <div className={"rounded-full bg-primary w-fit px-2 text-white text-h4"}>1</div>
-            </div>
-          </div>
-          <div className={"flex justify-between"}>
-            <div className={"flex gap-x-3"}>
-              <SecondProfileIcon />
-              <div className={"flex flex-col gap-y-1"}>
-                <div className={"text-h4 font-semibold"}>닉네임</div>
-                <div className={"text-h5 text-gray5"}>양진재 1층에서 만날까요?</div>
-              </div>
-            </div>
-            <div className={"flex flex-col items-end gap-y-1"}>
-              <div className={"text-gray3 text-h6"}>오후 18:00</div>
-              <div className={"rounded-full bg-primary w-fit px-2 text-white text-h4"}>1</div>
-            </div>
-          </div>
-          <div className={"flex justify-between"}>
-            <div className={"flex gap-x-3"}>
-              <SecondProfileIcon />
-              <div className={"flex flex-col gap-y-1"}>
-                <div className={"text-h4 font-semibold"}>닉네임</div>
-                <div className={"text-h5 text-gray5"}>양진재 1층에서 만날까요?</div>
-              </div>
-            </div>
-            <div className={"flex flex-col items-end gap-y-1"}>
-              <div className={"text-gray3 text-h6"}>오후 18:00</div>
-              <div className={"rounded-full bg-primary w-fit px-2 text-white text-h4"}>1</div>
-            </div>
-          </div>
-        </div>
+          {chatRooms &&
+            chatRooms.map((chatRoomData) => {
+              return chatRoomData?.data.data.chatRooms.map((chatRoom) => {
+                return (
+                  <div ref={ref} key={chatRoom.roomId} className={"flex justify-between"}>
+                    <div className={"flex gap-x-3"}>
+                      <Image src={chatRoom.memberProfileUrl} alt={chatRoom.memberProfileUrl} height={60} width={60} />
+                      <div className={"flex flex-col gap-y-1"}>
+                        <div className={"text-h4 font-semibold"}>{chatRoom.memberNickname}</div>
+                        <div className={"text-h5 text-gray5"}>{chatRoom.lastMessage}</div>
+                      </div>
+                    </div>
+                    <div className={"flex flex-col items-end gap-y-1"}>
+                      <div className={"text-gray3 text-h6"}>{chatRoom.lastMessageTime}</div>
+                      <div className={"rounded-full bg-primary w-fit px-2 text-white text-h6 py-[2px]"}>
+                        {chatRoom.unReadCount}
+                      </div>
+                    </div>
+                  </div>
+                );
+              });
+            })}
+        </section>
       </div>
     </>
   );
@@ -179,19 +143,6 @@ const ProfileIcon = (props: SVGProps<SVGSVGElement>) => (
         <path fill="#fff" d="M.507 0h48v48h-48z" />
       </clipPath>
     </defs>
-  </svg>
-);
-const SecondProfileIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={48} height={49} fill="none" {...props}>
-    <path fill="#E4E5E7" d="M24.007 48.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24" />
-    <path
-      fill="#191919"
-      d="M24.007 9.26c2.6 0 4.72 2.12 4.72 4.72s-2.12 4.72-4.72 4.72-4.72-2.12-4.72-4.72 2.12-4.72 4.72-4.72m0-3c-4.26 0-7.72 3.46-7.72 7.72s3.46 7.72 7.72 7.72 7.72-3.46 7.72-7.72-3.46-7.72-7.72-7.72M39.147 35.64c-.48 0-.96-.24-1.26-.68-3.1-4.68-8.28-7.46-13.88-7.46s-10.78 2.8-13.88 7.46c-.46.7-1.38.88-2.08.42a1.49 1.49 0 0 1-.42-2.08c3.66-5.52 9.78-8.82 16.38-8.82s12.74 3.3 16.38 8.82c.46.7.26 1.62-.42 2.08-.26.16-.54.24-.82.24z"
-    />
-    <path
-      fill="#E70050"
-      d="M31.127 34.36c-.86 0-1.56.7-1.56 1.56s.7 1.56 1.56 1.56 1.56-.7 1.56-1.56-.7-1.56-1.56-1.56"
-    />
   </svg>
 );
 
