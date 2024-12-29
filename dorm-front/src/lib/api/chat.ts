@@ -95,3 +95,43 @@ export const getRoomId = async (memberId: string | string[] | number | undefined
     console.error("멤버아이디로 채팅룸 아이디 불러오는데 에러:", error);
   }
 };
+
+/**
+ * 채팅방 검색
+ */
+export const getSearchChatRoom = async (searchValue: string, size: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "GET",
+      url: `/api/chats/rooms/search?q=${searchValue}&page=0&size=${size}`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("채팅방 검색 에러:", error);
+  }
+};
+
+/**
+ * 메시지 검색
+ */
+export const getSearchChatMessage = async (searchValue: string, sort: string, size: number) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "GET",
+      url: `/api/chats/messages/search?q=${searchValue}&sort=${sort}&page=0&size=${size}`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("채팅방 검색 에러:", error);
+  }
+};

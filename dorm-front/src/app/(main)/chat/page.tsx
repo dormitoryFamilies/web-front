@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { SVGProps, useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { useInView } from "react-intersection-observer";
@@ -10,6 +11,7 @@ import ProfileModal from "@/components/common/ProfileModal";
 import useChatRooms from "@/lib/hooks/useChatRooms";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
 const Chat = () => {
+  const router = useRouter();
   const { chatRooms, setChatRoomsSize } = useChatRooms();
   const { followings } = useMyFollowings(0);
   const [ref, inView] = useInView();
@@ -37,7 +39,17 @@ const Chat = () => {
   return (
     <>
       {isProfileOpen ? <ProfileModal memberId={selectedMemberId} /> : null}
-      <Header headerType={"chattingHome"} title={"채팅"} rightElement={<SearchIcon />} />
+      <Header
+        headerType={"chattingHome"}
+        title={"채팅"}
+        rightElement={
+          <SearchIcon
+            onClick={() => {
+              router.push("/chat/search");
+            }}
+          />
+        }
+      />
       <div className={"h-[60px]"} />
       <div className={""}>
         <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
@@ -50,7 +62,7 @@ const Chat = () => {
           </div>
 
           {/*팔로우*/}
-          <div className={" overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
+          <div className={"overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
             <div className={"flex gap-x-3"}>
               {followings?.data.memberProfiles.map((memberProfile) => {
                 return (

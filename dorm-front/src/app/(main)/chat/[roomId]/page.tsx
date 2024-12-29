@@ -35,9 +35,6 @@ const ChatRoom = () => {
   // 웹소켓 연결 설정
   const connectChattingRoom = (roomId: string | string[], roomUUID: string) => {
     const socket = new WebSocket("ws://13.124.186.20:8080/stomp");
-    socket.onopen = () => console.log("WebSocket connection opened");
-    socket.onclose = (event) => console.log("WebSocket connection closed", event);
-    socket.onerror = (error) => console.error("WebSocket error:", error);
 
     stompClient.current = Stomp.over(socket);
     stompClient.current.connect(

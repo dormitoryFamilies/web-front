@@ -1,4 +1,4 @@
-import { client } from "@/lib/axios";
+import { client, sendRequest } from "@/lib/axios";
 import { EditMyProfileType } from "@/types/mypage/type";
 import { LifeStylePostType } from "@/types/room-mate/type";
 export const getSearchFollowers = async (searchValue: string) => {
@@ -16,19 +16,20 @@ export const getSearchFollowers = async (searchValue: string) => {
     console.error("팔로워 검색 결과:", error);
   }
 };
+
 export const getSearchFollowings = async (searchValue: string) => {
   try {
-    const response = await client.get(`/members/followings/search?q=${searchValue}`, {
+    const response = await sendRequest({
       headers: {
-        "Content-type": "application/json",
-        "AccessToken": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
+      method: "GET",
+      url: `/api/members/followings/search?q=${searchValue}`,
     });
-    // 성공적인 응답 처리
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    // 에러 처리
-    console.error("팔로잉 검색 결과:", error);
+    console.error("팔로잉 검색 결과 에러:", error);
   }
 };
 export const putProfileData = async (profileData: EditMyProfileType) => {
