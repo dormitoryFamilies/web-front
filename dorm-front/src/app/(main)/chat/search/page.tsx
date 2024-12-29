@@ -59,12 +59,6 @@ const ChatSearch = () => {
     }
   }, [searchValue]);
 
-  useEffect(() => {
-    console.log("searchChatRoomResults", searchChatRoomResults);
-    console.log("searchChatMessageResults", searchChatMessageResults);
-    console.log("searchFollowingResults", searchFollowingResults);
-  }, [searchChatRoomResults, searchChatMessageResults, searchFollowingResults]);
-
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
 
