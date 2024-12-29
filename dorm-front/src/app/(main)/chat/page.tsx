@@ -55,7 +55,11 @@ const Chat = () => {
         <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
           <div className={"flex justify-between"}>
             <div className={"text-h3 font-semibold"}>팔로잉</div>
-            <button className={"flex items-center gap-x-1 home-button"}>
+            <button
+              onClick={() => {
+                router.push("/follow");
+              }}
+              className={"flex items-center gap-x-1 home-button"}>
               전체보기
               <MoveIcon />
             </button>
