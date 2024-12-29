@@ -1,6 +1,8 @@
+import { AxiosError } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import * as React from "react";
 import { useRecoilState } from "recoil";
 
 import { createChatRoom, getRoomId } from "@/lib/api/chat";
@@ -16,13 +18,27 @@ const ProfileModal = (props: Props) => {
   const router = useRouter();
   const { memberId } = props;
   const { userProfileData } = useUserProfile(memberId);
-  const [chatRoomId, setChatRoomId] = useRecoilState(chatRoomIdAtom);
-  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
-  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
 
   useEffect(() => {
     console.log(userProfileData);
   }, [userProfileData]);
+
+  const handleSubmit = async (memberId: number | undefined) => {
+    try {
+      const response = await createChatRoom(memberId);
+      if (response && response.data && response.data.code === 201) {
+        router.push(`/chat/${response.data.data.chatRoomId}`);
+      }
+    } catch (error: any) {
+      const axiosError = error as AxiosError; // AxiosError로 캐스팅
+      console.log("axiosError", axiosError.response?.status);
+      if (axiosError.response?.status === 409) {
+        getRoomId(memberId).then((response) => {
+          router.push(`/chat/${response.data.data.roomId}`);
+        });
+      }
+    }
+  };
 
   return (
     <div className={"fixed left-0 right-0 top-0 z-40 flex flex-col bg-[rgba(0,0,0,0.6)] min-h-screen"}>
@@ -55,18 +71,8 @@ const ProfileModal = (props: Props) => {
           )}
           <button
             onClick={() => {
-              createChatRoom(memberId).then((response) => {
-                console.log("response", response);
-                if (response.data.code === 201) {
-                  setMemberIdState(memberId);
-                  setChatRoomId(response.data.data.chatRoomId);
-                  setChatRoomUUID(response.data.data.roomUUID);
-                  router.push(`/chat/${response.data.data.chatRoomId}`);
-                } // else if (response === 409) {
-                //   getRoomId(memberId).then((response) => {
-                //     router.push(`/chat/${response.data.data.roomId}`);
-                //   });
-                // }
+              handleSubmit(userProfileData?.data.memberId).then((res) => {
+                console.log("res", res);
               });
             }}
             className={"bg-primary w-full text-white text-h5 rounded-[20px] py-[14px]"}>
