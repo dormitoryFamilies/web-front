@@ -6,34 +6,52 @@ import Header from "@/components/common/Header";
 import GuideMessageModal from "@/components/room-mate/GuideMessageModal";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { ExamPreparationType, RoomMateLifeStyleStepType, StudyLocationType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  ExamPreparationType,
+  LifeStyleResponseType,
+  RoomMateLifeStyleStepType,
+  StudyLocationType,
+} from "@/types/room-mate/type";
 import { examPreparationContents, studyLocationContents } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const Exam = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [studyLocation, setStudyLocation] = useState<StudyLocationType | undefined>("");
   const [examPreparation, setExamPreparation] = useState<ExamPreparationType>("");
   const [isClickedGuideMessage, setIsClickedGuideMessage] = useState<boolean>(false);
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-        examPreparation: examPreparation,
-      };
-
-      if (studyLocation !== "") {
-        updatedState.studyLocation = studyLocation;
-      } else {
-        delete updatedState.studyLocation;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.studyLocation !== studyLocation) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, studyLocation: studyLocation }));
       }
+      if (myLifeStyles.data.examPreparation !== examPreparation) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, examPreparation: examPreparation }));
+      }
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+          examPreparation: examPreparation,
+        };
 
-      return updatedState;
-    });
+        if (studyLocation !== "") {
+          updatedState.studyLocation = studyLocation;
+        } else {
+          delete updatedState.studyLocation;
+        }
+
+        return updatedState;
+      });
+    }
 
     setLifeStyleStep("OtherLifestyles");
   };
@@ -44,6 +62,29 @@ const Exam = (props: Props) => {
       setExamPreparation(lifeStylePostData.examPreparation);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      studyLocation: apiResponse.data.studyLocation,
+      examPreparation: apiResponse.data.examPreparation,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setStudyLocation(initialState.studyLocation);
+      setExamPreparation(initialState.examPreparation);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   return (
     <>

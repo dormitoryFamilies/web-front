@@ -131,6 +131,11 @@ export interface LifeStylePostType {
   insectTolerance?: InsectToleranceType;
 }
 
+export interface LifeStyleAxiosResponseType {
+  data: LifeStyleResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface LifeStyleResponseType {
   code: number;
   data: LifeStylePostType;

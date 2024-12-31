@@ -9,7 +9,7 @@ import SleepingSensitivityIcon from "@/assets/room-mate/SleepingSensitivityIcon"
 import SleepTimeIcon from "@/assets/room-mate/SleepTimeIcon";
 import SmokingIcon from "@/assets/room-mate/SmokingIcon";
 import WakeUpTimeIcon from "@/assets/room-mate/WakeUpTimeIcon";
-import useRoomMatePreferenceOrders from "@/lib/hooks/useRoomMatePreferenceOrders";
+import useRoomMateUserPreferenceOrders from "@/lib/hooks/useRoomMateUserPreferenceOrders";
 
 interface Props {
   memberId: string | string[] | number | undefined;
@@ -17,7 +17,7 @@ interface Props {
 
 const PreferredLifestyleReviewer = (props: Props) => {
   const { memberId } = props;
-  const { preferenceOrders } = useRoomMatePreferenceOrders(memberId);
+  const { preferenceOrders } = useRoomMateUserPreferenceOrders(memberId);
 
   const renderItem = (content: string) => {
     switch (content.split(":")[0]) {

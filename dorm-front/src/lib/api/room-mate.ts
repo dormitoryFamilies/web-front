@@ -19,6 +19,24 @@ export const postLifestyles = async (data: LifeStylePostType) => {
   }
 };
 
+export const patchLifestyles = async (data: {}) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PATCH",
+      data: data,
+      url: "/api/my/lifestyles",
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("lifestyle 설정 put 에러 발생:", error);
+  }
+};
+
 export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
   try {
     const response = await sendRequest({

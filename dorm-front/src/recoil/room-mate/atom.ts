@@ -20,6 +20,11 @@ export const lifeStylePostAtom = atom<LifeStylePostType>({
   },
 });
 
+export const lifeStyleEditAtom = atom({
+  key: "lifeStyleEditAtom",
+  default: {},
+});
+
 export const preferenceOrdersAtom = atom<PreferenceOrdersType>({
   key: "preferenceOrdersAtom",
   default: {

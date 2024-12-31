@@ -6,14 +6,20 @@ import Header from "@/components/common/Header";
 import { RoomMateLifeStyleStepType } from "@/types/room-mate/type";
 
 interface Props {
+  usage: "room-mate" | "mypage";
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 
 const Done = (props: Props) => {
-  const { setLifeStyleStep } = props;
+  const { usage, setLifeStyleStep } = props;
   const router = useRouter();
+
   const handleNextClick = () => {
-    router.push("/room-mate/lifestyle-priority");
+    if (usage === "room-mate") {
+      router.push("/room-mate/lifestyle-priority");
+    } else {
+      router.push("/mypage/room-mate/priority-edit");
+    }
   };
 
   return (

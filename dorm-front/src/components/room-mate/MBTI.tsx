@@ -4,11 +4,13 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import MBTIItem from "@/components/room-mate/MBTIItem";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
 import {
   ExtrovertOrIntrovertType,
   HeterosexualOrEmotionalType,
   IntuitiveOrThinkingType,
+  LifeStyleResponseType,
   PlannedOrSpontaneousType,
   RoomMateLifeStyleStepType,
 } from "@/types/room-mate/type";
@@ -23,24 +25,37 @@ interface Props {
 }
 const MBTI = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<string | ExtrovertOrIntrovertType>("");
-  const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<string | IntuitiveOrThinkingType>("");
-  const [heterosexualOrEmotional, setHeterosexualOrEmotional] = useState<string | HeterosexualOrEmotionalType>("");
-  const [plannedOrSpontaneous, setPlannedOrSpontaneous] = useState<string | PlannedOrSpontaneousType>("");
-  const [selectedMBTI, setSelectedMBTI] = useState<string>("");
+  const [extrovertOrIntrovert, setExtrovertOrIntrovert] = useState<string | ExtrovertOrIntrovertType | undefined>("");
+  const [intuitiveOrThinking, setIntuitiveOrThinking] = useState<string | IntuitiveOrThinkingType | undefined>("");
+  const [heterosexualOrEmotional, setHeterosexualOrEmotional] = useState<
+    string | HeterosexualOrEmotionalType | undefined
+  >("");
+  const [plannedOrSpontaneous, setPlannedOrSpontaneous] = useState<string | PlannedOrSpontaneousType | undefined>("");
+  const [selectedMBTI, setSelectedMBTI] = useState<string | undefined>("");
   const [updateMBTITrigger, setUpdateMBTITrigger] = useState(false);
 
   const updateMBTI = () => {
-    setSelectedMBTI(extrovertOrIntrovert + intuitiveOrThinking + heterosexualOrEmotional + plannedOrSpontaneous);
-    setUpdateMBTITrigger(true);
+    if (extrovertOrIntrovert && intuitiveOrThinking && heterosexualOrEmotional && plannedOrSpontaneous) {
+      setSelectedMBTI(extrovertOrIntrovert + intuitiveOrThinking + heterosexualOrEmotional + plannedOrSpontaneous);
+      setUpdateMBTITrigger(true);
+    }
   };
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      ...(selectedMBTI !== "" && { MBTI: selectedMBTI }),
-    }));
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.MBTI !== selectedMBTI) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, MBTI: selectedMBTI }));
+      }
+    } else {
+      setLifeStylePostData((prevState) => ({
+        ...prevState,
+        ...(selectedMBTI !== "" && { MBTI: selectedMBTI }),
+      }));
+    }
     setLifeStyleStep("CycleToReturnHome");
     setUpdateMBTITrigger(false);
   };
@@ -60,6 +75,30 @@ const MBTI = (props: Props) => {
       setPlannedOrSpontaneous(lifeStylePostData.MBTI.substring(3, 4));
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      MBTI: apiResponse.data.MBTI,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setExtrovertOrIntrovert(initialState.MBTI?.substring(0, 1));
+      setIntuitiveOrThinking(initialState.MBTI?.substring(1, 2));
+      setHeterosexualOrEmotional(initialState.MBTI?.substring(2, 3));
+      setPlannedOrSpontaneous(initialState.MBTI?.substring(3, 4));
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   const skipButton = () => {
     return (

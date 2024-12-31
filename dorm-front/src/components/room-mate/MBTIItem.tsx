@@ -11,8 +11,8 @@ import {
 
 interface Props {
   contents: MBTIContentType[];
-  selectedContent: MBTIContentType | string;
-  setSelectedContent: React.Dispatch<React.SetStateAction<MBTIContentType | string>>;
+  selectedContent: MBTIContentType | string | undefined;
+  setSelectedContent: React.Dispatch<React.SetStateAction<MBTIContentType | string | undefined>>;
 }
 
 const MBTIItem = (props: Props) => {
