@@ -41,7 +41,7 @@ const SettingLifeStyleType = (props: Props) => {
     onBack();
   };
 
-  const renderItem = (content: string) => {
+  const renderItem = (content: string | null) => {
     switch (content) {
       case "취침 시간":
         return sleepTimePriorityContents;
@@ -68,7 +68,7 @@ const SettingLifeStyleType = (props: Props) => {
     }
   };
 
-  const renderStyleGrid = (content: string) => {
+  const renderStyleGrid = (content: string | null) => {
     switch (content) {
       case "취침 시간":
         return "grid-cols-3";
@@ -95,7 +95,7 @@ const SettingLifeStyleType = (props: Props) => {
     }
   };
 
-  const updateLifeStyleType = (content: string) => {
+  const updateLifeStyleType = (content: string | null) => {
     switch (content) {
       case "취침 시간":
         return "SLEEP_TIME";
