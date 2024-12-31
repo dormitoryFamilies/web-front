@@ -37,6 +37,24 @@ export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
   }
 };
 
+export const putPreferenceOrders = async (data: PreferenceOrdersType) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PUT",
+      data: data,
+      url: `/api/my/preference-orders`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("lifestyle 우선순위 설정 put 에러 발생:", error);
+  }
+};
+
 export const postRoomMateMatching = async () => {
   try {
     const response = await sendRequest({

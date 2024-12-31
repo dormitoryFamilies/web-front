@@ -315,3 +315,15 @@ export interface MyRoomMateMatchingStatusResponseType {
   code: number;
   data: { matchedId: number };
 }
+
+////////////////////////////////////////////////////////////
+
+export interface LifeStylePreferenceOrdersAxiosResponseType {
+  data: LifeStylePreferenceOrdersResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface LifeStylePreferenceOrdersResponseType {
+  code: number;
+  data: PreferenceOrdersType;
+}

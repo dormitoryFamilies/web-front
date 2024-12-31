@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import LifeStylePriorityTypeSettingItem from "@/components/room-mate/LifeStylePriorityTypeSettingItem";
-import { postPreferenceOrders } from "@/lib/api/room-mate";
+import { postPreferenceOrders, putPreferenceOrders } from "@/lib/api/room-mate";
 import { preferenceOrderListAtom, preferenceOrdersAtom } from "@/recoil/room-mate/atom";
 import {
   cleaningFrequencyPriorityContents,
@@ -20,10 +20,11 @@ import {
 } from "@/utils/room-mate/priority";
 
 interface Props {
+  usage: "room-mate" | "mypage";
   setStep: React.Dispatch<React.SetStateAction<"SettingLifeStylePriority" | "SettingLifeStyleType" | "Done">>;
 }
 const SettingLifeStyleType = (props: Props) => {
-  const { setStep } = props;
+  const { usage, setStep } = props;
   const [preferenceOrderList, setPreferenceOrderList] = useRecoilState(preferenceOrderListAtom);
   const [preferenceOrders, setPreferenceOrders] = useRecoilState(preferenceOrdersAtom);
   const [firstPreference, setFirstPreference] = useState<string>("");
@@ -138,16 +139,29 @@ const SettingLifeStyleType = (props: Props) => {
       preferenceOrders.thirdPreference !== "" &&
       preferenceOrders.fourthPreference !== ""
     ) {
-      postPreferenceOrders(preferenceOrders).then(() => {
-        setPreferenceOrders((prevState) => ({
-          ...prevState,
-          firstPreference: "",
-          secondPreference: "",
-          thirdPreference: "",
-          fourthPreference: "",
-        }));
-        setStep("Done");
-      });
+      if (usage === "room-mate") {
+        postPreferenceOrders(preferenceOrders).then(() => {
+          setPreferenceOrders((prevState) => ({
+            ...prevState,
+            firstPreference: "",
+            secondPreference: "",
+            thirdPreference: "",
+            fourthPreference: "",
+          }));
+          setStep("Done");
+        });
+      } else {
+        putPreferenceOrders(preferenceOrders).then(() => {
+          setPreferenceOrders((prevState) => ({
+            ...prevState,
+            firstPreference: "",
+            secondPreference: "",
+            thirdPreference: "",
+            fourthPreference: "",
+          }));
+          setStep("Done");
+        });
+      }
     }
   }, [preferenceOrders]);
 

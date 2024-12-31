@@ -5,14 +5,19 @@ import React from "react";
 import Header from "@/components/common/Header";
 
 interface Props {
+  usage: "room-mate" | "mypage";
   setStep: React.Dispatch<React.SetStateAction<"SettingLifeStylePriority" | "SettingLifeStyleType" | "Done">>;
 }
 const SettingLifeStylePriorityDone = (props: Props) => {
-  const { setStep } = props;
+  const { setStep, usage } = props;
   const router = useRouter();
 
   const handleNextClick = () => {
-    router.push("/room-mate/recommended-roommate");
+    if (usage === "room-mate") {
+      router.push("/room-mate/recommended-roommate");
+    } else {
+      router.push("/mypage");
+    }
   };
 
   return (

@@ -30,7 +30,7 @@ export const preferenceOrdersAtom = atom<PreferenceOrdersType>({
   },
 });
 
-export const preferenceOrderListAtom = atom<string[]>({
+export const preferenceOrderListAtom = atom<(string | null)[]>({
   key: "preferenceOrderListAtom",
   default: [],
 });
