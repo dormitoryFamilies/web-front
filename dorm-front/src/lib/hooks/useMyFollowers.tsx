@@ -1,11 +1,11 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { FollowingResponseType } from "@/types/mypage/type";
+import { FollowingAxiosResponseType, FollowingResponseType } from "@/types/mypage/type";
 
 const useMyFollowers = (pageNumber: number) => {
-  const { data, error, mutate } = useSWR<FollowingResponseType>(
-    `/members/followers?page=${pageNumber}&size=10`,
+  const { data, error, mutate } = useSWR<FollowingAxiosResponseType>(
+    `/api/members/followers?page=${pageNumber}&size=4`,
     swrGetFetcher,
   );
 

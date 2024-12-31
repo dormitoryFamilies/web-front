@@ -7,13 +7,13 @@ import { useState } from "react";
 
 import Header from "@/components/common/Header";
 import Paging from "@/components/common/Paging";
-import FollowProfile from "@/components/mypage/FollowProfile";
 import MyPageFollowMenu from "@/components/mypage/MyPageFollowMenu";
+import RoommateMatchListProfile from "@/components/room-mate/RoommateMatchListProfile";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchFollowers, getSearchFollowings } from "@/lib/api/mypage";
 import useMyFollowers from "@/lib/hooks/useMyFollowers";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
-import { FollowSearchResponseType, FollowType, MemberProfile } from "@/types/mypage/type";
+import { FollowingAxiosResponseType, FollowType, MemberProfile } from "@/types/mypage/type";
 
 const MyPageFollow = () => {
   const [followType, setFollowType] = useState<FollowType>("팔로워");
@@ -23,8 +23,8 @@ const MyPageFollow = () => {
   const [followingPageNumber, setFollowingPageNumber] = useState<number>(0);
   const debouncedValue = useDebounce<string>(searchValue, 100);
   const router = useRouter();
-  const { followings } = useMyFollowings(0);
-  const { followers } = useMyFollowers(0);
+  const { followings } = useMyFollowings(followingPageNumber);
+  const { followers } = useMyFollowers(followerPageNumber);
 
   //쿼리파라미터 검색결과
   useEffect(() => {
@@ -42,16 +42,16 @@ const MyPageFollow = () => {
 
   // 팔로워 검색일 경우, 팔로잉 검색일 경우 따로 검색되도록
   useEffect(() => {
-    if (followType === "팔로워") {
-      getSearchFollowers(searchValue).then((r: FollowSearchResponseType) => {
-        if (r && r.code === 200) {
-          setSearchResults(r.data.MemberProfiles);
+    if (searchValue && followType === "팔로워") {
+      getSearchFollowers(searchValue).then((r) => {
+        if (r && r.data.code === 200) {
+          setSearchResults(r.data.data.memberProfiles);
         }
       });
-    } else {
-      getSearchFollowings(searchValue).then((r: FollowSearchResponseType) => {
-        if (r && r.code === 200) {
-          setSearchResults(r?.data.MemberProfiles);
+    } else if (searchValue && followType === "팔로잉") {
+      getSearchFollowings(searchValue).then((r: FollowingAxiosResponseType) => {
+        if (r && r.data.code === 200) {
+          setSearchResults(r?.data.data.memberProfiles);
         }
       });
     }
@@ -63,42 +63,6 @@ const MyPageFollow = () => {
       setSearchResults(undefined);
     }
   }, [searchValue]);
-
-  // 팔로우 페이징 이전 버튼 클릭시
-  const handlerBeforeFollowerPageNumber = () => {
-    if (followerPageNumber === 0) {
-      setFollowerPageNumber(0);
-    } else {
-      setFollowerPageNumber(followerPageNumber - 1);
-    }
-  };
-
-  // 팔로우 페이징 다음 버튼 클릭시
-  const handlerNextFollowerPageNumber = () => {
-    if (followers && followerPageNumber >= followers?.totalPageNumber - 1) {
-      setFollowerPageNumber(followers?.totalPageNumber - 1);
-    } else {
-      setFollowerPageNumber(followerPageNumber + 1);
-    }
-  };
-
-  // 팔로잉 페이징 이전 버튼 클릭시
-  const handlerBeforeFollowingPageNumber = () => {
-    if (followingPageNumber === 0) {
-      setFollowingPageNumber(0);
-    } else {
-      setFollowingPageNumber(followingPageNumber - 1);
-    }
-  };
-
-  // 팔로잉 페이징 다음 버튼 클릭시
-  const handlerNextFollowingPageNumber = () => {
-    if (followings && followingPageNumber >= followings?.totalPageNumber - 1) {
-      setFollowingPageNumber(followings?.totalPageNumber - 1);
-    } else {
-      setFollowingPageNumber(followingPageNumber + 1);
-    }
-  };
 
   //뒤로가기
   const onBack = () => {
@@ -150,33 +114,17 @@ const MyPageFollow = () => {
         <div className={"flex flex-col gap-y-3"}>
           {searchResults
             ? searchResults.map((memberProfile) => {
-                return (
-                  <FollowProfile
-                    key={memberProfile.memberId}
-                    profileUrl={memberProfile.profileUrl}
-                    nickname={memberProfile.nickname}
-                    memberId={memberProfile.memberId}></FollowProfile>
-                );
+                return <RoommateMatchListProfile key={memberProfile.memberId} memberId={memberProfile.memberId} />;
               })
-            : followType === "팔로워"
-              ? followers?.memberProfiles.map((memberProfile, index) => {
-                  return (
-                    <FollowProfile
-                      key={memberProfile.memberId}
-                      profileUrl={memberProfile.profileUrl}
-                      nickname={memberProfile.nickname}
-                      memberId={memberProfile.memberId}></FollowProfile>
-                  );
+            : !searchResults && followType === "팔로워"
+              ? followers?.data.memberProfiles.map((memberProfile, index) => {
+                  return <RoommateMatchListProfile key={memberProfile.memberId} memberId={memberProfile.memberId} />;
                 })
-              : followings?.memberProfiles.map((memberProfile, index) => {
-                  return (
-                    <FollowProfile
-                      key={memberProfile.memberId}
-                      profileUrl={memberProfile.profileUrl}
-                      nickname={memberProfile.nickname}
-                      memberId={memberProfile.memberId}></FollowProfile>
-                  );
-                })}
+              : !searchResults && followType === "팔로잉"
+                ? followings?.data.memberProfiles.map((memberProfile, index) => {
+                    return <RoommateMatchListProfile key={memberProfile.memberId} memberId={memberProfile.memberId} />;
+                  })
+                : null}
         </div>
       </div>
 
@@ -185,18 +133,14 @@ const MyPageFollow = () => {
         followType == "팔로워" ? (
           <Paging
             setPageNumber={setFollowerPageNumber}
-            totalPageNumber={followers?.totalPageNumber}
-            handlerBeforeButton={handlerBeforeFollowerPageNumber}
+            totalPageNumber={followers?.data.totalPageNumber}
             pageNumber={followerPageNumber}
-            handlerNextButton={handlerNextFollowerPageNumber}
           />
         ) : (
           <Paging
             setPageNumber={setFollowingPageNumber}
-            handlerNextButton={handlerNextFollowingPageNumber}
             pageNumber={followingPageNumber}
-            totalPageNumber={followings?.totalPageNumber}
-            handlerBeforeButton={handlerBeforeFollowingPageNumber}
+            totalPageNumber={followings?.data.totalPageNumber}
           />
         )
       ) : null}
