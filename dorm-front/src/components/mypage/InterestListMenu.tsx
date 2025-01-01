@@ -2,8 +2,8 @@ import { InterestListType } from "@/types/mypage/type";
 interface Props {
   interestListType: InterestListType;
   setInterestListType: React.Dispatch<React.SetStateAction<InterestListType>>;
-  numberOfDoomz: number;
-  numberOfBoards: number;
+  numberOfDoomz: number | null;
+  numberOfBoards: number | null;
 }
 
 const InterestListMenu = (props: Props) => {

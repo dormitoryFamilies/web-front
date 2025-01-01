@@ -61,3 +61,27 @@ export interface EditMyProfileType {
 export type InterestListType = "둠즈" | "게시판";
 
 export type DormitoryType = "기숙사" | "본관" | "양성재" | "양진재";
+
+///////////////////////////////////////////////////////
+
+export interface DoomzWishAxiosResponseType {
+  data: DoomzWishResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface DoomzWishResponseType {
+  code: number;
+  data: DoomzWishType;
+}
+
+export interface DoomzWishType {
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: DoomzWishMemberProfileType[];
+}
+
+export interface DoomzWishMemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+}
