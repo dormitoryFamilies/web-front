@@ -29,6 +29,11 @@ export interface MemberProfile {
 
 ////////////////////////////////////////////////////////
 
+export interface MyProfileAxiosResponseType {
+  data: MyProfileResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface MyProfileResponseType {
   code: number;
   data: MyProfileType;

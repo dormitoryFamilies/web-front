@@ -9,14 +9,14 @@ import MyProfileDormitoryFilter from "@/components/mypage/MyProfileDormitoryFilt
 import { postArticleImage } from "@/lib/api/board";
 import { putProfileData } from "@/lib/api/mypage";
 import useMyProfile from "@/lib/hooks/useMyProfile";
-import { EditMyProfileType, MyProfileType } from "@/types/mypage/type";
+import { EditMyProfileType, MyProfileResponseType } from "@/types/mypage/type";
 import { MEMBER_DORM_LIST } from "@/utils/dorm";
 
 const ProfileSetting = () => {
   const { myProfileData } = useMyProfile();
   const router = useRouter();
   const imgRef = useRef<HTMLInputElement>(null);
-  const [uploadImage, setUploadImage] = useState();
+  const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>();
   const [isDormFilterClick, setIsDormFilterClick] = useState(false);
   const [editProfileData, setEditProfileData] = useState<EditMyProfileType>({
     memberDormitoryType: "",
@@ -29,11 +29,11 @@ const ProfileSetting = () => {
    * Recoil 상태를 초기화하는 함수
    * @param apiResponse goalSettingData.result
    */
-  const initializeEditProfileState = (apiResponse: MyProfileType) => {
+  const initializeEditProfileState = (apiResponse: MyProfileResponseType) => {
     return {
-      memberDormitoryType: apiResponse.memberDormitoryType,
-      nickname: apiResponse.nickname,
-      profileUrl: apiResponse.profileUrl,
+      memberDormitoryType: apiResponse.data.memberDormitoryType,
+      nickname: apiResponse.data.nickname,
+      profileUrl: apiResponse.data.profileUrl,
     };
   };
 
@@ -61,7 +61,9 @@ const ProfileSetting = () => {
   const handleImagePreview = async () => {
     const files = imgRef.current?.files;
     let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
+    if (files) {
+      reader.readAsDataURL(files[0]);
+    }
     reader.onloadend = () => {
       setUploadImage(reader.result);
     };
@@ -72,6 +74,11 @@ const ProfileSetting = () => {
    */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // 폼 제출 시 새로고침 방지
+    if (!imgRef.current || !imgRef.current.files || imgRef.current.files.length === 0) {
+      console.error("이미지가 선택되지 않았습니다.");
+      return; // 파일이 없으면 함수 종료
+    }
+
     const formData = new FormData();
     formData.append("file", imgRef.current.files[0]); // 파일을 formData에 추가
 
@@ -82,7 +89,7 @@ const ProfileSetting = () => {
           if (response.data) {
             setEditProfileData((prevData) => ({
               ...prevData,
-              profileUrl: response.data.imageUrl, // 업로드된 이미지 URL을 postData에 추가
+              profileUrl: response.data.data.imageUrl, // 업로드된 이미지 URL을 postData에 추가
             }));
           }
         });
@@ -131,12 +138,12 @@ const ProfileSetting = () => {
       {/* 프로필 업로드 */}
       <div className={"flex justify-center items-center w-full"}>
         <div className={"mt-[46px] relative w-[80px] h-[80px]"}>
-          {uploadImage ? (
+          {uploadImage && typeof uploadImage === "string" ? (
             <Image alt={uploadImage} src={uploadImage} fill className={"object-cover rounded-full"} />
           ) : (
             <Image
-              alt={myProfileData ? myProfileData?.profileUrl : "/unnimm.jpg"}
-              src={myProfileData ? myProfileData?.profileUrl : "/unnimm.jpg"}
+              alt={myProfileData ? myProfileData?.data.profileUrl : "/unnimm.jpg"}
+              src={myProfileData ? myProfileData?.data.profileUrl : "/unnimm.jpg"}
               fill
               className={"object-cover rounded-full"}
             />
@@ -171,7 +178,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.name}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.name}</div>
         </div>
 
         {/* 성별 */}
@@ -182,7 +189,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.genderType}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.genderType}</div>
         </div>
 
         {/* 닉네임 */}
@@ -196,7 +203,7 @@ const ProfileSetting = () => {
           <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4"}>
             <input
               className={"focus:outline-0 w-full"}
-              defaultValue={myProfileData?.nickname}
+              defaultValue={myProfileData?.data.nickname}
               onChange={(e) => {
                 setEditProfileData((prevState) => ({ ...prevState, nickname: e.target.value }));
               }}></input>
@@ -211,7 +218,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.birthDate}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.birthDate}</div>
         </div>
 
         {/*기숙사*/}
@@ -250,7 +257,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.collegeType}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.collegeType}</div>
         </div>
 
         {/* 학과 */}
@@ -261,7 +268,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.departmentType}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.departmentType}</div>
         </div>
 
         {/* 학번 */}
@@ -272,7 +279,7 @@ const ProfileSetting = () => {
             <span className="text-primary"> *</span>
           </div>
           {/* 내용 */}
-          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.studentNumber}</div>
+          <div className={"rounded-[12px] bg-gray0 py-3 px-4 text-gray4"}>{myProfileData?.data.studentNumber}</div>
         </div>
       </div>
       <button className={"ml-5 mt-10 absolute text-h5 text-white bg-primary w-[90%] rounded-full py-4"} type={"submit"}>
