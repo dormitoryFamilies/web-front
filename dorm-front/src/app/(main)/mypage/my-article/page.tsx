@@ -51,6 +51,7 @@ const MyArticle = () => {
       getMoreAllArticleItem();
     }
   }, [inView]);
+
   const onBack = () => {
     router.push("/mypage");
   };
@@ -89,7 +90,7 @@ const MyArticle = () => {
 
   return (
     <>
-      <Header headerType={"dynamic"} title={"내가 작성한 댓글"} onBack={onBack} />
+      <Header headerType={"dynamic"} title={"내가 작성한 글"} onBack={onBack} />
       <div className={"h-[60px]"} />
       <FilterMenu boardType={boardType} setBoardType={setBoardType}></FilterMenu>
       <div className={"px-5"}>
@@ -140,31 +141,30 @@ const MyArticle = () => {
         </div>
         {/*내용*/}
         <div className={"flex flex-col gap-y-3"}>
-          {myArticles
-            ? myArticles.map((myArticle) => {
-                return myArticle.data.articles.map((article: ArticleType, index: number) => {
-                  return (
-                    <div key={index} ref={ref}>
-                      <Post
-                        bottomElement={bottomElement(article.articleId)}
-                        articleId={article.articleId}
-                        title={article.title}
-                        content={article.content}
-                        createdDate={article.createdAt}
-                        boardType={article.boardType}
-                        nickName={article.nickName}
-                        commentCount={article.commentCount}
-                        status={article.status}
-                        isWished={article.isWished}
-                        wishCount={article.wishCount}
-                        viewCount={article.viewCount}
-                        profileUrl={article.profileUrl}
-                        thumbnailUrl={"/unnimm.jpg"}></Post>
-                    </div>
-                  );
-                });
-              })
-            : null}
+          {myArticles &&
+            myArticles.map((myArticle) => {
+              return myArticle?.data.data.articles.map((article: ArticleType, index: number) => {
+                return (
+                  <div key={index} ref={ref}>
+                    <Post
+                      bottomElement={bottomElement(article.articleId)}
+                      articleId={article.articleId}
+                      title={article.title}
+                      content={article.content}
+                      createdDate={article.createdAt}
+                      boardType={article.boardType}
+                      nickname={article.nickname}
+                      commentCount={article.commentCount}
+                      status={article.status}
+                      isWished={article.isWished}
+                      wishCount={article.wishCount}
+                      viewCount={article.viewCount}
+                      profileUrl={article.profileUrl}
+                      thumbnailUrl={article.thumbnailUrl}></Post>
+                  </div>
+                );
+              });
+            })}
         </div>
       </div>
     </>

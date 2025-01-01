@@ -26,7 +26,12 @@ const MyComment = () => {
   const [isSortingFilterClick, setIsSortingFilterClick] = useState<boolean>(false);
   const [isStatusFilterClick, setIsStatusFilterClick] = useState<boolean>(false);
   const [isDormitoryFilterClick, setIsDormitoryFilterClick] = useState<boolean>(false);
-  const { myCommentPosts, setMyCommentPostSize } = useMyComments(selectedDormitoryType, boardType, selectedSortType, selectedStatusType);
+  const { myCommentPosts, setMyCommentPostSize } = useMyComments(
+    selectedDormitoryType,
+    boardType,
+    selectedSortType,
+    selectedStatusType,
+  );
 
   useEffect(() => {
     console.log("myCommentPosts", myCommentPosts);
@@ -110,30 +115,29 @@ const MyComment = () => {
         </div>
         {/*내용*/}
         <div className={"flex flex-col gap-y-3"}>
-          {myCommentPosts
-            ? myCommentPosts.map((myCommentPost) => {
-                return myCommentPost.data.articles.map((article: ArticleType, index: number) => {
-                  return (
-                    <div key={index} ref={ref}>
-                      <Post
-                        articleId={article.articleId}
-                        title={article.title}
-                        content={article.content}
-                        createdDate={article.createdAt}
-                        boardType={article.boardType}
-                        nickName={article.nickName}
-                        commentCount={article.commentCount}
-                        status={article.status}
-                        isWished={article.isWished}
-                        wishCount={article.wishCount}
-                        viewCount={article.viewCount}
-                        profileUrl={article.profileUrl}
-                        thumbnailUrl={"/unnimm.jpg"}></Post>
-                    </div>
-                  );
-                });
-              })
-            : null}
+          {myCommentPosts &&
+            myCommentPosts.map((myCommentPost) => {
+              return myCommentPost?.data.data.articles.map((article: ArticleType, index: number) => {
+                return (
+                  <div key={index} ref={ref}>
+                    <Post
+                      articleId={article.articleId}
+                      title={article.title}
+                      content={article.content}
+                      createdDate={article.createdAt}
+                      boardType={article.boardType}
+                      nickname={article.nickname}
+                      commentCount={article.commentCount}
+                      status={article.status}
+                      isWished={article.isWished}
+                      wishCount={article.wishCount}
+                      viewCount={article.viewCount}
+                      profileUrl={article.profileUrl}
+                      thumbnailUrl={article.thumbnailUrl}></Post>
+                  </div>
+                );
+              });
+            })}
         </div>
       </div>
     </>
