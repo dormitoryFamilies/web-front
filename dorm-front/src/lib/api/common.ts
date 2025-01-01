@@ -31,3 +31,19 @@ export const deleteFollowing = async (memberId: number | undefined) => {
     console.error("팔로우 delete 에러 발생:", error);
   }
 };
+
+export const logout = async () => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        RefreshToken: "Bearer " + localStorage.getItem("refreshToken"),
+      },
+      method: "POST",
+      url: `/api/logout`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("로그아웃시 에러 발생:", error);
+  }
+};

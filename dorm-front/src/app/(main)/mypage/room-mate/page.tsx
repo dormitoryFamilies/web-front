@@ -16,7 +16,7 @@ const MypageRoommate = () => {
         <div className={"border border-gray1 rounded-[24px]"}>
           <div
             onClick={() => {
-              router.push("/room-mate/lifestyle-edit");
+              router.push("/mypage/room-mate/lifestyle-edit");
             }}
             className={"py-4 mx-5 flex justify-between border-b border-gray1"}>
             긱사생활 설정
@@ -24,7 +24,7 @@ const MypageRoommate = () => {
           </div>
           <div
             onClick={() => {
-              router.push("/room-mate/priority-edit");
+              router.push("/mypage/room-mate/priority-edit");
             }}
             className={"py-4 mx-5 flex justify-between"}>
             선호 룸메 우선순위 설정
