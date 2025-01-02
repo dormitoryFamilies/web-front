@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 import useAllArticles from "@/lib/hooks/useAllArticles";
+import { selectedDormitory } from "@/recoil/atom";
 import { ArticleType } from "@/types/board/type";
 
 const HomePost = () => {
-  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles("popularity", "전체"); //boardType이 전체일 때
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
+  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles(selectedDorm, "popularity", "전체"); //boardType이 전체일 때
 
   const formatDate = (originalString: string) => {
     var dateObject = new Date(originalString);

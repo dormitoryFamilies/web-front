@@ -16,8 +16,11 @@ import { postArticle, postArticleImage } from "@/lib/api/board";
 import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { ARTICLE_DORM_LIST } from "@/utils/dorm";
+import { selectedDormitory } from "@/recoil/atom";
 
 const Write = () => {
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
+
   const router = useRouter();
   const [postData, setPostData] = useRecoilState(postDataState);
   const [imgUrlList, setImgUrlList] = useRecoilState<string[]>(imgUrlListAtom); //이미지 URL string
@@ -25,6 +28,14 @@ const Write = () => {
   // 입력 필드 목록을 관리하는 상태
   const [tags, setTags] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false); // 제출 중 상태를 관리
+
+  // 컴포넌트가 처음 렌더링될 때 dormitoryType 업데이트
+  useEffect(() => {
+    setPostData((prev) => ({
+      ...prev,
+      dormitoryType: selectedDorm,
+    }));
+  }, []);
 
   /**
    * Tags 새 입력 필드를 추가하는 함수

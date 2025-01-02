@@ -7,6 +7,7 @@ import HomeMenuFilter from "@/components/home/HomeMenuFilter";
 import { MenuByDayType } from "@/types/home/type";
 
 interface Props {
+  headerTitle: string;
   setIsOpenHomeMenuDetail: Dispatch<SetStateAction<boolean>>;
   homeMenuFilterState: "breakfast" | "lunch" | "dinner";
   setHomeMenuFilterState: Dispatch<SetStateAction<"breakfast" | "lunch" | "dinner">>;
@@ -21,6 +22,7 @@ interface Props {
 
 const HomeMenuDetail = (props: Props) => {
   const {
+    headerTitle,
     setIsOpenHomeMenuDetail,
     homeMenuFilterState,
     setHomeMenuFilterState,
@@ -42,7 +44,7 @@ const HomeMenuDetail = (props: Props) => {
 
   return (
     <>
-      <Header headerType={"dynamic"} title={"양성재 메뉴"} onBack={onBack} />
+      <Header headerType={"dynamic"} title={`${headerTitle} 메뉴`} onBack={onBack} />
       <div className={"h-[60px]"} />
       <div className={"mx-5 flex mt-[24px] items-center justify-between"}>
         <div className={"text-h3 font-semibold"}>메뉴 전체보기</div>

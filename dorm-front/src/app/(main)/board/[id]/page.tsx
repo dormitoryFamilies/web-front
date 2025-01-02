@@ -28,10 +28,12 @@ import Header from "@/components/common/Header";
 import ProfileModal from "@/components/common/ProfileModal";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
 import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
+import { selectedDormitory } from "@/recoil/atom";
 import { selectedCommentIdAtom } from "@/recoil/board/atom";
 import { ArticleDetailCommentType } from "@/types/board/type";
 
 const BoardDetail = () => {
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
   const params = useParams();
   const router = useRouter();
   const { articleDetail, articleMutate } = useGetArticleDetail(params.id);
@@ -75,7 +77,7 @@ const BoardDetail = () => {
   return (
     <div>
       {/* 프로필 클릭 */}
-      {isProfileModalOpen ? <ProfileModal></ProfileModal> : null}
+      {isProfileModalOpen ? <ProfileModal memberId={articleDetail?.data.memberId} /> : null}
 
       {/* 게시글 찜 목록 */}
       {isArticleFavoritesListClicked ? (
@@ -137,7 +139,7 @@ const BoardDetail = () => {
       <Header
         headerType={"dynamic"}
         onBack={onBack}
-        title={"긱사생활"}
+        title={`${selectedDorm} 긱사생활`}
         rightElement={
           articleDetail?.data.isWriter ? (
             <MoreIcon
@@ -171,7 +173,7 @@ const BoardDetail = () => {
           createdDate={articleDetail?.data.createdAt}
           profileUrl={articleDetail?.data.profileUrl}
           nickname={articleDetail?.data.nickname}
-          dormitory={"양진재"}
+          dormitory={selectedDorm}
         />
 
         {/*게시글 내용*/}

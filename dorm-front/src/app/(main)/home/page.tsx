@@ -3,6 +3,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
@@ -11,10 +12,12 @@ import HomeMenu from "@/components/home/HomeMenu";
 import HomeMenuDetail from "@/components/home/HomeMenuDetail";
 import HomeMenuFilter from "@/components/home/HomeMenuFilter";
 import HomePost from "@/components/home/HomePost";
+import { selectedDormitory } from "@/recoil/atom";
 import { MenuByDayType } from "@/types/home/type";
 
 const Home = () => {
   const router = useRouter();
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
   const [eveningMenuByDay, setEveningMenuByDay] = useState<MenuByDayType | undefined>();
   const [morningMenuByDay, setMorningMenuByDay] = useState<MenuByDayType | undefined>();
   const [lunchMenuByDay, setLunchMenuByDay] = useState<MenuByDayType | undefined>();
@@ -32,7 +35,7 @@ const Home = () => {
   const dayOfWeek = today.getDay(); // 요일: 0 (일요일) ~ 6 (토요일)
 
   useEffect(() => {
-    axios.get(`/api/scrape?type=${2}`).then(
+    axios.get(`/api/scrape?type=${selectedDorm === "본관" ? 1 : selectedDorm === "양성재" ? 2 : 3}`).then(
       (
         res: AxiosResponse<
           {
@@ -169,7 +172,7 @@ const Home = () => {
         setDay(res?.data.data.day[0]);
       },
     );
-  }, []);
+  }, [selectedDorm]);
 
   useEffect(() => {
     console.log("eveningMenuByDay", eveningMenuByDay);
@@ -180,6 +183,7 @@ const Home = () => {
     <>
       {isOpenHomeMenuDetail ? (
         <HomeMenuDetail
+          headerTitle={selectedDorm}
           setIsOpenHomeMenuDetail={setIsOpenHomeMenuDetail}
           homeMenuFilterState={homeMenuFilterState}
           setHomeMenuFilterState={setHomeMenuFilterState}

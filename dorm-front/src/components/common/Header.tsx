@@ -32,7 +32,12 @@ const Header = (props: Props) => {
       case "static":
         return (
           <>
-            <Logo className="absolute left-5" />
+            <Logo
+              onClick={() => {
+                router.push("/home");
+              }}
+              className="absolute left-5"
+            />
             <div
               className="absolute left-50 right-50 flex items-center gap-x-1"
               onClick={() => {
@@ -43,7 +48,11 @@ const Header = (props: Props) => {
             </div>
             <div className={"flex absolute right-5"}>
               {rightElement ? rightElement : <div className={"w-[40px] h-[40px]"} />}
-              <AlarmIcon className="" />
+              <AlarmIcon
+                onClick={() => {
+                  router.push("/alarm");
+                }}
+              />
             </div>
           </>
         );

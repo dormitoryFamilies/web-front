@@ -11,6 +11,9 @@ const DropDownDormModal = () => {
 
   return (
     <div
+      onClick={() => {
+        setIsDropDownClick(false);
+      }}
       className="
             justify-center
             items-center
@@ -40,7 +43,7 @@ const DropDownDormModal = () => {
                 pt-3
                 ">
         <DragIcon />
-        <div className="text-gray4 text-center py-3">기숙사 선택</div>
+        <div className="text-gray4 text-center py-3 text-h5">기숙사 선택</div>
         {ARTICLE_DORM_LIST.map((dormitory, item) => {
           return (
             <div
@@ -51,7 +54,7 @@ const DropDownDormModal = () => {
                                 text-gray5
                                 font-bold
                                 text-center
-                                py-2
+                                py-[14.5px]
                                 border
                                 border-gray0
                                 hover:bg-gray0"
