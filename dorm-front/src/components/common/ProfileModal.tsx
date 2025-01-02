@@ -12,7 +12,7 @@ import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ErrorResponseData } from "@/types/chat/page";
 
 interface Props {
-  memberId: number | undefined;
+  memberId: string | string[] | number | undefined;
 }
 
 const ProfileModal = (props: Props) => {

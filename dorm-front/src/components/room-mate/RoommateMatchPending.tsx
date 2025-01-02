@@ -34,14 +34,6 @@ const RoommateMatchPending = (props: Props) => {
     <div>
       <Header headerType={"dynamic"} title={"추천 룸메"} onBack={onBack} />
       <div className={"h-[60px]"} />
-      <button
-        onClick={() => {
-          postRoomMateMatching().then((r) => {
-            console.log(r?.data);
-          });
-        }}>
-        추천하기
-      </button>
       <div className={"px-5 mt-6"}>
         {/* 안내문구 */}
         <div>

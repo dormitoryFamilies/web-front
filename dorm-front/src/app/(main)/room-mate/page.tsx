@@ -9,6 +9,7 @@ import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
 import ConfirmRoommateMatchCancel from "@/components/room-mate/ConfirmRoommateMatchCancel";
 import MyRoomMateProfile from "@/components/room-mate/MyRoomMateProfile";
+import { postRoomMateMatching } from "@/lib/api/room-mate";
 import useMyRoomMateMatchingStatus from "@/lib/hooks/useMyRoomMateMatchingStatus";
 import useRoomMateHomeInfo from "@/lib/hooks/useRoomMateHomeInfo";
 
@@ -38,6 +39,10 @@ const RoommateMatching = () => {
                 <MoveWhiteIcon
                   className={"absolute right-5"}
                   onClick={() => {
+                    //룸메 추천 버튼
+                    postRoomMateMatching().then((r) => {
+                      console.log(r?.data);
+                    });
                     router.push("/room-mate/recommended-roommate");
                   }}
                 />
@@ -47,7 +52,7 @@ const RoommateMatching = () => {
                   height={160}
                   width={290}></Image>
                 <div className={"flex flex-col text-white text-h3 font-semibold"}>
-                  <div>{homeInfo?.data.nickname}님의 </div>
+                  <div>{homeInfo?.data.nickname}님의</div>
                   <div>추천룸메</div>
                 </div>
               </div>
