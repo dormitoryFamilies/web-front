@@ -58,3 +58,12 @@ export interface ResponseUnreadChattingTotalCountType {
     totalCount: number;
   };
 }
+
+export interface ErrorResponseData {
+  code?: number;
+  data?: {
+    errorMessage: string;
+    [key: string]: any; // 추가 필드 허용
+  };
+}
+

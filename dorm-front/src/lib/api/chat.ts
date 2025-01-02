@@ -3,7 +3,7 @@ import { client, sendRequest } from "@/lib/axios";
 /**
  * 룸메 매칭 신청
  */
-export const createChatRoom = async (roomId: number | undefined) => {
+export const createChatRoom = async (roomId: string | string[] | number | undefined) => {
   const response = await sendRequest({
     headers: {
       "Content-type": "application/json",
@@ -39,7 +39,7 @@ export const patchLeaveChatRoom = async (roomId: string | string[]) => {
 /**
  * 채팅방 재입장
  */
-export const patchRejoinChatRoom = async (memberId: number | undefined) => {
+export const patchRejoinChatRoom = async (memberId: string | string[] | number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {

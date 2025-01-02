@@ -243,6 +243,7 @@ const BoardDetail = () => {
             <CommunicationBox
               setIsArticleFavoritesList={setIsArticleFavoritesListClicked}
               isWriter={articleDetail?.data.isWriter}
+              memberId={articleDetail?.data.memberId}
               articleId={articleDetail?.data.articleId}
               articleMutate={articleMutate}
               wishCount={articleDetail?.data.wishCount}

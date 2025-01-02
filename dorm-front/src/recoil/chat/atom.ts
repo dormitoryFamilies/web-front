@@ -10,7 +10,7 @@ export const chatRoomUUIDAtom = atom<string>({
   default: "",
 });
 
-export const memberIdAtom = atom<number | undefined>({
+export const memberIdAtom = atom<string | string[] | number | undefined>({
   key: "memberIdAtom",
   default: 0,
 });

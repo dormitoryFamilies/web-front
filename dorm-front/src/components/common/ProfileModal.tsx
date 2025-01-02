@@ -9,14 +9,8 @@ import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { postFollow } from "@/lib/api/common";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
+import { ErrorResponseData } from "@/types/chat/page";
 
-interface ErrorResponseData {
-  code?: number;
-  data?: {
-    errorMessage: string;
-    [key: string]: any; // 추가 필드 허용
-  };
-}
 interface Props {
   memberId: number | undefined;
 }
