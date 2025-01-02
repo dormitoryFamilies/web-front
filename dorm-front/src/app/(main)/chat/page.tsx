@@ -158,6 +158,7 @@ const Chat = () => {
               });
             })}
         </section>
+        <div className={"h-[90px]"} />
         <NavBar />
       </div>
     </>
