@@ -66,4 +66,3 @@ export interface ErrorResponseData {
     [key: string]: any; // 추가 필드 허용
   };
 }
-

@@ -1,5 +1,4 @@
 import { AxiosHeaders } from "axios";
-import { number, string } from "prop-types";
 
 export type CollegeType =
   | "단과대학교"

@@ -50,7 +50,7 @@ export interface MyMemberIdResponseType {
   data: {
     memberId: number;
   };
-};
+}
 
 /**
  * profile
