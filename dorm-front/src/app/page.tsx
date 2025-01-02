@@ -71,13 +71,7 @@ const LogoIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 const KaKaoIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={25}
-    height={26}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={25} height={26} fill="none" {...props}>
     <g clipPath="url(#a)">
       <path
         fill="#F9E000"
@@ -100,8 +94,7 @@ const KaKaoIcon = (props: SVGProps<SVGSVGElement>) => (
         maskUnits="userSpaceOnUse"
         style={{
           maskType: "luminance",
-        }}
-      >
+        }}>
         <path
           fill="#fff"
           d="M6.402 11.043h.888s.004 2.44 0 3.01c0 .415.924.42.924.007l.004-2.984s.298 0 .884.003c.552 0 .552-.869 0-.869-.622 0-2.703-.017-2.703-.017-.52 0-.52.852 0 .852"
@@ -123,8 +116,7 @@ const KaKaoIcon = (props: SVGProps<SVGSVGElement>) => (
         maskUnits="userSpaceOnUse"
         style={{
           maskType: "luminance",
-        }}
-      >
+        }}>
         <path
           fill="#fff"
           d="m10.654 11.201.495 1.548h-1.03zm-.554-.725c-.218.483-1.008 2.756-1.27 3.358-.19.437.63.792.819.355l.177-.621h1.625s-.055.026.16.595c.176.46 1.02.142.846-.32-.25-.66-1.114-3.03-1.27-3.367-.072-.156-.333-.266-.585-.266-.21 0-.413.077-.5.266"
@@ -146,8 +138,7 @@ const KaKaoIcon = (props: SVGProps<SVGSVGElement>) => (
         maskUnits="userSpaceOnUse"
         style={{
           maskType: "luminance",
-        }}
-      >
+        }}>
         <path
           fill="#fff"
           d="M12.766 10.618c0 .773.005 3.264.005 3.264s-.072.495.353.495 1.366-.005 1.783-.005c.418 0 .415-.888 0-.888s-1.18-.005-1.18-.005.004-2.304.002-2.863c0-.271-.24-.406-.48-.406s-.483.137-.483.408"
@@ -169,8 +160,7 @@ const KaKaoIcon = (props: SVGProps<SVGSVGElement>) => (
         maskUnits="userSpaceOnUse"
         style={{
           maskType: "luminance",
-        }}
-      >
+        }}>
         <path
           fill="#fff"
           d="M15.438 10.496c.01.338-.013 3.403-.01 3.63 0 .358.912.358.912 0v-1.204l.269-.214 1.17 1.599c.238.312.983-.252.747-.564l-1.243-1.64s.845-.911 1.176-1.243c.195-.192-.408-.799-.6-.604l-1.51 1.51s.012-.831 0-1.292c-.004-.175-.218-.26-.436-.26-.236 0-.476.097-.47.284"
