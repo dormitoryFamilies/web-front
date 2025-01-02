@@ -195,7 +195,7 @@ const PreferredLifestyleReviewer = (props: Props) => {
     }
   };
   return preferenceOrders ? (
-    <div>
+    <div className={"bg-gray0 rounded-[24px] p-4"}>
       <div className={"flex justify-between items-center"}>
         <div className={"font-semibold text-primary"}>선호 룸메 라이프 스타일</div>
         {usage === "mypage" ? (
@@ -208,7 +208,7 @@ const PreferredLifestyleReviewer = (props: Props) => {
           </div>
         ) : null}
       </div>
-      <div className={"mt-2 bg-gray0 rounded-[24px]"}>
+      <div className={"mt-2"}>
         <div className={"grid grid-cols-2 justify-between gap-y-3"}>
           {/* 첫번째 선호 라이프 스타일 */}
           {preferenceOrders ? renderItem(preferenceOrders.data.firstPreference) : null}
