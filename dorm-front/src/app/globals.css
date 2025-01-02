@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "NPSFont";
+    src: url("/fonts/NPSfont_bold.ttf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Tailwind 기본 설정 적용 */
+html {
+    font-family: "NPSFont", sans-serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

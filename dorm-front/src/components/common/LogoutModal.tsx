@@ -18,7 +18,7 @@ const LogoutModal = (props: Props) => {
       <section className={"flex flex-col gap-y-8 justify-center items-center bg-white py-8 px-7 rounded-[32px]"}>
         <div className={"flex flex-col gap-y-3"}>
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"flex justify-center items-center text-h2 font-semibold"}>로그아웃 하시겠어요?</div>
+            <div className={"flex justify-center items-center text-h2 font-nps"}>로그아웃 하시겠어요?</div>
           </div>
           <div>
             <div className={"flex justify-center items-center text-h5 text-gray5"}>재로그인하면 둠즈서비스를</div>

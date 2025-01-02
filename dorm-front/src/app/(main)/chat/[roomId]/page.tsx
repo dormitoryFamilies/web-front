@@ -196,7 +196,7 @@ const ChatRoom = () => {
           <div className={"flex flex-col items-center"}>
             <Image width={147} height={121} src={"/alarm/noMessages.png"} alt={"/alarm/noMessages.png"}></Image>
             <div className={"mt-[7px] flex flex-col text-gray3 items-center"}>
-              <span className={"font-medium text-h5"}>채팅 내용이 없습니다</span>
+              <span className={"fonts-medium text-h5"}>채팅 내용이 없습니다</span>
               <span className={"text-h6"}>지금 바로 채팅을 시작해보세요!</span>
             </div>
           </div>

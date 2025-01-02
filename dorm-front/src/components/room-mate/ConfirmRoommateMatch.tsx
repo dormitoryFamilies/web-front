@@ -40,7 +40,7 @@ const ConfirmRoommateMatch = (props: Props) => {
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
               {recommendRoomMateProfile?.data.nickname}
-              <span className={"text-h4 font-normal"}>님에게</span> <br />
+              <span className={"text-h4 fonts-normal"}>님에게</span> <br />
               룸메 매칭을 신청할까요?{" "}
             </div>
             <div className={""}>

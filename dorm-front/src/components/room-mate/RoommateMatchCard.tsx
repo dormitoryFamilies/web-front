@@ -54,7 +54,7 @@ const RoommateMatchCard = (props: Props) => {
           <div className={"flex"}>
             <span className={"text-h4 font-semibold"}>
               {recommendRoomMateProfile?.data.nickname}
-              <span className={"font-normal"}> 님</span>
+              <span className={"fonts-normal"}> 님</span>
             </span>
           </div>
 

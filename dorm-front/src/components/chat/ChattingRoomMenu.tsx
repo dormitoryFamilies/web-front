@@ -16,7 +16,7 @@ const ChattingRoomMenu = (props: Props) => {
               setClickedMenu(false);
               setIsClickedLeaveChatRoomAlertModal(true);
             }}
-            className={"flex justify-center items-center text-point py-4 border-t border-t-gray0 font-medium"}>
+            className={"flex justify-center items-center text-point py-4 border-t border-t-gray0 fonts-medium"}>
             채팅방 나가기
           </div>
         </div>

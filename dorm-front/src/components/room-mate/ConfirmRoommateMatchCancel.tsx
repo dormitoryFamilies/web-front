@@ -49,7 +49,7 @@ const ConfirmRoommateMatchCancel = (props: Props) => {
           {/* 안내문구 */}
           <div className={"mb-6"}>
             <div className={"text-h2 font-semibold"}>
-              {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 font-normal"}>님과의</span> <br />
+              {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 fonts-normal"}>님과의</span> <br />
               매칭 신청을 취소할껀가요?{" "}
             </div>
             <div className={""}>

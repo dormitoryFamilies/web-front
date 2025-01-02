@@ -33,7 +33,7 @@ const LeaveChatRoomAlertModal = (props: Props) => {
 
         {/* 안내 문구 */}
         <div className={"flex flex-col gap-y-3 mt-2 items-center"}>
-          <div className={"text-h2 font-bold"}>채팅방을 나가시겠어요?</div>
+          <div className={"text-h2 font-nps"}>채팅방을 나가시겠어요?</div>
           <div className={"text-h5 text-gray5"}>대화 내용이 모두 삭제됩니다.</div>
         </div>
 

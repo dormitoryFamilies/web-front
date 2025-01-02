@@ -5,11 +5,9 @@ import { ARTICLE_DORM_LIST } from "@/utils/dorm";
 
 const DropDownDormModal = () => {
   //선택된 기숙사
-  const [selectedDorm, setSelectedDorm] =
-    useRecoilState<string>(selectedDormitory);
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
-  const [isDropDownClick, setIsDropDownClick] =
-    useRecoilState<boolean>(DropDownClick);
+  const [isDropDownClick, setIsDropDownClick] = useRecoilState<boolean>(DropDownClick);
 
   return (
     <div
@@ -21,12 +19,11 @@ const DropDownDormModal = () => {
             overflow-y-auto
             fixed
             inset-0
-            z-10
+            z-20
             outline-none
             focus:outline-none
             bg-black/50
-            "
-    >
+            ">
       {/* TODO: drag 이벤트 */}
       <div
         className="
@@ -41,21 +38,14 @@ const DropDownDormModal = () => {
                 items-center
                 rounded-t-[32px]
                 pt-3
-                "
-      >
+                ">
         <DragIcon />
-        <div
-          className="
-                    text-gray4
-                    text-center
-                    py-3"
-        >
-          기숙사 선택
-        </div>
+        <div className="text-gray4 text-center py-3">기숙사 선택</div>
         {ARTICLE_DORM_LIST.map((dormitory, item) => {
           return (
             <div
-              className="
+              key={dormitory.id}
+              className=" font-nps
                                 w-full
                                 text-h3
                                 text-gray5
@@ -68,8 +58,7 @@ const DropDownDormModal = () => {
               onClick={() => {
                 setSelectedDorm(dormitory.name);
                 setIsDropDownClick(false);
-              }}
-            >
+              }}>
               {dormitory.name}
             </div>
           );

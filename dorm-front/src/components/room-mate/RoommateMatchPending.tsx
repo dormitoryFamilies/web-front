@@ -46,7 +46,7 @@ const RoommateMatchPending = (props: Props) => {
         {/* 안내문구 */}
         <div>
           <div className={"text-h2 font-semibold"}>
-            닉네임<span className={"text-h4 font-normal"}>님의</span> <br />
+            닉네임<span className={"text-h4 fonts-normal"}>님의</span> <br />
             추천 룸메 입니다!{" "}
           </div>
           <div className={"flex justify-between items-end"}>

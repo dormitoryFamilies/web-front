@@ -17,8 +17,8 @@ const IncompleteProfileModal = () => {
             <Image src={"/room-mate/룸메이트.png"} alt={"/room-mate/룸메이트.png"} fill className={"object-cover"} />
           </div>
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"flex justify-center items-center text-h2 font-semibold"}>아직 룸메 정보 설정을</div>
-            <div className={"flex justify-center items-center text-h2 font-semibold"}>입력하지 않았어요!</div>
+            <div className={"flex justify-center items-center text-h2 font-nps"}>아직 룸메 정보 설정을</div>
+            <div className={"flex justify-center items-center text-h2 font-nps"}>입력하지 않았어요!</div>
           </div>
           <div>
             <div className={"flex justify-center items-center text-h5 text-gray5"}>룸메 매칭을 설정하면 둠즈가</div>
