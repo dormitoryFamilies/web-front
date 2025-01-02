@@ -1,4 +1,4 @@
-import { client, sendRequest } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 import { LifeStylePostType, PreferenceOrdersType } from "@/types/room-mate/type";
 
 export const postLifestyles = async (data: LifeStylePostType) => {

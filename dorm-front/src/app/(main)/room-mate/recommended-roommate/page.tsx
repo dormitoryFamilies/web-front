@@ -6,7 +6,6 @@ import { useRecoilState } from "recoil";
 
 import ConfirmRoommateMatch from "@/components/room-mate/ConfirmRoommateMatch";
 import ConfirmRoommateMatchCancel from "@/components/room-mate/ConfirmRoommateMatchCancel";
-import IncompleteProfileModal from "@/components/room-mate/IncompleteProfileModal";
 import RoommateMatchCancel from "@/components/room-mate/RoommateMatchCancel";
 import RoommateMatchList from "@/components/room-mate/RoommateMatchList";
 import RoommateMatchPending from "@/components/room-mate/RoommateMatchPending";
@@ -24,7 +23,6 @@ const RecommendedRoommate = () => {
   return (
     <>
       {/* 룸메 매칭 신청 확인 컴포넌트*/}
-      {/*<IncompleteProfileModal />*/}
       {isRoommateMatchListOpen ? (
         <RoommateMatchList setIsRoommateMatchListOpen={setIsRoommateMatchListOpen} />
       ) : isConfirmRoommateMatchOpen ? (

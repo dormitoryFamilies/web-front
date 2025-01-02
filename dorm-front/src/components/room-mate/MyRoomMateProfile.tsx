@@ -3,12 +3,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SVGProps } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
-import { useRecoilState } from "recoil";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ErrorResponseData } from "@/types/chat/page";
 

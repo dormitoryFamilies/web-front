@@ -1,6 +1,4 @@
-import { preferenceOrdersAtom } from "@/recoil/room-mate/atom";
 import { AxiosHeaders } from "axios";
-import { ResponseArticleWishListType } from "@/types/board/type";
 
 export type RoomMateLifeStyleStepType =
   | "SleepPattern"

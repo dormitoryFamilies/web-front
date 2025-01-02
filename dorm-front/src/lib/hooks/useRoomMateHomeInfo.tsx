@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { RoomMateHomeInfoAxiosResponseType, RoomMateWishStatusAxiosResponseType } from "@/types/room-mate/type";
+import { RoomMateHomeInfoAxiosResponseType } from "@/types/room-mate/type";
 
 const useRoomMateHomeInfo = () => {
   const { data, error, mutate } = useSWR<RoomMateHomeInfoAxiosResponseType>(

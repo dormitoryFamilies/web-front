@@ -1,4 +1,3 @@
-//TODO: 안읽은 채팅 전체 갯수
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
