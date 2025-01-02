@@ -141,7 +141,7 @@ const OtherLifestyles = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[320px] h-[140px]"}>
               <Image src={"/room-mate/운동.png"} alt={"/room-mate/운동.png"} className={"absolute object-cover"} fill />
             </div>
           </div>

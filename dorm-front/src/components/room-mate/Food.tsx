@@ -125,13 +125,8 @@ const Food = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
-              <Image
-                src={"/room-mate/휴대폰_소리.png"}
-                alt={"/room-mate/휴대폰_소리.png"}
-                className={"absolute object-cover"}
-                fill
-              />
+            <div className={"relative w-[230px] h-[140px]"}>
+              <Image src={"/room-mate/야식.png"} alt={"/room-mate/야식.png"} className={"absolute object-cover"} fill />
             </div>
           </div>
           <div className={"text-h3 font-semibold"}>음식은 어떤가요?</div>

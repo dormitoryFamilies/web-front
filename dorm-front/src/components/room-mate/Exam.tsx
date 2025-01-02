@@ -107,7 +107,7 @@ const Exam = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[300px] h-[160px]"}>
               <Image src={"/room-mate/공부.png"} alt={"/room-mate/공부.png"} className={"absolute object-cover"} fill />
             </div>
           </div>

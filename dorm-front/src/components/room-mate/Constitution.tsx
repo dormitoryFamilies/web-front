@@ -89,7 +89,7 @@ const Constitution = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[260px] h-[140px]"}>
               <Image
                 src={"/room-mate/추위,_더위.png"}
                 alt={"/room-mate/추위,_더위.png"}

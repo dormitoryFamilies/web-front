@@ -118,7 +118,7 @@ const SmokingAndDrinking = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[240px] h-[167px]"}>
               <Image
                 src={"/room-mate/흡연,_음주.png"}
                 alt={"/room-mate/흡연,_음주.png"}
@@ -126,8 +126,8 @@ const SmokingAndDrinking = (props: Props) => {
                 fill
               />
             </div>
+            <div className={"text-h3 font-semibold"}>나의 흡연・음주는?</div>
           </div>
-          <div className={"text-h3 font-semibold"}>나의 흡연・음주는?</div>
         </div>
 
         <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>

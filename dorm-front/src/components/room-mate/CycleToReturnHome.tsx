@@ -107,7 +107,7 @@ const CycleToReturnHome = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[250px] h-[140px]"}>
               <Image
                 src={"/room-mate/본가주기.png"}
                 alt={"/room-mate/본가주기.png"}

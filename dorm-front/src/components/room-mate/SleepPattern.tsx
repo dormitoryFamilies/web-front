@@ -103,7 +103,7 @@ const SleepPattern = (props: Props) => {
   }, [myLifeStyles]);
 
   useEffect(() => {
-    console.log("lifeStyleEditData", lifeStyleEditData)
+    console.log("lifeStyleEditData", lifeStyleEditData);
   }, [lifeStyleEditData]);
 
   return (
@@ -126,7 +126,7 @@ const SleepPattern = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[180px] h-[120px]"}>
+            <div className={"relative w-[220px] h-[140px]"}>
               <Image
                 src={"/room-mate/잠버릇.png"}
                 alt={"/room-mate/잠버릇.png"}
