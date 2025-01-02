@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { FollowingAxiosResponseType, FollowingResponseType } from "@/types/mypage/type";
+import { FollowingAxiosResponseType } from "@/types/mypage/type";
 
 const useMyFollowers = (pageNumber: number) => {
   const { data, error } = useSWR<FollowingAxiosResponseType>(

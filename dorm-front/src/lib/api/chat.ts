@@ -1,4 +1,4 @@
-import { client, sendRequest } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 
 /**
  * 룸메 매칭 신청
