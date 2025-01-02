@@ -20,23 +20,25 @@ const ImageInput = (props: Props) => {
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = async () => {
-    const files = imgRef.current.files;
-    if (files) {
-      const copyImgFile = [...imgUrlList];
-      const copyFileList = [...fileList];
+    if (imgRef.current?.files) {
+      const files = imgRef.current.files;
+      if (files) {
+        const copyImgFile = [...imgUrlList];
+        const copyFileList = [...fileList];
 
-      // 이미지 미리 보기 코드
-      for (let i = 0; i < files.length; i++) {
-        let reader = new FileReader();
-        reader.readAsDataURL(files[i]);
-        reader.onloadend = () => {
-          setImgUrlList((prevList: string[]) => [...prevList, reader.result as string]);
-        };
-      }
+        // 이미지 미리 보기 코드
+        for (let i = 0; i < files.length; i++) {
+          let reader = new FileReader();
+          reader.readAsDataURL(files[i]);
+          reader.onloadend = () => {
+            setImgUrlList((prevList: string[]) => [...prevList, reader.result as string]);
+          };
+        }
 
-      // 이미지 업로드 코드
-      for (let i = 0; i < files.length; i++) {
-        setFileList((prevList) => [...prevList, files[i]]);
+        // 이미지 업로드 코드
+        for (let i = 0; i < files.length; i++) {
+          setFileList((prevList) => [...prevList, files[i]]);
+        }
       }
     }
   };
