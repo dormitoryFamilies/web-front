@@ -13,10 +13,10 @@ import TagInput from "@/components/board/TagInput";
 import TitleInput from "@/components/board/TitleInput";
 import Header from "@/components/common/Header";
 import { postArticle, postArticleImage } from "@/lib/api/board";
+import { selectedDormitory } from "@/recoil/atom";
 import { fileListAtom, imgUrlListAtom, postDataState } from "@/recoil/board/atom";
 import { BOARD_TYPE_LIST } from "@/utils/boardType";
 import { ARTICLE_DORM_LIST } from "@/utils/dorm";
-import { selectedDormitory } from "@/recoil/atom";
 
 const Write = () => {
   const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);

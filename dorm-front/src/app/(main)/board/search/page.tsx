@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import Post from "@/components/board/Post";
 import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchResult } from "@/lib/api/board";
-import { ArticleType } from "@/types/board/type";
-import { useRecoilState } from "recoil";
 import { selectedDormitory } from "@/recoil/atom";
+import { ArticleType } from "@/types/board/type";
 
 const BoardSearch = () => {
   const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);

@@ -7,7 +7,6 @@ import * as React from "react";
 import Header from "@/components/common/Header";
 import LogoutModal from "@/components/common/LogoutModal";
 import NavBar from "@/components/common/NavBar";
-import Item from "@/components/mypage/Item";
 import MyLifeStyle from "@/components/mypage/MyLifeStyle";
 import Profile from "@/components/mypage/Profile";
 import useMyRoomMateProfile from "@/lib/hooks/useMyRoomMateProfile";
