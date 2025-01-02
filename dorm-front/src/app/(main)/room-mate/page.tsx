@@ -20,6 +20,23 @@ const RoommateMatching = () => {
   const { homeInfo } = useRoomMateHomeInfo();
   const { myRoomMateProfile } = useMyRoomMateMatchingStatus();
 
+  const rightElement = () => {
+    return (
+      <div className={"flex"}>
+        <SearchIcon
+          onClick={() => {
+            router.push("/room-mate/application-list");
+          }}
+        />
+        <AlarmIcon
+          onClick={() => {
+            router.push("/alarm");
+          }}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       {isConfirmRoommateMatchCancelOpen ? (
@@ -30,7 +47,7 @@ const RoommateMatching = () => {
         />
       ) : (
         <div>
-          <Header />
+          <Header headerType={"dynamic"} title={"룸메매칭"} rightElement={rightElement()} />
           <div className={"h-[60px] mb-[43px]"} />
           <div className={"px-5 flex flex-col gap-y-4"}>
             {/*추천 룸메*/}
@@ -145,5 +162,49 @@ const MoveBlackIcon = (props: SVGProps<SVGSVGElement>) => (
       fill="#191919"
       d="M11.525 17.013c0 .369.345.667.77.667s.77-.298.77-.667c0-.368-.344-.666-.77-.666-.425 0-.77.298-.77.666"
     />
+  </svg>
+);
+
+function AlarmIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg width={40} height={40} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M12.532 17.389a7.633 7.633 0 0115.266 0v10.767H12.532V17.389z" stroke="#191919" strokeWidth={1.6} />
+      <rect x={9.762} y={27.389} width={20.491} height={1.6} rx={0.8} fill="#191919" />
+      <rect x={16.776} y={30.724} width={6.463} height={1.6} rx={0.8} fill="#191919" />
+      <rect x={14.403} y={24.724} width={3.861} height={1.537} rx={0.768} fill="#E70050" />
+      <rect
+        x={20.807}
+        y={7.676}
+        width={2.56}
+        height={1.6}
+        rx={0.8}
+        transform="rotate(90 20.807 7.676)"
+        fill="#191919"
+      />
+    </svg>
+  );
+}
+
+const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={40} height={40} fill="none" {...props}>
+    <g clipPath="url(#a)">
+      <path
+        fill="#000"
+        d="M17.026 9.504a7.525 7.525 0 0 1 7.522 7.522 7.525 7.525 0 0 1-7.522 7.522 7.525 7.525 0 0 1-7.522-7.522 7.525 7.525 0 0 1 7.522-7.522m0-1.504a9.027 9.027 0 1 0 .002 18.054A9.027 9.027 0 0 0 17.026 8"
+      />
+      <path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="m24.739 24.739 6.509 6.509"
+      />
+      <path fill="#191919" d="M20.396 15.03a1.003 1.003 0 1 0 0-2.005 1.003 1.003 0 0 0 0 2.005" />
+    </g>
+    <defs>
+      <clipPath id="a">
+        <path fill="#fff" d="M8 8h24v24H8z" />
+      </clipPath>
+    </defs>
   </svg>
 );
