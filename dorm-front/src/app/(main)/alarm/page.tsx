@@ -2,15 +2,18 @@
 
 //@ts-ignore
 import { EventSourcePolyfill } from "event-source-polyfill";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import AlarmComponent from "@/components/alarm/AlarmComponent";
 import Header from "@/components/common/Header";
+import { putAlarm } from "@/lib/api/alarm";
 import useAlarms from "@/lib/hooks/useAlarms";
 
 const Alarm = () => {
   const { alarms } = useAlarms();
   const [notificationIds, setNotificationIds] = useState<number[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const connect = () => {
@@ -59,14 +62,20 @@ const Alarm = () => {
     }
   }, [alarms, notificationIds]); // alarms나 notificationIds가 변경될 때 실행
 
+  const onBack = () => {
+    putAlarm(notificationIds).then(() => {
+      router.back();
+    });
+  };
+
   return (
     <>
-      <Header headerType={"dynamic"} title={"알림"} />
+      <Header headerType={"dynamic"} title={"알림"} onBack={onBack} />
       <div className={"h-[60px]"} />
       <div className={"flex flex-col gap-y-[15px] px-5 mt-[24px]"}>
         {alarms &&
           alarms.map((alarmData) => {
-            return alarmData.data.data.notifications.map((notification) => {
+            return alarmData?.data.data.notifications.map((notification) => {
               return (
                 <AlarmComponent
                   key={notification.notificationId}

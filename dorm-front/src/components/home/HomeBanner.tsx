@@ -17,20 +17,11 @@ const HomeBanner = () => {
           룸메 매칭을 통해 <br />
           원하는 룸메를 구해보세요!
         </div>
-        <Button
-          Icon={ArrowIcon}
-          className={"bg-primaryMid text-white w-fit"}
-          onClick={onButtonClick}
-        >
+        <Button Icon={ArrowIcon} className={"bg-primaryMid text-white w-fit"} onClick={onButtonClick}>
           룸메 찾기
         </Button>
       </div>
-      <Image
-        src={"/룸메매칭 그래픽.png"}
-        width={100}
-        height={95}
-        alt={"룸메 매칭 그래픽"}
-      ></Image>
+      <Image src={"/룸메매칭 그래픽.png"} width={100} height={95} alt={"룸메 매칭 그래픽"}></Image>
     </div>
   );
 };
@@ -38,13 +29,7 @@ export default HomeBanner;
 
 function ArrowIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width={13}
-      height={11}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width={13} height={11} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M11.164 5.64H1.306M11.694 5.64l-4-5M8.6 9.303l3.094-3.663"
         stroke="#FFFDFD"

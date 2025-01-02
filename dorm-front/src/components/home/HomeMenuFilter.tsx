@@ -1,29 +1,41 @@
 "use client";
 
-import { useRecoilState } from "recoil";
+import { Dispatch, SetStateAction } from "react";
 
-import { homeMenuFilterState } from "@/recoil/atom";
+interface Props {
+  homeMenuFilterState: "breakfast" | "lunch" | "dinner";
+  setHomeMenuFilterState: Dispatch<SetStateAction<"breakfast" | "lunch" | "dinner">>;
+}
 
-const HomeMenuFilter = () => {
-  const [state, setState] = useRecoilState(homeMenuFilterState);
-
+const HomeMenuFilter = (props: Props) => {
+  const { homeMenuFilterState, setHomeMenuFilterState } = props;
   return (
     <div className="flex justify-evenly gap-x-[27px] bg-secondary h-[40px] rounded-full text-h4 font-semibold mt-3">
       <button
-        onClick={() => setState("breakfast")}
+        onClick={() => setHomeMenuFilterState("breakfast")}
         className={
-          state == "breakfast" ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold" : "m-1 px-6"
+          homeMenuFilterState == "breakfast"
+            ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold"
+            : "m-1 px-6"
         }>
         아침
       </button>
       <button
-        onClick={() => setState("lunch")}
-        className={state == "lunch" ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold" : "m-1 px-6"}>
+        onClick={() => setHomeMenuFilterState("lunch")}
+        className={
+          homeMenuFilterState == "lunch"
+            ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold"
+            : "m-1 px-6"
+        }>
         점심
       </button>
       <button
-        onClick={() => setState("dinner")}
-        className={state == "dinner" ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold" : "m-1 px-6"}>
+        onClick={() => setHomeMenuFilterState("dinner")}
+        className={
+          homeMenuFilterState == "dinner"
+            ? "m-1 px-6 text-primary bg-primaryLight rounded-full font-semibold"
+            : "m-1 px-6"
+        }>
         저녁
       </button>
     </div>

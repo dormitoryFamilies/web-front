@@ -14,11 +14,6 @@ export const selectedDormitory = atom({
   default: "양진재",
 });
 
-//
-export const homeMenuFilterState = atom<"breakfast" | "lunch" | "dinner">({
-  key: "homeMenuFilterState",
-  default: "breakfast",
-});
 
 // 프로필 선택
 export const selectedMemberIdAtom = atom<number>({

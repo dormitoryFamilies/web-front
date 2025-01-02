@@ -1,8 +1,8 @@
 //Navbar 리스트 타입
+import { AxiosHeaders } from "axios";
 import React from "react";
 
 import { CollegeType } from "@/types/onboarding/type";
-import { AxiosHeaders } from "axios";
 
 export type HeaderType = "static" | "chattingHome" | "dynamic" | "search";
 
