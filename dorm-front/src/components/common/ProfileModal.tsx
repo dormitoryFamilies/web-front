@@ -5,11 +5,18 @@ import { useEffect } from "react";
 import * as React from "react";
 import { useRecoilState } from "recoil";
 
-import { createChatRoom, getRoomId } from "@/lib/api/chat";
+import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { postFollow } from "@/lib/api/common";
 import useUserProfile from "@/lib/hooks/useUserProfile";
-import { chatRoomIdAtom, chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 
+interface ErrorResponseData {
+  code?: number;
+  data?: {
+    errorMessage: string;
+    [key: string]: any; // 추가 필드 허용
+  };
+}
 interface Props {
   memberId: number | undefined;
 }
@@ -17,6 +24,8 @@ interface Props {
 const ProfileModal = (props: Props) => {
   const router = useRouter();
   const { memberId } = props;
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
   const { userProfileData } = useUserProfile(memberId);
 
   useEffect(() => {
@@ -26,16 +35,27 @@ const ProfileModal = (props: Props) => {
   const handleSubmit = async (memberId: number | undefined) => {
     try {
       const response = await createChatRoom(memberId);
+      console.log("response", response);
       if (response && response.data && response.data.code === 201) {
+        setChatRoomUUID(response.data.data.roomUUID);
         router.push(`/chat/${response.data.data.chatRoomId}`);
       }
     } catch (error: any) {
-      const axiosError = error as AxiosError; // AxiosError로 캐스팅
+      const axiosError = error as AxiosError<ErrorResponseData>; // AxiosError로 캐스팅
       console.log("axiosError", axiosError.response?.status);
       if (axiosError.response?.status === 409) {
-        getRoomId(memberId).then((response) => {
-          router.push(`/chat/${response.data.data.roomId}`);
-        });
+        if (axiosError.response?.data?.data?.errorMessage === "채팅방이 존재합니다. 재입장해주세요.") {
+          patchRejoinChatRoom(memberIdState).then((res) => {
+            setChatRoomUUID(res.data.data.roomUUID);
+            console.log("res", res);
+          });
+        } else if (axiosError.response?.data?.data?.errorMessage === "이미 채팅방에 입장한 상태입니다") {
+          getRoomId(memberId).then((response) => {
+            console.log("response", response);
+            setChatRoomUUID(response.data.data.roomUUID);
+            router.push(`/chat/${response.data.data.chatRoomId}`);
+          });
+        }
       }
     }
   };
@@ -71,6 +91,7 @@ const ProfileModal = (props: Props) => {
           )}
           <button
             onClick={() => {
+              setMemberIdState(userProfileData?.data.memberId);
               handleSubmit(userProfileData?.data.memberId).then((res) => {
                 console.log("res", res);
               });

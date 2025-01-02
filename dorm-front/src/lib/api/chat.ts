@@ -27,12 +27,32 @@ export const patchLeaveChatRoom = async (roomId: string | string[]) => {
         AccessToken: "Bearer " + localStorage.getItem("accessToken"),
       },
       method: "PATCH",
-      url: `/chats/rooms/${roomId}`,
+      url: `/api/chats/rooms/${roomId}`,
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("채팅방 나가기 에러:", error);
+  }
+};
+
+/**
+ * 채팅방 재입장
+ */
+export const patchRejoinChatRoom = async (memberId: number | undefined) => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "PATCH",
+      url: `/api/chats/members/${memberId}`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("채팅방 재입장 에러:", error);
   }
 };
 

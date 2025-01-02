@@ -16,6 +16,7 @@ export interface ChatRoomsDataType {
 export interface ChatRoomType {
   roomId: number;
   memberId: number;
+  roomUUID: string;
   memberNickname: string;
   memberProfileUrl: string;
   unReadCount: number;
@@ -43,6 +44,8 @@ export interface ChatRoomMessageType {
 export interface chatHistoryType {
   chatMessage: string;
   isSender: false;
+  roomId: number;
+  roomUUID: string;
   memberId: number;
   memberNickname: string;
   memberProfileUrl: string;

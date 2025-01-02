@@ -4,13 +4,15 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { SVGProps, useEffect, useState } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import SearchInput from "@/components/chat/SearchInput";
 import SearchMenu from "@/components/chat/SearchMenu";
 import ProfileModal from "@/components/common/ProfileModal";
 import useDebounce from "@/hooks/useDebounce";
-import { getRoomId, getSearchChatMessage, getSearchChatRoom } from "@/lib/api/chat";
+import { getSearchChatMessage, getSearchChatRoom } from "@/lib/api/chat";
 import { getSearchFollowings } from "@/lib/api/mypage";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import {
   chatHistoryType,
   ChatRoomMessagesAxiosResponseType,
@@ -28,7 +30,8 @@ const ChatSearch = () => {
   const debouncedValue = useDebounce<string>(searchValue, 100);
   const router = useRouter();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [selectedMemberId, setSelectedMemberId] = useState<number | undefined>();
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
 
   //쿼리파라미터 검색결과
   useEffect(() => {
@@ -48,12 +51,15 @@ const ChatSearch = () => {
   useEffect(() => {
     if (searchValue) {
       getSearchChatRoom(searchValue, 3).then((r: ChatRoomsAxiosResponseType) => {
+        // console.log(r?.data.data.chatRooms)
         setSearchChatRoomResults(r?.data.data.chatRooms);
       });
       getSearchChatMessage(searchValue, "latest", 5).then((r: ChatRoomMessagesAxiosResponseType) => {
+        // console.log(r?.data.data.chatHistory)
         setSearchChatMessageResults(r?.data.data.chatHistory);
       });
       getSearchFollowings(searchValue).then((r: AllDoomzListAxiosResponseType) => {
+        // console.log(r?.data.data.memberProfiles)
         setSearchFollowingResults(r?.data.data.memberProfiles);
       });
     }
@@ -99,7 +105,8 @@ const ChatSearch = () => {
                     return (
                       <div
                         onClick={() => {
-                          setSelectedMemberId(searchFollowingResult.memberId);
+                          setMemberIdState(searchFollowingResult.memberId);
+                          setChatRoomUUID(searchFollowingResult.roomUUID);
                           setIsProfileOpen(true);
                         }}
                         key={searchFollowingResult.memberId}
@@ -142,6 +149,8 @@ const ChatSearch = () => {
                   return (
                     <div
                       onClick={() => {
+                        setMemberIdState(searchChatRoomResult.memberId);
+                        setChatRoomUUID(searchChatRoomResult.roomUUID);
                         router.push(`/chat/${searchChatRoomResult.roomId}`);
                       }}
                       key={searchChatRoomResult.roomId}
@@ -191,9 +200,9 @@ const ChatSearch = () => {
                   return (
                     <div
                       onClick={async () => {
-                        await getRoomId(searchChatMessageResult.memberId).then((res) => {
-                          router.push(`/chat/${res.data.data.roomId}`);
-                        });
+                        setMemberIdState(searchChatMessageResult.memberId);
+                        setChatRoomUUID(searchChatMessageResult.roomUUID);
+                        router.push(`/chat/${searchChatMessageResult.roomId}`);
                       }}
                       key={searchChatMessageResult.memberId}
                       className={"my-3 flex justify-between"}>
@@ -211,7 +220,7 @@ const ChatSearch = () => {
                         </div>
                       </div>
                       <div className={"flex flex-col items-end gap-y-1"}>
-                        <div className={"text-gray3 text-h6"}>{searchChatMessageResult.sentTime}</div>
+                        <div className={"text-gray3 text-h6"}>{formatTime(searchChatMessageResult.sentTime)}</div>
                       </div>
                     </div>
                   );
@@ -243,7 +252,8 @@ const ChatSearch = () => {
                     return (
                       <div
                         onClick={() => {
-                          setSelectedMemberId(searchFollowingResult.memberId);
+                          setMemberIdState(searchFollowingResult.memberId);
+                          setChatRoomUUID(searchFollowingResult.roomUUID);
                           setIsProfileOpen(true);
                         }}
                         key={searchFollowingResult.memberId}
@@ -281,6 +291,8 @@ const ChatSearch = () => {
                   return (
                     <div
                       onClick={() => {
+                        setMemberIdState(searchChatRoomResult.memberId);
+                        setChatRoomUUID(searchChatRoomResult.roomUUID);
                         router.push(`/chat/${searchChatRoomResult.roomId}`);
                       }}
                       key={searchChatRoomResult.roomId}
@@ -335,9 +347,9 @@ const ChatSearch = () => {
                   return (
                     <div
                       onClick={async () => {
-                        await getRoomId(searchChatMessageResult.memberId).then((res) => {
-                          router.push(`/chat/${res.data.data.roomId}`);
-                        });
+                        setMemberIdState(searchChatMessageResult.memberId);
+                        setChatRoomUUID(searchChatMessageResult.roomUUID);
+                        router.push(`/chat/${searchChatMessageResult.roomId}`);
                       }}
                       key={searchChatMessageResult.memberId}
                       className={"my-3 flex justify-between"}>
@@ -355,7 +367,7 @@ const ChatSearch = () => {
                         </div>
                       </div>
                       <div className={"flex flex-col items-end gap-y-1"}>
-                        <div className={"text-gray3 text-h6"}>{searchChatMessageResult.sentTime}</div>
+                        <div className={"text-gray3 text-h6"}>{formatTime(searchChatMessageResult.sentTime)}</div>
                       </div>
                     </div>
                   );
@@ -369,7 +381,7 @@ const ChatSearch = () => {
 
   return (
     <div className={"relative"}>
-      {isProfileOpen ? <ProfileModal memberId={selectedMemberId} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
       <SearchInput setSearchValue={setSearchValue} />
       <SearchMenu type={type} setType={setType} />
       {renderSearchResults(type)}

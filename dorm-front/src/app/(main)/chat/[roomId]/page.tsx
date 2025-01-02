@@ -1,6 +1,6 @@
 "use client";
 
-import { Stomp } from "@stomp/stompjs";
+import { CompatClient, IFrame, Stomp } from "@stomp/stompjs";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, SVGProps, useEffect, useRef, useState } from "react";
@@ -16,12 +16,13 @@ import useChatMessages from "@/lib/hooks/useChatMessages";
 import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
+
 const ChatRoom = () => {
   const router = useRouter();
   const params = useParams();
   // STOMP 클라이언트를 위한 ref. 웹소켓 연결을 유지하기 위해 사용
-  const stompClient = useRef();
-  const chatContainerRef = useRef(null); // 채팅 컨테이너에 대한 참조 생성
+  const stompClient = useRef<CompatClient | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null); // 채팅 컨테이너에 대한 참조 생성
   const { chatMessages, mutate } = useChatMessages(params.roomId);
   const [isClickedMenu, setIsClickedMenu] = useState(false);
   const [isClickedLeaveChatRoomAlertModal, setIsClickedLeaveChatRoomAlertModal] = useState(false);
@@ -39,18 +40,18 @@ const ChatRoom = () => {
     stompClient.current = Stomp.over(socket);
     stompClient.current.connect(
       { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
-      (frame) => {
+      (frame: IFrame) => {
         console.log("STOMP Connected:", frame);
 
-        stompClient.current.subscribe(
+        stompClient.current?.subscribe(
           `/sub/chat/room/${chatRoomUUID}`,
-          { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
           (frame: { body: string }) => {
             console.log("frame", frame);
           },
+          { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
         );
       },
-      (error) => {
+      (error: string | Error) => {
         console.error("STOMP 연결 에러:", error);
       },
     );
@@ -73,7 +74,9 @@ const ChatRoom = () => {
         { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
         JSON.stringify(messageObj),
       );
-      await mutate();
+      // 메시지 전송 후 일정 시간 대기
+      await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms 대기
+      await mutate(); // mutate를 호출하여 데이터 새로고침
     }
   };
 
@@ -95,7 +98,7 @@ const ChatRoom = () => {
   }, [chatMessages]);
 
   useEffect(() => {
-    console.log(chatMessages);
+    console.log("chatMessages", chatMessages);
   }, [chatMessages]);
 
   useEffect(() => {
@@ -194,7 +197,7 @@ const ChatRoom = () => {
         }>
         {chatMessages?.data.chatHistory.length === 0 ? (
           <div className={"flex flex-col items-center"}>
-            <Image width={147} height={121} src={"/alarm/noMessages.png"} alt={"/alarm/noMessages.png"}></Image>
+            <Image width={147} height={121} src={"/chat/noMessages.png"} alt={"/chat/noMessages.png"}></Image>
             <div className={"mt-[7px] flex flex-col text-gray3 items-center"}>
               <span className={"fonts-medium text-h5"}>채팅 내용이 없습니다</span>
               <span className={"text-h6"}>지금 바로 채팅을 시작해보세요!</span>

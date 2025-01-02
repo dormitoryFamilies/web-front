@@ -38,7 +38,7 @@ const LeaveChatRoomAlertModal = (props: Props) => {
         </div>
 
         {/* 버튼 */}
-        <div className={"mt-6 flex gap-x-3"}>
+        <div className={"w-full mt-6 flex gap-x-3"}>
           <button className={"w-full bg-gray1 rounded-[20px] text-h5 text-gray5 py-[14px] px-[35px]"}>취소</button>
           <button
             onClick={() => {

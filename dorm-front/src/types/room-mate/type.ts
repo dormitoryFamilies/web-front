@@ -256,6 +256,7 @@ export interface AllDoomzListType {
 
 export interface MemberProfileType {
   memberId: number;
+  roomUUID: string;
   nickname: string;
   profileUrl: string;
   isFollowing: boolean;

@@ -5,19 +5,22 @@ import { useRouter } from "next/navigation";
 import { SVGProps, useCallback, useEffect, useState } from "react";
 import * as React from "react";
 import { useInView } from "react-intersection-observer";
+import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
+import NavBar from "@/components/common/NavBar";
 import ProfileModal from "@/components/common/ProfileModal";
 import useChatRooms from "@/lib/hooks/useChatRooms";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
-import NavBar from "@/components/common/NavBar";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 const Chat = () => {
   const router = useRouter();
   const { chatRooms, setChatRoomsSize } = useChatRooms();
   const { followings } = useMyFollowings(0);
   const [ref, inView] = useInView();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [selectedMemberId, setSelectedMemberId] = useState<number | undefined>();
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
 
   // 전체
   const getMoreAllArticleItem = useCallback(async () => {
@@ -37,9 +40,24 @@ const Chat = () => {
     console.log("chatRooms", chatRooms);
   }, [chatRooms]);
 
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const period = hours >= 12 ? "오후" : "오전";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0시를 12시로 변환
+
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${period} ${hours}:${formattedMinutes}`;
+  };
+
   return (
     <>
-      {isProfileOpen ? <ProfileModal memberId={selectedMemberId} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
       <Header
         headerType={"chattingHome"}
         title={"채팅"}
@@ -58,7 +76,7 @@ const Chat = () => {
             <div className={"text-h3 font-semibold"}>팔로잉</div>
             <button
               onClick={() => {
-                router.push("/follow");
+                router.push("/mypage/follow");
               }}
               className={"flex items-center gap-x-1 home-button"}>
               전체보기
@@ -73,7 +91,7 @@ const Chat = () => {
                 return (
                   <div
                     onClick={() => {
-                      setSelectedMemberId(memberProfile.memberId);
+                      setMemberIdState(memberProfile.memberId);
                       setIsProfileOpen(true);
                     }}
                     key={memberProfile.memberId}
@@ -105,19 +123,35 @@ const Chat = () => {
             chatRooms.map((chatRoomData) => {
               return chatRoomData?.data.data.chatRooms.map((chatRoom) => {
                 return (
-                  <div ref={ref} key={chatRoom.roomId} className={"flex justify-between"}>
-                    <div className={"flex gap-x-3"}>
-                      <Image src={chatRoom.memberProfileUrl} alt={chatRoom.memberProfileUrl} height={60} width={60} />
+                  <div
+                    onClick={() => {
+                      setMemberIdState(chatRoom.memberId);
+                      setChatRoomUUID(chatRoom.roomUUID);
+                      router.push(`/chat/${chatRoom.roomId}`);
+                    }}
+                    ref={ref}
+                    key={chatRoom.roomId}
+                    className={"flex justify-between "}>
+                    <div className={"flex gap-x-3 items-center"}>
+                      <Image
+                        src={chatRoom.memberProfileUrl}
+                        alt={chatRoom.memberProfileUrl}
+                        height={60}
+                        width={60}
+                        className={"rounded-full"}
+                      />
                       <div className={"flex flex-col gap-y-1"}>
                         <div className={"text-h4 font-semibold"}>{chatRoom.memberNickname}</div>
                         <div className={"text-h5 text-gray5"}>{chatRoom.lastMessage}</div>
                       </div>
                     </div>
                     <div className={"flex flex-col items-end gap-y-1"}>
-                      <div className={"text-gray3 text-h6"}>{chatRoom.lastMessageTime}</div>
-                      <div className={"rounded-full bg-primary w-fit px-2 text-white text-h6 py-[2px]"}>
-                        {chatRoom.unReadCount}
-                      </div>
+                      <div className={"text-gray3 text-h6"}>{formatTime(chatRoom.lastMessageTime)}</div>
+                      {chatRoom.unReadCount === 0 ? null : (
+                        <div className={"rounded-full bg-primary w-fit px-2 text-white text-h6 py-[2px]"}>
+                          {chatRoom.unReadCount}
+                        </div>
+                      )}
                     </div>
                   </div>
                 );

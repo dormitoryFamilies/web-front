@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect } from "react";
+import { SVGProps, useEffect } from "react";
 
 import useUserProfile from "@/lib/hooks/useUserProfile";
 interface Props {
@@ -27,19 +27,23 @@ const OtherUserChatContent = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log("내 채팅", message)
+    console.log("내 채팅", message);
   }, [message]);
 
   return (
     <div className={"flex items-end px-5 w-full gap-x-2"}>
       <div className={"flex justify-start gap-x-1"}>
-        <div className={"relative w-[36px] h-[36px]"}>
-          <Image
-            src={userProfileData?.data.profileUrl}
-            alt={userProfileData?.data.profileUrl}
-            fill
-            className={"object-cover rounded-full"}></Image>
-        </div>
+        {userProfileData ? (
+          <div className={"relative w-[36px] h-[36px]"}>
+            <Image
+              src={userProfileData.data.profileUrl}
+              alt={userProfileData.data.profileUrl}
+              fill
+              className={"object-cover rounded-full"}></Image>
+          </div>
+        ) : (
+          <ProfileIcon />
+        )}
         <div className={"flex flex-col gap-y-1"}>
           <div className={"text-h5"}>{userProfileData?.data.nickname}</div>
           <div>
@@ -53,3 +57,9 @@ const OtherUserChatContent = (props: Props) => {
   );
 };
 export default OtherUserChatContent;
+
+const ProfileIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={37} height={36} fill="none" {...props}>
+    <path fill="#E4E5E7" d="M18.507 36c9.941 0 18-8.059 18-18s-8.059-18-18-18-18 8.059-18 18 8.059 18 18 18" />
+  </svg>
+);
