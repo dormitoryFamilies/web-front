@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { SVGProps, useState } from "react";
 import * as React from "react";
 
@@ -10,7 +11,6 @@ import Item from "@/components/mypage/Item";
 import MyLifeStyle from "@/components/mypage/MyLifeStyle";
 import Profile from "@/components/mypage/Profile";
 import useMyRoomMateProfile from "@/lib/hooks/useMyRoomMateProfile";
-import { useRouter } from "next/navigation";
 
 const MyPage = () => {
   const [isOpenLogoutModal, setIsOpenLogoutModal] = useState(false);
