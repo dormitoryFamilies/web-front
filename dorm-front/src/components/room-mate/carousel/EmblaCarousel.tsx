@@ -31,8 +31,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   const embla_styles: React.CSSProperties = {
     "--slide-height": "19rem",
-    "--slide-spacing": "1rem",
-    "--slide-size": "50%",
+    "--slide-spacing": "2rem",
+    "--slide-size": "100%",
   } as React.CSSProperties;
 
   return (
