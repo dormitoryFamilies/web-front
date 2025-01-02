@@ -8,6 +8,7 @@ import Header from "@/components/common/Header";
 import RoomMateDoomzBasicProfile from "@/components/room-mate/RoomMateDoomzBasicProfile";
 import RoomMateDoomzMatchingProfile from "@/components/room-mate/RoomMateDoomzMatchingProfile";
 import RoomMateDoomzProfileMenu from "@/components/room-mate/RoomMateDoomzProfileMenu";
+import NavBar from "@/components/common/NavBar";
 
 const RoomMateDoomzProfile = () => {
   const params = useParams();
@@ -24,6 +25,7 @@ const RoomMateDoomzProfile = () => {
       <RoomMateDoomzBasicProfile memberId={params.memberId} />
       <RoomMateDoomzProfileMenu setProfileMenu={setProfileMenu} profileMenu={profileMenu} />
       <RoomMateDoomzMatchingProfile profileMenu={profileMenu} memberId={params.memberId} />
+      <NavBar />
     </main>
   );
 };

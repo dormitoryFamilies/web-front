@@ -10,6 +10,7 @@ import Header from "@/components/common/Header";
 import ProfileModal from "@/components/common/ProfileModal";
 import useChatRooms from "@/lib/hooks/useChatRooms";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
+import NavBar from "@/components/common/NavBar";
 const Chat = () => {
   const router = useRouter();
   const { chatRooms, setChatRoomsSize } = useChatRooms();
@@ -123,6 +124,7 @@ const Chat = () => {
               });
             })}
         </section>
+        <NavBar />
       </div>
     </>
   );
