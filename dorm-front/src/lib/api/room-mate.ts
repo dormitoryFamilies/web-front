@@ -37,6 +37,23 @@ export const patchLifestyles = async (data: {}) => {
   }
 };
 
+export const deleteLifestyles = async () => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
+      url: "/api/my/lifestyles",
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("lifestyle 설정 put 에러 발생:", error);
+  }
+};
+
 export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
   try {
     const response = await sendRequest({
@@ -46,6 +63,23 @@ export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
       },
       method: "POST",
       data: data,
+      url: `/api/my/preference-orders`,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("lifestyle 설정 post 에러 발생:", error);
+  }
+};
+
+export const deletePreferenceOrders = async () => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        "Content-type": "application/json",
+        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      method: "DELETE",
       url: `/api/my/preference-orders`,
     });
     console.log(response.data);

@@ -3,7 +3,12 @@ import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
 
-const IncompleteProfileModal = () => {
+interface Props {
+  errorType: "preferenceOrdersError" | "myLifeStylesError";
+}
+
+const IncompleteProfileModal = (props: Props) => {
+  const { errorType } = props;
   const router = useRouter();
 
   return (
@@ -27,7 +32,11 @@ const IncompleteProfileModal = () => {
         </div>
         <button
           onClick={() => {
-            router.push("/room-mate/lifestyle-setting");
+            if (errorType === "myLifeStylesError") {
+              router.push("/room-mate/lifestyle-setting");
+            } else {
+              router.push("/room-mate/lifestyle-priority");
+            }
           }}
           className={
             "flex gap-x-2 items-center justify-center bg-primary rounded-full text-white text-h5 py-[13px] w-full "

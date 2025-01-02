@@ -1,11 +1,13 @@
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import { SVGProps, useEffect } from "react";
+import { SVGProps, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import EmblaCarousel from "@/components/room-mate/carousel/EmblaCarousel";
-import { postRoomMateMatching } from "@/lib/api/room-mate";
+import IncompleteProfileModal from "@/components/room-mate/IncompleteProfileModal";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import usePreferenceOrders from "@/lib/hooks/usePreferenceOrders";
 import useRoomMateRecommendResult from "@/lib/hooks/useRoomMateRecommendResult";
 import { candidateIdsAtom } from "@/recoil/room-mate/atom";
 
@@ -19,6 +21,9 @@ const RoommateMatchPending = (props: Props) => {
   const router = useRouter();
   const { recommendations } = useRoomMateRecommendResult();
   const [candidateIds, setCandidateIds] = useRecoilState(candidateIdsAtom);
+  const { myLifeStylesError } = useMyLifeStyles();
+  const { preferenceOrdersError } = usePreferenceOrders();
+  const [isOpenIncompleteProfileModal, setIsOpenIncompleteProfileModal] = useState(false);
 
   const onBack = () => {
     router.push("/room-mate");
@@ -30,8 +35,19 @@ const RoommateMatchPending = (props: Props) => {
     }
   }, [recommendations]);
 
+  useEffect(() => {
+    if (preferenceOrdersError?.response?.status === 404 || myLifeStylesError?.response?.status === 404) {
+      setIsOpenIncompleteProfileModal(true);
+    }
+  }, [myLifeStylesError, preferenceOrdersError]);
+
   return (
     <div>
+      {isOpenIncompleteProfileModal ? (
+        <IncompleteProfileModal
+          errorType={myLifeStylesError !== undefined ? "myLifeStylesError" : "preferenceOrdersError"}
+        />
+      ) : null}
       <Header headerType={"dynamic"} title={"추천 룸메"} onBack={onBack} />
       <div className={"h-[60px]"} />
       <div className={"px-5 mt-6"}>

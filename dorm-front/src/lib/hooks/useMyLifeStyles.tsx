@@ -9,7 +9,7 @@ const useMyLifeStyles = () => {
   return {
     myLifeStyles: data ? data.data : null,
     isLoading: !error && !data,
-    isError: error,
+    myLifeStylesError: error,
   };
 };
 export default useMyLifeStyles;

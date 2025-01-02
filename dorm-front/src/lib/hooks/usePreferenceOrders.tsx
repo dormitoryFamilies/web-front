@@ -12,7 +12,7 @@ const usePreferenceOrders = () => {
   return {
     preferenceOrders: data ? data.data : null,
     isLoading: !error && !data,
-    isError: error,
+    preferenceOrdersError: error,
   };
 };
 export default usePreferenceOrders;
