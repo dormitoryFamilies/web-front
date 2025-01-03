@@ -29,11 +29,13 @@ const OtherUserChatContent = (props: Props) => {
     <div className={"flex items-end px-5 w-full gap-x-2"}>
       <div className={"flex justify-start gap-x-1"}>
         <div className={"relative w-[36px] h-[36px]"}>
-          <Image
-            src={userProfileData?.profileUrl}
-            alt={userProfileData?.profileUrl}
-            fill
-            className={"object-cover rounded-full"}></Image>
+          {userProfileData ? (
+            <Image
+              src={userProfileData?.profileUrl}
+              alt={userProfileData?.profileUrl}
+              fill
+              className={"object-cover rounded-full"}></Image>
+          ) : null}
         </div>
         <div className={"flex flex-col gap-y-1"}>
           <div className={"text-h5"}>{userProfileData?.nickname}</div>

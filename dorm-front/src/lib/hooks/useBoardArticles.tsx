@@ -1,12 +1,7 @@
 import useSWRInfinite from "swr/infinite";
 
 import { swrGetFetcher } from "@/lib/axios";
-import {
-  BoardSortType,
-  BoardStatusType,
-  BoardType,
-  ResponseAxiosArticleType,
-} from "@/types/board/type";
+import { BoardSortType, BoardStatusType, BoardType, ResponseAxiosArticleType } from "@/types/board/type";
 
 const getKey = (
   size: number,

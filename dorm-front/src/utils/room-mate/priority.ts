@@ -44,4 +44,3 @@ export const heatTolerancePriorityContents = ["적게 탐", "조금 탐", "많�
 export const coldTolerancePriorityContents = ["적게 탐", "조금 탐", "많이 탐"];
 export const perfumeUsagePriorityContents = ["미사용", "가끔", "자주"];
 export const examPreparation = ["시험 준비", "해당 없어요"];
-
