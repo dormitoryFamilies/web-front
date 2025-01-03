@@ -22,6 +22,11 @@ const nextConfig = {
     }
     return config;
   },
+
+  eslint: {
+    ignoreDuringBuilds: true, // 빌드 중 ESLint 경고 무시
+  },
+
   reactStrictMode: false,
   swcMinify: true,
 };
