@@ -52,7 +52,7 @@ client.interceptors.request.use((config) => {
 const setAuthHeader = (token: string) => {
   if (token) {
     client.defaults.headers["AccessToken"] = `${token}`;
-    localStorage.removeItem("accessToken");
+    // localStorage.removeItem("accessToken");
   } else {
     delete client.defaults.headers["AccessToken"];
   }
@@ -108,8 +108,8 @@ const sendRequest = async (config: any) => {
 
           if (newAccessToken && newRefreshToken) {
             // 갱신된 토큰을 처리
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("accessToken");
+            // localStorage.removeItem("refreshToken");
+            // localStorage.removeItem("accessToken");
             setAuthHeader(newAccessToken);
             saveTokensToLocalStorage(newAccessToken, newRefreshToken);
 
