@@ -1,10 +1,10 @@
-import { sendRequest } from "@/lib/axios";
+import { getAccessToken, sendRequest } from "@/lib/axios";
 
 export const postFollow = async (memberId: number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "POST",
       url: `/api/members/${memberId}/follows`,
@@ -20,7 +20,7 @@ export const deleteFollowing = async (memberId: number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "DELETE",
       url: `/api/members/${memberId}/followings`,
@@ -36,7 +36,7 @@ export const logout = async () => {
   try {
     const response = await sendRequest({
       headers: {
-        RefreshToken: "Bearer " + localStorage.getItem("refreshToken"),
+        RefreshToken: `Bearer ${getAccessToken()}`,
       },
       method: "POST",
       url: `/api/logout`,

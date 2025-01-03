@@ -1,10 +1,10 @@
-import { sendRequest } from "@/lib/axios";
+import { getAccessToken, sendRequest } from "@/lib/axios";
 
 export const putAlarm = async (data: number[]) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "PUT",
       data: {

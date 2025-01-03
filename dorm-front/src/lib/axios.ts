@@ -1,13 +1,13 @@
 import axios, { AxiosError } from "axios";
 
-const getAccessToken = () => {
+export const getAccessToken = () => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("accessToken");
   }
   return null;
 };
 
-const getRefreshToken = () => {
+export const getRefreshToken = () => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("refreshToken");
   }
@@ -18,7 +18,7 @@ const client = axios.create({
   baseURL: "http://13.124.186.20:8080",
   headers: {
     "Content-type": "application/json",
-    AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+    AccessToken: getAccessToken(),
   },
   transformResponse: [
     (data, headers) => {

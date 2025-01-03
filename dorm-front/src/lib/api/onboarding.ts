@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { sendRequest } from "@/lib/axios";
+import { getAccessToken, sendRequest } from "@/lib/axios";
 import { ProfileSettingType } from "@/types/global";
 
 export const getKaKaoAccessToken = async (code: string | null) => {
@@ -45,7 +45,7 @@ export const getJWTToken = async (accessToken: string) => {
 export const getSearchDuplicateNickName = async (searchValue: string) => {
   const response = await sendRequest({
     headers: {
-      AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+      AccessToken: `Bearer ${getAccessToken()}`,
     },
     method: "GET",
     url: `/api/members/check?nickname=${searchValue}`,
@@ -58,7 +58,7 @@ export const putProfileInitialData = async (data: ProfileSettingType) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "PUT",
       data: data,
@@ -78,7 +78,7 @@ export const putMemberApproval = async (memberId: number) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "PUT",
       url: `/api/verify/members/${memberId}/approvals`,
@@ -97,7 +97,7 @@ export const putMemberRejection = async (memberId: number) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: "Bearer " + localStorage.getItem("accessToken"),
+        AccessToken: `Bearer ${getAccessToken()}`,
       },
       method: "PUT",
       url: `/api/verify/members/${memberId}/rejections`,

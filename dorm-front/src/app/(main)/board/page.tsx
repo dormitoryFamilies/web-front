@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { useRouter } from "next/navigation";
 import { SVGProps } from "react";
@@ -82,11 +83,6 @@ const Board = () => {
       return "인기순";
     }
   };
-
-  useEffect(() => {
-    console.log("accessToken", localStorage.getItem("accessToken"));
-    console.log("refreshToken", localStorage.getItem("refreshToken"));
-  }, [localStorage.getItem("accessToken"), localStorage.getItem("refreshToken")]);
 
   return (
     <div className="relative">
