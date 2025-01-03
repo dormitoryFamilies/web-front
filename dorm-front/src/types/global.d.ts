@@ -1,8 +1,8 @@
 //Navbar 리스트 타입
+import { AxiosHeaders } from "axios";
 import React from "react";
 
 import { CollegeType } from "@/types/onboarding/type";
-import { AxiosHeaders } from "axios";
 
 export type HeaderType = "static" | "chattingHome" | "dynamic" | "search";
 
@@ -40,9 +40,26 @@ export interface FoodMenuList {
   dinner: string[];
 }
 
+export interface MyMemberIdAxiosResponseType {
+  data: MyMemberIdResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface MyMemberIdResponseType {
+  code: number;
+  data: {
+    memberId: number;
+  };
+}
+
 /**
  * profile
  */
+
+export interface ProfileAxiosResponseType {
+  data: ResponseProfileType;
+  headers: AxiosHeaders;
+}
 
 export interface ResponseProfileType {
   code: number;
@@ -50,10 +67,11 @@ export interface ResponseProfileType {
 }
 
 export interface ProfileType {
-  memberDormitory: string;
   memberId: number;
+  dormitoryType: string;
   nickname: string;
   profileUrl: string;
+  isFollowing: boolean;
 }
 
 export interface ProfileSettingType {

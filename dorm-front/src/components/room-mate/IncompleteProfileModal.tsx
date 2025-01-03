@@ -3,13 +3,18 @@ import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
 
-const IncompleteProfileModal = () => {
+interface Props {
+  errorType: "preferenceOrdersError" | "myLifeStylesError";
+}
+
+const IncompleteProfileModal = (props: Props) => {
+  const { errorType } = props;
   const router = useRouter();
 
   return (
     <div
       className={
-        "absolute left-0 right-0 z-50 flex flex-col gap-y-2 justify-center bg-[rgba(0,0,0,0.2)] px-8 min-h-screen"
+        "absolute left-0 right-0 z-50 flex flex-col gap-y-2 justify-center bg-[rgba(0,0,0,0.5)] px-8 min-h-screen"
       }>
       <section className={"flex flex-col gap-y-8 justify-center items-center bg-white py-8 px-7 rounded-[32px]"}>
         <div className={"flex flex-col gap-y-3"}>
@@ -17,8 +22,8 @@ const IncompleteProfileModal = () => {
             <Image src={"/room-mate/룸메이트.png"} alt={"/room-mate/룸메이트.png"} fill className={"object-cover"} />
           </div>
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"flex justify-center items-center text-h2 font-semibold"}>아직 룸메 정보 설정을</div>
-            <div className={"flex justify-center items-center text-h2 font-semibold"}>입력하지 않았어요!</div>
+            <div className={"flex justify-center items-center text-h2 font-nps"}>아직 룸메 정보 설정을</div>
+            <div className={"flex justify-center items-center text-h2 font-nps"}>입력하지 않았어요!</div>
           </div>
           <div>
             <div className={"flex justify-center items-center text-h5 text-gray5"}>룸메 매칭을 설정하면 둠즈가</div>
@@ -27,7 +32,11 @@ const IncompleteProfileModal = () => {
         </div>
         <button
           onClick={() => {
-            router.push("/room-mate/lifestyle-setting");
+            if (errorType === "myLifeStylesError") {
+              router.push("/room-mate/lifestyle-setting");
+            } else {
+              router.push("/room-mate/lifestyle-priority");
+            }
           }}
           className={
             "flex gap-x-2 items-center justify-center bg-primary rounded-full text-white text-h5 py-[13px] w-full "

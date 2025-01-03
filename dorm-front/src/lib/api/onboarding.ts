@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { client, sendRequest } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 import { ProfileSettingType } from "@/types/global";
 
 export const getKaKaoAccessToken = async (code: string | null) => {

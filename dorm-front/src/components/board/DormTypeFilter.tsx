@@ -58,4 +58,3 @@ function UpIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-

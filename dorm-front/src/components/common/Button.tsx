@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 interface Props {
   children: React.ReactNode;
-  onClick?: () => void | React.Dispatch<React.SetStateAction<number>>;
+  onClick?: () => void;
   Icon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   SecondIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   className: string;
@@ -22,7 +22,7 @@ const Button = (props: Props) => {
                 `,
         className,
       )}
-      onClick={onClick ? onClick : null}>
+      onClick={onClick}>
       <div className="flex items-center gap-x-[5px] text-h5">
         {SecondIcon ? <SecondIcon /> : null}
         {children}

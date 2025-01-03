@@ -1,10 +1,14 @@
 "use client";
 
+import { useRecoilState } from "recoil";
+
 import useAllArticles from "@/lib/hooks/useAllArticles";
+import { selectedDormitory } from "@/recoil/atom";
 import { ArticleType } from "@/types/board/type";
 
 const HomePost = () => {
-  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles("popularity", "전체"); //boardType이 전체일 때
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
+  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles(selectedDorm, "popularity", "전체"); //boardType이 전체일 때
 
   const formatDate = (originalString: string) => {
     var dateObject = new Date(originalString);
@@ -22,7 +26,7 @@ const HomePost = () => {
   return (
     <div className="flex flex-col mt-3 px-4 py-[11.5px] rounded-[32px] border border-secondary">
       {allArticles?.map((articles) => {
-        return articles.data.articles.slice(0, 3).map((post: ArticleType, index: number) => {
+        return articles?.data.data.articles.slice(0, 3).map((post: ArticleType, index: number) => {
           return index !== 2 ? (
             <div className="relative flex items-center gap-x-2 border-b border-gray1 py-[5.5px]">
               <div className="bg-secondary rounded-full px-2 text-h5 py-[1.5px]">{post.boardType}</div>

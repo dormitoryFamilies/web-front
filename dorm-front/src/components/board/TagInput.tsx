@@ -22,8 +22,10 @@ const TagInput = (props: Props) => {
     tags.forEach((tag, index) => {
       if (inputRefs.current[index]) {
         const inputElement = inputRefs.current[index];
-        inputElement.style.width = `${inputElement.value.length + 1}ch`;
-        inputElement.style.maxWidth = 'calc(100% - 32px)'; // DeleteButton의 너비를 고려한 maxWidth 설정
+        if (inputElement) {
+          inputElement.style.width = `${inputElement.value.length + 1}ch`;
+          inputElement.style.maxWidth = "calc(100% - 32px)"; // DeleteButton의 너비를 고려한 maxWidth 설정
+        }
       }
     });
   }, [tags]);
@@ -32,8 +34,10 @@ const TagInput = (props: Props) => {
     handleChangeTags(index, event);
     if (inputRefs.current[index]) {
       const inputElement = inputRefs.current[index];
-      inputElement.style.width = `${inputElement.value.length + 1}ch`;
-      inputElement.style.maxWidth = "calc(100% - 32px)"; // DeleteButton의 너비를 고려한 maxWidth 설정
+      if (inputElement) {
+        inputElement.style.width = `${inputElement.value.length + 1}ch`;
+        inputElement.style.maxWidth = "calc(100% - 32px)"; // DeleteButton의 너비를 고려한 maxWidth 설정
+      }
     }
   };
 

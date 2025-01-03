@@ -1,10 +1,10 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { ResponseProfileType } from "@/types/global";
+import { ProfileAxiosResponseType } from "@/types/global";
 
-const useUserProfile = (memberId: number | string | string[]) => {
-  const { data, error } = useSWR<ResponseProfileType>(`/members/${memberId}`, swrGetFetcher);
+const useUserProfile = (memberId: number | string | string[] | undefined) => {
+  const { data, error } = useSWR<ProfileAxiosResponseType>(`/api/members/${memberId}/profiles`, swrGetFetcher);
 
   return {
     userProfileData: data ? data.data : null,

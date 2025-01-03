@@ -1,12 +1,17 @@
+import { AxiosError } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
+import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateWish, postRoomMateWish } from "@/lib/api/room-mate";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
+import { ErrorResponseData } from "@/types/chat/page";
 
 interface Props {
   memberId: number | undefined;
@@ -19,6 +24,39 @@ const RoommateMatchCard = (props: Props) => {
   const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
   const { wishStatus, wishStatusMutate } = useRoomMateWishStatus(memberId);
   const router = useRouter();
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+
+  const handleSubmit = async (memberId: string | string[] | number | undefined) => {
+    try {
+      const response = await createChatRoom(memberId);
+      console.log("response", response);
+      if (response && response.data && response.data.code === 201) {
+        setChatRoomUUID(response.data.data.roomUUID);
+        setMemberIdState(memberId);
+        router.push(`/chat/${response.data.data.chatRoomId}`);
+      }
+    } catch (error: any) {
+      const axiosError = error as AxiosError<ErrorResponseData>; // AxiosError로 캐스팅
+      console.log("axiosError", axiosError.response?.status);
+      if (axiosError.response?.status === 409) {
+        if (axiosError.response?.data?.data?.errorMessage === "채팅방이 존재합니다. 재입장해주세요.") {
+          patchRejoinChatRoom(memberId).then((res) => {
+            setChatRoomUUID(res.data.data.roomUUID);
+            setMemberIdState(memberId);
+            console.log("res", res);
+          });
+        } else if (axiosError.response?.data?.data?.errorMessage === "이미 채팅방에 입장한 상태입니다") {
+          getRoomId(memberId).then((response) => {
+            console.log("response", response);
+            setChatRoomUUID(response.data.data.roomUUID);
+            setMemberIdState(memberId);
+            router.push(`/chat/${response.data.data.chatRoomId}`);
+          });
+        }
+      }
+    }
+  };
 
   function calculateKoreanAge(birthDate: string | undefined) {
     if (!birthDate) return "";
@@ -54,7 +92,7 @@ const RoommateMatchCard = (props: Props) => {
           <div className={"flex"}>
             <span className={"text-h4 font-semibold"}>
               {recommendRoomMateProfile?.data.nickname}
-              <span className={"font-normal"}> 님</span>
+              <span className={"fonts-normal"}> 님</span>
             </span>
           </div>
 
@@ -126,7 +164,9 @@ const RoommateMatchCard = (props: Props) => {
               {wishStatus?.data.isRoommateWished ? <WhiteHeartIcon /> : <HeartIcon />}
             </button>
             <button
-              //TODO: 채팅이동
+              onClick={() => {
+                handleSubmit(recommendRoomMateProfile?.data.memberId);
+              }}
               className={
                 "flex py-[5px] px-5 rounded-full border-[1px] border-gray1 items-center gap-x-1 text-gray5 text-h5"
               }>

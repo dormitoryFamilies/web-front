@@ -5,14 +5,17 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 import * as React from "react";
+import { useRecoilState } from "recoil";
 
 import Post from "@/components/board/Post";
 import Header from "@/components/common/Header";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchResult } from "@/lib/api/board";
+import { selectedDormitory } from "@/recoil/atom";
 import { ArticleType } from "@/types/board/type";
 
 const BoardSearch = () => {
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResults, setSearchResults] = useState<ArticleType[]>();
   const debouncedValue = useDebounce<string>(searchValue, 100);
@@ -35,11 +38,11 @@ const BoardSearch = () => {
   //단어가 바뀔 때 마다 검색하여 요청
   useEffect(() => {
     if (!searchValue) {
-      getSearchResult("본관", " ").then((r) => {
+      getSearchResult(selectedDorm, " ").then((r) => {
         setSearchResults(r?.data.data.articles);
       });
     } else {
-      getSearchResult("본관", searchValue).then((r) => {
+      getSearchResult(selectedDorm, searchValue).then((r) => {
         setSearchResults(r?.data.data.articles);
       });
     }

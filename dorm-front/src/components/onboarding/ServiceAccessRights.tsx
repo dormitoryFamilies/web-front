@@ -12,7 +12,7 @@ const ServiceAccessRights = (props: Props) => {
     <div className={"flex flex-col min-h-screen"}>
       <div className={"mt-[40px] px-[30px]"}>
         <div className={"flex flex-col gap-y-[5px]"}>
-          <div className={"text-h1 font-semibold"}>서비스 접근 권한 안내</div>
+          <div className={"text-h1 font-semibold font-nps"}>서비스 접근 권한 안내</div>
           <div className={"text-h5 text-gray4"}>원활한 서비스 사용을 위해 다음 권한이 필요합니다.</div>
         </div>
 

@@ -14,7 +14,7 @@ import SleepPattern from "@/components/room-mate/SleepPattern";
 import SmokingAndDrinking from "@/components/room-mate/SmokingAndDrinking";
 import SoundAndPerfume from "@/components/room-mate/SoundAndPerfume";
 import { RoomMateLifeStyleStepType } from "@/types/room-mate/type";
-const LifeStyleEditor = () => {
+const LifeStyleSetter = () => {
   const [lifeStyleStep, setLifeStyleStep] = useState<RoomMateLifeStyleStepType>("SleepPattern");
 
   return (
@@ -28,9 +28,11 @@ const LifeStyleEditor = () => {
       {lifeStyleStep === "Food" && <Food setLifeStyleStep={setLifeStyleStep} />}
       {lifeStyleStep === "SoundAndPerfume" && <SoundAndPerfume setLifeStyleStep={setLifeStyleStep} />}
       {lifeStyleStep === "Exam" && <Exam setLifeStyleStep={setLifeStyleStep} />}
-      {lifeStyleStep === "OtherLifestyles" && <OtherLifestyles setLifeStyleStep={setLifeStyleStep} />}
-      {lifeStyleStep === "Done" && <Done setLifeStyleStep={setLifeStyleStep} />}
+      {lifeStyleStep === "OtherLifestyles" && (
+        <OtherLifestyles setLifeStyleStep={setLifeStyleStep} usage={"room-mate"} />
+      )}
+      {lifeStyleStep === "Done" && <Done setLifeStyleStep={setLifeStyleStep} usage={"room-mate"} />}
     </div>
   );
 };
-export default LifeStyleEditor;
+export default LifeStyleSetter;

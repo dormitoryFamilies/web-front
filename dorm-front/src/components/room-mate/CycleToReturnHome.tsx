@@ -4,31 +4,41 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { RoomMateLifeStyleStepType, VisitHomeFrequencyType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import { LifeStyleResponseType, RoomMateLifeStyleStepType, VisitHomeFrequencyType } from "@/types/room-mate/type";
 import { visitHomeFrequencyContents } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const CycleToReturnHome = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
-  const [visitHomeFrequency, setVisitHomeFrequency] = useState<VisitHomeFrequencyType>("");
+  const [visitHomeFrequency, setVisitHomeFrequency] = useState<VisitHomeFrequencyType | undefined>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-      };
-
-      if (visitHomeFrequency !== "") {
-        updatedState.visitHomeFrequency = visitHomeFrequency;
-      } else {
-        delete updatedState.visitHomeFrequency;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.visitHomeFrequency !== visitHomeFrequency) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, visitHomeFrequency: visitHomeFrequency }));
       }
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+        };
 
-      return updatedState;
-    });
+        if (visitHomeFrequency !== "") {
+          updatedState.visitHomeFrequency = visitHomeFrequency;
+        } else {
+          delete updatedState.visitHomeFrequency;
+        }
+
+        return updatedState;
+      });
+    }
 
     setLifeStyleStep("Food");
   };
@@ -39,6 +49,27 @@ const CycleToReturnHome = (props: Props) => {
       setVisitHomeFrequency(lifeStylePostData.visitHomeFrequency);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      visitHomeFrequency: apiResponse.data.visitHomeFrequency,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setVisitHomeFrequency(initialState.visitHomeFrequency);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   const skipButton = () => {
     return (
@@ -76,7 +107,7 @@ const CycleToReturnHome = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[250px] h-[140px]"}>
               <Image
                 src={"/room-mate/본가주기.png"}
                 alt={"/room-mate/본가주기.png"}

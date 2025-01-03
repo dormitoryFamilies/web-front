@@ -2,7 +2,7 @@ import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  title: string;
+  title: string | null;
   className: string | undefined;
   contents: string[] | undefined;
   selectedContent: string;

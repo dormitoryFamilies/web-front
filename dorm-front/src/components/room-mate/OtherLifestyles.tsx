@@ -4,47 +4,66 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import { postLifestyles } from "@/lib/api/room-mate";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { ExerciseType, InsectToleranceType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
+import { patchLifestyles, postLifestyles } from "@/lib/api/room-mate";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  ExerciseType,
+  InsectToleranceType,
+  LifeStyleResponseType,
+  RoomMateLifeStyleStepType,
+} from "@/types/room-mate/type";
 import { exerciseContents, insectToleranceContents } from "@/utils/room-mate/lifestyles";
 interface Props {
+  usage: "room-mate" | "mypage";
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const OtherLifestyles = (props: Props) => {
-  const { setLifeStyleStep } = props;
+  const { usage, setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [exercise, setExercise] = useState<ExerciseType | undefined>("");
   const [insectTolerance, setInsectTolerance] = useState<InsectToleranceType | undefined>("");
   const [isLifestyleComplete, setIsLifestyleComplete] = useState(false);
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-      };
-
-      if (exercise !== "") {
-        updatedState.exercise = exercise;
-      } else {
-        delete updatedState.exercise;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.exercise !== exercise) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, exercise: exercise }));
       }
-
-      if (insectTolerance !== "") {
-        updatedState.insectTolerance = insectTolerance;
-      } else {
-        delete updatedState.insectTolerance;
+      if (myLifeStyles.data.insectTolerance !== insectTolerance) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, insectTolerance: insectTolerance }));
       }
-      return updatedState;
-    });
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+        };
+
+        if (exercise !== "") {
+          updatedState.exercise = exercise;
+        } else {
+          delete updatedState.exercise;
+        }
+
+        if (insectTolerance !== "") {
+          updatedState.insectTolerance = insectTolerance;
+        } else {
+          delete updatedState.insectTolerance;
+        }
+        return updatedState;
+      });
+    }
 
     setIsLifestyleComplete(true);
   };
 
   useEffect(() => {
-    if (isLifestyleComplete) {
-      postLifestyles(lifeStylePostData).then((r) => {
-        console.log("r", r);
+    if (isLifestyleComplete && usage === "room-mate") {
+      postLifestyles(lifeStylePostData).then((res) => {
+        console.log("res", res);
         setIsLifestyleComplete(false);
         setLifeStylePostData((prevState) => ({
           ...prevState,
@@ -63,6 +82,13 @@ const OtherLifestyles = (props: Props) => {
         }));
         setLifeStyleStep("Done");
       });
+    } else if (isLifestyleComplete && usage === "mypage") {
+      patchLifestyles(lifeStyleEditData).then((r) => {
+        console.log("patch response", r);
+        setIsLifestyleComplete(false);
+        setLifeStyleEditData(() => ({}));
+        setLifeStyleStep("Done");
+      });
     }
   }, [isLifestyleComplete]);
 
@@ -72,6 +98,29 @@ const OtherLifestyles = (props: Props) => {
       setInsectTolerance(lifeStylePostData.insectTolerance);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      exercise: apiResponse.data.exercise,
+      insectTolerance: apiResponse.data.insectTolerance,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setExercise(initialState.exercise);
+      setInsectTolerance(initialState.insectTolerance);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   return (
     <>
@@ -92,7 +141,7 @@ const OtherLifestyles = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[320px] h-[140px]"}>
               <Image src={"/room-mate/운동.png"} alt={"/room-mate/운동.png"} className={"absolute object-cover"} fill />
             </div>
           </div>

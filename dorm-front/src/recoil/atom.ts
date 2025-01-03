@@ -11,13 +11,7 @@ export const DropDownClick = atom({
 //드롭다운 메뉴로 기숙사 선택시
 export const selectedDormitory = atom({
   key: "selectedDormitory",
-  default: "양진재",
-});
-
-//
-export const homeMenuFilterState = atom<"breakfast" | "lunch" | "dinner">({
-  key: "homeMenuFilterState",
-  default: "breakfast",
+  default: "본관",
 });
 
 // 프로필 선택

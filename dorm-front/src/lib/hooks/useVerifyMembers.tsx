@@ -1,7 +1,7 @@
 import useSWRInfinite from "swr/infinite";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { VerifyMembersResponseType, VerifyMembersType } from "@/types/onboarding/type";
+import { VerifyMembersResponseType } from "@/types/onboarding/type";
 
 const getKey = (pageIndex: number, previousPageData: VerifyMembersResponseType | null) => {
   // 초기 요청 또는 이전 페이지 데이터가 없을 때

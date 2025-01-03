@@ -13,9 +13,9 @@ const RoommateLifeStylePriority = () => {
 
   return (
     <div>
-      {step === "SettingLifeStylePriority" && <SettingLifeStylePriority setStep={setStep} />}
-      {step === "SettingLifeStyleType" && <SettingLifeStyleType setStep={setStep} />}
-      {step === "Done" && <SettingLifeStylePriorityDone setStep={setStep} />}
+      {step === "SettingLifeStylePriority" && <SettingLifeStylePriority setStep={setStep} usage={"room-mate"} />}
+      {step === "SettingLifeStyleType" && <SettingLifeStyleType setStep={setStep} usage={"room-mate"} />}
+      {step === "Done" && <SettingLifeStylePriorityDone setStep={setStep} usage={"room-mate"} />}
     </div>
   );
 };

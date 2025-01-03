@@ -6,24 +6,25 @@ import { BoardSortType, BoardStatusType, BoardType, ResponseAxiosArticleType } f
 const getKey = (
   size: number,
   previousPageData: ResponseAxiosArticleType | null,
+  selectedDorm: string,
   boardType: BoardType,
   sortType: BoardSortType,
   statusType: BoardStatusType,
 ) => {
   if (size === 0) {
-    return `/api/dormitories/본관/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
+    return `/api/dormitories/${selectedDorm}/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
   }
   if (previousPageData && !previousPageData.data.data.isLast) {
-    return `/api/dormitories/본관/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
+    return `/api/dormitories/${selectedDorm}/board-types/${boardType}/articles?page=${size}&size=6&sort=${sortType}${statusType === "전체" ? "" : `&status=${statusType}`}`;
   }
   if (previousPageData && previousPageData.data.data.isLast) {
     return null;
   }
 };
 
-const useBoardArticles = (boardType: BoardType, sortType: BoardSortType, statusType: BoardStatusType) => {
+const useBoardArticles = (selectedDorm: string, boardType: BoardType, sortType: BoardSortType, statusType: BoardStatusType) => {
   const { data, isLoading, error, size, setSize, mutate } = useSWRInfinite<ResponseAxiosArticleType>(
-    (pageIndex, previousPageData) => getKey(pageIndex, previousPageData, boardType, sortType, statusType),
+    (pageIndex, previousPageData) => getKey(pageIndex, previousPageData, selectedDorm, boardType, sortType, statusType),
     swrGetFetcher,
     {
       revalidateAll: true,

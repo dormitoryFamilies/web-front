@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, SVGProps, useEffect, useState } from "react";

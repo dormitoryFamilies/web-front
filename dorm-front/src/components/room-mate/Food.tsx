@@ -4,39 +4,57 @@ import { useRecoilState } from "recoil";
 
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { LateNightSnackType, RoomMateLifeStyleStepType, SnackInRoomType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  LateNightSnackType,
+  LifeStyleResponseType,
+  RoomMateLifeStyleStepType,
+  SnackInRoomType,
+} from "@/types/room-mate/type";
 import { lateNightSnackContents, snackInRoomContents } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const Food = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
 
   const [lateNightSnack, setLateNightSnack] = useState<LateNightSnackType | undefined>("");
   const [snackInRoom, setSnackInRoom] = useState<SnackInRoomType | undefined>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-      };
-
-      if (lateNightSnack !== "") {
-        updatedState.lateNightSnack = lateNightSnack;
-      } else {
-        delete updatedState.lateNightSnack;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.lateNightSnack !== lateNightSnack) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, lateNightSnack: lateNightSnack }));
       }
-
-      if (snackInRoom !== "") {
-        updatedState.snackInRoom = snackInRoom;
-      } else {
-        delete updatedState.snackInRoom;
+      if (myLifeStyles.data.snackInRoom !== snackInRoom) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, snackInRoom: snackInRoom }));
       }
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+        };
 
-      return updatedState;
-    });
+        if (lateNightSnack !== "") {
+          updatedState.lateNightSnack = lateNightSnack;
+        } else {
+          delete updatedState.lateNightSnack;
+        }
+
+        if (snackInRoom !== "") {
+          updatedState.snackInRoom = snackInRoom;
+        } else {
+          delete updatedState.snackInRoom;
+        }
+
+        return updatedState;
+      });
+    }
 
     setLifeStyleStep("SoundAndPerfume");
   };
@@ -47,6 +65,29 @@ const Food = (props: Props) => {
       setSnackInRoom(lifeStylePostData.snackInRoom);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      lateNightSnack: apiResponse.data.lateNightSnack,
+      snackInRoom: apiResponse.data.snackInRoom,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setLateNightSnack(initialState.lateNightSnack);
+      setSnackInRoom(initialState.snackInRoom);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   const skipButton = () => {
     return (
@@ -84,13 +125,8 @@ const Food = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
-              <Image
-                src={"/room-mate/휴대폰_소리.png"}
-                alt={"/room-mate/휴대폰_소리.png"}
-                className={"absolute object-cover"}
-                fill
-              />
+            <div className={"relative w-[230px] h-[140px]"}>
+              <Image src={"/room-mate/야식.png"} alt={"/room-mate/야식.png"} className={"absolute object-cover"} fill />
             </div>
           </div>
           <div className={"text-h3 font-semibold"}>음식은 어떤가요?</div>

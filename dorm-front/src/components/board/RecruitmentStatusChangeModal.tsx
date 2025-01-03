@@ -40,7 +40,7 @@ const RecruitmentStatusChangeModal = (props: Props) => {
       {status === "모집중" ? (
         <div className={"flex flex-col gap-y-[32px] bg-white m-5 rounded-[32px] py-[32px] px-[28px]"}>
           <div className={"flex flex-col items-center justify-center gap-y-3"}>
-            <div className={"text-h2 font-bold"}>모집완료를 할까요?</div>
+            <div className={"text-h2 font-nps"}>모집완료를 할까요?</div>
             <div className={"flex flex-col items-center justify-center text-h5 text-gray5"}>
               <div>모집을 완료하면 1주일 뒤에</div>
               <div>게시판에서 글이 내려가고, 보관함으로 이동해요.</div>
@@ -63,7 +63,7 @@ const RecruitmentStatusChangeModal = (props: Props) => {
       ) : (
         <div className={"flex flex-col gap-y-[32px] bg-white m-5 rounded-[32px] py-[32px] px-[28px]"}>
           <div className={"flex flex-col items-center justify-center gap-y-3"}>
-            <div className={"text-h2 font-bold"}>다시 모집을 시작할까요?</div>
+            <div className={"text-h2 font-nps"}>다시 모집을 시작할까요?</div>
             <div className={"flex flex-col items-center justify-center text-h5 text-gray5"}>
               <div>모집을 완료하면 1주일 뒤에</div>
               <div>게시판에서 글이 내려가고, 보관함으로 이동해요.</div>

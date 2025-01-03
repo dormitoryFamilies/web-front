@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { patchLeaveChatRoom } from "@/lib/api/chat";
-import Image from "next/image";
+import { deleteChatRoom, patchLeaveChatRoom } from "@/lib/api/chat";
 
 interface Props {
   roomId: string | string[];
@@ -21,23 +21,28 @@ const LeaveChatRoomAlertModal = (props: Props) => {
         {/*사용자 프로필*/}
         <div className={"flex flex-col gap-y-2"}>
           <div className={"relative w-[80px] h-[80px]"}>
-            <Image src={userProfileUrl} alt={userProfileUrl} className={"object-cover rounded-full"} fill />
+            <Image
+              src={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+              alt={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+              className={"object-cover rounded-full"}
+              fill
+            />
           </div>
           <div className={"text-h3 font-semibold"}>{userNickName}</div>
         </div>
 
         {/* 안내 문구 */}
         <div className={"flex flex-col gap-y-3 mt-2 items-center"}>
-          <div className={"text-h2 font-bold"}>채팅방을 나가시겠어요?</div>
+          <div className={"text-h2 font-nps"}>채팅방을 나가시겠어요?</div>
           <div className={"text-h5 text-gray5"}>대화 내용이 모두 삭제됩니다.</div>
         </div>
 
         {/* 버튼 */}
-        <div className={"mt-6 flex gap-x-3"}>
+        <div className={"w-full mt-6 flex gap-x-3"}>
           <button className={"w-full bg-gray1 rounded-[20px] text-h5 text-gray5 py-[14px] px-[35px]"}>취소</button>
           <button
             onClick={() => {
-              patchLeaveChatRoom(roomId).then((r) => {
+              deleteChatRoom(roomId).then((r) => {
                 setClickedMenu(false);
                 router.push("/chat");
               });

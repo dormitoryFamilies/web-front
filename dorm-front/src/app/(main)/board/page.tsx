@@ -5,6 +5,7 @@ import { SVGProps } from "react";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { useRecoilState } from "recoil";
 
 import ArticleSortFilter from "@/components/board/ArticleSortFilter";
 import ArticleStatusFilter from "@/components/board/ArticleStatusFilter";
@@ -16,17 +17,24 @@ import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
 import useAllArticles from "@/lib/hooks/useAllArticles";
 import useBoardArticles from "@/lib/hooks/useBoardArticles";
+import { selectedDormitory } from "@/recoil/atom";
 import { ArticleType, BoardSortType, BoardStatusType, BoardType } from "@/types/board/type";
 import { sortFilterContents, statusFilterContents } from "@/utils/board/filterContent";
 
 const Board = () => {
   const [ref, inView] = useInView();
   const router = useRouter();
+  const [selectedDorm, setSelectedDorm] = useRecoilState<string>(selectedDormitory);
   const [boardType, setBoardType] = useState<BoardType>("전체");
   const [selectedSortType, setSelectedSortType] = useState<BoardSortType>("createdAt");
   const [selectedStatusType, setSelectedStatusType] = useState<BoardStatusType>("전체");
-  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles(selectedSortType, selectedStatusType); //boardType이 전체일 때
+  const { allArticles, allArticlesSize, setAllArticlesSize } = useAllArticles(
+    selectedDorm,
+    selectedSortType,
+    selectedStatusType,
+  ); //boardType이 전체일 때
   const { boardArticles, boardArticlesSize, setBoardArticlesSize } = useBoardArticles(
+    selectedDorm,
     boardType,
     selectedSortType,
     selectedStatusType,

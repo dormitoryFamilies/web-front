@@ -1,20 +1,62 @@
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps } from "react";
+import { useRecoilState } from "recoil";
 import { KeyedMutator } from "swr";
 
 import { deleteArticleWish, postArticleWish } from "@/lib/api/board";
+import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ResponseAxiosArticleDetailType } from "@/types/board/type";
+import { ErrorResponseData } from "@/types/chat/page";
 
 interface Props {
   isWriter: boolean | undefined;
   isWished: boolean | undefined;
   articleId: string | string[] | number | undefined;
+  memberId: number | undefined;
   wishCount: number | undefined;
   articleMutate: KeyedMutator<ResponseAxiosArticleDetailType>;
   setIsArticleFavoritesList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const CommunicationBox = (props: Props) => {
-  const { isWriter, isWished, articleId, wishCount, articleMutate, setIsArticleFavoritesList } = props;
+  const { isWriter, isWished, articleId, wishCount, articleMutate, setIsArticleFavoritesList, memberId } = props;
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const router = useRouter();
+
+  const handleSubmit = async (memberId: string | string[] | number | undefined) => {
+    try {
+      const response = await createChatRoom(memberId);
+      console.log("response", response);
+      if (response && response.data && response.data.code === 201) {
+        setChatRoomUUID(response.data.data.roomUUID);
+        setMemberIdState(memberId);
+        router.push(`/chat/${response.data.data.chatRoomId}`);
+      }
+    } catch (error: any) {
+      const axiosError = error as AxiosError<ErrorResponseData>; // AxiosError로 캐스팅
+      console.log("axiosError", axiosError.response?.status);
+      if (axiosError.response?.status === 409) {
+        if (axiosError.response?.data?.data?.errorMessage === "채팅방이 존재합니다. 재입장해주세요.") {
+          patchRejoinChatRoom(memberId).then((res) => {
+            setChatRoomUUID(res.data.data.roomUUID);
+            setMemberIdState(memberId);
+            console.log("res", res);
+          });
+        } else if (axiosError.response?.data?.data?.errorMessage === "이미 채팅방에 입장한 상태입니다") {
+          getRoomId(memberId).then((response) => {
+            console.log("response", response);
+            setChatRoomUUID(response.data.data.roomUUID);
+            setMemberIdState(memberId);
+            router.push(`/chat/${response.data.data.chatRoomId}`);
+          });
+        }
+      }
+    }
+  };
+
   const renderCommunicationBox = (isWriter: boolean | undefined) => {
     switch (isWriter) {
       case true:
@@ -71,6 +113,9 @@ const CommunicationBox = (props: Props) => {
               </button>
             )}
             <button
+              onClick={() => {
+                handleSubmit(memberId);
+              }}
               className={
                 "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
               }>

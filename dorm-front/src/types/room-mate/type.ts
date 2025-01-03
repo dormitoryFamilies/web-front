@@ -1,6 +1,4 @@
-import { preferenceOrdersAtom } from "@/recoil/room-mate/atom";
 import { AxiosHeaders } from "axios";
-import { ResponseArticleWishListType } from "@/types/board/type";
 
 export type RoomMateLifeStyleStepType =
   | "SleepPattern"
@@ -131,6 +129,11 @@ export interface LifeStylePostType {
   insectTolerance?: InsectToleranceType;
 }
 
+export interface LifeStyleAxiosResponseType {
+  data: LifeStyleResponseType;
+  headers: AxiosHeaders;
+}
+
 export interface LifeStyleResponseType {
   code: number;
   data: LifeStylePostType;
@@ -251,6 +254,7 @@ export interface AllDoomzListType {
 
 export interface MemberProfileType {
   memberId: number;
+  roomUUID: string;
   nickname: string;
   profileUrl: string;
   isFollowing: boolean;
@@ -314,4 +318,16 @@ export interface MyRoomMateMatchingStatusAxiosResponseType {
 export interface MyRoomMateMatchingStatusResponseType {
   code: number;
   data: { matchedId: number };
+}
+
+////////////////////////////////////////////////////////////
+
+export interface LifeStylePreferenceOrdersAxiosResponseType {
+  data: LifeStylePreferenceOrdersResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface LifeStylePreferenceOrdersResponseType {
+  code: number;
+  data: PreferenceOrdersType;
 }

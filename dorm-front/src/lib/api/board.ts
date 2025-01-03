@@ -35,7 +35,7 @@ export const putArticle = async (data: ArticlePostType, articleId: string | stri
   }
 };
 
-export const deleteArticle = async (articleId: number | string | string[]) => {
+export const deleteArticle = async (articleId: number | string | string[] | undefined) => {
   try {
     const response = await sendRequest({
       headers: {

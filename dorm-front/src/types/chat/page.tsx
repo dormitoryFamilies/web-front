@@ -1,3 +1,9 @@
+import { AxiosHeaders } from "axios";
+
+export interface ChatRoomsAxiosResponseType {
+  data: ResponseChatRoomsType;
+  headers: AxiosHeaders;
+}
 export interface ResponseChatRoomsType {
   code: number;
   data: ChatRoomsDataType;
@@ -10,10 +16,17 @@ export interface ChatRoomsDataType {
 export interface ChatRoomType {
   roomId: number;
   memberId: number;
+  roomUUID: string;
   memberNickname: string;
+  memberProfileUrl: string;
   unReadCount: number;
   lastMessage: string;
   lastMessageTime: string;
+}
+
+export interface ChatRoomMessagesAxiosResponseType {
+  data: ResponseChatRoomMessagesType;
+  headers: AxiosHeaders;
 }
 
 export interface ResponseChatRoomMessagesType {
@@ -29,9 +42,13 @@ export interface ChatRoomMessageType {
 }
 
 export interface chatHistoryType {
-  chatId: number;
-  senderId: number;
-  message: string;
+  chatMessage: string;
+  isSender: false;
+  roomId: number;
+  roomUUID: string;
+  memberId: number;
+  memberNickname: string;
+  memberProfileUrl: string;
   sentTime: string;
 }
 
@@ -39,5 +56,13 @@ export interface ResponseUnreadChattingTotalCountType {
   code: number;
   data: {
     totalCount: number;
+  };
+}
+
+export interface ErrorResponseData {
+  code?: number;
+  data?: {
+    errorMessage: string;
+    [key: string]: any; // 추가 필드 허용
   };
 }

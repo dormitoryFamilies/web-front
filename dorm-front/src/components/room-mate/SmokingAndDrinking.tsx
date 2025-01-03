@@ -5,8 +5,14 @@ import { useRecoilState } from "recoil";
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { DrinkingFrequencyType, RoomMateLifeStyleStepType, SmokingType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  DrinkingFrequencyType,
+  LifeStyleResponseType,
+  RoomMateLifeStyleStepType,
+  SmokingType,
+} from "@/types/room-mate/type";
 import { drinkingFrequencyContents, smokingStatusContents } from "@/utils/room-mate/lifestyles";
 
 interface Props {
@@ -14,28 +20,44 @@ interface Props {
 }
 const SmokingAndDrinking = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
+
   const [smoking, setSmoking] = useState<SmokingType>("");
   const [drinkingFrequency, setDrinkingFrequency] = useState<DrinkingFrequencyType>("");
   const [drunkHabit, setDrunkHabit] = useState<string | undefined>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-        smoking: smoking,
-        drinkingFrequency: drinkingFrequency,
-      };
-
-      if (drunkHabit !== undefined) {
-        updatedState.drunkHabit = drunkHabit;
-      } else {
-        delete updatedState.drunkHabit;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.smoking !== smoking) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, smoking: smoking }));
       }
+      if (myLifeStyles.data.drinkingFrequency !== drinkingFrequency) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, drinkingFrequency: drinkingFrequency }));
+      }
+      if (myLifeStyles.data.drunkHabit !== drunkHabit) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, drunkHabit: drunkHabit }));
+      }
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+          smoking: smoking,
+          drinkingFrequency: drinkingFrequency,
+        };
 
-      return updatedState;
-    });
+        if (drunkHabit !== undefined) {
+          updatedState.drunkHabit = drunkHabit;
+        } else {
+          delete updatedState.drunkHabit;
+        }
 
+        return updatedState;
+      });
+    }
     setLifeStyleStep("LifeStyle");
   };
 
@@ -50,6 +72,31 @@ const SmokingAndDrinking = (props: Props) => {
       setDrunkHabit(lifeStylePostData.drunkHabit);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      smoking: apiResponse.data.smoking,
+      drinkingFrequency: apiResponse.data.drinkingFrequency,
+      drunkHabit: apiResponse.data.drunkHabit,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setSmoking(initialState.smoking);
+      setDrinkingFrequency(initialState.drinkingFrequency);
+      setDrunkHabit(initialState.drunkHabit);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   return (
     <>
@@ -71,7 +118,7 @@ const SmokingAndDrinking = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[240px] h-[167px]"}>
               <Image
                 src={"/room-mate/흡연,_음주.png"}
                 alt={"/room-mate/흡연,_음주.png"}
@@ -79,8 +126,8 @@ const SmokingAndDrinking = (props: Props) => {
                 fill
               />
             </div>
+            <div className={"text-h3 font-semibold"}>나의 흡연・음주는?</div>
           </div>
-          <div className={"text-h3 font-semibold"}>나의 흡연・음주는?</div>
         </div>
 
         <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>

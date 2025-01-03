@@ -18,7 +18,7 @@ interface Props {
   commentCount: number;
   status: string;
   createdDate: string;
-  thumbnailUrl: string;
+  thumbnailUrl: string | undefined;
   viewCount: number;
   profileUrl: string;
   bottomElement?: React.JSX.Element | null;
@@ -89,12 +89,14 @@ const Post = (props: Props) => {
             <div className="truncate text-h4">{title}</div>
             <div className="text-h5 text-gray5 line-clamp-2">{content}</div>
           </div>
-          <Image
-            src={thumbnailUrl}
-            alt={thumbnailUrl}
-            width={60}
-            height={60}
-            className="rounded-[8px] bg-[#D9D9D9] w-[60px] h-[60px]"></Image>
+          {thumbnailUrl ? (
+            <Image
+              src={thumbnailUrl}
+              alt={thumbnailUrl}
+              width={60}
+              height={60}
+              className="rounded-[8px] bg-[#D9D9D9] w-[60px] h-[60px]"></Image>
+          ) : null}
         </article>
 
         {/*프로필*/}

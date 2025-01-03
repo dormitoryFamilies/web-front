@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { RecommendResultProfileResponseType, RoomMateDoomzProfileAxiosResponseType } from "@/types/room-mate/type";
+import { RoomMateDoomzProfileAxiosResponseType } from "@/types/room-mate/type";
 
 const useRoomMateDoomzProfile = (memberId: string | string[] | number) => {
   const { data, error } = useSWR<RoomMateDoomzProfileAxiosResponseType>(

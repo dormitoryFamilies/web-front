@@ -1,5 +1,4 @@
 import React from "react";
-import { SetterOrUpdater } from "recoil";
 
 import { DormTypeList } from "@/types/global";
 import { EditMyProfileType } from "@/types/mypage/type";

@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import Image from "next/image";
-import { useEffect } from "react";
 
 interface Props {
   usage: string;

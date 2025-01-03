@@ -17,7 +17,7 @@ const DeleteArticleWarningModal = (props: Props) => {
       }>
       <div className={"flex flex-col gap-y-[32px] bg-white mx-[28px] rounded-[32px] py-[32px] px-[28px]"}>
         <div className={"flex flex-col items-center justify-center gap-y-3"}>
-          <div className={"text-h2 font-bold"}>정말 삭제할까요?</div>
+          <div className={"text-h2 font-nps"}>정말 삭제할까요?</div>
           <div className={"flex flex-col items-center justify-center text-h5 text-gray5"}>
             <div>삭제를 하게 되면</div>
             <div>더이상 게시물을 확인할 수 없어요.</div>

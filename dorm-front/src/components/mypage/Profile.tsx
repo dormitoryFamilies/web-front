@@ -4,17 +4,32 @@ import type { SVGProps } from "react";
 import * as React from "react";
 
 interface Props {
-  name: string;
+  name: string | undefined;
+  followerCount: number | undefined;
+  followingCount: number | undefined;
+  profileUrl: string | undefined;
 }
 const Profile = (props: Props) => {
-  const { name } = props;
+  const { name, followerCount, followingCount, profileUrl } = props;
   const router = useRouter();
 
   return (
     <div className={"flex p-4 rounded-[32px] gap-x-3 items-center"}>
-      <Image alt={"/unnimm.jpg"} src={"/unnimm.jpg"} width={72} height={72} className={"rounded-full"}></Image>
+      <Image
+        onClick={() => {
+          router.push("/mypage/profile-setting");
+        }}
+        alt={profileUrl ? profileUrl : "/unnimm.jpg"}
+        src={profileUrl ? profileUrl : "/unnimm.jpg"}
+        width={72}
+        height={72}
+        className={"rounded-full"}></Image>
       <div className={"flex flex-col gap-y-1"}>
-        <div className={"flex items-center gap-x-[6px]"}>
+        <div
+          onClick={() => {
+            router.push("/mypage/profile-setting");
+          }}
+          className={"flex items-center gap-x-[6px]"}>
           <span className={"text-h3 font-semibold"}>{name}</span> <span className={"text-h4"}>님</span>
           <MoveIcon />
         </div>
@@ -24,10 +39,10 @@ const Profile = (props: Props) => {
           }}
           className={"flex gap-x-5"}>
           <div className={"text-h6 text-gray4"}>
-            <span className={"text-h5 text-primaryMid"}>20 </span>팔로잉
+            <span className={"text-h5 text-primaryMid"}>{followingCount} </span>팔로잉
           </div>
           <div className={"text-h6 text-gray4"}>
-            <span className={"text-h5 text-primaryMid"}>10 </span>팔로워
+            <span className={"text-h5 text-primaryMid"}>{followerCount} </span>팔로워
           </div>
         </div>
       </div>

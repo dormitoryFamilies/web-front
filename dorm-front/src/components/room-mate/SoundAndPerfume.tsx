@@ -5,33 +5,51 @@ import { useRecoilState } from "recoil";
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { PerfumeUsageType, PhoneSoundType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import {
+  LifeStyleResponseType,
+  PerfumeUsageType,
+  PhoneSoundType,
+  RoomMateLifeStyleStepType,
+} from "@/types/room-mate/type";
 import { perfumeUsageContents, phoneSoundContents } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const SoundAndPerfume = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [phoneSound, setPhoneSound] = useState<PhoneSoundType | undefined>("");
   const [perfumeUsage, setPerfumeUsage] = useState<PerfumeUsageType>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => {
-      const updatedState = {
-        ...prevState,
-        perfumeUsage: perfumeUsage,
-      };
-
-      if (phoneSound !== "") {
-        updatedState.phoneSound = phoneSound;
-      } else {
-        delete updatedState.phoneSound;
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.phoneSound !== phoneSound) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, phoneSound: phoneSound }));
       }
+      if (myLifeStyles.data.perfumeUsage !== perfumeUsage) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, perfumeUsage: perfumeUsage }));
+      }
+    } else {
+      setLifeStylePostData((prevState) => {
+        const updatedState = {
+          ...prevState,
+          perfumeUsage: perfumeUsage,
+        };
 
-      return updatedState;
-    });
+        if (phoneSound !== "") {
+          updatedState.phoneSound = phoneSound;
+        } else {
+          delete updatedState.phoneSound;
+        }
+
+        return updatedState;
+      });
+    }
 
     setLifeStyleStep("Exam");
   };
@@ -42,6 +60,29 @@ const SoundAndPerfume = (props: Props) => {
       setPerfumeUsage(lifeStylePostData.perfumeUsage);
     }
   }, [lifeStylePostData]);
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      phoneSound: apiResponse.data.phoneSound,
+      perfumeUsage: apiResponse.data.perfumeUsage,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setPhoneSound(initialState.phoneSound);
+      setPerfumeUsage(initialState.perfumeUsage);
+    }
+  }, [myLifeStyles]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   return (
     <>
@@ -63,7 +104,7 @@ const SoundAndPerfume = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[280px] h-[140px]"}>
               <Image
                 src={"/room-mate/휴대폰_소리.png"}
                 alt={"/room-mate/휴대폰_소리.png"}

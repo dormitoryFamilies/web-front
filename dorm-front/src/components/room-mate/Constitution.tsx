@@ -5,26 +5,58 @@ import { useRecoilState } from "recoil";
 import Header from "@/components/common/Header";
 import Item from "@/components/room-mate/Item";
 import RequirementBanner from "@/components/room-mate/RequirementBanner";
-import { lifeStylePostAtom } from "@/recoil/room-mate/atom";
-import { HeatToleranceType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
+import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
+import { lifeStyleEditAtom, lifeStylePostAtom } from "@/recoil/room-mate/atom";
+import { HeatToleranceType, LifeStyleResponseType, RoomMateLifeStyleStepType } from "@/types/room-mate/type";
 import { coldToleranceContents, heatToleranceContents } from "@/utils/room-mate/lifestyles";
 interface Props {
   setLifeStyleStep: Dispatch<SetStateAction<RoomMateLifeStyleStepType>>;
 }
 const Constitution = (props: Props) => {
   const { setLifeStyleStep } = props;
+  const { myLifeStyles } = useMyLifeStyles();
+  const [lifeStyleEditData, setLifeStyleEditData] = useRecoilState(lifeStyleEditAtom);
   const [lifeStylePostData, setLifeStylePostData] = useRecoilState(lifeStylePostAtom);
   const [heatTolerance, setHeatTolerance] = useState<HeatToleranceType>("");
   const [coldTolerance, setColdTolerance] = useState<HeatToleranceType>("");
 
   const handleNextClick = () => {
-    setLifeStylePostData((prevState) => ({
-      ...prevState,
-      heatTolerance: heatTolerance,
-      coldTolerance: coldTolerance,
-    }));
+    if (myLifeStyles && myLifeStyles.data.sleepTime) {
+      //sleepTime 이 있으면 데이터 정보가 있다고 판단
+      if (myLifeStyles.data.heatTolerance !== heatTolerance) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, heatTolerance: heatTolerance }));
+      }
+      if (myLifeStyles.data.coldTolerance !== coldTolerance) {
+        setLifeStyleEditData((prevState) => ({ ...prevState, coldTolerance: coldTolerance }));
+      }
+    } else {
+      setLifeStylePostData((prevState) => ({
+        ...prevState,
+        heatTolerance: heatTolerance,
+        coldTolerance: coldTolerance,
+      }));
+    }
     setLifeStyleStep("MBTI");
   };
+
+  /**
+   * Recoil 초기화 함수
+   */
+  const initializeEditPostData = (apiResponse: LifeStyleResponseType) => {
+    return {
+      heatTolerance: apiResponse.data.heatTolerance,
+      coldTolerance: apiResponse.data.coldTolerance,
+    };
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (myLifeStyles) {
+      const initialState = initializeEditPostData(myLifeStyles);
+      setHeatTolerance(initialState.heatTolerance);
+      setColdTolerance(initialState.coldTolerance);
+    }
+  }, [myLifeStyles]);
 
   useEffect(() => {
     if (lifeStylePostData.heatTolerance !== "" || lifeStylePostData.coldTolerance !== "") {
@@ -32,6 +64,10 @@ const Constitution = (props: Props) => {
       setColdTolerance(lifeStylePostData.coldTolerance);
     }
   }, [lifeStylePostData]);
+
+  useEffect(() => {
+    console.log("lifeStyleEditData", lifeStyleEditData);
+  }, [lifeStyleEditData]);
 
   return (
     <>
@@ -53,7 +89,7 @@ const Constitution = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[200px] h-[140px]"}>
+            <div className={"relative w-[260px] h-[140px]"}>
               <Image
                 src={"/room-mate/추위,_더위.png"}
                 alt={"/room-mate/추위,_더위.png"}

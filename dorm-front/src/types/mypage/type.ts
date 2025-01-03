@@ -1,3 +1,5 @@
+import { AxiosHeaders } from "axios";
+
 export type FollowType = "팔로워" | "팔로잉";
 export interface FollowSearchResponseType {
   code: number;
@@ -5,11 +7,15 @@ export interface FollowSearchResponseType {
     MemberProfiles: MemberProfile[];
   };
 }
-export interface FollowResponseType {
-  code: number;
-  data: FollowDataType;
+export interface FollowingAxiosResponseType {
+  data: FollowingResponseType;
+  headers: AxiosHeaders;
 }
-export interface FollowDataType {
+export interface FollowingResponseType {
+  code: number;
+  data: FollowingType;
+}
+export interface FollowingType {
   totalPageNumber: number;
   nowPageNumber: number;
   isLast: boolean;
@@ -22,6 +28,11 @@ export interface MemberProfile {
 }
 
 ////////////////////////////////////////////////////////
+
+export interface MyProfileAxiosResponseType {
+  data: MyProfileResponseType;
+  headers: AxiosHeaders;
+}
 
 export interface MyProfileResponseType {
   code: number;
@@ -50,3 +61,27 @@ export interface EditMyProfileType {
 export type InterestListType = "둠즈" | "게시판";
 
 export type DormitoryType = "기숙사" | "본관" | "양성재" | "양진재";
+
+///////////////////////////////////////////////////////
+
+export interface DoomzWishAxiosResponseType {
+  data: DoomzWishResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface DoomzWishResponseType {
+  code: number;
+  data: DoomzWishType;
+}
+
+export interface DoomzWishType {
+  nowPageNumber: number;
+  isLast: boolean;
+  memberProfiles: DoomzWishMemberProfileType[];
+}
+
+export interface DoomzWishMemberProfileType {
+  memberId: number;
+  nickname: string;
+  profileUrl: string;
+}

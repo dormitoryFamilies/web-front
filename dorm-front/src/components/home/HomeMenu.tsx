@@ -1,43 +1,38 @@
 "use client";
-import { useRecoilState } from "recoil";
+import { useEffect } from "react";
 
-import HomeMenuFilter from "@/components/home/HomeMenuFilter";
-import { homeMenuFilterState } from "@/recoil/atom";
-import { ALL_MENU } from "@/utils/home/allMenu";
+interface Props {
+  menuByDay: string[] | undefined;
+  energy: string[] | undefined;
+}
 
-const HomeMenu = () => {
-  const [state, setState] = useRecoilState(homeMenuFilterState);
+const HomeMenu = (props: Props) => {
+  const { menuByDay, energy } = props;
+
+  useEffect(() => {
+    console.log("energy", energy);
+  }, [energy]);
 
   return (
-    <div className="flex flex-col mt-3 pb-4 gap-y-3 items-center rounded-[32px] border border-secondary">
-      <HomeMenuFilter />
+    <>
       {/*TODO: 데이터 추가 */}
       <div className="flex flex-col gap-y-3 items-center text-h4">
-        {ALL_MENU[state].map((menu) => {
-          return <div>{menu}</div>;
-        })}
+        {menuByDay &&
+          menuByDay.map((menu) => {
+            return <div key={menu}>{menu}</div>;
+          })}
       </div>
       <div className="flex text-gray4 text-h5 gap-x-5">
-        <div className="flex items-center gap-x-1">
-          <ClockIcon />
-          <div>운영시간 11:00~ 14:00</div>
-        </div>
-        <div>총 칼로리 890kcal</div>
+        <div>총 칼로리 {energy}</div>
       </div>
-    </div>
+    </>
   );
 };
 export default HomeMenu;
 
 function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width={16}
-      height={15}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width={16} height={15} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M8.007 1.5c3.308 0 6 2.692 6 6 0 3.307-2.692 6-6 6-3.307 0-6-2.693-6-6 0-3.308 2.693-6 6-6zm0-1.5c-4.14 0-7.5 3.36-7.5 7.5 0 4.14 3.36 7.5 7.5 7.5 4.14 0 7.5-3.36 7.5-7.5 0-4.14-3.36-7.5-7.5-7.5z"
         fill="#9E9FA1"

@@ -7,7 +7,13 @@ export const MENU_LIST: MenuList[] = [
   { id: 1, ClickedIcon: ClickedHomeIcon, UnClickedIcon: UnClickedHomeIcon, name: "홈", path: "/home" },
   { id: 2, ClickedIcon: ClickedBoardIcon, UnClickedIcon: UnClickedBoardIcon, name: "게시판", path: "/board" },
   { id: 3, ClickedIcon: ClickedChatIcon, UnClickedIcon: UnClickedChatIcon, name: "채팅", path: "/chat" },
-  { id: 4, ClickedIcon: ClickedRoomMateIcon, UnClickedIcon: UnClickedRoomMateIcon, name: "룸메이트", path: "/room-mate" },
+  {
+    id: 4,
+    ClickedIcon: ClickedRoomMateIcon,
+    UnClickedIcon: UnClickedRoomMateIcon,
+    name: "룸메이트",
+    path: "/room-mate",
+  },
   { id: 5, ClickedIcon: ClickedMyPageIcon, UnClickedIcon: UnClickedMyPageIcon, name: "마이페이지", path: "/mypage" },
 ];
 
@@ -210,7 +216,7 @@ function UnClickedMyPageIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function ClickedBoardIcon(props: SVGProps<SVGSVGElement>){
+function ClickedBoardIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={33} height={32} fill="none" {...props}>
       <path
@@ -252,7 +258,7 @@ function ClickedChatIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function ClickedMyPageIcon(props: SVGProps<SVGSVGElement>){
+function ClickedMyPageIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={33} height={32} fill="none" {...props}>
       <path

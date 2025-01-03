@@ -1,8 +1,14 @@
+import { AxiosError } from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps, useState } from "react";
+import { useRecoilState } from "recoil";
 
+import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateMatchingRequest, postAcceptMatchingRequest } from "@/lib/api/room-mate";
+import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
+import { ErrorResponseData } from "@/types/chat/page";
 
 interface Props {
   memberId: number;
@@ -15,6 +21,41 @@ interface Props {
 const ApplicationReceivedProfile = (props: Props) => {
   const { memberId, profileUrl, nickname, isMatchable, mutate } = props;
   const [isPreferredLifestyleReviewerOpen, setIsPreferredLifestyleReviewerOpen] = useState(false);
+
+  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
+  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const router = useRouter();
+
+  const handleSubmit = async (memberId: string | string[] | number | undefined) => {
+    try {
+      const response = await createChatRoom(memberId);
+      console.log("response", response);
+      if (response && response.data && response.data.code === 201) {
+        setChatRoomUUID(response.data.data.roomUUID);
+        setMemberIdState(memberId);
+        router.push(`/chat/${response.data.data.chatRoomId}`);
+      }
+    } catch (error: any) {
+      const axiosError = error as AxiosError<ErrorResponseData>; // AxiosError로 캐스팅
+      console.log("axiosError", axiosError.response?.status);
+      if (axiosError.response?.status === 409) {
+        if (axiosError.response?.data?.data?.errorMessage === "채팅방이 존재합니다. 재입장해주세요.") {
+          patchRejoinChatRoom(memberId).then((res) => {
+            setChatRoomUUID(res.data.data.roomUUID);
+            setMemberIdState(memberId);
+            console.log("res", res);
+          });
+        } else if (axiosError.response?.data?.data?.errorMessage === "이미 채팅방에 입장한 상태입니다") {
+          getRoomId(memberId).then((response) => {
+            console.log("response", response);
+            setChatRoomUUID(response.data.data.roomUUID);
+            setMemberIdState(memberId);
+            router.push(`/chat/${response.data.data.chatRoomId}`);
+          });
+        }
+      }
+    }
+  };
 
   return (
     <div className={"flex flex-col gap-y-1 py-3 px-4 rounded-[24px] border border-gray1 "}>
@@ -79,7 +120,11 @@ const ApplicationReceivedProfile = (props: Props) => {
           }>
           수락
         </button>
-        <button className={"border border-gray1 rounded-full p-2"}>
+        <button
+          onClick={() => {
+            handleSubmit(memberId);
+          }}
+          className={"border border-gray1 rounded-full p-2"}>
           <FollowChatIcon />
         </button>
       </section>
