@@ -17,6 +17,10 @@ const Alarm = () => {
 
   useEffect(() => {
     const connect = () => {
+      if (typeof window === "undefined") {
+        console.error("Cannot access localStorage on the server.");
+        return;
+      }
       const accessToken = "Bearer " + localStorage.getItem("accessToken");
 
       if (!accessToken) {

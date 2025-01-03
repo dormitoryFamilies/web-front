@@ -1,5 +1,19 @@
 import axios, { AxiosError } from "axios";
 
+const getAccessToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("accessToken");
+  }
+  return null;
+};
+
+const getRefreshToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("refreshToken");
+  }
+  return null;
+};
+
 const client = axios.create({
   baseURL: "http://13.124.186.20:8080",
   headers: {
@@ -24,6 +38,14 @@ const client = axios.create({
   withCredentials: true,
 });
 
+client.interceptors.request.use((config) => {
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    config.headers["AccessToken"] = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
 /**
  * 토큰 관리를 위한 함수
  */
@@ -40,8 +62,10 @@ const setAuthHeader = (token: string) => {
  * 액세스 토큰 및 리프레시 토큰을 저장하는 함수
  */
 const saveTokensToLocalStorage = (accessToken: string, refreshToken: string) => {
-  localStorage.setItem("accessToken", accessToken);
-  localStorage.setItem("refreshToken", refreshToken);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+  }
 };
 
 /**
@@ -73,7 +97,7 @@ const sendRequest = async (config: any) => {
             {}, // 여기에 요청 바디 데이터를 넣어줘야 함
             {
               headers: {
-                RefreshToken: "Bearer " + refreshToken,
+                RefreshToken: `Bearer ${refreshToken}`,
               },
             },
           );
@@ -89,14 +113,12 @@ const sendRequest = async (config: any) => {
             setAuthHeader(newAccessToken);
             saveTokensToLocalStorage(newAccessToken, newRefreshToken);
 
-            // 이전 요청 재시도
             return await client({
+              ...config,
               headers: {
-                AccessToken: "Bearer " + newAccessToken,
+                ...config.headers,
+                AccessToken: `Bearer ${newAccessToken}`,
               },
-              method: config.method,
-              data: config.data,
-              url: config.url,
             });
           } else {
             console.error("새로운 토큰이 없습니다.");
@@ -117,11 +139,8 @@ const sendRequest = async (config: any) => {
 export const swrGetFetcher = async (url: any) => {
   // 액세스 토큰을 헤더에 담아 요청 보내기
   const response = await sendRequest({
-    headers: {
-      AccessToken: "Bearer " + localStorage.getItem("accessToken"),
-    },
     method: "GET",
-    url: url,
+    url,
   });
   return response.data;
 };
