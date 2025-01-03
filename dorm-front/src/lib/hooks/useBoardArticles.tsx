@@ -22,7 +22,12 @@ const getKey = (
   }
 };
 
-const useBoardArticles = (selectedDorm: string, boardType: BoardType, sortType: BoardSortType, statusType: BoardStatusType) => {
+const useBoardArticles = (
+  selectedDorm: string,
+  boardType: BoardType,
+  sortType: BoardSortType,
+  statusType: BoardStatusType,
+) => {
   const { data, isLoading, error, size, setSize, mutate } = useSWRInfinite<ResponseAxiosArticleType>(
     (pageIndex, previousPageData) => getKey(pageIndex, previousPageData, selectedDorm, boardType, sortType, statusType),
     swrGetFetcher,
