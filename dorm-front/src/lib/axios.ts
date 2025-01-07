@@ -1,24 +1,11 @@
 import axios, { AxiosError } from "axios";
-
-export const getAccessToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("accessToken");
-  }
-  return null;
-};
-
-export const getRefreshToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("refreshToken");
-  }
-  return null;
-};
+import Cookies from "js-cookie";
 
 const client = axios.create({
   baseURL: "http://13.124.186.20:8080",
   headers: {
     "Content-type": "application/json",
-    AccessToken: getAccessToken(),
+    AccessToken: Cookies.get("accessToken"),
   },
   transformResponse: [
     (data, headers) => {
@@ -39,7 +26,7 @@ const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
-  const accessToken = getAccessToken();
+  const accessToken = Cookies.get("accessToken");
   if (accessToken) {
     config.headers["AccessToken"] = `Bearer ${accessToken}`;
   }
@@ -61,19 +48,19 @@ const setAuthHeader = (token: string) => {
 /**
  * 액세스 토큰 및 리프레시 토큰을 저장하는 함수
  */
-const saveTokensToLocalStorage = (accessToken: string, refreshToken: string) => {
+const saveTokensToCookies = (accessToken: string, refreshToken: string) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    Cookies.set("accessToken", accessToken, { expires: 7 });
+    Cookies.set("refreshToken", refreshToken, { expires: 7 });
   }
 };
 
 /**
  * 액세스 토큰 및 리프레시 토큰을 불러오는 함수
  */
-const getTokensFromLocalStorage = () => {
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
+const getTokensFromCookies = () => {
+  const accessToken = Cookies.get("accessToken");
+  const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
 
@@ -83,13 +70,13 @@ const getTokensFromLocalStorage = () => {
  */
 const sendRequest = async (config: any) => {
   try {
-    console.log("In send Request" + localStorage.getItem("accessToken"));
+    console.log("In send Request" + Cookies.get("accessToken"));
     return await client(config);
   } catch (error) {
     const axiosError = error as AxiosError; // AxiosError로 캐스팅
     if (axiosError.response && axiosError.response.status === 401) {
       // 만료된 액세스 ㅇ토큰일 경우 리프레시 토큰으로 갱신
-      const { refreshToken } = getTokensFromLocalStorage();
+      const { refreshToken } = getTokensFromCookies();
       if (refreshToken) {
         try {
           const response = await client.post(
@@ -111,7 +98,7 @@ const sendRequest = async (config: any) => {
             // localStorage.removeItem("refreshToken");
             // localStorage.removeItem("accessToken");
             setAuthHeader(newAccessToken);
-            saveTokensToLocalStorage(newAccessToken, newRefreshToken);
+            saveTokensToCookies(newAccessToken, newRefreshToken);
 
             return await client({
               ...config,
@@ -145,4 +132,4 @@ export const swrGetFetcher = async (url: any) => {
   return response.data;
 };
 
-export { client, getTokensFromLocalStorage, saveTokensToLocalStorage, sendRequest, setAuthHeader };
+export { client, getTokensFromCookies, saveTokensToCookies, sendRequest, setAuthHeader };

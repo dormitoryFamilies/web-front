@@ -1,8 +1,10 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 export const dynamic = "force-dynamic";
 
-import { useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 import NicknameSetting from "@/components/onboarding/NicknameSetting";
@@ -15,18 +17,18 @@ import { StepOnboarding } from "@/types/onboarding/type";
 
 const OnBoarding = () => {
   const [step, setStep] = useState<StepOnboarding>("ServiceAccessRights");
+  const params = useSearchParams();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = searchParams.get("code");
-      if (code && localStorage.getItem("kakaoAccessToken") === null) {
+      const code = params.get("code");
+      if (code && Cookies.get("kakaoAccessToken") === null) {
         getKaKaoAccessToken(code).then((r) => {
-          localStorage.setItem("kakaoAccessToken", r?.access_token);
+          Cookies.set("kakaoAccessToken", r?.access_toke, { expires: Date.now() + 604800000 });
           getJWTToken(r?.access_token).then((res) => {
             if (res) {
-              localStorage.setItem("accessToken", res.headers.accesstoken);
-              localStorage.setItem("refreshToken", res.headers.refreshtoken);
+              Cookies.set("accessToken", res.headers.accessToken, { expires: Date.now() + 604800000 });
+              Cookies.set("refreshToken", res.headers.refreshToken, { expires: Date.now() + 604800000 });
             }
           });
         });
