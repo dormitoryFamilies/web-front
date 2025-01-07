@@ -5,18 +5,11 @@ import { useSearchParams } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import NicknameSetting from "@/components/onboarding/NicknameSetting";
-import PhotoStudentIDCard from "@/components/onboarding/PhotoStudentIDCard";
-import SchoolInfoSetting from "@/components/onboarding/SchoolInfoSetting";
-import ServiceAccessRights from "@/components/onboarding/ServiceAccessRights";
-import WaitForCompletion from "@/components/onboarding/WaitForCompletion";
-import { getJWTToken, getKaKaoAccessToken } from "@/lib/api/onboarding";
-import { StepOnboarding } from "@/types/onboarding/type";
+import { getJWTToken, getKaKaoAccessToken, getUserRole } from "@/lib/api/onboarding";
 
 const OnBoarding = () => {
-  const [step, setStep] = useState<StepOnboarding>("ServiceAccessRights");
   const params = useSearchParams();
 
   useEffect(() => {
@@ -40,14 +33,6 @@ const OnBoarding = () => {
     }
   }, []);
 
-  return (
-    <main>
-      {step === "ServiceAccessRights" && <ServiceAccessRights onNext={setStep} />}
-      {step === "NicknameSetting" && <NicknameSetting onNext={setStep} />}
-      {step === "SchoolInfoSetting" && <SchoolInfoSetting onNext={setStep} onBefore={setStep} />}
-      {step === "PhotoStudentIDCard" && <PhotoStudentIDCard onNext={setStep} onBefore={setStep} />}
-      {step === "WaitForCompletion" && <WaitForCompletion onBefore={setStep} />}
-    </main>
-  );
+  return <div></div>;
 };
 export default OnBoarding;
