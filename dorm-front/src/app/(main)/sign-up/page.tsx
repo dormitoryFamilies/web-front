@@ -21,5 +21,5 @@ const SignUp = () => {
       {step === "WaitForCompletion" && <WaitForCompletion onBefore={setStep} />}
     </main>
   );
-}
+};
 export default SignUp;

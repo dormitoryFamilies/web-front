@@ -43,11 +43,11 @@ export const getJWTToken = async (accessToken: string) => {
   }
 };
 
-export const getUserRole = async () => {
+export const getUserRole = async (accessToken: string) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
+        AccessToken: `Bearer ${accessToken}`,
       },
       method: "GET",
       url: "/api/members/me/authorities",
