@@ -1,11 +1,13 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 import { EditMyProfileType } from "@/types/mypage/type";
 
 export const getSearchFollowers = async (searchValue: string) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/members/followers/search?q=${searchValue}`,
@@ -21,7 +23,7 @@ export const getSearchFollowings = async (searchValue: string) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/members/followings/search?q=${searchValue}`,
@@ -37,7 +39,7 @@ export const putProfileData = async (profileData: EditMyProfileType) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: profileData,

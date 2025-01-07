@@ -1,32 +1,31 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 export const dynamic = "force-dynamic";
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
-import NicknameSetting from "@/components/onboarding/NicknameSetting";
-import PhotoStudentIDCard from "@/components/onboarding/PhotoStudentIDCard";
-import SchoolInfoSetting from "@/components/onboarding/SchoolInfoSetting";
-import ServiceAccessRights from "@/components/onboarding/ServiceAccessRights";
-import WaitForCompletion from "@/components/onboarding/WaitForCompletion";
-import { getJWTToken, getKaKaoAccessToken } from "@/lib/api/onboarding";
-import { StepOnboarding } from "@/types/onboarding/type";
+import { getJWTToken, getKaKaoAccessToken, getUserRole } from "@/lib/api/onboarding";
 
 const OnBoarding = () => {
-  const [step, setStep] = useState<StepOnboarding>("ServiceAccessRights");
+  const params = useSearchParams();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = searchParams.get("code");
-      if (code && localStorage.getItem("kakaoAccessToken") === null) {
+      const code = params.get("code");
+      if (code && Cookies.get("kakaoAccessToken") === null) {
         getKaKaoAccessToken(code).then((r) => {
-          localStorage.setItem("kakaoAccessToken", r?.access_token);
+          Cookies.set("kakaoAccessToken", r?.access_toke, { expires: Date.now() + 604800000 });
           getJWTToken(r?.access_token).then((res) => {
             if (res) {
-              localStorage.setItem("accessToken", res.headers.accesstoken);
-              localStorage.setItem("refreshToken", res.headers.refreshtoken);
+              Cookies.set("accessToken", res.headers.accessToken, { expires: Date.now() + 604800000 });
+              Cookies.set("refreshToken", res.headers.refreshToken, { expires: Date.now() + 604800000 });
+              getUserRole().then((r) => {
+                console.log("r", r.data.data);
+                Cookies.set("role", "ROLE_ADMIN");
+              });
             }
           });
         });
@@ -34,14 +33,6 @@ const OnBoarding = () => {
     }
   }, []);
 
-  return (
-    <main>
-      {step === "ServiceAccessRights" && <ServiceAccessRights onNext={setStep} />}
-      {step === "NicknameSetting" && <NicknameSetting onNext={setStep} />}
-      {step === "SchoolInfoSetting" && <SchoolInfoSetting onNext={setStep} onBefore={setStep} />}
-      {step === "PhotoStudentIDCard" && <PhotoStudentIDCard onNext={setStep} onBefore={setStep} />}
-      {step === "WaitForCompletion" && <WaitForCompletion onBefore={setStep} />}
-    </main>
-  );
+  return <div></div>;
 };
 export default OnBoarding;

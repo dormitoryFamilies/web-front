@@ -1,10 +1,12 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 
 export const putAlarm = async (data: number[]) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: {

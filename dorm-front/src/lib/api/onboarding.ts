@@ -1,6 +1,7 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import { sendRequest } from "@/lib/axios";
 import { ProfileSettingType } from "@/types/global";
 
 export const getKaKaoAccessToken = async (code: string | null) => {
@@ -42,10 +43,26 @@ export const getJWTToken = async (accessToken: string) => {
   }
 };
 
+export const getUserRole = async () => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
+      },
+      method: "GET",
+      url: "/api/members/me/authorities",
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("User Role 에러:", error);
+  }
+};
+
 export const getSearchDuplicateNickName = async (searchValue: string) => {
   const response = await sendRequest({
     headers: {
-      AccessToken: `Bearer ${getAccessToken()}`,
+      AccessToken: `Bearer ${Cookies.get("accessToken")}`,
     },
     method: "GET",
     url: `/api/members/check?nickname=${searchValue}`,
@@ -58,7 +75,7 @@ export const putProfileInitialData = async (data: ProfileSettingType) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: data,
@@ -78,7 +95,7 @@ export const putMemberApproval = async (memberId: number) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       url: `/api/verify/members/${memberId}/approvals`,
@@ -97,7 +114,7 @@ export const putMemberRejection = async (memberId: number) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       url: `/api/verify/members/${memberId}/rejections`,
