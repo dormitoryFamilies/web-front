@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -34,6 +35,7 @@ const Edit = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false); //비동기 제출 트리거
   // 입력 필드 목록을 관리하는 상태
   const [tags, setTags] = useState<string[]>([]);
+  const router = useRouter();
 
   /**
    * Recoil 초기화 함수
@@ -134,6 +136,7 @@ const Edit = () => {
           console.error("폼 제출 중 오류 발생:", error);
         } finally {
           setIsReadyToSubmit(false);
+          router.push("/board");
         }
       }
     };
