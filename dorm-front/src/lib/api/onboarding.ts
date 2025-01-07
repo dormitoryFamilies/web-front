@@ -43,6 +43,22 @@ export const getJWTToken = async (accessToken: string) => {
   }
 };
 
+export const getUserRole = async () => {
+  try {
+    const response = await sendRequest({
+      headers: {
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
+      },
+      method: "GET",
+      url: "/api/members/me/authorities",
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("User Role 에러:", error);
+  }
+};
+
 export const getSearchDuplicateNickName = async (searchValue: string) => {
   const response = await sendRequest({
     headers: {

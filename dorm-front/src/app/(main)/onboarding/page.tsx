@@ -29,6 +29,10 @@ const OnBoarding = () => {
             if (res) {
               Cookies.set("accessToken", res.headers.accessToken, { expires: Date.now() + 604800000 });
               Cookies.set("refreshToken", res.headers.refreshToken, { expires: Date.now() + 604800000 });
+              getUserRole().then((r) => {
+                console.log("r", r.data.data);
+                Cookies.set("role", "ROLE_ADMIN");
+              });
             }
           });
         });
