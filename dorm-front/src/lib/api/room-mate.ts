@@ -1,4 +1,6 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 import { LifeStylePostType, PreferenceOrdersType } from "@/types/room-mate/type";
 
 export const postLifestyles = async (data: LifeStylePostType) => {
@@ -6,7 +8,7 @@ export const postLifestyles = async (data: LifeStylePostType) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: data,
@@ -24,7 +26,7 @@ export const patchLifestyles = async (data: {}) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PATCH",
       data: data,
@@ -42,7 +44,7 @@ export const deleteLifestyles = async () => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: "/api/my/lifestyles",
@@ -59,7 +61,7 @@ export const postPreferenceOrders = async (data: PreferenceOrdersType) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: data,
@@ -77,7 +79,7 @@ export const deletePreferenceOrders = async () => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/my/preference-orders`,
@@ -94,7 +96,7 @@ export const putPreferenceOrders = async (data: PreferenceOrdersType) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: data,
@@ -112,7 +114,7 @@ export const postRoomMateMatching = async () => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/matchings/recommendations`,
@@ -129,7 +131,7 @@ export const getAllDoomzList = async (searchValue: string) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/matchings/members/search?q=${searchValue}&page=0&size=5`,
@@ -146,7 +148,7 @@ export const postRoomMateWish = async (memberId: string | string[] | number | un
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/members/${memberId}/roommate-wishes`,
@@ -163,7 +165,7 @@ export const deleteRoomMateWish = async (memberId: string | string[] | number | 
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/members/${memberId}/roommate-wishes`,
@@ -183,7 +185,7 @@ export const postRoomMateMatchingRequest = async (memberId: string | string[] | 
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/members/${memberId}/matching-requests`,
@@ -203,7 +205,7 @@ export const deleteRoomMateMatchingRequest = async (memberId: number | undefined
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/members/${memberId}/matching-requests`,
@@ -223,7 +225,7 @@ export const postAcceptMatchingRequest = async (memberId: number) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/members/${memberId}/matching-results`,
@@ -243,7 +245,7 @@ export const deleteCancelMatchingRequest = async (memberId: number | undefined) 
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/members/${memberId}/matching-results`,

@@ -1,11 +1,13 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 import { ArticlePostType, PostCommentType } from "@/types/board/type";
 
 export const postArticle = async (data: ArticlePostType) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: data,
@@ -22,7 +24,7 @@ export const putArticle = async (data: ArticlePostType, articleId: string | stri
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: data,
@@ -39,7 +41,7 @@ export const deleteArticle = async (articleId: number | string | string[] | unde
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/articles/${articleId}`,
@@ -56,7 +58,7 @@ export const postArticleImage = async (formData: FormData) => {
     const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: formData,
@@ -74,7 +76,7 @@ export const deleteArticleImage = async (formData: FormData) => {
     const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       data: formData,
@@ -92,7 +94,7 @@ export const putArticleStatus = async (articleId: string | string[] | number | u
     const response = await sendRequest({
       headers: {
         "Content-Type": "multipart/form-data",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PUT",
       data: formData,
@@ -109,7 +111,7 @@ export const postArticleWish = async (articleId: string | number | string[] | un
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/articles/${articleId}/wishes`,
@@ -125,7 +127,7 @@ export const deleteArticleWish = async (articleId: string | number | string[] | 
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/articles/${articleId}/wishes`,
@@ -142,7 +144,7 @@ export const postArticleComment = async (articleId: string | string[], data: Pos
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: data,
@@ -160,7 +162,7 @@ export const deleteArticleComment = async (commentId: number) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/comments/${commentId}`,
@@ -177,7 +179,7 @@ export const postArticleReplyComments = async (commentId: number, data: PostComm
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       data: data,
@@ -195,7 +197,7 @@ export const deleteArticleReplyComment = async (replyCommentId: number) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/reply-comments/${replyCommentId}`,
@@ -214,7 +216,7 @@ export const getSearchResult = async (dormitoryType: string, searchValue: string
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/dormitories/${dormitoryType}/articles/search?q=${searchValue}`,

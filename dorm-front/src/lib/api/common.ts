@@ -1,10 +1,12 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 
 export const postFollow = async (memberId: number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/members/${memberId}/follows`,
@@ -20,7 +22,7 @@ export const deleteFollowing = async (memberId: number | undefined) => {
   try {
     const response = await sendRequest({
       headers: {
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/members/${memberId}/followings`,
@@ -36,7 +38,7 @@ export const logout = async () => {
   try {
     const response = await sendRequest({
       headers: {
-        RefreshToken: `Bearer ${getAccessToken()}`,
+        RefreshToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "POST",
       url: `/api/logout`,

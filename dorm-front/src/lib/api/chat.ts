@@ -1,4 +1,6 @@
-import { getAccessToken, sendRequest } from "@/lib/axios";
+import Cookies from "js-cookie";
+
+import { sendRequest } from "@/lib/axios";
 
 /**
  * 룸메 매칭 신청
@@ -7,7 +9,7 @@ export const createChatRoom = async (roomId: string | string[] | number | undefi
   const response = await sendRequest({
     headers: {
       "Content-type": "application/json",
-      AccessToken: `Bearer ${getAccessToken()}`,
+      AccessToken: `Bearer ${Cookies.get("accessToken")}`,
     },
     method: "POST",
     url: `/api/chats/members/${roomId}`,
@@ -24,7 +26,7 @@ export const patchLeaveChatRoom = async (roomId: string | string[]) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PATCH",
       url: `/api/chats/rooms/${roomId}`,
@@ -44,7 +46,7 @@ export const patchRejoinChatRoom = async (memberId: string | string[] | number |
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "PATCH",
       url: `/api/chats/members/${memberId}`,
@@ -64,7 +66,7 @@ export const deleteChatRoom = async (roomId: string | string[]) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/chats/rooms/${roomId}`,
@@ -84,7 +86,7 @@ export const deleteNoMessageChatRoom = async (roomId: string | string[]) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "DELETE",
       url: `/api/chats/rooms/${roomId}/no-messages`,
@@ -104,7 +106,7 @@ export const getRoomId = async (memberId: string | string[] | number | undefined
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/chats/members/${memberId}`,
@@ -124,7 +126,7 @@ export const getSearchChatRoom = async (searchValue: string, size: number) => {
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/chats/rooms/search?q=${searchValue}&page=0&size=${size}`,
@@ -144,7 +146,7 @@ export const getSearchChatMessage = async (searchValue: string, sort: string, si
     const response = await sendRequest({
       headers: {
         "Content-type": "application/json",
-        AccessToken: `Bearer ${getAccessToken()}`,
+        AccessToken: `Bearer ${Cookies.get("accessToken")}`,
       },
       method: "GET",
       url: `/api/chats/messages/search?q=${searchValue}&sort=${sort}&page=0&size=${size}`,
