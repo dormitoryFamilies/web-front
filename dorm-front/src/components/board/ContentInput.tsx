@@ -39,7 +39,7 @@ const ContentInput = (props: Props) => {
         <textarea
           maxLength={300}
           placeholder={placeholder}
-          value={pastContent ? pastContent : ""}
+          value={pastContent ? pastContent : postData.content}
           className={"focus:outline-0 w-full h-[200px] placeholder focus:placeholder-top"}
           onChange={(e) => {
             setCount(e.target.value.length);

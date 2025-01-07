@@ -37,7 +37,7 @@ const TitleInput = (props: Props) => {
       <div className={"relative flex justify-between rounded-[12px] border-[1px] border-gray1 py-3 px-4"}>
         <input
           maxLength={20}
-          value={pastTitle ? pastTitle : ""}
+          value={pastTitle ? pastTitle : postData.title}
           placeholder={placeholder}
           className={"focus:outline-0 w-full"}
           onChange={(e) => {
