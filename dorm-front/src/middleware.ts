@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 
@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 
@@ -39,7 +39,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 
@@ -47,7 +47,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 
@@ -55,7 +55,7 @@ export function middleware(request: NextRequest) {
     if (request.cookies.get("role")?.value === "ROLE_MEMBER" || request.cookies.get("role")?.value === "ROLE_ADMIN") {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/onboarding", request.url));
     }
   }
 }
