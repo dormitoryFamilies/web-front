@@ -162,21 +162,13 @@ const MBTI = (props: Props) => {
                 setSelectedContent={setPlannedOrSpontaneous}></MBTIItem>
             </div>
           </div>
-          <button
-            disabled={
-              !(
-                (extrovertOrIntrovert === "" &&
-                  intuitiveOrThinking === "" &&
-                  heterosexualOrEmotional === "" &&
-                  plannedOrSpontaneous === "") ||
-                (extrovertOrIntrovert !== "" &&
-                  intuitiveOrThinking !== "" &&
-                  heterosexualOrEmotional !== "" &&
-                  plannedOrSpontaneous !== "")
-              )
-            }
-            onClick={updateMBTI}
-            className={
+        </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={
+            !(
               (extrovertOrIntrovert === "" &&
                 intuitiveOrThinking === "" &&
                 heterosexualOrEmotional === "" &&
@@ -185,12 +177,23 @@ const MBTI = (props: Props) => {
                 intuitiveOrThinking !== "" &&
                 heterosexualOrEmotional !== "" &&
                 plannedOrSpontaneous !== "")
-                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
-        </div>
+            )
+          }
+          onClick={updateMBTI}
+          className={
+            (extrovertOrIntrovert === "" &&
+              intuitiveOrThinking === "" &&
+              heterosexualOrEmotional === "" &&
+              plannedOrSpontaneous === "") ||
+            (extrovertOrIntrovert !== "" &&
+              intuitiveOrThinking !== "" &&
+              heterosexualOrEmotional !== "" &&
+              plannedOrSpontaneous !== "")
+              ? "w-[90%] mx-5 rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+              : "w-[90%] mx-5 rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

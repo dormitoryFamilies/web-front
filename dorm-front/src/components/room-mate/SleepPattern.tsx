@@ -161,17 +161,21 @@ const SleepPattern = (props: Props) => {
             selectedContent={sleepingSensitivity}
             setSelectedContent={setSleepingSensitivity}
             className={"grid-cols-2"}></Item>
-          <button
-            disabled={sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""}
-            onClick={handleNextClick}
-            className={
-              sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""
-                ? "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
+
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""}
+          onClick={handleNextClick}
+          className={
+            sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""
+              ? "mx-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

@@ -15,12 +15,12 @@ const OnBoarding = () => {
   const [isTrigger, setIsTrigger] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const code = params.get("code");
-      if (code && Cookies.get("accessToken") === undefined) {
-        getKaKaoAccessToken(code).then((r) => {
-          Cookies.set("kakaoAccessToken", r?.access_toke, { expires: Date.now() + 604800000 });
-          getJWTToken(r?.access_token).then((res) => {
+    const code = params.get("code");
+    if (code && Cookies.get("accessToken") === undefined) {
+      getKaKaoAccessToken(code).then((r) => {
+        if (r) {
+          Cookies.set("kakaoAccessToken", r.access_token, { expires: Date.now() + 604800000 });
+          getJWTToken(r.access_token).then((res) => {
             if (res) {
               Cookies.set("accessToken", res.headers.accesstoken, { expires: Date.now() + 604800000 });
               Cookies.set("refreshToken", res.headers.refreshtoken, { expires: Date.now() + 604800000 });
@@ -31,8 +31,8 @@ const OnBoarding = () => {
               });
             }
           });
-        });
-      }
+        }
+      });
     }
   }, [params]);
 

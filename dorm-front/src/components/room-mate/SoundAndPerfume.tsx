@@ -103,19 +103,17 @@ const SoundAndPerfume = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[280px] h-[140px]"}>
-              <img
-                src={"/room-mate/휴대폰_소리.png"}
-                alt={"/room-mate/휴대폰_소리.png"}
-                className={"absolute object-cover"}
-              />
-            </div>
+            <img
+              src={"/room-mate/휴대폰_소리.png"}
+              alt={"/room-mate/휴대폰_소리.png"}
+              className={"w-[280px] h-[240px]"}
+            />
           </div>
           <div className={"text-h3 font-semibold"}>나는 주로 어떤 편인가요?</div>
         </div>
 
         <div className={"flex flex-col gap-y-[28px] mt-[32px]"}>
-          <Item
+        <Item
             title={"휴대폰 소리"}
             isRequired={false}
             contents={phoneSoundContents}
@@ -131,17 +129,20 @@ const SoundAndPerfume = (props: Props) => {
             setSelectedContent={setPerfumeUsage}
             selectedContent={perfumeUsage}
           />
-          <button
-            disabled={perfumeUsage === ""}
-            onClick={handleNextClick}
-            className={
-              perfumeUsage === ""
-                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={perfumeUsage === ""}
+          onClick={handleNextClick}
+          className={
+            perfumeUsage === ""
+              ? "mx-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

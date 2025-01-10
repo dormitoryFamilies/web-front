@@ -141,7 +141,7 @@ const Board = () => {
                         wishCount={article.wishCount}
                         viewCount={article.viewCount}
                         profileUrl={article.profileUrl}
-                        thumbnailUrl={"/unnimm.jpg"}></Post>
+                        thumbnailUrl={article.thumbnailUrl}></Post>
                     </div>
                   );
                 });

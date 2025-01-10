@@ -106,7 +106,7 @@ const CycleToReturnHome = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <img src={"/room-mate/본가주기.png"} alt={"/room-mate/본가주기.png"} className={"w-[250px] h-[180px]"} />
+            <img src={"/room-mate/본가주기.png"} alt={"/room-mate/본가주기.png"} className={"w-[250px] h-[200px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>나의 본가 주기는?</div>
         </div>
@@ -123,13 +123,14 @@ const CycleToReturnHome = (props: Props) => {
           />
         </div>
       </div>
-      <button
-        onClick={handleNextClick}
-        className={
-          "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-        }>
-        다음
-      </button>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          onClick={handleNextClick}
+          className={"mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"}>
+          다음
+        </button>
+      </div>
     </>
   );
 };

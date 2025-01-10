@@ -184,7 +184,7 @@ const Edit = () => {
             essential={false}></TagInput>
         </div>
         <div className={"h-[100px]"} />
-        <div className={"fixed bottom-0 flex items-center justify-center bg-white w-full border py-5"}>
+        <div className={"fixed bottom-0 flex items-center justify-center bg-white w-full py-5"}>
           <button className={"w-[90%] left-5 text-h5 text-white bg-primary rounded-full py-4"} type={"submit"}>
             작성완료
           </button>

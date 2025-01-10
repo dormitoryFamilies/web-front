@@ -158,17 +158,20 @@ const SmokingAndDrinking = (props: Props) => {
               placeholder={"나의 주사를 적어주세요."}
               className={"p-3 outline-none rounded-[12px] border-[1px] border-gray1 placeholder:text-h4"}></input>
           </div>
-          <button
-            disabled={smoking === "" || drinkingFrequency === ""}
-            onClick={handleNextClick}
-            className={
-              smoking === "" || drinkingFrequency === ""
-                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={smoking === "" || drinkingFrequency === ""}
+          onClick={handleNextClick}
+          className={
+            smoking === "" || drinkingFrequency === ""
+              ? "w-[90%] mx-5 rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "w-[90%] mx-5 rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

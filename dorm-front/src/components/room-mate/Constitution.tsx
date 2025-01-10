@@ -114,17 +114,20 @@ const Constitution = (props: Props) => {
             selectedContent={coldTolerance}
             setSelectedContent={setColdTolerance}
           />
-          <button
-            disabled={coldTolerance === "" || heatTolerance === ""}
-            onClick={handleNextClick}
-            className={
-              coldTolerance === "" || heatTolerance === ""
-                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={coldTolerance === "" || heatTolerance === ""}
+          onClick={handleNextClick}
+          className={
+            coldTolerance === "" || heatTolerance === ""
+              ? "w-[90%] mx-5 rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "w-[90%] mx-5 rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );
