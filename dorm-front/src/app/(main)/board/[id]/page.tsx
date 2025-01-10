@@ -28,7 +28,7 @@ import Header from "@/components/common/Header";
 import ProfileModal from "@/components/common/ProfileModal";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
 import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
-import { selectedDormitory } from "@/recoil/atom";
+import { selectedDormitory, selectedMemberIdAtom } from "@/recoil/atom";
 import { selectedCommentIdAtom } from "@/recoil/board/atom";
 import { ArticleDetailCommentType } from "@/types/board/type";
 
@@ -46,6 +46,7 @@ const BoardDetail = () => {
   const [isArticleFavoritesListClicked, setIsArticleFavoritesListClicked] = useState(false);
   const [isRecruitmentStatusChangeModalOpen, setIsRecruitmentStatusChangeModal] = useState(false);
   const [isDeleteArticleWarningModalOpen, setIsDeleteArticleWarningModalOpen] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useRecoilState(selectedMemberIdAtom);
 
   const [selectedCommentId, setSelectedCommentId] = useRecoilState(selectedCommentIdAtom);
   const [isCommentInput, setIsCommentInput] = useState(true);
