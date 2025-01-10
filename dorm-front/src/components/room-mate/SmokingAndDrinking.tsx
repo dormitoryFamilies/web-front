@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -118,14 +117,11 @@ const SmokingAndDrinking = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[240px] h-[167px]"}>
-              <Image
-                src={"/room-mate/흡연,_음주.png"}
-                alt={"/room-mate/흡연,_음주.png"}
-                className={"absolute object-cover"}
-                fill
-              />
-            </div>
+            <img
+              src={"/room-mate/흡연,_음주.png"}
+              alt={"/room-mate/흡연,_음주.png"}
+              className={"w-[250px] h-[200px]"}
+            />
             <div className={"text-h3 font-semibold"}>나의 흡연・음주는?</div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -89,14 +88,11 @@ const Constitution = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[260px] h-[140px]"}>
-              <Image
-                src={"/room-mate/추위,_더위.png"}
-                alt={"/room-mate/추위,_더위.png"}
-                className={"absolute object-cover"}
-                fill
-              />
-            </div>
+            <img
+              src={"/room-mate/추위,_더위.png"}
+              alt={"/room-mate/추위,_더위.png"}
+              className={"object-cover w-[260px] h-[140px]"}
+            />
           </div>
           <div className={"text-h3 font-semibold"}>나의 체질은?</div>
         </div>

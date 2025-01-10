@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -136,9 +135,7 @@ const MBTI = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[400px] h-[140px]"}>
-              <Image src={"/room-mate/MBTI.png"} alt={"/room-mate/MBTI.png"} className={"absolute object-cover"} fill />
-            </div>
+            <img src={"/room-mate/MBTI.png"} alt={"/room-mate/MBTI.png"} className={"object-cover w-[340px] h-[200px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>나의 MBTI는?</div>
         </div>

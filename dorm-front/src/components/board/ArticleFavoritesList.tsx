@@ -1,4 +1,3 @@
-import Image from "next/image";
 import * as React from "react";
 import { useRecoilState } from "recoil";
 
@@ -36,14 +35,11 @@ const ArticleFavoritesList = (props: Props) => {
                     setIsProfileModalOpen(true);
                   }}
                   className={"flex gap-x-3"}>
-                  <div className={"relative w-[48px] h-[48px] "}>
-                    <Image
-                      className={"object-cover rounded-full"}
-                      src={articleWishUser.profileUrl ? articleWishUser.profileUrl : "/unnimm.jpg"}
-                      alt={articleWishUser.profileUrl}
-                      fill
-                    />
-                  </div>
+                  <img
+                    className={"object-cover w-[48px] h-[48px] rounded-full"}
+                    src={articleWishUser.profileUrl ? articleWishUser.profileUrl : "/unnimm.jpg"}
+                    alt={articleWishUser.profileUrl}
+                  />
                   <div className={"flex flex-col gap-y-[2px]"}>
                     <div className={"font-semibold"}>{articleWishUser.nickname}</div>
                     <div className={"text-h5 text-gray5"}>{articleWishUser.dormitoryType}</div>

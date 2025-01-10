@@ -33,7 +33,7 @@ const Done = (props: Props) => {
             <div className={"font-semibold"}>원하는 룸메정보를 설정해봐요!</div>
           </div>
           <div className={"text-h5 mt-3"}>나의 긱사생활 변경은 ‘마이페이지’에서 가능해요.</div>
-          <Image alt={"/room-mate/룸메이트.png"} src={"/room-mate/룸메이트.png"} width={300} height={50}></Image>
+          <img alt={"/room-mate/룸메이트.png"} src={"/room-mate/룸메이트.png"} className={"w-[300px] h-[50px]"}></img>
         </div>
       </div>
       <button

@@ -1,6 +1,5 @@
 import { format, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps } from "react";
@@ -90,12 +89,7 @@ const Post = (props: Props) => {
             <div className="text-h5 text-gray5 line-clamp-2">{content}</div>
           </div>
           {thumbnailUrl ? (
-            <Image
-              src={thumbnailUrl}
-              alt={thumbnailUrl}
-              width={60}
-              height={60}
-              className="rounded-[8px] bg-[#D9D9D9] w-[60px] h-[60px]"></Image>
+            <img src={thumbnailUrl} alt={thumbnailUrl} className="rounded-[8px] bg-[#D9D9D9] w-[60px] h-[60px]"></img>
           ) : null}
         </article>
 
@@ -103,13 +97,10 @@ const Post = (props: Props) => {
         <div className="flex justify-between">
           <div className="flex items-center justify-center text-h5 text-gray4 gap-x-2 ">
             <div className="flex items-center justify-center gap-x-[5px]">
-              <div className={"relative w-[15px] h-[15px] mt-1"}>
-                <Image
-                  alt={profileUrl ? profileUrl : "profile"}
-                  src={profileUrl ? profileUrl : "/profile.png"}
-                  fill
-                  className={"object-cover rounded-full"}></Image>
-              </div>
+              <img
+                alt={profileUrl ? profileUrl : "profile"}
+                src={profileUrl ? profileUrl : "/profile.png"}
+                className={"w-[15px] h-[15px] rounded-full"}></img>
               <div className={"flex items-center justify-center"}>
                 <span className="text-h5">{nickname}</span>
                 <span className="px-[6px] text-[10px]">|</span>

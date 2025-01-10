@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import Image from "next/image";
 
 interface Props {
   usage: string;
@@ -23,32 +22,23 @@ const Profile = (props: Props) => {
       }>
       {/* 프로필 사진 */}
       {usage == "author" ? (
-        <div className={"relative w-[45px] h-[45px]"}>
-          <Image
-            src={profileUrl ? profileUrl : "/profile.png"}
-            fill
-            alt={"프로필"}
-            className={"object-cover rounded-full w-[45px] h-[45px]"}
-          />
-        </div>
+        <img
+          src={profileUrl ? profileUrl : "/profile.png"}
+          alt={profileUrl ? profileUrl : "/profile.png"}
+          className={"object-cover rounded-full w-[45px] h-[45px]"}
+        />
       ) : usage == "comment" ? (
-        <div className={"relative w-[32px] h-[32px]"}>
-          <Image
-            src={profileUrl ? profileUrl : "/profile.png"}
-            fill
-            alt={"프로필"}
-            className={"object-cover rounded-full"}
-          />
-        </div>
+        <img
+          src={profileUrl ? profileUrl : "/profile.png"}
+          alt={profileUrl ? profileUrl : "/profile.png"}
+          className={"object-cover rounded-full w-[32px] h-[32px]"}
+        />
       ) : (
-        <div className={"relative w-[24px] h-[24px]"}>
-          <Image
-            src={profileUrl ? profileUrl : "/profile.png"}
-            fill
-            alt={"프로필"}
-            className={"object-cover rounded-full mt-2"}
-          />
-        </div>
+        <img
+          src={profileUrl ? profileUrl : "/profile.png"}
+          alt={profileUrl ? profileUrl : "/profile.png"}
+          className={"object-cover rounded-full mt-2 w-[24px] h-[24px]"}
+        />
       )}
       {/* 프로필 이름 */}
       <div className="flex flex-col">

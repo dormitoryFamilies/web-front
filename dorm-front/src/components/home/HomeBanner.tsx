@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/Button";
@@ -21,7 +20,7 @@ const HomeBanner = () => {
           룸메 찾기
         </Button>
       </div>
-      <Image src={"/룸메매칭 그래픽.png"} width={100} height={95} alt={"룸메 매칭 그래픽"}></Image>
+      <img src={"/룸메매칭 그래픽.png"} className={"w-[100px] h-[95px]"} alt={"룸메 매칭 그래픽"}></img>
     </div>
   );
 };

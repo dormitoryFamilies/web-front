@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -30,11 +29,10 @@ const SettingLifeStylePriorityDone = (props: Props) => {
             <div className={"font-semibold"}>룸메매칭을 해줄께요!</div>
           </div>
           <div className={"text-h5 mt-3"}>룸메 정보 변경은 ‘마이페이지’에서 가능해요.</div>
-          <Image
+          <img
             alt={"/room-mate/룸메매칭 설정 완료.png"}
             src={"/room-mate/룸메매칭 설정 완료.png"}
-            width={171.429}
-            height={160}></Image>
+            className={"w-[171px] h-[160px]"}></img>
         </div>
       </div>
       <button

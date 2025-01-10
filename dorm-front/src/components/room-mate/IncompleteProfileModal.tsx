@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
@@ -18,9 +17,7 @@ const IncompleteProfileModal = (props: Props) => {
       }>
       <section className={"flex flex-col gap-y-8 justify-center items-center bg-white py-8 px-7 rounded-[32px]"}>
         <div className={"flex flex-col gap-y-3"}>
-          <div className={"relative w-[300px] h-[160px]"}>
-            <Image src={"/room-mate/룸메이트.png"} alt={"/room-mate/룸메이트.png"} fill className={"object-cover"} />
-          </div>
+          <img src={"/room-mate/룸메이트.png"} alt={"/room-mate/룸메이트.png"} className={" w-[300px] h-[160px]"} />
           <div className={"flex flex-col items-center justify-center"}>
             <div className={"flex justify-center items-center text-h2 font-nps"}>아직 룸메 정보 설정을</div>
             <div className={"flex justify-center items-center text-h2 font-nps"}>입력하지 않았어요!</div>

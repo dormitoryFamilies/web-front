@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
@@ -15,15 +14,13 @@ const Profile = (props: Props) => {
 
   return (
     <div className={"flex p-4 rounded-[32px] gap-x-3 items-center"}>
-      <Image
+      <img
         onClick={() => {
           router.push("/mypage/profile-setting");
         }}
         alt={profileUrl ? profileUrl : "/unnimm.jpg"}
         src={profileUrl ? profileUrl : "/unnimm.jpg"}
-        width={72}
-        height={72}
-        className={"rounded-full"}></Image>
+        className={"rounded-full w-[72px] h-[72px]"}></img>
       <div className={"flex flex-col gap-y-1"}>
         <div
           onClick={() => {

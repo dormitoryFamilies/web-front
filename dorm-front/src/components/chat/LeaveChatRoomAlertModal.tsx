@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { deleteChatRoom, patchLeaveChatRoom } from "@/lib/api/chat";
@@ -20,14 +19,11 @@ const LeaveChatRoomAlertModal = (props: Props) => {
       <div className={"flex flex-col bg-white rounded-[32px] px-[28px] py-8 items-center"}>
         {/*사용자 프로필*/}
         <div className={"flex flex-col gap-y-2"}>
-          <div className={"relative w-[80px] h-[80px]"}>
-            <Image
-              src={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
-              alt={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
-              className={"object-cover rounded-full"}
-              fill
-            />
-          </div>
+          <img
+            src={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+            alt={userProfileUrl ? userProfileUrl : "/unnimm.jpg"}
+            className={"w-[80px] h-[80px] rounded-full"}
+          />
           <div className={"text-h3 font-semibold"}>{userNickName}</div>
         </div>
 

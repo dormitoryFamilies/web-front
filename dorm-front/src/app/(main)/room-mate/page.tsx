@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps, useState } from "react";
@@ -63,11 +62,13 @@ const RoommateMatching = () => {
                     router.push("/room-mate/recommended-roommate");
                   }}
                 />
-                <Image
+                <img
                   src={"/room-mate/룸메매칭_추천룸메.png"}
                   alt={"/room-mate/룸메매칭_추천룸메.png"}
+                  className={"w-full h-[230px]"}
                   height={160}
-                  width={290}></Image>
+                  width={290}
+                />
                 <div className={"flex flex-col text-white text-h3 font-semibold"}>
                   <div>{homeInfo?.data.nickname}님의</div>
                   <div>추천룸메</div>
@@ -93,11 +94,13 @@ const RoommateMatching = () => {
                   />
                 </div>
                 <div className={"flex justify-end"}>
-                  <Image
+                  <img
                     src={"/room-mate/룸메매칭_신청목록.png"}
                     alt={"/room-mate/룸메매칭_신청목록.png"}
+                    className={"w-[107px] h-[140px]"}
                     width={107}
-                    height={140}></Image>
+                    height={140}
+                  />
                 </div>
                 <div className={"pt-3 flex flex-col text-h3 font-semibold"}>
                   <div>룸메</div>
@@ -115,11 +118,10 @@ const RoommateMatching = () => {
                   />
                 </div>
                 <div className={"flex justify-end"}>
-                  <Image
+                  <img
                     src={"/room-mate/룸메매칭_전체둠즈.png"}
                     alt={"/room-mate/룸메매칭_전체둠즈.png"}
-                    width={104}
-                    height={139}></Image>
+                    className={"w-[104px] h-[140px]"}></img>
                 </div>
                 <div className={"pt-3 flex flex-col text-h3 font-semibold"}>
                   <div>룸메</div>

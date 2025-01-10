@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 import BoardTypeFilterContent from "@/components/board/BoardTypeFilterContent";

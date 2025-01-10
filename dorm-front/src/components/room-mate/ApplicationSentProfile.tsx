@@ -1,5 +1,4 @@
 import { AxiosError } from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps, useState } from "react";
@@ -60,13 +59,10 @@ const ApplicationSentProfile = (props: Props) => {
       {/* 이미지, 닉네임 */}
       <section className={"flex justify-between items-center"}>
         <div className={"flex items-center gap-x-2"}>
-          <div className={"relative w-[40px] h-[40px]"}>
-            <Image
-              src={profileUrl ? profileUrl : "/profile.png"}
-              fill
-              className={"object-cover rounded-full"}
-              alt={String(memberId)}></Image>
-          </div>
+          <img
+            src={profileUrl ? profileUrl : "/profile.png"}
+            className={"object-cover rounded-full w-[40px] h-[40px]"}
+            alt={String(memberId)}></img>
           <div>{nickname}</div>
         </div>
         {isPreferredLifestyleReviewerOpen ? (

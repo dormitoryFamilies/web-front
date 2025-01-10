@@ -1,5 +1,4 @@
 import { AxiosError } from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps, useEffect, useState } from "react";
@@ -75,13 +74,10 @@ const RoommateMatchListProfile = (props: Props) => {
       {/* 이미지, 닉네임 */}
       <div className={"flex justify-between items-center"}>
         <div className={"flex items-center gap-x-2"}>
-          <div className={"relative w-[40px] h-[40px]"}>
-            <Image
-              src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/profile.png"}
-              fill
-              className={"object-cover rounded-full"}
-              alt={String(memberId)}></Image>
-          </div>
+          <img
+            src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/profile.png"}
+            className={"rounded-full  w-[40px] h-[40px]"}
+            alt={String(memberId)}></img>
           <div>{recommendRoomMateProfile?.data.nickname}</div>
         </div>
         {isPreferredLifestyleReviewerOpen ? (

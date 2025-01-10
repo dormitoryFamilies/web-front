@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -105,11 +104,10 @@ const SoundAndPerfume = (props: Props) => {
 
           <div className={"flex flex-col items-center justify-center"}>
             <div className={"relative w-[280px] h-[140px]"}>
-              <Image
+              <img
                 src={"/room-mate/휴대폰_소리.png"}
                 alt={"/room-mate/휴대폰_소리.png"}
                 className={"absolute object-cover"}
-                fill
               />
             </div>
           </div>

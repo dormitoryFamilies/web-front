@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -107,14 +106,7 @@ const CycleToReturnHome = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[250px] h-[140px]"}>
-              <Image
-                src={"/room-mate/본가주기.png"}
-                alt={"/room-mate/본가주기.png"}
-                className={"absolute object-cover"}
-                fill
-              />
-            </div>
+            <img src={"/room-mate/본가주기.png"} alt={"/room-mate/본가주기.png"} className={"w-[250px] h-[180px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>나의 본가 주기는?</div>
         </div>
