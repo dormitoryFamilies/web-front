@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -126,14 +125,7 @@ const SleepPattern = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[220px] h-[140px]"}>
-              <Image
-                src={"/room-mate/잠버릇.png"}
-                alt={"/room-mate/잠버릇.png"}
-                className={"absolute object-cover"}
-                fill
-              />
-            </div>
+            <img src={"/room-mate/잠버릇.png"} alt={"/room-mate/잠버릇.png"} className={"w-[220px] h-[180px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>나의 수면 패턴은?</div>
         </div>
@@ -169,17 +161,21 @@ const SleepPattern = (props: Props) => {
             selectedContent={sleepingSensitivity}
             setSelectedContent={setSleepingSensitivity}
             className={"grid-cols-2"}></Item>
-          <button
-            disabled={sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""}
-            onClick={handleNextClick}
-            className={
-              sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""
-                ? "w-full rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "w-full rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
+
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""}
+          onClick={handleNextClick}
+          className={
+            sleepTime === "" || wakeUpTime === "" || sleepingHabit === "" || sleepingSensitivity === ""
+              ? "mx-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

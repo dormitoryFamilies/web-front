@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -107,9 +106,7 @@ const Exam = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[300px] h-[160px]"}>
-              <Image src={"/room-mate/공부.png"} alt={"/room-mate/공부.png"} className={"absolute object-cover"} fill />
-            </div>
+            <img src={"/room-mate/공부.png"} alt={"/room-mate/공부.png"} className={"w-[300px] h-[220px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>시험기간에 나는?</div>
         </div>
@@ -135,16 +132,19 @@ const Exam = (props: Props) => {
           />
         </div>
       </div>
-      <button
-        disabled={examPreparation === ""}
-        onClick={handleNextClick}
-        className={
-          examPreparation === ""
-            ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-            : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-        }>
-        다음
-      </button>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={examPreparation === ""}
+          onClick={handleNextClick}
+          className={
+            examPreparation === ""
+              ? "mx-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
+      </div>
     </>
   );
 };

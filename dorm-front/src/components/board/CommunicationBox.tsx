@@ -73,6 +73,9 @@ const CommunicationBox = (props: Props) => {
               {wishCount}
             </button>
             <button
+              onClick={() => {
+                router.push("/chat");
+              }}
               className={
                 "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
               }>

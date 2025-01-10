@@ -71,11 +71,6 @@ const Board = () => {
     }
   }, [inView]);
 
-  useEffect(() => {
-    // console.log("boardArticles", boardArticles);
-    console.log("allArticles", allArticles);
-  }, [boardArticles, allArticles]);
-
   const formatSortContent = () => {
     if (selectedSortType === "createdAt") {
       return "최신순";
@@ -97,7 +92,7 @@ const Board = () => {
       <div className={"h-[60px]"} />
       <FilterMenu boardType={boardType} setBoardType={setBoardType}></FilterMenu>
       {/* filter */}
-      <div className="flex gap-x-2 mx-5 my-3">
+      <div className="relative flex gap-x-2 mx-5 my-3">
         <Button
           className={"not-click-filter"}
           onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
@@ -146,7 +141,7 @@ const Board = () => {
                         wishCount={article.wishCount}
                         viewCount={article.viewCount}
                         profileUrl={article.profileUrl}
-                        thumbnailUrl={"/unnimm.jpg"}></Post>
+                        thumbnailUrl={article.thumbnailUrl}></Post>
                     </div>
                   );
                 });

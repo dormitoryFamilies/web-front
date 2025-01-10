@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { FormEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -34,6 +35,7 @@ const Edit = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false); //비동기 제출 트리거
   // 입력 필드 목록을 관리하는 상태
   const [tags, setTags] = useState<string[]>([]);
+  const router = useRouter();
 
   /**
    * Recoil 초기화 함수
@@ -134,6 +136,7 @@ const Edit = () => {
           console.error("폼 제출 중 오류 발생:", error);
         } finally {
           setIsReadyToSubmit(false);
+          router.push("/board");
         }
       }
     };
@@ -145,7 +148,7 @@ const Edit = () => {
     <div>
       <Header headerType={"dynamic"} title={"긱사생활 글수정"}></Header>
       <div className={"h-[60px]"} />
-      <form onSubmit={handleSubmit} className={"relative"}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col m-5 gap-y-5">
           <div className="flex justify-between gap-x-4">
             <DormTypeFilter content={ARTICLE_DORM_LIST} title={"기숙사"} />
@@ -180,9 +183,12 @@ const Edit = () => {
             placeholder={"#태그추가"}
             essential={false}></TagInput>
         </div>
-        <button className={"absolute text-h5 text-white bg-primary w-full rounded-full py-4"} type={"submit"}>
-          작성완료
-        </button>
+        <div className={"h-[100px]"} />
+        <div className={"fixed bottom-0 flex items-center justify-center bg-white w-full py-5"}>
+          <button className={"w-[90%] left-5 text-h5 text-white bg-primary rounded-full py-4"} type={"submit"}>
+            작성완료
+          </button>
+        </div>
       </form>
     </div>
   );

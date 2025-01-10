@@ -34,6 +34,9 @@ const RecruitmentStatusChangeModal = (props: Props) => {
 
   return (
     <div
+      onClick={() => {
+        setIsRecruitmentStatusChangeModal(false);
+      }}
       className={
         "absolute left-0 right-0 z-40 flex flex-col  items-center justify-center bg-[rgba(0,0,0,0.6)] min-h-screen"
       }>

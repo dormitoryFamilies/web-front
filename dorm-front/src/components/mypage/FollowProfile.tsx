@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { SVGProps } from "react";
 import * as React from "react";
 
@@ -11,9 +10,7 @@ const FollowProfile = (props: MemberProfile) => {
       <div className={"flex flex-col gap-y-1 rounded-[24px] border-[1px] border-gray1 py-3 px-4"}>
         {/* 이미지, 닉네임 */}
         <div className={"flex items-center gap-x-2"}>
-          <div className={"relative w-[40px] h-[40px]"}>
-            <Image src={profileUrl} fill className={"object-cover rounded-full"} alt={profileUrl}></Image>
-          </div>
+          <img src={profileUrl} className={"object-cover rounded-full w-[40px] h-[40px]"} alt={profileUrl}></img>
           <div>{nickname}</div>
         </div>
 

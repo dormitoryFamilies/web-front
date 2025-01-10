@@ -152,12 +152,11 @@ const ChatRoom = () => {
             }}
           />
           {userProfileData?.data.profileUrl ? (
-            <div className={"ml-4 relative w-[36px] h-[36px]"}>
-              <Image
+            <div className={"ml-4 relative"}>
+              <img
                 src={userProfileData?.data.profileUrl}
                 alt={userProfileData?.data.profileUrl}
-                fill
-                className={"object-cover rounded-full"}
+                className={"object-cover rounded-full w-[36px] h-[36px]"}
               />
             </div>
           ) : (

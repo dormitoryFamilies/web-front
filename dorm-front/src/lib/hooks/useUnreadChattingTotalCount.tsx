@@ -1,13 +1,13 @@
 import useSWR from "swr";
 
 import { swrGetFetcher } from "@/lib/axios";
-import { ResponseUnreadChattingTotalCountType } from "@/types/chat/page";
+import { AxiosResponseUnreadChattingTotalCountType } from "@/types/chat/page";
 
 const useUnreadChattingTotalCount = () => {
-  const { data, error } = useSWR<ResponseUnreadChattingTotalCountType>(`/chats/rooms/unread`, swrGetFetcher);
+  const { data, error } = useSWR<AxiosResponseUnreadChattingTotalCountType>(`/api/chats/rooms/unread`, swrGetFetcher);
 
   return {
-    unreadChattingTotalCount: data ? data.data.totalCount : null,
+    unreadChattingTotalCount: data ? data.data : null,
     isLoading: !error && !data,
     isError: error,
   };

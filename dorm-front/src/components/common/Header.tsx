@@ -1,10 +1,12 @@
 import { useRouter } from "next/navigation";
-import React, { Dispatch, ReactNode, SetStateAction, SVGProps } from "react";
+import React, { Dispatch, ReactNode, SetStateAction, SVGProps, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 import DropDownDormModal from "@/components/common/DropDownDormModal";
 import { DropDownClick, selectedDormitory } from "@/recoil/atom";
 import { HeaderType } from "@/types/global";
+import useAlarms from "@/lib/hooks/useAlarms";
+import { Notification } from "@/types/alarm/type";
 
 interface Props {
   headerType?: HeaderType;
@@ -19,6 +21,22 @@ const Header = (props: Props) => {
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
   const [isDropDownClick, setIsDropDownClick] = useRecoilState<boolean>(DropDownClick);
   const router = useRouter();
+  const { alarms } = useAlarms();
+
+  const updateStateBasedOnNotifications = (notifications: Notification[]) => {
+    // 초기 state 값
+    let state = false;
+
+    // isRead가 false인 항목이 하나라도 있는지 확인
+    const hasUnread = notifications.some((notification) => !notification.isRead);
+
+    // 조건에 따라 state 값 업데이트
+    if (hasUnread) {
+      state = true;
+    }
+
+    return state;
+  };
 
   //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 함수
   const dropDownOnClick = () => {
@@ -53,6 +71,9 @@ const Header = (props: Props) => {
                   router.push("/alarm");
                 }}
               />
+              {alarms && updateStateBasedOnNotifications(alarms[0].data.data.notifications) ? (
+                <div className={"absolute top-2 right-1 bg-primary rounded-full w-[4px] h-[4px]"} />
+              ) : null}
             </div>
           </>
         );

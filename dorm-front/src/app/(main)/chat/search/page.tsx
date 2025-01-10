@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { SVGProps, useEffect, useState } from "react";
@@ -112,14 +111,11 @@ const ChatSearch = () => {
                         key={searchFollowingResult.memberId}
                         className={"flex flex-col gap-y-1 justify-center items-center"}>
                         {searchFollowingResult.profileUrl ? (
-                          <div className={"relative w-[48px] h-[48px]"}>
-                            <Image
-                              src={searchFollowingResult.profileUrl}
-                              alt={searchFollowingResult.profileUrl}
-                              fill
-                              className={"object-cover rounded-full"}
-                            />
-                          </div>
+                          <img
+                            src={searchFollowingResult.profileUrl}
+                            alt={searchFollowingResult.profileUrl}
+                            className={"object-cover rounded-full w-[48px] h-[48px]"}
+                          />
                         ) : (
                           <ProfileIcon />
                         )}
@@ -156,12 +152,10 @@ const ChatSearch = () => {
                       key={searchChatRoomResult.roomId}
                       className={"my-3 flex justify-between"}>
                       <div className={"flex gap-x-3"}>
-                        <Image
-                          className={"rounded-full"}
+                        <img
+                          className={"rounded-full w-[48px] h-[48px]"}
                           src={searchChatRoomResult.memberProfileUrl}
                           alt={searchChatRoomResult.memberProfileUrl}
-                          height={48}
-                          width={48}
                         />
                         <div className={"flex flex-col gap-y-1"}>
                           <div className={"text-h4 font-semibold"}>{searchChatRoomResult.memberNickname}</div>
@@ -207,12 +201,10 @@ const ChatSearch = () => {
                       key={searchChatMessageResult.memberId}
                       className={"my-3 flex justify-between"}>
                       <div className={"flex gap-x-3"}>
-                        <Image
-                          className={"rounded-full"}
+                        <img
+                          className={"rounded-full w-[48px] h-[48px]"}
                           src={searchChatMessageResult.memberProfileUrl}
                           alt={searchChatMessageResult.memberProfileUrl}
-                          height={48}
-                          width={48}
                         />
                         <div className={"flex flex-col gap-y-1"}>
                           <div className={"text-h4 font-semibold"}>{searchChatMessageResult.memberNickname}</div>
@@ -259,14 +251,11 @@ const ChatSearch = () => {
                         key={searchFollowingResult.memberId}
                         className={"flex flex-col gap-y-1 justify-center items-center"}>
                         {searchFollowingResult.profileUrl ? (
-                          <div className={"relative w-[48px] h-[48px]"}>
-                            <Image
-                              src={searchFollowingResult.profileUrl}
-                              alt={searchFollowingResult.profileUrl}
-                              fill
-                              className={"object-cover rounded-full"}
-                            />
-                          </div>
+                          <img
+                            src={searchFollowingResult.profileUrl}
+                            alt={searchFollowingResult.profileUrl}
+                            className={"object-cover rounded-full w-[48px] h-[48px]"}
+                          />
                         ) : (
                           <ProfileIcon />
                         )}
@@ -298,12 +287,10 @@ const ChatSearch = () => {
                       key={searchChatRoomResult.roomId}
                       className={"my-3 flex justify-between"}>
                       <div className={"flex gap-x-3"}>
-                        <Image
-                          className={"rounded-full"}
+                        <img
+                          className={"rounded-full w-[48px] h-[48px]"}
                           src={searchChatRoomResult.memberProfileUrl}
                           alt={searchChatRoomResult.memberProfileUrl}
-                          height={48}
-                          width={48}
                         />
                         <div className={"flex flex-col gap-y-1"}>
                           <div className={"text-h4 font-semibold"}>{searchChatRoomResult.memberNickname}</div>
@@ -354,12 +341,10 @@ const ChatSearch = () => {
                       key={searchChatMessageResult.memberId}
                       className={"my-3 flex justify-between"}>
                       <div className={"flex gap-x-3"}>
-                        <Image
-                          className={"rounded-full"}
+                        <img
+                          className={"rounded-full w-[48px] h-[48px]"}
                           src={searchChatMessageResult.memberProfileUrl}
                           alt={searchChatMessageResult.memberProfileUrl}
-                          height={48}
-                          width={48}
                         />
                         <div className={"flex flex-col gap-y-1"}>
                           <div className={"text-h4 font-semibold"}>{searchChatMessageResult.memberNickname}</div>
@@ -381,7 +366,7 @@ const ChatSearch = () => {
 
   return (
     <div className={"relative"}>
-      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
       <SearchInput setSearchValue={setSearchValue} />
       <SearchMenu type={type} setType={setType} />
       {renderSearchResults(type)}

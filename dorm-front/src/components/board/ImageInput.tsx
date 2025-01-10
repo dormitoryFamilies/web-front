@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import * as React from "react";
 import { SVGProps, useRef } from "react";
 import { SetterOrUpdater } from "recoil";
@@ -68,7 +67,7 @@ const ImageInput = (props: Props) => {
               <div key={i} className={"relative pt-[6px] pr-[6px]"}>
                 <ImageDeleteButton i={i} usage={usage} />
                 <div className={"relative h-[80px] w-[80px] rounded-[8px] flex-shrink-0"}>
-                  <Image src={imgUrl} alt={imgUrl} fill className={"object-cover rounded-[8px]"}></Image>
+                  <img src={imgUrl} alt={imgUrl} className={"object-cover rounded-[8px]"}></img>
                 </div>
               </div>
             ))}

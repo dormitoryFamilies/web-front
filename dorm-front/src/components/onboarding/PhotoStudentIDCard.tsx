@@ -1,4 +1,3 @@
-import Image from "next/image";
 import * as React from "react";
 import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -108,23 +107,21 @@ const PhotoStudentIDCard = (props: Props) => {
         <div className={"mt-[32px] text-h2 font-semibold"}>학생증 인증을 해주세요.</div>
         {uploadImage.length !== 0 ? (
           <div className={"mt-5 flex justify-center items-center"}>
-            <div className={"relative  w-[320px] h-[550px]"}>
-              <Image alt={uploadImage} src={uploadImage} fill className={"absolute object-cover"} />
-            </div>
+            <img alt={uploadImage} src={uploadImage} className={"w-[320px] h-[550px]"} />
           </div>
         ) : (
           <section>
             <div className={"mt-[24px]"}>충북대 학생을 인증하면</div>
             <div className={"flex flex-col gap-y-3 mt-[12px]"}>
               <div className={"flex justify-between items-center gap-x-3 bg-gray0 rounded-[20px] px-5 py-3"}>
-                <Image src={"/onboarding/종이비행기.png"} width={100} height={100} alt={"/onboarding/종이비행기.png"} />
+                <img src={"/onboarding/종이비행기.png"} className={"w-[100px] h-[100px]"} alt={"/onboarding/종이비행기.png"} />
                 <div className={"flex flex-col"}>
                   <div className={"font-semibold"}>기숙사에 대한 다양한 정보와</div>
                   <div className={"font-semibold"}>소식을 빠르게 전해요!</div>
                 </div>
               </div>
               <div className={"flex justify-between items-center gap-x-3 bg-gray0 rounded-[20px] px-5 py-3"}>
-                <Image src={"/onboarding/손뼉.png"} width={100} height={100} alt={"/onboarding/종이비행기.png"} />
+                <img src={"/onboarding/손뼉.png"} className={"w-[100px] h-[100px]"} alt={"/onboarding/종이비행기.png"} />
                 <div className={"flex flex-col"}>
                   <div className={"font-semibold"}>룸메 매칭으로</div>
                   <div className={"font-semibold"}>원하는 룸메를 추천해요!</div>

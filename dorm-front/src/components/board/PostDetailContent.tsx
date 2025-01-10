@@ -1,4 +1,3 @@
-import Image from "next/image";
 import * as React from "react";
 
 import Button from "@/components/common/Button";
@@ -29,7 +28,7 @@ const PostDetailContent = (props: Props) => {
           images.map((image, index) => {
             return (
               <div key={index} className={"relative rounded-[8px] w-[100px] h-[100px] overflow-hidden"}>
-                <Image alt={image} src={image} fill className={"object-cover"} />
+                <img alt={image} src={image} className={"object-cover"} />
               </div>
             );
           })}

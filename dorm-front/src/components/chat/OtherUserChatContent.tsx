@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { SVGProps, useEffect } from "react";
 
 import useUserProfile from "@/lib/hooks/useUserProfile";
@@ -34,20 +33,17 @@ const OtherUserChatContent = (props: Props) => {
     <div className={"flex items-end px-5 w-full gap-x-2"}>
       <div className={"flex justify-start gap-x-1"}>
         {userProfileData ? (
-          <div className={"relative w-[36px] h-[36px]"}>
-            <Image
-              src={userProfileData.data.profileUrl}
-              alt={userProfileData.data.profileUrl}
-              fill
-              className={"object-cover rounded-full"}></Image>
-          </div>
+          <img
+            src={userProfileData.data.profileUrl}
+            alt={userProfileData.data.profileUrl}
+            className={"object-cover rounded-full  w-[36px] h-[36px]"}></img>
         ) : (
           <ProfileIcon />
         )}
         <div className={"flex flex-col gap-y-1"}>
           <div className={"text-h5"}>{userProfileData?.data.nickname}</div>
           <div>
-            <div className={"bg-gray1 w-[8px] h-[8px] rounded-full"} />
+          <div className={"bg-gray1 w-[8px] h-[8px] rounded-full"} />
             <div className={"py-2 px-4 rounded-full bg-gray1"}>{message}</div>
           </div>
         </div>

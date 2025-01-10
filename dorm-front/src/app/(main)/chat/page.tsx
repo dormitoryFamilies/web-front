@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SVGProps, useCallback, useEffect, useState } from "react";
 import * as React from "react";
@@ -57,7 +56,7 @@ const Chat = () => {
 
   return (
     <>
-      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
       <Header
         headerType={"chattingHome"}
         title={"채팅"}
@@ -97,14 +96,11 @@ const Chat = () => {
                     key={memberProfile.memberId}
                     className={"flex flex-col gap-y-1 justify-center items-center"}>
                     {memberProfile.profileUrl ? (
-                      <div className={"relative w-[48px] h-[48px]"}>
-                        <Image
-                          src={memberProfile.profileUrl}
-                          alt={memberProfile.profileUrl}
-                          fill
-                          className={"object-cover rounded-full"}
-                        />
-                      </div>
+                      <img
+                        src={memberProfile.profileUrl}
+                        alt={memberProfile.profileUrl}
+                        className={"object-cover rounded-full  w-[48px] h-[48px]"}
+                      />
                     ) : (
                       <ProfileIcon />
                     )}
@@ -133,12 +129,10 @@ const Chat = () => {
                     key={chatRoom.roomId}
                     className={"flex justify-between "}>
                     <div className={"flex gap-x-3 items-center"}>
-                      <Image
+                      <img
                         src={chatRoom.memberProfileUrl}
                         alt={chatRoom.memberProfileUrl}
-                        height={60}
-                        width={60}
-                        className={"rounded-full"}
+                        className={"rounded-full w-[60px] h-[60px]"}
                       />
                       <div className={"flex flex-col gap-y-1"}>
                         <div className={"text-h4 font-semibold"}>{chatRoom.memberNickname}</div>

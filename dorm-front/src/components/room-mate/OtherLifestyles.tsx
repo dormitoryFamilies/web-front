@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -141,9 +140,7 @@ const OtherLifestyles = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[320px] h-[140px]"}>
-              <Image src={"/room-mate/운동.png"} alt={"/room-mate/운동.png"} className={"absolute object-cover"} fill />
-            </div>
+            <img src={"/room-mate/운동.png"} alt={"/room-mate/운동.png"} className={"w-[300px] h-[240px]"} />
           </div>
           <div className={"text-h3 font-semibold"}>기타 생활방식을 알려주세요</div>
         </div>
@@ -167,13 +164,16 @@ const OtherLifestyles = (props: Props) => {
           />
         </div>
       </div>
-      <button
-        onClick={handleNextClick}
-        className={
-          "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-        }>
-        다음
-      </button>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          onClick={handleNextClick}
+          className={
+            "mx-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
+      </div>
     </>
   );
 };

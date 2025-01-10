@@ -2,11 +2,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
+import useUnreadChattingTotalCount from "@/lib/hooks/useUnreadChattingTotalCount";
 import { MENU_LIST } from "@/utils/nav";
 
 export default function NavBar() {
   const [route, setRoute] = useState<string>("홈");
   const paramsName = usePathname();
+  const { unreadChattingTotalCount } = useUnreadChattingTotalCount();
 
   return (
     <div className="fixed bottom-0 flex justify-center items-center w-full">
@@ -17,8 +19,13 @@ export default function NavBar() {
               href={menu.path}
               key={menu.id}
               onClick={() => setRoute(menu.name)}
-              className="w-[54px] h-[52px] text-[12px] flex flex-col justify-center items-center">
+              className="relative w-[54px] h-[52px] text-[12px] flex flex-col justify-center items-center">
               {"/" + paramsName.split("/")[1] === menu.path ? <menu.ClickedIcon /> : <menu.UnClickedIcon />}
+              {menu.name === "채팅" && unreadChattingTotalCount?.data.totalCount !== 0 ? (
+                <div className={"absolute bg-primary rounded-full px-1 text-white text-[10px] top-0 right-1"}>
+                  {unreadChattingTotalCount?.data.totalCount}
+                </div>
+              ) : null}
               <span className="text-h6 text-gray4">{menu.name}</span>
             </Link>
           );

@@ -1,5 +1,4 @@
 import { AxiosError } from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SVGProps } from "react";
 import * as React from "react";
@@ -77,12 +76,10 @@ const RoommateMatchCard = (props: Props) => {
       {/*유저 프로필*/}
       <section className={"flex items-center gap-x-3"}>
         {recommendRoomMateProfile ? (
-          <Image
-            className={"rounded-full"}
+          <img
+            className={"rounded-full w-[60px] h-[60px]"}
             src={recommendRoomMateProfile.data.profileUrl}
             alt={recommendRoomMateProfile.data.profileUrl}
-            height={60}
-            width={60}
           />
         ) : (
           <UserProfileIcon></UserProfileIcon>

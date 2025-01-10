@@ -1,7 +1,6 @@
 "use client";
 
 import { AxiosError } from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SVGProps } from "react";
@@ -61,12 +60,10 @@ const RoomMateDoomzBasicProfile = (props: Props) => {
     <section className={"mx-5 flex flex-col gap-y-5"}>
       {/* 기본 프로필 */}
       <section className={"flex items-center gap-x-3"}>
-        <Image
+        <img
           src={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/unnimm.jpg"}
           alt={recommendRoomMateProfile ? recommendRoomMateProfile.data.profileUrl : "/unnimm.jpg"}
-          width={60}
-          height={60}
-          className={"rounded-full"}
+          className={"rounded-full w-[60px] h-[60px]"}
         />
         <div className={"flex flex-col"}>
           <div className={"flex gap-x-1"}>

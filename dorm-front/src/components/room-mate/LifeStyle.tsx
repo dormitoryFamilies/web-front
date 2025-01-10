@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -126,14 +125,11 @@ const LifeStyle = (props: Props) => {
           </div>
 
           <div className={"flex flex-col items-center justify-center"}>
-            <div className={"relative w-[240px] h-[140px]"}>
-              <Image
-                src={"/room-mate/샤워,_청소.png"}
-                alt={"/room-mate/샤워,_청소.png"}
-                className={"absolute object-cover"}
-                fill
-              />
-            </div>
+            <img
+              src={"/room-mate/샤워,_청소.png"}
+              alt={"/room-mate/샤워,_청소.png"}
+              className={"w-[240px] h-[220px]"}
+            />
           </div>
           <div className={"text-h3 font-semibold"}>나의 생활방식은?</div>
         </div>
@@ -160,17 +156,20 @@ const LifeStyle = (props: Props) => {
             selectedContent={cleaningFrequency}
             setSelectedContent={setCleaningFrequency}
           />
-          <button
-            disabled={cleaningFrequency === ""}
-            onClick={handleNextClick}
-            className={
-              cleaningFrequency === ""
-                ? "absolute bottom-5 left-5 w-[90%] rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
-                : "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
-            }>
-            다음
-          </button>
         </div>
+      </div>
+      <div className={"h-[80px]"} />
+      <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+        <button
+          disabled={cleaningFrequency === ""}
+          onClick={handleNextClick}
+          className={
+            cleaningFrequency === ""
+              ? "w-[90%] mx-5 rounded-full bg-gray3 text-white text-h5 py-4 hover:text-white transition"
+              : "w-[90%] mx-5 rounded-full bg-primary text-white text-h5 py-4 hover:text-white transition"
+          }>
+          다음
+        </button>
       </div>
     </>
   );

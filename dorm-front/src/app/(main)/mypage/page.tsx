@@ -19,7 +19,7 @@ const MyPage = () => {
   return (
     <>
       {isOpenLogoutModal ? <LogoutModal setIsOpenLogoutModal={setIsOpenLogoutModal} /> : null}
-      <Header headerType={"dynamic"} title={"프로필"} />
+      <Header headerType={"dynamic"} title={"마이페이지"} />
       <div className={"h-[30px]"} />
       <div className={"flex flex-col gap-y-5 p-5"}>
         <div>
