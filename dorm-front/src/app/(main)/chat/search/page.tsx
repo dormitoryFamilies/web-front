@@ -366,7 +366,7 @@ const ChatSearch = () => {
 
   return (
     <div className={"relative"}>
-      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
       <SearchInput setSearchValue={setSearchValue} />
       <SearchMenu type={type} setType={setType} />
       {renderSearchResults(type)}

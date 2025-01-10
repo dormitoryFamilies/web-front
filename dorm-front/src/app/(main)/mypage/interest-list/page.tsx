@@ -76,7 +76,9 @@ const InterestList = () => {
 
   return (
     <>
-      {isOpenProfileModal ? <ProfileModal memberId={selectedMemberId} /> : null}
+      {isOpenProfileModal ? (
+        <ProfileModal memberId={selectedMemberId} setIsOpenProfileModal={setIsOpenProfileModal} />
+      ) : null}
       <Header headerType={"dynamic"} title={"관심목록"} onBack={onBack} />
       <div className={"h-[60px]"} />
       <InterestListMenu

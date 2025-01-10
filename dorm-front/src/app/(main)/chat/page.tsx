@@ -56,7 +56,7 @@ const Chat = () => {
 
   return (
     <>
-      {isProfileOpen ? <ProfileModal memberId={memberIdState} /> : null}
+      {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
       <Header
         headerType={"chattingHome"}
         title={"채팅"}
