@@ -52,6 +52,11 @@ export interface chatHistoryType {
   sentTime: string;
 }
 
+export interface AxiosResponseUnreadChattingTotalCountType {
+  data: ResponseUnreadChattingTotalCountType;
+  headers: AxiosHeaders;
+}
+
 export interface ResponseUnreadChattingTotalCountType {
   code: number;
   data: {
