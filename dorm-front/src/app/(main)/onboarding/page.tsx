@@ -14,6 +14,15 @@ const OnBoarding = () => {
   const router = useRouter();
   const [isTrigger, setIsTrigger] = useState(false);
 
+  //캐시가 남아있어 재로그인이 안되는 상황 제거
+  useEffect(() => {
+    if (Cookies.get("kakaoAccessToken") || Cookies.get("accessToken") || Cookies.get("refreshToken")) {
+      Cookies.remove("kakaoAccessToken");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+    }
+  }, []);
+
   useEffect(() => {
     const code = params.get("code");
     if (code && Cookies.get("accessToken") === undefined) {
