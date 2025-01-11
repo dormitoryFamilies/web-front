@@ -26,14 +26,14 @@ const Done = (props: Props) => {
     <>
       <Header headerType={"dynamic"} title={"긱사생활 설정"} onBack={() => setLifeStyleStep("OtherLifestyles")} />
       <div className={"h-[60px]"} />
-      <div className={"flex flex-col justify-center items-center min-h-screen"}>
-        <div className={"flex flex-col justify-center items-center"}>
+      <div className={"absolute inset-0 flex flex-col  justify-center items-center"}>
+        <div className={"flex flex-col justify-center items-center h-full"}>
           <div className={"text-h3 flex flex-col justify-center items-center"}>
             <div>나의 긱사생활 입력이 완료되었어요</div>
             <div className={"font-semibold"}>원하는 룸메정보를 설정해봐요!</div>
           </div>
           <div className={"text-h5 mt-3"}>나의 긱사생활 변경은 ‘마이페이지’에서 가능해요.</div>
-          <img alt={"/room-mate/룸메이트.png"} src={"/room-mate/룸메이트.png"} className={"w-[300px] h-[50px]"}></img>
+          <img alt={"/room-mate/룸메이트.png"} src={"/room-mate/룸메이트.png"} className={"w-[300px] h-[300px]"}></img>
         </div>
       </div>
       <button
