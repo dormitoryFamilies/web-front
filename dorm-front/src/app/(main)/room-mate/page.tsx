@@ -130,6 +130,7 @@ const RoommateMatching = () => {
               </div>
             </div>
           </div>
+          <div className={"h-[80px]"} />
           <NavBar />
         </div>
       )}
