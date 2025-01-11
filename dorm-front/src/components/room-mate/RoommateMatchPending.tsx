@@ -6,12 +6,12 @@ import { useRecoilState } from "recoil";
 import Header from "@/components/common/Header";
 import EmblaCarousel from "@/components/room-mate/carousel/EmblaCarousel";
 import IncompleteProfileModal from "@/components/room-mate/IncompleteProfileModal";
+import useLoginUserId from "@/lib/hooks/useLoginUserId";
 import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
 import usePreferenceOrders from "@/lib/hooks/usePreferenceOrders";
 import useRoomMateRecommendResult from "@/lib/hooks/useRoomMateRecommendResult";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import { candidateIdsAtom } from "@/recoil/room-mate/atom";
-import useLoginUserId from "@/lib/hooks/useLoginUserId";
 
 interface Props {
   setIsConfirmRoommateMatchOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,7 +58,8 @@ const RoommateMatchPending = (props: Props) => {
         {/* 안내문구 */}
         <div>
           <div className={"text-h2 font-semibold"}>
-            {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 fonts-normal"}>님의</span> <br />
+            {recommendRoomMateProfile?.data.nickname}
+            <span className={"text-h4 fonts-normal"}>님의</span> <br />
             추천 룸메 입니다!{" "}
           </div>
           <div className={"flex justify-between items-end"}>
