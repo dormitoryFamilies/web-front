@@ -75,15 +75,18 @@ const RoommateMatchPending = (props: Props) => {
         {/* 룸메 추천 카드 */}
         <EmblaCarousel slides={candidateIds} />
       </div>
-      <button
-        onClick={() => {
-          setIsConfirmRoommateMatchOpen(true);
-        }}
-        className={
-          "absolute bottom-5 left-5 w-[90%] rounded-full bg-primary text-h5 text-white py-4 hover:text-white transition"
-        }>
-        룸메 신청하기
-      </button>
+      <div className={"h-[80px]"} />
+      {candidateIds.length === 0 ? null : (
+        <div className={"fixed bottom-0 w-full py-5 bg-white"}>
+          <button
+            onClick={() => {
+              setIsConfirmRoommateMatchOpen(true);
+            }}
+            className={"mx-5 w-[90%] rounded-full bg-primary text-h5 text-white py-4 hover:text-white transition"}>
+            룸메 신청하기
+          </button>
+        </div>
+      )}
     </div>
   );
 };
