@@ -9,7 +9,9 @@ import IncompleteProfileModal from "@/components/room-mate/IncompleteProfileModa
 import useMyLifeStyles from "@/lib/hooks/useMyLifeStyles";
 import usePreferenceOrders from "@/lib/hooks/usePreferenceOrders";
 import useRoomMateRecommendResult from "@/lib/hooks/useRoomMateRecommendResult";
+import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
 import { candidateIdsAtom } from "@/recoil/room-mate/atom";
+import useLoginUserId from "@/lib/hooks/useLoginUserId";
 
 interface Props {
   setIsConfirmRoommateMatchOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,8 +20,10 @@ interface Props {
 
 const RoommateMatchPending = (props: Props) => {
   const { setIsConfirmRoommateMatchOpen, setIsRoommateMatchListOpen } = props;
+  const { loginUserId } = useLoginUserId();
   const router = useRouter();
   const { recommendations } = useRoomMateRecommendResult();
+  const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(loginUserId?.data.memberId);
   const [candidateIds, setCandidateIds] = useRecoilState(candidateIdsAtom);
   const { myLifeStylesError } = useMyLifeStyles();
   const { preferenceOrdersError } = usePreferenceOrders();
@@ -54,7 +58,7 @@ const RoommateMatchPending = (props: Props) => {
         {/* 안내문구 */}
         <div>
           <div className={"text-h2 font-semibold"}>
-            닉네임<span className={"text-h4 fonts-normal"}>님의</span> <br />
+            {recommendRoomMateProfile?.data.nickname}<span className={"text-h4 fonts-normal"}>님의</span> <br />
             추천 룸메 입니다!{" "}
           </div>
           <div className={"flex justify-between items-end"}>
@@ -73,7 +77,14 @@ const RoommateMatchPending = (props: Props) => {
           </div>
         </div>
         {/* 룸메 추천 카드 */}
-        <EmblaCarousel slides={candidateIds} />
+        {candidateIds.length > 0 ? (
+          <EmblaCarousel slides={candidateIds} />
+        ) : (
+          <div className={"flex flex-col items-center justify-center h-[calc(70vh-60px-80px)]"}>
+            <img src={"/search/검색결과없음.png"} />
+            <div className={"text-h5 text-gray3"}>추천 룸메이트가 없습니다.</div>
+          </div>
+        )}
       </div>
       <div className={"h-[80px]"} />
       {candidateIds.length === 0 ? null : (

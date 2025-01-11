@@ -95,3 +95,17 @@ export interface FollowStatusResponseType {
     isFollowing: false;
   };
 }
+
+///////////////////////////////////////////////////////////
+
+export interface LoginUserIdAxiosResponseType {
+  data: LoginUserIdResponseType;
+  headers: AxiosHeaders;
+}
+
+export interface LoginUserIdResponseType {
+  code: number;
+  data: {
+    memberId: number;
+  };
+}
