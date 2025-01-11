@@ -100,7 +100,7 @@ const MyArticle = () => {
           <div className={"relative"}>
             <Button
               className={"not-click-filter"}
-              onClick={() => setIsDormitoryFilterClick(!isSortingFilterClick)}
+              onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
               Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
               {selectedDormitoryType}
             </Button>

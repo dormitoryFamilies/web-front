@@ -97,7 +97,7 @@ const InterestList = () => {
                 <div className={"relative"}>
                   <Button
                     className={"not-click-filter"}
-                    onClick={() => setIsDormitoryFilterClick(!isSortingFilterClick)}
+                    onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
                     Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
                     {selectedDormitoryType}
                   </Button>
@@ -165,7 +165,7 @@ const InterestList = () => {
                             wishCount={article.wishCount}
                             viewCount={article.viewCount}
                             profileUrl={article.profileUrl}
-                            thumbnailUrl={"/unnimm.jpg"}></Post>
+                            thumbnailUrl={article.thumbnailUrl}></Post>
                         </div>
                       );
                     });
