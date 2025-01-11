@@ -29,10 +29,13 @@ const OnBoarding = () => {
       getKaKaoAccessToken(code).then((r) => {
         if (r) {
           Cookies.set("kakaoAccessToken", r.access_token, { expires: Date.now() + 604800000 });
+          console.log("kakaoAccessToken", r.access_token);
           getJWTToken(r.access_token).then((res) => {
             if (res) {
               Cookies.set("accessToken", res.headers.accesstoken, { expires: Date.now() + 604800000 });
               Cookies.set("refreshToken", res.headers.refreshtoken, { expires: Date.now() + 604800000 });
+              console.log("accessToken", res.headers.accesstoken);
+              console.log("refreshToken", res.headers.refreshtoken);
               getUserRole(res.headers.accessToken).then((response) => {
                 console.log("response.data.data.authority", response.data.data[0].authority);
                 Cookies.set("role", response.data.data[0].authority, { expires: Date.now() + 604800000 });
