@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  DOCKER_IMAGE: ghcr.io/yulimhwang/nextjs-app
+  DOCKER_IMAGE: ghcr.io/ummiih/nextjs-app
   VERSION: ${{ github.sha }}
   CONTAINER_NAME: nextjs-app
 
