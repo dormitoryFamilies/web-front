@@ -10,7 +10,7 @@ const InterestListDormitoryFilter = (props: Props) => {
   return (
     <div
       className={
-        "flex flex-col gap-y-2 absolute top-[11%] w-[80px] bg-white border-[1px] border-gray1 rounded-[16px] py-2"
+        "flex flex-col gap-y-2 absolute top-8 w-[80px] bg-white border-[1px] border-gray1 rounded-[16px] py-2"
       }>
       {dormitoryFilterContents.map((dormitoryFilterContent, index) => {
         return (

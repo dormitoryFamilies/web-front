@@ -161,7 +161,6 @@ const SleepPattern = (props: Props) => {
             selectedContent={sleepingSensitivity}
             setSelectedContent={setSleepingSensitivity}
             className={"grid-cols-2"}></Item>
-
         </div>
       </div>
       <div className={"h-[80px]"} />

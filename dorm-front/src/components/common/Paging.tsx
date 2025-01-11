@@ -39,7 +39,7 @@ const Paging = (props: Props) => {
 
   return (
     <>
-      <div className={"flex absolute gap-x-3 bottom-8 w-full py-1 items-center justify-center"}>
+      <div className={"flex gap-x-3 w-full py-1 items-center justify-center"}>
         <PreviousIcon
           onClick={handlePrevious}
           className={currentGroup === 0 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}

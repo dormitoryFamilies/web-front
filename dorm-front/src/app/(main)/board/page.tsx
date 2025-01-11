@@ -114,6 +114,7 @@ const Board = () => {
         </Button>
         {isStatusFilterClick ? (
           <ArticleStatusFilter
+            className={"left-[25%]"}
             statusFilterContents={statusFilterContents}
             setSelectedStatusType={setSelectedStatusType}
             setIsStatusFilterClick={setIsStatusFilterClick}

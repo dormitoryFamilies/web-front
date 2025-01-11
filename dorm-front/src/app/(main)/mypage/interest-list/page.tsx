@@ -94,47 +94,55 @@ const InterestList = () => {
             <div>
               <div className="flex gap-x-2 my-3">
                 {/*기숙사 선택 필터*/}
-                <Button
-                  className={"not-click-filter"}
-                  onClick={() => setIsDormitoryFilterClick(!isSortingFilterClick)}
-                  Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
-                  {selectedDormitoryType}
-                </Button>
-                {isDormitoryFilterClick ? (
-                  <InterestListDormitoryFilter
-                    dormitoryFilterContents={dormitoryFilterContents}
-                    setSelectedDormitoryType={setSelectedDormitoryType}
-                    setIsDormitoryFilterClick={setIsDormitoryFilterClick}
-                  />
-                ) : null}
+                <div className={"relative"}>
+                  <Button
+                    className={"not-click-filter"}
+                    onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
+                    Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
+                    {selectedDormitoryType}
+                  </Button>
+                  {isDormitoryFilterClick ? (
+                    <InterestListDormitoryFilter
+                      dormitoryFilterContents={dormitoryFilterContents}
+                      setSelectedDormitoryType={setSelectedDormitoryType}
+                      setIsDormitoryFilterClick={setIsDormitoryFilterClick}
+                    />
+                  ) : null}
+                </div>
+
                 {/*sort 선택 필터*/}
-                <Button
-                  className={"not-click-filter"}
-                  onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-                  Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
-                  {formatSortContent()}
-                </Button>
-                {isSortingFilterClick ? (
-                  <ArticleSortFilter
-                    sortFilterContents={sortFilterContents}
-                    setSelectedSortType={setSelectedSortType}
-                    setIsSortingFilterClick={setIsSortingFilterClick}
-                  />
-                ) : null}
+                <div className={"relative"}>
+                  <Button
+                    className={"not-click-filter"}
+                    onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
+                    Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+                    {formatSortContent()}
+                  </Button>
+                  {isSortingFilterClick ? (
+                    <ArticleSortFilter
+                      sortFilterContents={sortFilterContents}
+                      setSelectedSortType={setSelectedSortType}
+                      setIsSortingFilterClick={setIsSortingFilterClick}
+                    />
+                  ) : null}
+                </div>
+
                 {/*status 선택 필터*/}
-                <Button
-                  className={"not-click-filter"}
-                  onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-                  Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
-                  {selectedStatusType}
-                </Button>
-                {isStatusFilterClick ? (
-                  <ArticleStatusFilter
-                    statusFilterContents={statusFilterContents}
-                    setSelectedStatusType={setSelectedStatusType}
-                    setIsStatusFilterClick={setIsStatusFilterClick}
-                  />
-                ) : null}
+                <div className={"relative"}>
+                  <Button
+                    className={"not-click-filter"}
+                    onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
+                    Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+                    {selectedStatusType}
+                  </Button>
+                  {isStatusFilterClick ? (
+                    <ArticleStatusFilter
+                      statusFilterContents={statusFilterContents}
+                      setSelectedStatusType={setSelectedStatusType}
+                      setIsStatusFilterClick={setIsStatusFilterClick}
+                    />
+                  ) : null}
+                </div>
               </div>
             </div>
             {/* 내용 */}
@@ -157,7 +165,7 @@ const InterestList = () => {
                             wishCount={article.wishCount}
                             viewCount={article.viewCount}
                             profileUrl={article.profileUrl}
-                            thumbnailUrl={"/unnimm.jpg"}></Post>
+                            thumbnailUrl={article.thumbnailUrl}></Post>
                         </div>
                       );
                     });
