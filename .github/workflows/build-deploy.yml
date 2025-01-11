@@ -64,10 +64,6 @@ jobs:
             sudo chmod 666 /var/run/docker.sock
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Debug SSH Connection
-        run: |
-          ssh -v -i /dev/null ${{ secrets.REMOTE_SSH_ID }}@${{ secrets.REMOTE_IP }} -p ${{ secrets.REMOTE_SSH_PORT }}
-
       - name: Deploy
         uses: appleboy/ssh-action@master # 추적을 위해 스텝을 나누어놨지만 한스크립트에서 전부 돌려도댐.
         with:
