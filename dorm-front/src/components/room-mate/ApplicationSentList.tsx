@@ -34,8 +34,10 @@ const ApplicationSentList = () => {
         </section>
       </main>
 
+      <div className={"h-[50px]"} />
+
       {/* 페이징 */}
-      <section>
+      <section className={"fixed  bottom-0 bg-white py-2 w-full"}>
         <Paging
           setPageNumber={setPageNumber}
           pageNumber={pageNumber}

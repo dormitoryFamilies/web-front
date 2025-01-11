@@ -95,9 +95,10 @@ const AllDoomzList = (props: Props) => {
         )}
       </main>
 
+      <div className={"h-[60px]"} />
       {/* 페이징 */}
       {searchResults && searchValue ? null : (
-        <section>
+        <section className={"fixed bottom-0 bg-white py-2 w-full"}>
           <Paging
             setPageNumber={setPageNumber}
             pageNumber={pageNumber}

@@ -128,22 +128,25 @@ const MyPageFollow = () => {
         </div>
       </div>
 
+      <div className={"h-[50px]"} />
       {/* 페이징 */}
-      {!searchValue ? (
-        followType == "팔로워" ? (
-          <Paging
-            setPageNumber={setFollowerPageNumber}
-            totalPageNumber={followers?.data.totalPageNumber}
-            pageNumber={followerPageNumber}
-          />
-        ) : (
-          <Paging
-            setPageNumber={setFollowingPageNumber}
-            pageNumber={followingPageNumber}
-            totalPageNumber={followings?.data.totalPageNumber}
-          />
-        )
-      ) : null}
+      <section className={"fixed bottom-0 bg-white w-full py-2"}>
+        {!searchValue ? (
+          followType == "팔로워" ? (
+            <Paging
+              setPageNumber={setFollowerPageNumber}
+              totalPageNumber={followers?.data.totalPageNumber}
+              pageNumber={followerPageNumber}
+            />
+          ) : (
+            <Paging
+              setPageNumber={setFollowingPageNumber}
+              pageNumber={followingPageNumber}
+              totalPageNumber={followings?.data.totalPageNumber}
+            />
+          )
+        ) : null}
+      </section>
     </div>
   );
 };
