@@ -18,7 +18,7 @@ const ArticleSortFilter = (props: Props) => {
   return (
     <div
       className={
-        "absolute flex flex-col gap-y-2 top-[100%] w-[80px] bg-white border-[1px] border-gray1 rounded-[16px] py-2"
+        "absolute flex flex-col gap-y-2 top-8 w-[80px] bg-white border-[1px] border-gray1 rounded-[16px] py-2"
       }>
       {sortFilterContents.map((sortFilterContent, index) => {
         return (

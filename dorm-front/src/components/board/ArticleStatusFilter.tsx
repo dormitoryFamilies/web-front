@@ -11,7 +11,7 @@ const ArticleStatusFilter = (props: Props) => {
   return (
     <div
       className={
-        "flex flex-col gap-y-2 absolute w-[80px] top-[100%] left-[25%] bg-white border-[1px] border-gray1 rounded-[16px] py-2"
+        "flex flex-col gap-y-2 absolute w-[80px] top-8 bg-white border-[1px] border-gray1 rounded-[16px] py-2"
       }>
       {statusFilterContents.map((statusFilterContent, index) => {
         return (
