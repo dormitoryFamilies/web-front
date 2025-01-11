@@ -142,8 +142,8 @@ const ProfileSetting = () => {
             <Image alt={uploadImage} src={uploadImage} fill className={"object-cover rounded-full"} />
           ) : (
             <Image
-              alt={myProfileData ? myProfileData?.data.profileUrl : "/unnimm.jpg"}
-              src={myProfileData ? myProfileData?.data.profileUrl : "/unnimm.jpg"}
+              alt={myProfileData ? myProfileData?.data.profileUrl : "/profile.png"}
+              src={myProfileData ? myProfileData?.data.profileUrl : "/profile.png"}
               fill
               className={"object-cover rounded-full"}
             />
