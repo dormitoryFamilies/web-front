@@ -45,8 +45,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ env.DOCKER_IMAGE }}:latest
-          context: ./web-front/dorm-front # Dockerfile이 있는 디렉토리를 컨텍스트로 설정
-          file: ./web-front/dorm-front/Dockerfile # Dockerfile 경로를 명시
+          context: ../dorm-front # Dockerfile이 있는 디렉토리를 컨텍스트로 설정
+          file: ../dorm-front/Dockerfile # Dockerfile 경로를 명시
 
   deploy:
     needs: build
