@@ -96,9 +96,9 @@ const InterestList = () => {
                 {/*기숙사 선택 필터*/}
                 <div className={"relative"}>
                   <Button
-                    className={"not-click-filter"}
+                    className={"border-gray1-button"}
                     onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
-                    Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
+                    RightIcon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
                     {selectedDormitoryType}
                   </Button>
                   {isDormitoryFilterClick ? (
@@ -113,9 +113,9 @@ const InterestList = () => {
                 {/*sort 선택 필터*/}
                 <div className={"relative"}>
                   <Button
-                    className={"not-click-filter"}
+                    className={"border-gray1-button"}
                     onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-                    Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+                    RightIcon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
                     {formatSortContent()}
                   </Button>
                   {isSortingFilterClick ? (
@@ -130,9 +130,9 @@ const InterestList = () => {
                 {/*status 선택 필터*/}
                 <div className={"relative"}>
                   <Button
-                    className={"not-click-filter"}
+                    className={"border-gray1-button"}
                     onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-                    Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+                    RightIcon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
                     {selectedStatusType}
                   </Button>
                   {isStatusFilterClick ? (
@@ -197,13 +197,13 @@ const InterestList = () => {
                           <div className={"font-semibold"}>{memberProfile.nickname}</div>
                         </div>
                         <div>
-                          <button
+                          <Button
                             onClick={() => {
                               deleteRoomMateWish(memberProfile.memberId);
                             }}
-                            className={"py-1 px-3 rounded-full bg-gray1 text-gray5 text-h5"}>
+                            className={"bg-gray1-button"}>
                             찜 취소
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     );

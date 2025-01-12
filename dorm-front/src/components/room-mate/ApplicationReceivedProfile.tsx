@@ -4,10 +4,12 @@ import * as React from "react";
 import { SVGProps, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import Button from "@/components/common/Button";
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateMatchingRequest, postAcceptMatchingRequest } from "@/lib/api/room-mate";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ErrorResponseData } from "@/types/chat/page";
+import Tag from "@/components/common/Tag";
 
 interface Props {
   memberId: number;
@@ -56,17 +58,24 @@ const ApplicationReceivedProfile = (props: Props) => {
     }
   };
 
+  const cancelMatching = () => {
+    deleteRoomMateMatchingRequest(memberId).then(() => {
+      mutate();
+    });
+  };
+
+  const acceptMatching = () => {
+    postAcceptMatchingRequest(memberId).then(() => {
+      mutate();
+    });
+  };
+
   return (
     <div className={"flex flex-col gap-y-1 py-3 px-4 rounded-[24px] border border-gray1 "}>
       {/* 매칭 가능 여부 나타내는 태그 */}
-      <section
-        className={
-          isMatchable
-            ? "rounded-full bg-primaryMid py-1 px-3 text-white text-h5 w-fit"
-            : "rounded-full bg-point py-1 px-3 text-white text-h5 w-fit"
-        }>
+      <Tag className={isMatchable ? "bg-primaryMid-tag" : "bg-point-tag"}>
         {isMatchable ? "매칭 가능" : "매칭 불가능"}
-      </section>
+      </Tag>
 
       {/* 이미지, 닉네임 */}
       <section className={"flex justify-between items-center"}>
@@ -94,35 +103,21 @@ const ApplicationReceivedProfile = (props: Props) => {
 
       {/* 신청 거절 버튼 */}
       <section className={"flex justify-end gap-x-2"}>
-        <button
-          onClick={() => {
-            deleteRoomMateMatchingRequest(memberId).then(() => {
-              mutate();
-            });
-          }}
-          className={"px-5 py-[6px] rounded-full border border-gray1 text-gray5 text-h5"}>
+        <Button onClick={cancelMatching} className={"border-gray1-button"} secondClassName={"px-5 py-[6px]"}>
           거절
-        </button>
-        <button
-          onClick={() => {
-            postAcceptMatchingRequest(memberId).then(() => {
-              mutate();
-            });
-          }}
-          className={
-            isMatchable
-              ? "px-5 py-[6px] rounded-full bg-primary text-white text-h5"
-              : "px-5 py-[6px] rounded-full bg-gray3 text-white text-h5"
-          }>
+        </Button>
+        <Button
+          onClick={acceptMatching}
+          className={isMatchable ? "bg-primary-button" : "bg-gray3-button"}
+          secondClassName={"px-5 py-[6px]"}>
           수락
-        </button>
-        <button
-          onClick={() => {
-            handleSubmit(memberId);
-          }}
-          className={"border border-gray1 rounded-full p-2"}>
-          <FollowChatIcon />
-        </button>
+        </Button>
+        <Button
+          onClick={() => handleSubmit(memberId)}
+          secondClassName={"p-2"}
+          RightIcon={FollowChatIcon}
+          className={"border border-gray1 rounded-full p-2"}
+        />
       </section>
     </div>
   );

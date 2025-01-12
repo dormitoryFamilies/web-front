@@ -9,10 +9,6 @@ const ApplicationReceivedList = () => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const { matchingRequests, mutate } = useMatchingRequests("received", pageNumber);
 
-  useEffect(() => {
-    console.log("matchingRequests", matchingRequests);
-  }, [matchingRequests]);
-
   return (
     <>
       <main className={"px-5"}>

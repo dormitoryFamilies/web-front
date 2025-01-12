@@ -73,9 +73,9 @@ const MyComment = () => {
           {/*기숙사 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
-              Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
               {selectedDormitoryType}
             </Button>
             {isDormitoryFilterClick ? (
@@ -89,9 +89,9 @@ const MyComment = () => {
           {/*sort 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-              Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
               {formatSortContent()}
             </Button>
             {isSortingFilterClick ? (
@@ -106,9 +106,9 @@ const MyComment = () => {
           {/*status 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-              Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
               {selectedStatusType}
             </Button>
             {isStatusFilterClick ? (

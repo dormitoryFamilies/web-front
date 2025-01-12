@@ -4,30 +4,35 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  children: React.ReactNode;
-  onClick?: () => void;
-  Icon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
-  SecondIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
-  className: string;
+  children?: React.ReactNode;
+  onClick?: () => void | Promise<void>;
+  RightIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  LeftIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  className: string; //globals.css에 선언된 style
+  secondClassName?: string; //globals.css에서 변경하고 싶은 style
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 const Button = (props: Props) => {
-  const { children, onClick, Icon, className, SecondIcon } = props;
+  const {
+    children,
+    onClick,
+    RightIcon,
+    className,
+    secondClassName,
+    LeftIcon,
+    type = "button",
+    disabled = false,
+  } = props;
   return (
     <button
-      className={twMerge(
-        `
-                py-1 
-                px-3 
-                rounded-full
-                `,
-        className,
-      )}
+      disabled={disabled}
+      type={type}
+      className={twMerge("flex items-center gap-x-[4px]", className, secondClassName)}
       onClick={onClick}>
-      <div className="flex items-center gap-x-[5px] text-h5">
-        {SecondIcon ? <SecondIcon /> : null}
-        {children}
-        {Icon ? <Icon /> : null}
-      </div>
+      {LeftIcon ? <LeftIcon /> : null}
+      {children}
+      {RightIcon ? <RightIcon /> : null}
     </button>
   );
 };

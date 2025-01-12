@@ -12,6 +12,7 @@ import ProfileModal from "@/components/common/ProfileModal";
 import useChatRooms from "@/lib/hooks/useChatRooms";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
+import Button from "@/components/common/Button";
 const Chat = () => {
   const router = useRouter();
   const { chatRooms, setChatRoomsSize } = useChatRooms();
@@ -54,6 +55,10 @@ const Chat = () => {
     return `${period} ${hours}:${formattedMinutes}`;
   };
 
+  const navigateToMypageFollow = () => {
+    router.push("/mypage/follow");
+  };
+
   return (
     <>
       {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
@@ -73,14 +78,9 @@ const Chat = () => {
         <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
           <div className={"flex justify-between"}>
             <div className={"text-h3 font-semibold"}>팔로잉</div>
-            <button
-              onClick={() => {
-                router.push("/mypage/follow");
-              }}
-              className={"flex items-center gap-x-1 home-button"}>
+            <Button onClick={navigateToMypageFollow} className={"border-primaryMid-button"} RightIcon={MoveIcon}>
               전체보기
-              <MoveIcon />
-            </button>
+            </Button>
           </div>
 
           {/*팔로우*/}

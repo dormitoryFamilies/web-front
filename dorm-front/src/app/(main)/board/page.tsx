@@ -12,7 +12,6 @@ import ArticleSortFilter from "@/components/board/ArticleSortFilter";
 import ArticleStatusFilter from "@/components/board/ArticleStatusFilter";
 import FilterMenu from "@/components/board/FilterMenu";
 import Post from "@/components/board/Post";
-import WriteButton from "@/components/board/WriteButton";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
@@ -79,6 +78,10 @@ const Board = () => {
     }
   };
 
+  const onMove = () => {
+    router.push("/board/write");
+  };
+
   return (
     <div className="relative">
       <Header
@@ -94,9 +97,9 @@ const Board = () => {
       {/* filter */}
       <div className="relative flex gap-x-2 mx-5 my-3">
         <Button
-          className={"not-click-filter"}
+          className={"border-gray1-button"}
           onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-          Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+          RightIcon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
           {formatSortContent()}
         </Button>
         {isSortingFilterClick ? (
@@ -107,9 +110,9 @@ const Board = () => {
           />
         ) : null}
         <Button
-          className={"not-click-filter"}
+          className={"border-gray1-button"}
           onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-          Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+          RightIcon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
           {selectedStatusType}
         </Button>
         {isStatusFilterClick ? (
@@ -166,7 +169,7 @@ const Board = () => {
                         status={article.status}
                         wishCount={article.wishCount}
                         viewCount={article.viewCount}
-                        thumbnailUrl={"/unnimm.jpg"}></Post>
+                        thumbnailUrl={article.thumbnailUrl}></Post>
                     </div>
                   );
                 });
@@ -174,13 +177,29 @@ const Board = () => {
             : null}
         </div>
       </div>
-      <WriteButton />
+      <Button
+        className={"bg-primary-button"}
+        secondClassName={"fixed bottom-[84px] right-5 z-10 text-h4 gap-x-2"}
+        LeftIcon={WriteButtonIcon}>
+        글쓰기
+      </Button>
       <div className={"h-[90px]"} />
-      <NavBar></NavBar>
+      <NavBar />
     </div>
   );
 };
 export default Board;
+
+const WriteButtonIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg width={16} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M7.81 15.864a.82.82 0 01-.813-.813V8.857H.814A.82.82 0 010 8.043a.82.82 0 01.814-.813h6.183V.95A.82.82 0 017.81.134a.82.82 0 01.814.814v6.28h3.037a.82.82 0 01.814.814.82.82 0 01-.814.814H8.624v6.194a.82.82 0 01-.814.813zM16 8.044a1.085 1.085 0 11-2.17 0 1.085 1.085 0 012.17 0z"
+      fill="#fff"
+    />
+  </svg>
+);
 
 const DropDownIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={10} height={6} fill="none" {...props}>

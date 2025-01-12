@@ -67,23 +67,24 @@ const MyArticle = () => {
   const bottomElement = (articleId: number | string | string[]) => {
     return (
       <div className={"mt-2 flex gap-x-2 justify-end"}>
-        <button
+        <Button
           onClick={() => {
             setSelectedArticleId(articleId);
             router.push("/board/edit");
           }}
-          className={"px-4 py-1 text-h5 bg-gray1 rounded-[8px]"}>
+          secondClassName={"rounded-[8px] text-[#323232] px-4 py-1"}
+          className={"bg-gray1-button"}>
           수정
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             deleteArticle(articleId).then(() => {
               mutate();
             });
           }}
-          className={"px-4 py-1 text-h5 text-white bg-black rounded-[8px]"}>
+          className={"bg-black-button"}>
           삭제
-        </button>
+        </Button>
       </div>
     );
   };
@@ -99,9 +100,9 @@ const MyArticle = () => {
           {/*기숙사 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsDormitoryFilterClick(!isDormitoryFilterClick)}
-              Icon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isDormitoryFilterClick ? DropUpIcon : DropDownIcon}>
               {selectedDormitoryType}
             </Button>
             {isDormitoryFilterClick ? (
@@ -115,9 +116,9 @@ const MyArticle = () => {
           {/*sort 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-              Icon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
               {formatSortContent()}
             </Button>
             {isSortingFilterClick ? (
@@ -131,9 +132,9 @@ const MyArticle = () => {
           {/*status 선택 필터*/}
           <div className={"relative"}>
             <Button
-              className={"not-click-filter"}
+              className={"border-gray1-button"}
               onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-              Icon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+              RightIcon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
               {selectedStatusType}
             </Button>
             {isStatusFilterClick ? (

@@ -5,6 +5,7 @@ import { SVGProps } from "react";
 import { useRecoilState } from "recoil";
 import { KeyedMutator } from "swr";
 
+import Button from "@/components/common/Button";
 import { deleteArticleWish, postArticleWish } from "@/lib/api/board";
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
@@ -57,76 +58,57 @@ const CommunicationBox = (props: Props) => {
     }
   };
 
+  const openArticleFavoritesList = () => {
+    setIsArticleFavoritesList(true);
+  };
+
+  const navigateToChat = () => {
+    router.push("/chat");
+  };
+
+  const cancelArticleWish = () => {
+    deleteArticleWish(articleId).then(() => {
+      articleMutate();
+    });
+  };
+
+  const clickArticleWish = () => {
+    postArticleWish(articleId).then(() => {
+      articleMutate();
+    });
+  };
+
   const renderCommunicationBox = (isWriter: boolean | undefined) => {
     switch (isWriter) {
       case true:
         return (
           <div className={"flex justify-between"}>
-            <button
-              onClick={() => {
-                setIsArticleFavoritesList(true);
-              }}
-              className={
-                "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
-              }>
-              <GrayHeartIcon /> <span>관심목록</span>
-              {wishCount}
-            </button>
-            <button
-              onClick={() => {
-                router.push("/chat");
-              }}
-              className={
-                "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
-              }>
-              <div className={"w-[16px] h-[16px]"}>
-                <ChatIcon />
+            <Button onClick={openArticleFavoritesList} LeftIcon={GrayHeartIcon} className={"border-gray1-button"}>
+              <div className={"flex gap-x-1"}>
+                관심목록
+                <span>{wishCount}</span>
               </div>
+            </Button>
+            <Button LeftIcon={ChatIcon} onClick={navigateToChat} className={"border-gray1-button"}>
               채팅하기
-            </button>
+            </Button>
           </div>
         );
       default:
         return (
           <div className={"flex justify-between"}>
             {isWished ? (
-              <button
-                onClick={() => {
-                  deleteArticleWish(articleId).then(() => {
-                    articleMutate();
-                  });
-                }}
-                className={"flex items-center px-4 py-[5px] text-white text-h5 gap-x-1 rounded-full bg-primaryMid"}>
-                <WhiteHeartIcon />
+              <Button onClick={cancelArticleWish} LeftIcon={WhiteHeartIcon} className={"bg-primaryMid-button"}>
                 {wishCount}
-              </button>
+              </Button>
             ) : (
-              <button
-                onClick={() => {
-                  //좋아요가 눌리지 않을경우
-                  postArticleWish(articleId).then(() => {
-                    articleMutate();
-                  });
-                }}
-                className={
-                  "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
-                }>
-                <GrayHeartIcon />
+              <Button onClick={clickArticleWish} className={"border-gray1-button"} LeftIcon={GrayHeartIcon}>
                 {wishCount}
-              </button>
+              </Button>
             )}
-            <button
-              onClick={() => {
-                handleSubmit(memberId);
-              }}
-              className={
-                "flex items-center border-[1px] border-gray1 px-4 py-[5px] text-gray5 text-h5 gap-x-1 rounded-full"
-              }>
-              <div className={"w-[16px] h-[16px]"}>
-                <ChatIcon />
-              </div>
+            <Button LeftIcon={ChatIcon} onClick={() => handleSubmit(memberId)} className={"border-gray1-button"}>
               채팅보내기
-            </button>
+            </Button>
           </div>
         );
     }

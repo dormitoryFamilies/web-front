@@ -15,26 +15,46 @@ html {
 @tailwind utilities;
 
 @layer components {
-    .recruiting-tag {
-        @apply text-black bg-[#D8EAFF]
+    /* button style */
+    .border-primaryMid-button {
+        @apply border-[1px] px-3 py-1 text-h5 border-primaryMid rounded-full text-primaryMid w-fit
     }
-    .recruitment-completed-tag {
-        @apply bg-gray0 text-gray5
+    .border-gray1-button {
+         @apply border-[1px] px-3 py-1 text-h5 border-gray1 rounded-full text-gray5 w-fit
     }
-    .board-type-tag {
-        @apply bg-secondary text-primary
+    .bg-primary-button {
+        @apply rounded-full px-4 py-2 bg-primary text-white text-h5
     }
-    .tag {
-        @apply bg-gray0 text-gray5
+    .bg-gray3-button {
+        @apply rounded-full px-4 py-[6px] bg-gray3 text-white text-h5 w-fit
     }
-    .click-filter {
-        @apply bg-primaryMid text-white
+    .bg-primaryMid-button {
+        @apply rounded-full px-4 py-[6px] bg-primaryMid text-primaryLight text-h5 w-fit
     }
-    .not-click-filter {
-        @apply border-[1px] border-gray1 text-gray5
+    .bg-gray1-button {
+        @apply rounded-full px-3 py-[6px] bg-gray1 text-gray5 text-h5 w-fit
     }
-    .home-button {
-        @apply border-[1px] px-3 py-1 text-h5 border-primaryMid rounded-full text-primaryMid hover:shadow-lg transition
+    .bg-black-button {
+        @apply rounded-[8px] px-4 py-1 bg-black text-white text-h5
+    }
+}
+
+@layer components {
+    /* tag style */
+    .bg-secondary-tag {
+        @apply py-1 px-3 rounded-full text-h5 text-primary w-fit bg-secondary
+    }
+    .bg-blue-tag {
+        @apply py-1 px-3 rounded-full text-h5 text-black w-fit bg-[#D8EAFF]
+    }
+    .bg-point-tag {
+        @apply py-1 px-3 rounded-full text-h5 text-white w-fit bg-point
+    }
+    .bg-primaryMid-tag {
+        @apply py-1 px-3 rounded-full text-h5 text-white w-fit bg-primaryMid
+    }
+    .bg-gray0-tag {
+        @apply py-1 px-3 rounded-full text-h5 text-gray5 w-fit bg-gray0
     }
 }
 

@@ -16,6 +16,7 @@ import useChatMessages from "@/lib/hooks/useChatMessages";
 import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
+import Button from "@/components/common/Button";
 
 const ChatRoom = () => {
   const router = useRouter();
@@ -229,11 +230,11 @@ const ChatRoom = () => {
               setMessage(e.target.value);
             }}
             placeholder={"메시지 보내기"}
-            className={"ml-3 bg-gray0 placeholder:text-gray4 placeholder:text-h5 outline-none"}
+            className={"ml-3 bg-gray0 placeholder:text-gray4 placeholder:text-h5 outline-none w-[75%]"}
           />
-          <button type={"submit"} className={"py-2 px-4 text-white bg-primary rounded-full"}>
+          <Button type={"submit"} className={"bg-primary-button"}>
             전송
-          </button>
+          </Button>
         </div>
       </div>
     </form>
