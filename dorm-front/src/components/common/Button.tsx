@@ -4,7 +4,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick?: () => void | Promise<void>;
   RightIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   LeftIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;

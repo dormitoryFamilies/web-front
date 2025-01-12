@@ -4,6 +4,7 @@ import * as React from "react";
 import { SVGProps, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import Button from "@/components/common/Button";
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateMatchingRequest } from "@/lib/api/room-mate";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
@@ -23,10 +24,15 @@ const ApplicationSentProfile = (props: Props) => {
   const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
   const router = useRouter();
 
+  const cancelMatching = () => {
+    deleteRoomMateMatchingRequest(memberId).then(() => {
+      mutate();
+    });
+  };
+
   const handleSubmit = async (memberId: string | string[] | number | undefined) => {
     try {
       const response = await createChatRoom(memberId);
-      console.log("response", response);
       if (response && response.data && response.data.code === 201) {
         setChatRoomUUID(response.data.data.roomUUID);
         setMemberIdState(memberId);
@@ -34,17 +40,14 @@ const ApplicationSentProfile = (props: Props) => {
       }
     } catch (error: any) {
       const axiosError = error as AxiosError<ErrorResponseData>; // AxiosError로 캐스팅
-      console.log("axiosError", axiosError.response?.status);
       if (axiosError.response?.status === 409) {
         if (axiosError.response?.data?.data?.errorMessage === "채팅방이 존재합니다. 재입장해주세요.") {
           patchRejoinChatRoom(memberId).then((res) => {
             setChatRoomUUID(res.data.data.roomUUID);
             setMemberIdState(memberId);
-            console.log("res", res);
           });
         } else if (axiosError.response?.data?.data?.errorMessage === "이미 채팅방에 입장한 상태입니다") {
           getRoomId(memberId).then((response) => {
-            console.log("response", response);
             setChatRoomUUID(response.data.data.roomUUID);
             setMemberIdState(memberId);
             router.push(`/chat/${response.data.data.chatRoomId}`);
@@ -82,22 +85,15 @@ const ApplicationSentProfile = (props: Props) => {
 
       {/* 매칭 신청 취소 */}
       <section className={"flex justify-end gap-x-2"}>
-        <button
-          onClick={() => {
-            deleteRoomMateMatchingRequest(memberId).then(() => {
-              mutate();
-            });
-          }}
-          className={"px-5 py-[6px] rounded-full bg-gray1 text-gray5 text-h5"}>
+        <Button onClick={cancelMatching} className={"bg-gray1-button"} secondClassName={"py-[6px] px-5"}>
           매칭 신청 취소
-        </button>
-        <button
-          onClick={() => {
-            handleSubmit(memberId);
-          }}
-          className={"border border-gray1 rounded-full p-2"}>
-          <FollowChatIcon />
-        </button>
+        </Button>
+        <Button
+          RightIcon={FollowChatIcon}
+          onClick={() => handleSubmit(memberId)}
+          className={"border-gray1-button"}
+          secondClassName={"p-2"}
+        />
       </section>
     </div>
   );

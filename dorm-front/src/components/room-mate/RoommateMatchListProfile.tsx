@@ -13,6 +13,7 @@ import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendR
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ErrorResponseData } from "@/types/chat/page";
+import Button from "@/components/common/Button";
 
 interface Props {
   memberId: number;
@@ -99,7 +100,8 @@ const RoommateMatchListProfile = (props: Props) => {
       {/* 찜, 채팅, 팔로우 */}
       <div className={"flex justify-between"}>
         <div className={"flex gap-x-2"}>
-          <button
+          <Button
+            LeftIcon={wishStatus?.data.isRoommateWished ? WhiteHeartIcon : HeartIcon}
             onClick={() => {
               if (wishStatus?.data.isRoommateWished) {
                 deleteRoomMateWish(memberId).then(() => {
@@ -111,14 +113,10 @@ const RoommateMatchListProfile = (props: Props) => {
                 });
               }
             }}
-            className={
-              wishStatus?.data.isRoommateWished
-                ? "bg-primaryMid text-white text-h5 rounded-full py-[6px] px-[20px] items-center"
-                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
-            }>
-            {wishStatus?.data.isRoommateWished ? <WhiteHeartIcon /> : <HeartIcon />}
-          </button>
-          <button
+            className={wishStatus?.data.isRoommateWished ? "bg-primaryMid-button" : "border-gray1-button"}
+            secondClassName={"py-[9px] px-4"}
+          />
+          <Button
             onClick={() => {
               if (followStatus?.data.isFollowing) {
                 deleteFollowing(memberId).then(() => {
@@ -132,21 +130,18 @@ const RoommateMatchListProfile = (props: Props) => {
                 });
               }
             }}
-            className={
-              followStatus?.data.isFollowing
-                ? "bg-gray1 rounded-full text-h5 px-5 py-[6px] text-gray5 items-center"
-                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[6px] px-[20px] items-center"
-            }>
+            secondClassName={"px-5 py-[6px]"}
+            className={followStatus?.data.isFollowing ? "bg-gray1-button" : "border-gray1-button"}>
             {followStatus?.data.isFollowing ? "팔로우 취소" : "팔로우"}
-          </button>
+          </Button>
         </div>
-        <button
+        <Button
           onClick={() => {
             handleSubmit(memberId);
           }}
-          className={"p-[10px] rounded-full border-[1px] border-gray1 items-center gap-x-1"}>
-          <FollowChatIcon />
-        </button>
+          RightIcon={FollowChatIcon}
+          secondClassName={"p-2"}
+          className={"border-gray1-button"} />
       </div>
     </div>
   );

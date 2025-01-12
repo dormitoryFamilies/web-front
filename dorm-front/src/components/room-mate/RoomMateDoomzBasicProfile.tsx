@@ -6,6 +6,7 @@ import * as React from "react";
 import { SVGProps } from "react";
 import { useRecoilState } from "recoil";
 
+import Button from "@/components/common/Button";
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteRoomMateWish, postRoomMateMatchingRequest, postRoomMateWish } from "@/lib/api/room-mate";
@@ -88,7 +89,8 @@ const RoomMateDoomzBasicProfile = (props: Props) => {
       {/* 좋아요, 채팅, 룸메 신청하기 버튼 */}
       <section className={"flex justify-between"}>
         <div className={"flex gap-x-2"}>
-          <button
+          <Button
+            RightIcon={wishStatus?.data.isRoommateWished ? WhiteHeartIcon : HeartIcon}
             onClick={() => {
               if (wishStatus?.data.isRoommateWished) {
                 deleteRoomMateWish(memberId).then(() => {
@@ -100,33 +102,27 @@ const RoomMateDoomzBasicProfile = (props: Props) => {
                 });
               }
             }}
-            className={
-              wishStatus?.data.isRoommateWished
-                ? "bg-primaryMid text-white text-h5 rounded-full py-[9px] px-4 items-center"
-                : "border-[1px] border-gray1 text-gray4 text-h5 rounded-full py-[9px] px-4 items-center"
-            }>
-            {wishStatus?.data.isRoommateWished ? <WhiteHeartIcon /> : <HeartIcon />}
-          </button>
-          <button
+            secondClassName={"px-4 py-[9px]"}
+            className={wishStatus?.data.isRoommateWished ? "bg-primaryMid-button" : "border-gray1-button"}></Button>
+          <Button
             onClick={() => {
               handleSubmit(memberId);
             }}
-            className={
-              "flex py-[5px] px-5 rounded-full border-[1px] border-gray1 items-center gap-x-1 text-gray5 text-h5"
-            }>
-            <FollowChatIcon />
+            LeftIcon={FollowChatIcon}
+            secondClassName={"px-5 py-[6px]"}
+            className={"border-gray1-button"}>
             채팅
-          </button>
+          </Button>
         </div>
 
-        <button
+        <Button
           onClick={() => {
-            //TODO: 비활성화
             postRoomMateMatchingRequest(memberId);
           }}
-          className={"bg-primaryMid text-white text-h5 rounded-full px-5 py-1"}>
+          secondClassName={"px-5 py-[6px]"}
+          className={"bg-primaryMid-button"}>
           룸메 신청하기
-        </button>
+        </Button>
       </section>
     </section>
   );

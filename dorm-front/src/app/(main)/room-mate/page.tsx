@@ -6,6 +6,7 @@ import { SVGProps, useState } from "react";
 
 import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
+import Tag from "@/components/common/Tag";
 import ConfirmRoommateMatchCancel from "@/components/room-mate/ConfirmRoommateMatchCancel";
 import MyRoomMateProfile from "@/components/room-mate/MyRoomMateProfile";
 import { postRoomMateMatching } from "@/lib/api/room-mate";
@@ -84,9 +85,9 @@ const RoommateMatching = () => {
               {/*룸메 신청 목록*/}
               <div className={"rounded-[24px] w-full p-5 bg-secondary "}>
                 <div className={"flex justify-between items-center"}>
-                  <div className={"px-[12px] py-[5px] text-white text-h5 bg-primaryMid rounded-[24px]"}>
+                  <Tag className={"bg-primaryMid-button"} secondClassName={"py-1 px-3"}>
                     신청 {homeInfo?.data.requestReceivedCount}건
-                  </div>
+                  </Tag>
                   <MoveBlackIcon
                     onClick={() => {
                       router.push("/room-mate/application-list");
