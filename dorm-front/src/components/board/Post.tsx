@@ -5,6 +5,7 @@ import * as React from "react";
 import { SVGProps } from "react";
 
 import Button from "@/components/common/Button";
+import Tag from "@/components/common/Tag";
 
 interface Props {
   articleId: number;
@@ -74,11 +75,11 @@ const Post = (props: Props) => {
       <div onClick={() => onMove(articleId)} className="flex flex-col gap-y-2">
         {/*태그*/}
         <div className="flex gap-x-2">
-          <Button className={"board-type-tag"}>{boardType}</Button>
+          <Button className={"bg-secondary-tag"}>{boardType}</Button>
           {status == "모집중" ? (
-            <Button className={"recruiting-tag"}>모집중</Button>
+            <Tag className={"bg-blue-tag"}>모집중</Tag>
           ) : (
-            <Button className={"recruitment-completed-tag"}>모집완료</Button>
+            <Tag className={"bg-gray0-tag"}>모집완료</Tag>
           )}
         </div>
 

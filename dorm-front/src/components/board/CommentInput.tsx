@@ -2,6 +2,7 @@ import { FormEvent } from "react";
 import { useRecoilState } from "recoil";
 import { KeyedMutator } from "swr";
 
+import Button from "@/components/common/Button";
 import { postArticleComment, postArticleReplyComments } from "@/lib/api/board";
 import { articleCommentDataAtom } from "@/recoil/board/atom";
 import { ResponseAxiosArticleDetailAllCommentsType } from "@/types/board/type";
@@ -60,10 +61,10 @@ const CommentInput = (props: Props) => {
           }
         }}
         placeholder={isCommentInput ? "댓글을 남겨주세요" : "대댓글을 남겨주세요"}
-        className="bg-gray0 rounded-[22px] py-2 focus:outline-0 w-full"></input>
-      <button type={"submit"} className="px-4 py-2 bg-primary text-white rounded-full">
+        className="bg-gray0 rounded-[22px] py-2 focus:outline-0 w-[80%]"></input>
+      <Button type={"submit"} className="bg-primary-button">
         등록
-      </button>
+      </Button>
     </form>
   );
 };

@@ -23,9 +23,9 @@ import PostDetailContent from "@/components/board/PostDetailContent";
 import Profile from "@/components/board/Profile";
 import RecruitmentStatusChangeModal from "@/components/board/RecruitmentStatusChangeModal";
 import ReplyCommentDeleteMenu from "@/components/board/ReplyCommentDeleteMenu";
-import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import ProfileModal from "@/components/common/ProfileModal";
+import Tag from "@/components/common/Tag";
 import useGetArticleDetail from "@/lib/hooks/useGetArticleDetail";
 import useGetArticleDetailComments from "@/lib/hooks/useGetArticleDetailComments";
 import { selectedDormitory, selectedMemberIdAtom } from "@/recoil/atom";
@@ -159,14 +159,14 @@ const BoardDetail = () => {
           <div className="flex flex-col m-5 gap-y-4">
             {/*태그*/}
             <div className="flex gap-x-2">
-              <div className={"flex items-center gap-x-1 board-type-tag py-1 px-3 rounded-full text-h5"}>
+              <Tag className={"bg-secondary-tag"}>
                 {renderBoardTypeIcon(articleDetail?.data.boardType)}
                 {articleDetail?.data.boardType}
-              </div>
+              </Tag>
               {articleDetail?.data.status == "모집중" ? (
-                <Button className={"recruiting-tag"}>모집중</Button>
+                <Tag className={"bg-blue-tag"}>모집중</Tag>
               ) : (
-                <Button className={"recruitment-completed-tag"}>모집완료</Button>
+                <Tag className={"bg-gray0-tag"}>모집완료</Tag>
               )}
             </div>
 
@@ -236,7 +236,7 @@ const BoardDetail = () => {
               );
             })}
           </div>
-          <div className={"h-[110px]"} />
+          <div className={"h-[130px]"} />
           {/* 댓글 작성, 찜하기 */}
           {isArticleFavoritesListClicked ? null : (
             <div>
