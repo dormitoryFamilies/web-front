@@ -3,6 +3,7 @@ import * as React from "react";
 import Header from "@/components/common/Header";
 import RoommateMatchCard from "@/components/room-mate/RoommateMatchCard";
 import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendResultProfile";
+import Tag from "@/components/common/Tag";
 
 interface Props {
   memberId: number;
@@ -21,7 +22,7 @@ const RoommateMatchCancel = (props: Props) => {
   };
 
   const topElement = () => {
-    return <div className={"px-3 py-1 text-h5 bg-gray0 rounded-full w-fit"}>받는 분의 프로필</div>;
+    return <Tag className={"bg-gray0-tag"}>받는 분의 프로필</Tag>;
   };
 
   return (

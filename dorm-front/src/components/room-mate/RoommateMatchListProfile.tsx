@@ -4,6 +4,7 @@ import * as React from "react";
 import { SVGProps, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import Button from "@/components/common/Button";
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
 import { createChatRoom, getRoomId, patchRejoinChatRoom } from "@/lib/api/chat";
 import { deleteFollowing, postFollow } from "@/lib/api/common";
@@ -13,7 +14,6 @@ import useRoomMateRecommendResultProfile from "@/lib/hooks/useRoomMateRecommendR
 import useRoomMateWishStatus from "@/lib/hooks/useRoomMateWishStatus";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
 import { ErrorResponseData } from "@/types/chat/page";
-import Button from "@/components/common/Button";
 
 interface Props {
   memberId: number;
@@ -141,7 +141,8 @@ const RoommateMatchListProfile = (props: Props) => {
           }}
           RightIcon={FollowChatIcon}
           secondClassName={"p-2"}
-          className={"border-gray1-button"} />
+          className={"border-gray1-button"}
+        />
       </div>
     </div>
   );
