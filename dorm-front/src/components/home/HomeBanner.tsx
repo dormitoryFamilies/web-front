@@ -6,7 +6,7 @@ import Button from "@/components/common/Button";
 
 const HomeBanner = () => {
   const router = useRouter();
-  const onButtonClick = () => {
+  const navigateToRoomMate = () => {
     router.push("/room-mate");
   };
   return (
@@ -16,7 +16,7 @@ const HomeBanner = () => {
           룸메 매칭을 통해 <br />
           원하는 룸메를 구해보세요!
         </div>
-        <Button Icon={ArrowIcon} className={"bg-primaryMid text-white w-fit"} onClick={onButtonClick}>
+        <Button RightIcon={ArrowIcon} className={"bg-primaryMid-button"} onClick={navigateToRoomMate}>
           룸메 찾기
         </Button>
       </div>
