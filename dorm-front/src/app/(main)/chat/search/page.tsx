@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 
 import SearchInput from "@/components/chat/SearchInput";
 import SearchMenu from "@/components/chat/SearchMenu";
+import Button from "@/components/common/Button";
 import ProfileModal from "@/components/common/ProfileModal";
 import useDebounce from "@/hooks/useDebounce";
 import { getSearchChatMessage, getSearchChatRoom } from "@/lib/api/chat";
@@ -79,6 +80,18 @@ const ChatSearch = () => {
     return `${period} ${hours}:${formattedMinutes}`;
   };
 
+  const ChangeTypeFollowing = () => {
+    setType("팔로잉");
+  };
+
+  const ChangeTypeChatRoom = () => {
+    setType("채팅방");
+  };
+
+  const ChangeTypeMessage = () => {
+    setType("메시지");
+  };
+
   const renderSearchResults = (type: "전체" | "팔로잉" | "채팅방" | "메시지") => {
     switch (type) {
       case "전체":
@@ -87,16 +100,9 @@ const ChatSearch = () => {
             <section>
               <div className={"flex justify-between"}>
                 <div className={"text-h3 font-semibold"}>팔로잉</div>
-                <button
-                  className={
-                    "flex gap-x-1 text-h5 text-primaryMid rounded-full border border-primaryMid py-1 px-3 items-center"
-                  }
-                  onClick={() => {
-                    setType("팔로잉");
-                  }}>
+                <Button className={"border-primaryMid-button"} onClick={ChangeTypeFollowing} RightIcon={ArrowIcon}>
                   더보기
-                  <ArrowIcon />
-                </button>
+                </Button>
               </div>
               <div className={"overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
                 <div className={"flex gap-x-3"}>
@@ -129,16 +135,9 @@ const ChatSearch = () => {
             <section>
               <div className={"flex justify-between"}>
                 <div className={"text-h3 font-semibold"}>채팅방</div>
-                <button
-                  className={
-                    "flex gap-x-1 text-h5 text-primaryMid rounded-full border border-primaryMid py-1 px-3 items-center"
-                  }
-                  onClick={() => {
-                    setType("채팅방");
-                  }}>
+                <Button className={"border-primaryMid-button"} RightIcon={ArrowIcon} onClick={ChangeTypeChatRoom}>
                   더보기
-                  <ArrowIcon />
-                </button>
+                </Button>
               </div>
               <div className={"mt-3"}>
                 {searchChatRoomResults?.map((searchChatRoomResult) => {
@@ -178,16 +177,9 @@ const ChatSearch = () => {
             <section>
               <div className={"flex justify-between"}>
                 <div className={"text-h3 font-semibold"}>메시지</div>
-                <button
-                  className={
-                    "flex gap-x-1 text-h5 text-primaryMid rounded-full border border-primaryMid py-1 px-3 items-center"
-                  }
-                  onClick={() => {
-                    setType("메시지");
-                  }}>
+                <Button RightIcon={ArrowIcon} className={"border-primaryMid-button"} onClick={ChangeTypeMessage}>
                   더보기
-                  <ArrowIcon />
-                </button>
+                </Button>
               </div>
               <div className={"mt-3"}>
                 {searchChatMessageResults.map((searchChatMessageResult) => {
@@ -227,16 +219,6 @@ const ChatSearch = () => {
             <section>
               <div className={"flex justify-between"}>
                 <div className={"text-h3 font-semibold"}>팔로잉</div>
-                <button
-                  className={
-                    "flex gap-x-1 text-h5 text-primaryMid rounded-full border border-primaryMid py-1 px-3 items-center"
-                  }
-                  onClick={() => {
-                    setType("팔로잉");
-                  }}>
-                  더보기
-                  <ArrowIcon />
-                </button>
               </div>
               <div className={"overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
                 <div className={"flex gap-x-3"}>
@@ -318,16 +300,6 @@ const ChatSearch = () => {
             <section>
               <div className={"flex justify-between"}>
                 <div className={"text-h3 font-semibold"}>메시지</div>
-                <button
-                  className={
-                    "flex gap-x-1 text-h5 text-primaryMid rounded-full border border-primaryMid py-1 px-3 items-center"
-                  }
-                  onClick={() => {
-                    setType("메시지");
-                  }}>
-                  더보기
-                  <ArrowIcon />
-                </button>
               </div>
               <div className={"mt-3"}>
                 {searchChatMessageResults.map((searchChatMessageResult) => {

@@ -57,7 +57,7 @@ const Chat = () => {
 
   const navigateToMypageFollow = () => {
     router.push("/mypage/follow");
-  }
+  };
 
   return (
     <>
@@ -78,13 +78,8 @@ const Chat = () => {
         <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
           <div className={"flex justify-between"}>
             <div className={"text-h3 font-semibold"}>팔로잉</div>
-            <Button
-              onClick={() => {
-
-              }}
-              className={"flex items-center gap-x-1 home-button"}>
+            <Button onClick={navigateToMypageFollow} className={"border-primaryMid-button"} RightIcon={MoveIcon}>
               전체보기
-              <MoveIcon />
             </Button>
           </div>
 
