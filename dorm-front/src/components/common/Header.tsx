@@ -3,10 +3,10 @@ import React, { Dispatch, ReactNode, SetStateAction, SVGProps, useEffect } from 
 import { useRecoilState } from "recoil";
 
 import DropDownDormModal from "@/components/common/DropDownDormModal";
-import { DropDownClick, selectedDormitory } from "@/recoil/atom";
-import { HeaderType } from "@/types/global";
 import useAlarms from "@/lib/hooks/useAlarms";
+import { DropDownClick, selectedDormitory } from "@/recoil/atom";
 import { Notification } from "@/types/alarm/type";
+import { HeaderType } from "@/types/global";
 
 interface Props {
   headerType?: HeaderType;

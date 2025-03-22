@@ -31,7 +31,7 @@ const NicknameSetting = (props: Props) => {
     };
 
     const url = qs.stringifyUrl({
-      url: "/onboarding",
+      url: "/sign-up",
       query: query,
     });
 

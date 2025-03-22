@@ -2,12 +2,13 @@
 import { useEffect } from "react";
 
 interface Props {
-  menuByDay: string[] | undefined;
-  energy: string[] | undefined;
+  menu: string | undefined;
+  energy: string | undefined;
+  protein: string | undefined;
 }
 
 const HomeMenu = (props: Props) => {
-  const { menuByDay, energy } = props;
+  const { menu, energy, protein } = props;
 
   useEffect(() => {
     console.log("energy", energy);
@@ -17,8 +18,8 @@ const HomeMenu = (props: Props) => {
     <>
       {/*TODO: 데이터 추가 */}
       <div className="flex flex-col gap-y-3 items-center text-h4">
-        {menuByDay &&
-          menuByDay.map((menu) => {
+        {menu?.split(" ") &&
+          menu?.split(" ").map((menu) => {
             return <div key={menu}>{menu}</div>;
           })}
       </div>

@@ -17,6 +17,7 @@ import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
 import Button from "@/components/common/Button";
+import Cookies from "js-cookie";
 
 const ChatRoom = () => {
   const router = useRouter();
@@ -40,7 +41,7 @@ const ChatRoom = () => {
 
     stompClient.current = Stomp.over(socket);
     stompClient.current.connect(
-      { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+      { AccessToken: "Bearer " + Cookies.get("accessToken") },
       (frame: IFrame) => {
         console.log("STOMP Connected:", frame);
 
@@ -49,7 +50,7 @@ const ChatRoom = () => {
           (frame: { body: string }) => {
             console.log("frame", frame);
           },
-          { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+          { AccessToken: "Bearer " + Cookies.get("accessToken") },
         );
       },
       (error: string | Error) => {
@@ -72,7 +73,7 @@ const ChatRoom = () => {
       console.log("Attempting to send message:", messageObj);
       stompClient.current.send(
         `/pub/message`,
-        { AccessToken: "Bearer " + localStorage.getItem("accessToken") },
+        { AccessToken: "Bearer " + Cookies.get("accessToken") },
         JSON.stringify(messageObj),
       );
       // 메시지 전송 후 일정 시간 대기
