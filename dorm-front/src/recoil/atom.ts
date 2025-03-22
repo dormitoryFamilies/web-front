@@ -2,6 +2,8 @@
 
 import { atom } from "recoil";
 
+import { DormType } from "@/types/home/type";
+
 //드롭다운 메뉴를 보이도록(or 보이지 않도록) 하는 state
 export const DropDownClick = atom({
   key: "DropDownClick",
