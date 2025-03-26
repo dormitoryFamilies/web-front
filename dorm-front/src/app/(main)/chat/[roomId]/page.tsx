@@ -1,6 +1,7 @@
 "use client";
 
 import { CompatClient, IFrame, Stomp } from "@stomp/stompjs";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, SVGProps, useEffect, useRef, useState } from "react";
@@ -11,13 +12,12 @@ import ChattingRoomMenu from "@/components/chat/ChattingRoomMenu";
 import LeaveChatRoomAlertModal from "@/components/chat/LeaveChatRoomAlertModal";
 import MyChatContent from "@/components/chat/MyChatContent";
 import OtherUserChatContent from "@/components/chat/OtherUserChatContent";
+import Button from "@/components/common/Button";
 import { deleteNoMessageChatRoom, patchLeaveChatRoom } from "@/lib/api/chat";
 import useChatMessages from "@/lib/hooks/useChatMessages";
 import useMyMemberId from "@/lib/hooks/useMyMemberId";
 import useUserProfile from "@/lib/hooks/useUserProfile";
 import { chatRoomUUIDAtom, memberIdAtom, messageAtom } from "@/recoil/chat/atom";
-import Button from "@/components/common/Button";
-import Cookies from "js-cookie";
 
 const ChatRoom = () => {
   const router = useRouter();
@@ -37,7 +37,7 @@ const ChatRoom = () => {
 
   // 웹소켓 연결 설정
   const connectChattingRoom = (roomId: string | string[], roomUUID: string) => {
-    const socket = new WebSocket("ws://13.124.186.20:8080/stomp");
+    const socket = new WebSocket("wss://api.doomz.o-r.kr/stomp");
 
     stompClient.current = Stomp.over(socket);
     stompClient.current.connect(
