@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
 const client = axios.create({
-  baseURL: "http://13.124.186.20:8080",
+  baseURL: "https://api.doomz.o-r.kr",
   headers: {
     "Content-type": "application/json",
     AccessToken: Cookies.get("accessToken"),
