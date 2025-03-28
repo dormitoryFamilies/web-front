@@ -89,9 +89,6 @@ const CommunicationBox = (props: Props) => {
                 <span>{wishCount}</span>
               </div>
             </Button>
-            <Button LeftIcon={ChatIcon} onClick={navigateToChat} className={"border-gray1-button"}>
-              채팅하기
-            </Button>
           </div>
         );
       default:
