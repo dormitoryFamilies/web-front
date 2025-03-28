@@ -52,17 +52,16 @@ const RoommateMatching = () => {
           <div className={"px-5 flex flex-col gap-y-4"}>
             {/*추천 룸메*/}
             {myRoomMateProfile && myRoomMateProfile.data.matchedId === 0 ? (
-              <div className={"relative flex flex-col rounded-[24px] w-full p-5 bg-primaryMid"}>
-                <MoveWhiteIcon
-                  className={"absolute right-5"}
-                  onClick={() => {
-                    //룸메 추천 버튼
-                    postRoomMateMatching().then((r) => {
-                      console.log(r?.data);
-                    });
-                    router.push("/room-mate/recommended-roommate");
-                  }}
-                />
+              <div
+                onClick={() => {
+                  //룸메 추천 버튼
+                  postRoomMateMatching().then((r) => {
+                    console.log(r?.data);
+                  });
+                  router.push("/room-mate/recommended-roommate");
+                }}
+                className={"relative flex flex-col rounded-[24px] w-full p-5 bg-primaryMid"}>
+                <MoveWhiteIcon className={"absolute right-5"} />
                 <img
                   src={"/room-mate/룸메매칭_추천룸메.png"}
                   alt={"/room-mate/룸메매칭_추천룸메.png"}
@@ -81,18 +80,18 @@ const RoommateMatching = () => {
                 memberId={myRoomMateProfile?.data.matchedId}
               />
             )}
-            <div className={"flex gap-x-4"}>
+            <div
+              onClick={() => {
+                router.push("/room-mate/application-list");
+              }}
+              className={"flex gap-x-4"}>
               {/*룸메 신청 목록*/}
               <div className={"rounded-[24px] w-full p-5 bg-secondary "}>
                 <div className={"flex justify-between items-center"}>
                   <Tag className={"bg-primaryMid-button"} secondClassName={"py-1 px-3"}>
                     신청 {homeInfo?.data.requestReceivedCount}건
                   </Tag>
-                  <MoveBlackIcon
-                    onClick={() => {
-                      router.push("/room-mate/application-list");
-                    }}
-                  />
+                  <MoveBlackIcon />
                 </div>
                 <div className={"flex justify-end"}>
                   <img
@@ -110,13 +109,13 @@ const RoommateMatching = () => {
               </div>
 
               {/*전체 둠즈 목록*/}
-              <div className={"rounded-[24px] w-full p-5 bg-primaryLight "}>
+              <div
+                onClick={() => {
+                  router.push("/room-mate/application-list");
+                }}
+                className={"rounded-[24px] w-full p-5 bg-primaryLight "}>
                 <div className={"flex justify-end"}>
-                  <MoveBlackIcon
-                    onClick={() => {
-                      router.push("/room-mate/application-list");
-                    }}
-                  />
+                  <MoveBlackIcon />
                 </div>
                 <div className={"flex justify-end"}>
                   <img
