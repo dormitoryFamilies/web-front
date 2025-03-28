@@ -78,6 +78,7 @@ const ChatRoom = () => {
       );
       // 메시지 전송 후 일정 시간 대기
       await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms 대기
+      setMessage(""); //입력창 초기화
       await mutate(); // mutate를 호출하여 데이터 새로고침
     }
   };
@@ -227,6 +228,7 @@ const ChatRoom = () => {
       <div className={"fixed bottom-0 w-full bg-white pb-5"}>
         <div className={"flex mx-5 justify-between bg-gray0 rounded-[22px] py-[7px] px-2"}>
           <input
+            value={message}
             onChange={(e) => {
               setMessage(e.target.value);
             }}
