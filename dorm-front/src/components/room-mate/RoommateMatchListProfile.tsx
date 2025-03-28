@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import { SVGProps, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { SVGProps, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 import Button from "@/components/common/Button";
 import PreferredLifestyleReviewer from "@/components/room-mate/PreferredLifestyleReviewer";
@@ -25,10 +25,26 @@ const RoommateMatchListProfile = (props: Props) => {
   const { recommendRoomMateProfile } = useRoomMateRecommendResultProfile(memberId);
   const { wishStatus, wishStatusMutate } = useRoomMateWishStatus(memberId);
   const [isPreferredLifestyleReviewerOpen, setIsPreferredLifestyleReviewerOpen] = useState(false);
-  const { followStatus } = useFollowStatus(memberId);
-  const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
-  const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
+  const { followStatus, followStatusMutate } = useFollowStatus(memberId);
+  const setChatRoomUUID = useSetRecoilState(chatRoomUUIDAtom);
+  const setMemberIdState = useSetRecoilState(memberIdAtom);
   const router = useRouter();
+
+  const [localFollowStatus, setLocalFollowStatus] = useState<boolean | null>(null);
+  const isFollowing = localFollowStatus ?? followStatus?.data.isFollowing;
+
+  const toggleFollow = async () => {
+    if (isFollowing) {
+      await deleteFollowing(memberId);
+      setLocalFollowStatus(false);
+    } else {
+      await postFollow(memberId);
+      setLocalFollowStatus(true);
+    }
+
+    followStatusMutate();
+    allDoomzListMutate?.();
+  };
 
   const handleSubmit = async (memberId: string | string[] | number | undefined) => {
     try {
@@ -60,10 +76,6 @@ const RoommateMatchListProfile = (props: Props) => {
       }
     }
   };
-
-  useEffect(() => {
-    console.log("recommendRoomMateProfile", recommendRoomMateProfile);
-  }, [recommendRoomMateProfile]);
 
   return (
     <div
@@ -117,22 +129,10 @@ const RoommateMatchListProfile = (props: Props) => {
             secondClassName={"py-[9px] px-4"}
           />
           <Button
-            onClick={() => {
-              if (followStatus?.data.isFollowing) {
-                deleteFollowing(memberId).then(() => {
-                  console.log("팔로우 취소 성공");
-                  allDoomzListMutate();
-                });
-              } else {
-                postFollow(memberId).then((r) => {
-                  console.log("팔로우 성공", r);
-                  allDoomzListMutate();
-                });
-              }
-            }}
+            onClick={toggleFollow}
             secondClassName={"px-5 py-[6px]"}
-            className={followStatus?.data.isFollowing ? "bg-gray1-button" : "border-gray1-button"}>
-            {followStatus?.data.isFollowing ? "팔로우 취소" : "팔로우"}
+            className={isFollowing ? "bg-gray1-button" : "border-gray1-button"}>
+            {isFollowing ? "팔로우 취소" : "팔로우"}
           </Button>
         </div>
         <Button

@@ -22,8 +22,8 @@ const Follow = (props: Props) => {
   const [searchResults, setSearchResults] = useState<MemberProfile[]>();
   const [followerPageNumber, setFollowerPageNumber] = useState<number>(0);
   const [followingPageNumber, setFollowingPageNumber] = useState<number>(0);
-  const { followings } = useMyFollowings(followingPageNumber);
-  const { followers } = useMyFollowers(followerPageNumber);
+  const { followings, myFollowingsMutate } = useMyFollowings(followingPageNumber);
+  const { followers, myFollowersMutate } = useMyFollowers(followerPageNumber);
 
   // 팔로워 검색일 경우, 팔로잉 검색일 경우 따로 검색되도록
   useEffect(() => {
@@ -56,10 +56,7 @@ const Follow = (props: Props) => {
 
   return (
     <div className={"z-10 fixed min-h-screen bg-white w-full"}>
-      <Header
-        headerType={"dynamic"}
-        title={followType === "팔로워" ? "팔로워 목록" : "팔로잉 목록"}
-        onBack={onBack} />
+      <Header headerType={"dynamic"} title={followType === "팔로워" ? "팔로워 목록" : "팔로잉 목록"} onBack={onBack} />
       <div className={"h-[60px]"} />
       <MyPageFollowMenu
         followType={followType}
@@ -103,11 +100,23 @@ const Follow = (props: Props) => {
               })
             : !searchResults && followType === "팔로워"
               ? followers?.data.memberProfiles.map((memberProfile, index) => {
-                  return <RoommateMatchListProfile key={memberProfile.memberId} memberId={memberProfile.memberId} />;
+                  return (
+                    <RoommateMatchListProfile
+                      key={memberProfile.memberId}
+                      memberId={memberProfile.memberId}
+                      allDoomzListMutate={myFollowersMutate}
+                    />
+                  );
                 })
               : !searchResults && followType === "팔로잉"
                 ? followings?.data.memberProfiles.map((memberProfile, index) => {
-                    return <RoommateMatchListProfile key={memberProfile.memberId} memberId={memberProfile.memberId} />;
+                    return (
+                      <RoommateMatchListProfile
+                        key={memberProfile.memberId}
+                        memberId={memberProfile.memberId}
+                        allDoomzListMutate={myFollowingsMutate}
+                      />
+                    );
                   })
                 : null}
         </div>

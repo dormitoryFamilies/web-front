@@ -12,6 +12,7 @@ const useMyFollowings = (pageNumber: number) => {
   return {
     followings: data ? data.data : null,
     isLoading: !error && !data,
+    myFollowingsMutate: mutate,
     isError: error,
   };
 };
