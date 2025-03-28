@@ -39,8 +39,9 @@ const Board = () => {
     selectedSortType,
     selectedStatusType,
   ); //boardType이 전체가 아닐 때
+
   //filter
-  const [activeFilter, setActiveFilter] = useState<"sort" | "status" | null>(null);
+  const [activeFilter, setActiveFilter] = useState<"sort" | "status" | "dormitory" | null>(null);
 
   // 전체
   const getMoreAllArticleItem = useCallback(async () => {

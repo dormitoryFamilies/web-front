@@ -3,7 +3,7 @@ import { BoardType } from "@/types/board/type";
 interface Props {
   boardType: BoardType;
   setBoardType: React.Dispatch<React.SetStateAction<BoardType>>;
-  setActiveFilter: React.Dispatch<React.SetStateAction<"sort" | "status" | null>>;
+  setActiveFilter: React.Dispatch<React.SetStateAction<"sort" | "status" | "dormitory" | null>>;
 }
 
 const FilterMenu = (props: Props) => {
