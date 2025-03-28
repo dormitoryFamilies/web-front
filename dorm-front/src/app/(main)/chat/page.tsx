@@ -6,13 +6,14 @@ import * as React from "react";
 import { useInView } from "react-intersection-observer";
 import { useRecoilState } from "recoil";
 
+import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import NavBar from "@/components/common/NavBar";
 import ProfileModal from "@/components/common/ProfileModal";
+import Follow from "@/components/mypage/Follow";
 import useChatRooms from "@/lib/hooks/useChatRooms";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
 import { chatRoomUUIDAtom, memberIdAtom } from "@/recoil/chat/atom";
-import Button from "@/components/common/Button";
 const Chat = () => {
   const router = useRouter();
   const { chatRooms, setChatRoomsSize } = useChatRooms();
@@ -21,6 +22,7 @@ const Chat = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [memberIdState, setMemberIdState] = useRecoilState(memberIdAtom);
   const [chatRoomUUID, setChatRoomUUID] = useRecoilState(chatRoomUUIDAtom);
+  const [isFollowPageOpen, setIsFollowPageOpen] = useState(false);
 
   // 전체
   const getMoreAllArticleItem = useCallback(async () => {
@@ -56,105 +58,111 @@ const Chat = () => {
   };
 
   const navigateToMypageFollow = () => {
-    router.push("/mypage/follow");
+    setIsFollowPageOpen(true);
   };
 
   return (
     <>
       {isProfileOpen ? <ProfileModal memberId={memberIdState} setIsOpenProfileModal={setIsProfileOpen} /> : null}
-      <Header
-        headerType={"chattingHome"}
-        title={"채팅"}
-        rightElement={
-          <SearchIcon
-            onClick={() => {
-              router.push("/chat/search");
-            }}
+      {isFollowPageOpen ? (
+        <Follow setIsFollowPageOpen={setIsFollowPageOpen} isFollowPageOpen={isFollowPageOpen} />
+      ) : (
+        <main>
+          <Header
+            headerType={"chattingHome"}
+            title={"채팅"}
+            rightElement={
+              <SearchIcon
+                onClick={() => {
+                  router.push("/chat/search");
+                }}
+              />
+            }
           />
-        }
-      />
-      <div className={"h-[60px]"} />
-      <div className={""}>
-        <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
-          <div className={"flex justify-between"}>
-            <div className={"text-h3 font-semibold"}>팔로잉</div>
-            <Button onClick={navigateToMypageFollow} className={"border-primaryMid-button"} RightIcon={MoveIcon}>
-              전체보기
-            </Button>
-          </div>
+          <div className={"h-[60px]"} />
+          <div className={""}>
+            <section className={"py-3 px-5 border-b-[1px] border-gray1"}>
+              <div className={"flex justify-between"}>
+                <div className={"text-h3 font-semibold"}>팔로잉</div>
+                <Button onClick={navigateToMypageFollow} className={"border-primaryMid-button"} RightIcon={MoveIcon}>
+                  전체보기
+                </Button>
+              </div>
 
-          {/*팔로우*/}
-          <div className={"overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
-            <div className={"flex gap-x-3"}>
-              {followings?.data.memberProfiles.map((memberProfile) => {
-                return (
-                  <div
-                    onClick={() => {
-                      setMemberIdState(memberProfile.memberId);
-                      setIsProfileOpen(true);
-                    }}
-                    key={memberProfile.memberId}
-                    className={"flex flex-col gap-y-1 justify-center items-center"}>
-                    {memberProfile.profileUrl ? (
-                      <img
-                        src={memberProfile.profileUrl}
-                        alt={memberProfile.profileUrl}
-                        className={"object-cover rounded-full  w-[48px] h-[48px]"}
-                      />
-                    ) : (
-                      <ProfileIcon />
-                    )}
-                    <div className={"text-h6 text-gray3"}>{memberProfile.nickname}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/*채팅 목록*/}
-        <section className={"px-5 pt-2 flex flex-col gap-y-5"}>
-          <div className={"text-h3 font-semibold py-3"}>채팅목록</div>
-          {chatRooms &&
-            chatRooms.map((chatRoomData) => {
-              return chatRoomData?.data.data.chatRooms.map((chatRoom) => {
-                return (
-                  <div
-                    onClick={() => {
-                      setMemberIdState(chatRoom.memberId);
-                      setChatRoomUUID(chatRoom.roomUUID);
-                      router.push(`/chat/${chatRoom.roomId}`);
-                    }}
-                    ref={ref}
-                    key={chatRoom.roomId}
-                    className={"flex justify-between "}>
-                    <div className={"flex gap-x-3 items-center"}>
-                      <img
-                        src={chatRoom.memberProfileUrl}
-                        alt={chatRoom.memberProfileUrl}
-                        className={"rounded-full w-[60px] h-[60px]"}
-                      />
-                      <div className={"flex flex-col gap-y-1"}>
-                        <div className={"text-h4 font-semibold"}>{chatRoom.memberNickname}</div>
-                        <div className={"text-h5 text-gray5"}>{chatRoom.lastMessage}</div>
+              {/*팔로우*/}
+              <div className={"overflow-x-scroll pt-[12px] flex flex-col gap-y-3"}>
+                <div className={"flex gap-x-3"}>
+                  {followings?.data.memberProfiles.map((memberProfile) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          setMemberIdState(memberProfile.memberId);
+                          setIsProfileOpen(true);
+                        }}
+                        key={memberProfile.memberId}
+                        className={"flex flex-col gap-y-1 justify-center items-center"}>
+                        {memberProfile.profileUrl ? (
+                          <img
+                            src={memberProfile.profileUrl}
+                            alt={memberProfile.profileUrl}
+                            className={"object-cover rounded-full  w-[48px] h-[48px]"}
+                          />
+                        ) : (
+                          <ProfileIcon />
+                        )}
+                        <div className={"text-h6 text-gray3"}>{memberProfile.nickname}</div>
                       </div>
-                    </div>
-                    <div className={"flex flex-col items-end gap-y-1"}>
-                      <div className={"text-gray3 text-h6"}>{formatTime(chatRoom.lastMessageTime)}</div>
-                      {chatRoom.unReadCount === 0 ? null : (
-                        <div className={"rounded-full bg-primary w-fit px-2 text-white text-h6 py-[2px]"}>
-                          {chatRoom.unReadCount}
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            {/*채팅 목록*/}
+            <section className={"px-5 pt-2 flex flex-col gap-y-5"}>
+              <div className={"text-h3 font-semibold py-3"}>채팅목록</div>
+              {chatRooms &&
+                chatRooms.map((chatRoomData) => {
+                  return chatRoomData?.data.data.chatRooms.map((chatRoom) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          setMemberIdState(chatRoom.memberId);
+                          setChatRoomUUID(chatRoom.roomUUID);
+                          router.push(`/chat/${chatRoom.roomId}`);
+                        }}
+                        ref={ref}
+                        key={chatRoom.roomId}
+                        className={"flex justify-between "}>
+                        <div className={"flex gap-x-3 items-center"}>
+                          <img
+                            src={chatRoom.memberProfileUrl}
+                            alt={chatRoom.memberProfileUrl}
+                            className={"rounded-full w-[60px] h-[60px]"}
+                          />
+                          <div className={"flex flex-col gap-y-1"}>
+                            <div className={"text-h4 font-semibold"}>{chatRoom.memberNickname}</div>
+                            <div className={"text-h5 text-gray5"}>{chatRoom.lastMessage}</div>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              });
-            })}
-        </section>
-        <div className={"h-[90px]"} />
-        <NavBar />
-      </div>
+                        <div className={"flex flex-col items-end gap-y-1"}>
+                          <div className={"text-gray3 text-h6"}>{formatTime(chatRoom.lastMessageTime)}</div>
+                          {chatRoom.unReadCount === 0 ? null : (
+                            <div className={"rounded-full bg-primary w-fit px-2 text-white text-h6 py-[2px]"}>
+                              {chatRoom.unReadCount}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  });
+                })}
+            </section>
+            <div className={"h-[90px]"} />
+            <NavBar />
+          </div>
+        </main>
+      )}
     </>
   );
 };

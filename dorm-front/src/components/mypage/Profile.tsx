@@ -7,9 +7,10 @@ interface Props {
   followerCount: number | undefined;
   followingCount: number | undefined;
   profileUrl: string | undefined;
+  setIsFollowPageOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const Profile = (props: Props) => {
-  const { name, followerCount, followingCount, profileUrl } = props;
+  const { name, followerCount, followingCount, profileUrl, setIsFollowPageOpen } = props;
   const router = useRouter();
 
   return (
@@ -32,7 +33,7 @@ const Profile = (props: Props) => {
         </div>
         <div
           onClick={() => {
-            router.push("/mypage/follow");
+            setIsFollowPageOpen(true);
           }}
           className={"flex gap-x-5"}>
           <div className={"text-h6 text-gray4"}>

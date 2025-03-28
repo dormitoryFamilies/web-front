@@ -1,44 +1,29 @@
-"use client";
-import { useRouter } from "next/navigation";
-import qs from "query-string";
-import { SVGProps, useEffect } from "react";
 import * as React from "react";
-import { useState } from "react";
+import { SVGProps, useEffect, useState } from "react";
 
 import Header from "@/components/common/Header";
 import Paging from "@/components/common/Paging";
 import MyPageFollowMenu from "@/components/mypage/MyPageFollowMenu";
 import RoommateMatchListProfile from "@/components/room-mate/RoommateMatchListProfile";
-import useDebounce from "@/hooks/useDebounce";
 import { getSearchFollowers, getSearchFollowings } from "@/lib/api/mypage";
 import useMyFollowers from "@/lib/hooks/useMyFollowers";
 import useMyFollowings from "@/lib/hooks/useMyFollowings";
 import { FollowingAxiosResponseType, FollowType, MemberProfile } from "@/types/mypage/type";
 
-const MyPageFollow = () => {
+interface Props {
+  isFollowPageOpen: boolean;
+  setIsFollowPageOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Follow = (props: Props) => {
+  const { isFollowPageOpen, setIsFollowPageOpen } = props;
   const [followType, setFollowType] = useState<FollowType>("팔로워");
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResults, setSearchResults] = useState<MemberProfile[]>();
   const [followerPageNumber, setFollowerPageNumber] = useState<number>(0);
   const [followingPageNumber, setFollowingPageNumber] = useState<number>(0);
-  const debouncedValue = useDebounce<string>(searchValue, 100);
-  const router = useRouter();
   const { followings } = useMyFollowings(followingPageNumber);
   const { followers } = useMyFollowers(followerPageNumber);
-
-  //쿼리파라미터 검색결과
-  useEffect(() => {
-    const query = {
-      keyword: debouncedValue,
-    };
-
-    const url = qs.stringifyUrl({
-      url: "/mypage/follow",
-      query: query,
-    });
-
-    router.push(url);
-  }, [debouncedValue]);
 
   // 팔로워 검색일 경우, 팔로잉 검색일 경우 따로 검색되도록
   useEffect(() => {
@@ -66,15 +51,15 @@ const MyPageFollow = () => {
 
   //뒤로가기
   const onBack = () => {
-    router.push("/mypage");
+    setIsFollowPageOpen(!isFollowPageOpen);
   };
 
   return (
-    <div className={"min-h-screen"}>
+    <div className={"z-10 fixed min-h-screen bg-white w-full"}>
       <Header
         headerType={"dynamic"}
         title={followType === "팔로워" ? "팔로워 목록" : "팔로잉 목록"}
-        onBack={onBack}></Header>
+        onBack={onBack} />
       <div className={"h-[60px]"} />
       <MyPageFollowMenu
         followType={followType}
@@ -150,7 +135,7 @@ const MyPageFollow = () => {
     </div>
   );
 };
-export default MyPageFollow;
+export default Follow;
 
 const FollowSearchIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={17} height={16} fill="none" {...props}>

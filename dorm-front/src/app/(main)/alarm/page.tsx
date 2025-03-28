@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import AlarmComponent from "@/components/alarm/AlarmComponent";
 import Header from "@/components/common/Header";
+import Follow from "@/components/mypage/Follow";
 import { putAlarm } from "@/lib/api/alarm";
 import useAlarms from "@/lib/hooks/useAlarms";
 
@@ -14,6 +15,7 @@ const Alarm = () => {
   const { alarms } = useAlarms();
   const [notificationIds, setNotificationIds] = useState<number[]>([]);
   const router = useRouter();
+  const [isFollowPageOpen, setIsFollowPageOpen] = useState(false);
 
   useEffect(() => {
     const connect = () => {
@@ -74,27 +76,34 @@ const Alarm = () => {
 
   return (
     <>
-      <Header headerType={"dynamic"} title={"알림"} onBack={onBack} />
-      <div className={"h-[60px]"} />
-      <div className={"flex flex-col gap-y-[15px] px-5 mt-[24px]"}>
-        {alarms &&
-          alarms.map((alarmData) => {
-            return alarmData?.data.data.notifications.map((notification) => {
-              return (
-                <AlarmComponent
-                  key={notification.notificationId}
-                  articleTitle={notification.articleTitle}
-                  type={notification.type}
-                  createdAt={notification.createdAt}
-                  sender={notification.sender}
-                  targetId={notification.targetId}
-                  isRead={notification.isRead}
-                  notificationIds={notificationIds}
-                />
-              );
-            });
-          })}
-      </div>
+      {isFollowPageOpen ? (
+        <Follow isFollowPageOpen={isFollowPageOpen} setIsFollowPageOpen={setIsFollowPageOpen} />
+      ) : (
+        <main>
+          <Header headerType={"dynamic"} title={"알림"} onBack={onBack} />
+          <div className={"h-[60px]"} />
+          <div className={"flex flex-col gap-y-[15px] px-5 mt-[24px]"}>
+            {alarms &&
+              alarms.map((alarmData) => {
+                return alarmData?.data.data.notifications.map((notification) => {
+                  return (
+                    <AlarmComponent
+                      key={notification.notificationId}
+                      articleTitle={notification.articleTitle}
+                      type={notification.type}
+                      createdAt={notification.createdAt}
+                      sender={notification.sender}
+                      targetId={notification.targetId}
+                      isRead={notification.isRead}
+                      notificationIds={notificationIds}
+                      setIsFollowPageOpen={setIsFollowPageOpen}
+                    />
+                  );
+                });
+              })}
+          </div>
+        </main>
+      )}
     </>
   );
 };

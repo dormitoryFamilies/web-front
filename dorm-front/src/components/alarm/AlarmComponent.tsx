@@ -1,6 +1,7 @@
 import { format, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 import ReadBoardAlarmIcon from "@/assets/alarm/ReadBoardAlarmIcon";
 import ReadChatAlarmIcon from "@/assets/alarm/ReadChatAlarmIcon";
@@ -21,9 +22,10 @@ interface Props {
   targetId: number;
   isRead: boolean;
   notificationIds: number[];
+  setIsFollowPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 const AlarmComponent = (props: Props) => {
-  const { type, articleTitle, createdAt, sender, targetId, isRead, notificationIds } = props;
+  const { type, articleTitle, createdAt, sender, targetId, isRead, notificationIds, setIsFollowPageOpen } = props;
   const router = useRouter();
 
   const renderUnReadIcon = (type: NotificationType) => {
@@ -165,8 +167,6 @@ const AlarmComponent = (props: Props) => {
         return `/board/${targetId}`;
       case "ARTICLE_WISH":
         return "/mypage/interest-list";
-      case "MEMBER_FOLLOW":
-        return "/mypage/follow";
       case "CHAT":
         return `/chat/${targetId}`;
       case "MATCHING_WISH":
@@ -177,6 +177,8 @@ const AlarmComponent = (props: Props) => {
         return "/room-mate/application-list";
       case "MATCHING_ACCEPT":
         return "/room-mate/application-list";
+      default:
+        return "";
     }
   };
 
@@ -208,7 +210,11 @@ const AlarmComponent = (props: Props) => {
     <div
       onClick={() => {
         putAlarm(notificationIds).then(() => {
-          router.push(renderRouter(type));
+          if (type === "MEMBER_FOLLOW") {
+            setIsFollowPageOpen(true);
+          } else {
+            router.push(renderRouter(type));
+          }
         });
       }}
       className={"flex flex-col gap-y-2 p-4 rounded-[16px] border border-gray1"}>
