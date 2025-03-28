@@ -6,33 +6,16 @@ import { useEffect, useState } from "react";
 
 import Paging from "@/components/common/Paging";
 import RoommateMatchListProfile from "@/components/room-mate/RoommateMatchListProfile";
-import useDebounce from "@/hooks/useDebounce";
 import { getAllDoomzList } from "@/lib/api/room-mate";
 import useRoomMateAllDoomzList from "@/lib/hooks/useRoomMateAllDoomzList";
 import { AllDoomzListAxiosResponseType, MemberProfileType } from "@/types/room-mate/type";
 
 interface Props {}
 const AllDoomzList = (props: Props) => {
-  const router = useRouter();
   const [pageNumber, setPageNumber] = useState<number>(0);
   const { allDoomzList, mutate } = useRoomMateAllDoomzList(pageNumber);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResults, setSearchResults] = useState<MemberProfileType[]>();
-  const debouncedValue = useDebounce<string>(searchValue, 100);
-
-  //쿼리파라미터 검색결과
-  useEffect(() => {
-    const query = {
-      keyword: debouncedValue,
-    };
-
-    const url = qs.stringifyUrl({
-      url: "/room-mate/application-list",
-      query: query,
-    });
-
-    router.push(url);
-  }, [debouncedValue]);
 
   //단어가 바뀔 때 마다 검색하여 요청
   useEffect(() => {
@@ -43,10 +26,6 @@ const AllDoomzList = (props: Props) => {
       });
     }
   }, [searchValue]);
-
-  useEffect(() => {
-    console.log("allDoomzList", allDoomzList);
-  }, [allDoomzList]);
 
   return (
     <>
