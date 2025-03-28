@@ -39,8 +39,8 @@ const Board = () => {
     selectedSortType,
     selectedStatusType,
   ); //boardType이 전체가 아닐 때
-  const [isSortingFilterClick, setIsSortingFilterClick] = useState<boolean>(false);
-  const [isStatusFilterClick, setIsStatusFilterClick] = useState<boolean>(false);
+  //filter
+  const [activeFilter, setActiveFilter] = useState<"sort" | "status" | null>(null);
 
   // 전체
   const getMoreAllArticleItem = useCallback(async () => {
@@ -93,34 +93,34 @@ const Board = () => {
           />
         }></Header>
       <div className={"h-[60px]"} />
-      <FilterMenu boardType={boardType} setBoardType={setBoardType}></FilterMenu>
+      <FilterMenu boardType={boardType} setBoardType={setBoardType} setActiveFilter={setActiveFilter} />
       {/* filter */}
       <div className="relative flex gap-x-2 mx-5 my-3">
         <Button
           className={"border-gray1-button"}
-          onClick={() => setIsSortingFilterClick(!isSortingFilterClick)}
-          RightIcon={isSortingFilterClick ? DropUpIcon : DropDownIcon}>
+          onClick={() => setActiveFilter(activeFilter === "sort" ? null : "sort")}
+          RightIcon={activeFilter === "sort" ? DropUpIcon : DropDownIcon}>
           {formatSortContent()}
         </Button>
-        {isSortingFilterClick ? (
+        {activeFilter === "sort" ? (
           <ArticleSortFilter
             sortFilterContents={sortFilterContents}
             setSelectedSortType={setSelectedSortType}
-            setIsSortingFilterClick={setIsSortingFilterClick}
+            setIsSortingFilterClick={() => setActiveFilter(null)}
           />
         ) : null}
         <Button
           className={"border-gray1-button"}
-          onClick={() => setIsStatusFilterClick(!isStatusFilterClick)}
-          RightIcon={isStatusFilterClick ? DropUpIcon : DropDownIcon}>
+          onClick={() => setActiveFilter(activeFilter === "status" ? null : "status")}
+          RightIcon={activeFilter === "status" ? DropUpIcon : DropDownIcon}>
           {selectedStatusType}
         </Button>
-        {isStatusFilterClick ? (
+        {activeFilter === "status" ? (
           <ArticleStatusFilter
             className={"left-[25%]"}
             statusFilterContents={statusFilterContents}
             setSelectedStatusType={setSelectedStatusType}
-            setIsStatusFilterClick={setIsStatusFilterClick}
+            setIsStatusFilterClick={() => setActiveFilter(null)}
           />
         ) : null}
       </div>

@@ -3,21 +3,24 @@ import { BoardType } from "@/types/board/type";
 interface Props {
   boardType: BoardType;
   setBoardType: React.Dispatch<React.SetStateAction<BoardType>>;
+  setActiveFilter: React.Dispatch<React.SetStateAction<"sort" | "status" | null>>;
 }
 
 const FilterMenu = (props: Props) => {
-  const { boardType, setBoardType } = props;
+  const { boardType, setBoardType, setActiveFilter } = props;
 
   const changeBoardType = (type: BoardType) => {
     setBoardType(type);
   };
 
+  //TODO: 언젠가 리팩토링 하기
   return (
     <div
       className={"bg-white px-5 py-1 border-b-[1px] border-gray1 flex gap-x-2 w-full overflow-x-scroll scroll-hidden"}>
       <button
         onClick={() => {
           changeBoardType("전체");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
@@ -32,6 +35,7 @@ const FilterMenu = (props: Props) => {
       <button
         onClick={() => {
           changeBoardType("도와주세요");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
@@ -46,6 +50,7 @@ const FilterMenu = (props: Props) => {
       <button
         onClick={() => {
           changeBoardType("함께해요");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
@@ -60,6 +65,7 @@ const FilterMenu = (props: Props) => {
       <button
         onClick={() => {
           changeBoardType("나눔해요");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
@@ -74,6 +80,7 @@ const FilterMenu = (props: Props) => {
       <button
         onClick={() => {
           changeBoardType("궁금해요");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
@@ -88,6 +95,7 @@ const FilterMenu = (props: Props) => {
       <button
         onClick={() => {
           changeBoardType("분실신고");
+          setActiveFilter(null);
         }}
         className={"flex-shrink-0"}>
         <span
