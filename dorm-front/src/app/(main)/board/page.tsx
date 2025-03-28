@@ -179,6 +179,7 @@ const Board = () => {
         </div>
       </div>
       <Button
+        onClick={() => router.push("/board/write")}
         className={"bg-primary-button"}
         secondClassName={"fixed bottom-[84px] right-5 z-10 text-h4 gap-x-2"}
         LeftIcon={WriteButtonIcon}>
